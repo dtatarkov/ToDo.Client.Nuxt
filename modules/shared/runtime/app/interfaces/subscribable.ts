@@ -1,5 +1,5 @@
-export abstract class Subscribable extends Destroyable
+export interface Subscribable extends Destroyable
 {
-  abstract subscribe(handler: Action, options?: SubscriptionOptions): Action;
+  subscribe(handler: Action, options?: SubscriptionOptions): Action;
 }
 

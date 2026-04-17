@@ -1,13 +1,12 @@
 import type { SubscriptionOptions } from "../types/subscriptionOptions";
 import { EventBusBase } from "../entities/eventBusBase";
 
-export class ObservableBase<T> extends ObservableWritable<T>
+export class ObservableBase<T> implements ObservableWritable<T>
 {
   protected eventbus = new EventBusBase();
 
   constructor(private _value: T)
   {
-    super();
   }
 
   get value(): T
@@ -21,7 +20,7 @@ export class ObservableBase<T> extends ObservableWritable<T>
     this.eventbus.emit();
   }
 
-  override subscribe(handler: Action, options?: SubscriptionOptions): Action
+  subscribe(handler: Action, options?: SubscriptionOptions): Action
   {
     const unsubscribe = this.eventbus.subscribe(handler);
 
@@ -33,7 +32,7 @@ export class ObservableBase<T> extends ObservableWritable<T>
     return unsubscribe;
   }
 
-  override destroy(): void
+  destroy(): void
   {
     this.eventbus.destroy();
   }

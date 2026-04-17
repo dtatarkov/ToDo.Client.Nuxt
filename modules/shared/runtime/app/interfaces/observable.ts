@@ -1,4 +1,4 @@
-export abstract class Observable<T> extends Subscribable
+export interface Observable<T> extends Subscribable
 {
-  abstract get value(): T;
+  get value(): T;
 }

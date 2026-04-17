@@ -14,6 +14,7 @@
     "type-check": "nuxt typecheck"
   },
   "dependencies": {
+    "@internationalized/date": "3.12.1",
     "@nuxt/ui": "4.5.1",
     "inversify": "7.11.0",
     "luxon": "3.7.2",

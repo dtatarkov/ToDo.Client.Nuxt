@@ -12,6 +12,7 @@ export default defineNuxtModule({
 
     addImportsDir(resolver.resolve('./runtime/app/enums'));
     addImportsDir(resolver.resolve('./runtime/app/types'));
+    addImportsDir(resolver.resolve('./runtime/app/interfaces'));
     addImportsDir(resolver.resolve('./runtime/app/composables'));
     addImportsDir(resolver.resolve('./runtime/app/utils'));
 
@@ -23,10 +24,6 @@ export default defineNuxtModule({
       { from: resolver.resolve('./runtime/app/interfaces/datesService'), name: 'DatesService' },
       { from: resolver.resolve('./runtime/app/interfaces/stringsService'), name: 'StringsService' },
       { from: resolver.resolve('./runtime/app/interfaces/ssrLoader'), name: 'SSRLoader' },
-      { from: resolver.resolve('./runtime/app/interfaces/observable'), name: 'Observable' },
-      { from: resolver.resolve('./runtime/app/interfaces/observableWritable'), name: 'ObservableWritable' },
-      { from: resolver.resolve('./runtime/app/interfaces/subscribable'), name: 'Subscribable' },
-      { from: resolver.resolve('./runtime/app/interfaces/destroyable'), name: 'Destroyable' },
       { from: resolver.resolve('./runtime/app/interfaces/valueMapper'), name: 'ValueMapper' },
       { from: resolver.resolve('./runtime/app/interfaces/timeMapper'), name: 'TimeMapper' },
       { from: resolver.resolve('./runtime/app/interfaces/zonedDateTimeMapper'), name: 'ZonedDateTimeMapper' },
