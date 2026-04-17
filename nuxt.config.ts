@@ -17,8 +17,24 @@ export default defineNuxtConfig({
     },
   ],
 
-  // @ts-ignore
+  typescript: {
+    tsConfig: {
+      include: [
+        "../.storybook/**/*",
+      ]
+    }
+  },
+
+  alias: {
+    '@forms'  : '../modules/forms/runtime/app',
+    '@overlay': '../modules/overlay/runtime/app',
+    '@shared' : '../modules/shared/runtime/app',
+    '@todo'   : '../modules/todo/runtime/app',
+    '@uikit'  : '../modules/uikit/runtime/app',
+  },
+
   ui: {
+    // @ts-ignore
     colorMode: process.env.NUXT_ALLOW_COLOR_MODE === 'true' ? {
       preference: 'dark'
     } : false

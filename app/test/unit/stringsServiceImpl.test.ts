@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { StringsServiceImpl } from "~/services/stringsServiceImpl";
+import { StringsServiceImpl } from "@shared/services/stringsServiceImpl";
 
 describe('StringsServiceImpl', () =>
 {
