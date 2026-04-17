@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "@/*": [
+                "./shared/*"
+            ],
+
+            "#components/*": [
+                "./app/components/*"
+            ],
+
+            "#styles/*": [
+                "./styles/*"
+            ],
+
+            "#composables/*": [
+                "./app/composables/*"
+            ],
+
+            "#storybook/*": [
+                "./.storybook/*"
+            ]
+        }
+    },
+
+    "include": [
+        "./.storybook/**/*",
+        "./stories/**/*",
+        ".nuxt/imports.d.ts"
+    ]
+}

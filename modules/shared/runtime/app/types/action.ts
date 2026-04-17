@@ -1,0 +1,1 @@
+export type Action<T extends any[] = any[]> = (...args: T) => void;

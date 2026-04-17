@@ -1,0 +1,27 @@
+import { FormElementFactory } from "../app/interfaces/formElementFactory";
+import { FormFactory } from "../app/interfaces/formFactory";
+import { FormElementFactoryImpl } from "../app/factories/formElementFactoryImpl";
+import { FormFactoryImpl } from "../app/factories/formFactoryImpl";
+
+export default defineNuxtPlugin((nuxtApp) =>
+{
+  registerServiceFactory(FormElementFactory, () =>
+  {
+    const datesService        = getService(DatesService);
+    const stringsService      = getService(StringsService);
+    const zonedDateTimeMapper = getService(ZonedDateTimeMapper);
+    const timeMapper          = getService(TimeMapper);
+
+    const result = new FormElementFactoryImpl(datesService, stringsService, zonedDateTimeMapper, timeMapper);
+
+    return result;
+  }, ServiceScope.Singleton);
+
+  registerServiceFactory(FormFactory, () =>
+  {
+    const formElementFactory = getService(FormElementFactory);
+    const formFactory        = new FormFactoryImpl(formElementFactory);
+
+    return formFactory;
+  }, ServiceScope.Singleton);
+})

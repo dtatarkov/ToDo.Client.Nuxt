@@ -1,0 +1,51 @@
+{
+  "name": "client.nuxt",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "storybook": "set NUXT_ALLOW_COLOR_MODE=false && storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build",
+    "test": "vitest run",
+    "type-check": "nuxt typecheck"
+  },
+  "dependencies": {
+    "@nuxt/ui": "4.5.1",
+    "inversify": "7.11.0",
+    "luxon": "3.7.2",
+    "nuxt": "4.3.1",
+    "tailwindcss": "4.2.1",
+    "vite": "7.3.1",
+    "vue": "3.5.29",
+    "vue-router": "4.6.4"
+  },
+  "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
+  "devDependencies": {
+    "@nuxt/test-utils": "3.23.0",
+    "@types/luxon": "3.7.1",
+    "@vue/test-utils": "2.4.6",
+    "happy-dom": "20.8.3",
+    "playwright-core": "1.58.2",
+    "sass-embedded": "1.97.3",
+    "typescript": "5.9.3",
+    "vitest": "3.2.4",
+    "vue-tsc": "3.2.5",
+    "storybook": "^10.2.17",
+    "@storybook/addon-a11y": "^10.2.17",
+    "@storybook/addon-docs": "^10.2.17",
+    "@nuxtjs/storybook": "^9.0.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "citty": "^0.1.6"
+    },
+    "onlyBuiltDependencies": [
+      "core-js",
+      "esbuild"
+    ]
+  }
+}
