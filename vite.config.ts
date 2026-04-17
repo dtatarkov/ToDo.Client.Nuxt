@@ -11,6 +11,7 @@ export default defineConfig({
       '#storybook': path.resolve(__dirname, '.storybook'),
       '@': path.resolve(__dirname, 'app'),
       '@shared': path.resolve(__dirname, 'modules/shared/runtime/app'),
+      '@todo': path.resolve(__dirname, 'modules/todo/runtime/app'),
     },
   },
 })

@@ -1,4 +1,4 @@
-import type { Preview } from '@storybook-vue/nuxt';
+import type { Preview } from '@nuxtjs/storybook';
 
 const preview: Preview = {
   parameters: {
