@@ -1,6 +1,5 @@
 import { Time } from "@internationalized/date";
-import { ValueMapper } from '../interfaces/valueMapper';
-import { DatesService } from '@shared/interfaces/datesService';
+import { ValueMapper } from '../../interfaces/valueMapper';
 
 export class TimeMapperImpl extends ValueMapper<number, Time>
 {
@@ -31,7 +30,7 @@ export class TimeMapperImpl extends ValueMapper<number, Time>
 
   mapReverse(time: Time): number
   {
-    const hours   = time.hour * 60 * 60 * 1000;
+    const hours = time.hour * 60 * 60 * 1000;
     const minutes = time.minute * 60 * 1000;
     const seconds = time.second * 1000;
 

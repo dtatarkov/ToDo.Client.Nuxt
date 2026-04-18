@@ -1,8 +1,8 @@
 import { type BindInWhenOnFluentSyntax, Container } from "inversify";
-import type { ServiceIdentifier } from "../types/serviceIdentifier";
-import type { Constructor } from "../types/constructor";
-import { ServiceScope } from "../enums/serviceScope";
-import { ServiceLocator } from "../interfaces/serviceLocator";
+import type { ServiceIdentifier } from "../../types/serviceIdentifier";
+import type { Constructor } from "../../types/constructor";
+import { ServiceScope } from "../../enums/serviceScope";
+import { ServiceLocator } from "../../interfaces/internal/serviceLocator";
 
 export class ServiceLocatorBase extends ServiceLocator
 {

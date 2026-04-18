@@ -1,5 +1,4 @@
 import { ToDo } from "../interfaces/todo";
-import type { Observable } from "@shared/interfaces/observable";
 
 export abstract class ToDosService
 {
@@ -7,5 +6,5 @@ export abstract class ToDosService
 
   abstract updateToDosAsync(): Promise<void>;
 
-  abstract editToDoAsync(todoId: string): Promise<void>
+  abstract editToDoAsync(todoId: string): Promise<void>;
 }

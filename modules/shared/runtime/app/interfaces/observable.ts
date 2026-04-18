@@ -1,6 +1,6 @@
-import type { Subscribable } from "./subscribable";
+import { Subscribable } from "./subscribable";
 
-export interface Observable<T> extends Subscribable
+export abstract class Observable<T> extends Subscribable
 {
-  get value(): T;
+  abstract get value(): T;
 }

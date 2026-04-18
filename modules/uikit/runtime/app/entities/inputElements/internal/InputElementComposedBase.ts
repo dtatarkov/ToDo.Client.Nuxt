@@ -1,13 +1,12 @@
 import { InputElement } from "../../../interfaces/inputElement";
-import type { StringsService } from "@shared/interfaces/stringsService";
 
 export abstract class InputElementComposedBase<V> extends InputElement<V>
 {
   #id = ref('');
   #name = ref('');
 
-  protected abstract children: Record<string, InputElement>
-  protected dataSetters: Record<string, Action<[any]>> = {}
+  protected abstract children: Record<string, InputElement>;
+  protected dataSetters: Record<string, Action<[any]>> = {};
 
   readonly key = getUniqueId('input-element-composed');
 
@@ -16,7 +15,7 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
     {
       const props = {
         class: 'flex gap-1'
-      }
+      };
 
       const children = Object
         .values(this.children)
@@ -24,7 +23,7 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
 
       return () => h('div', props, children);
     }
-  }
+  };
 
   constructor(
     protected stringsService: StringsService
@@ -42,7 +41,7 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
       {
         this.value = value;
       }
-    })
+    });
   }
 
   get id(): string
@@ -64,7 +63,7 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
 
   get name(): string
   {
-    return this.#name.value
+    return this.#name.value;
   }
 
   set name(value: string)

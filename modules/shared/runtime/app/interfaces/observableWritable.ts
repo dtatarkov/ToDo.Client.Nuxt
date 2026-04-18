@@ -1,7 +1,7 @@
-import type { Observable } from "./observable";
+import { Observable } from "./observable";
 
-export interface ObservableWritable<T> extends Observable<T>
+export abstract class ObservableWritable<T> extends Observable<T>
 {
-  get value(): T;
-  set value(value: T);
+  abstract override get value(): T;
+  abstract override set value(value: T);
 }

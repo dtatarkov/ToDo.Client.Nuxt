@@ -1,16 +1,15 @@
 import { ToDoCard } from "../interfaces/todoCard";
 import type { ToDosService } from "../interfaces/todosService";
 import VToDoCard from "../components/VToDoCard.vue";
-import { DatesService } from '@shared/interfaces/datesService';
 
 export class ToDoCardBase extends ToDoCard
 {
   protected data = reactive({
-    id                   : '',
-    title                : '',
-    description          : '',
+    id: '',
+    title: '',
+    description: '',
     completionDatePlanned: <Date | undefined>undefined,
-    completionDateActual : <Date | undefined>undefined,
+    completionDateActual: <Date | undefined>undefined,
   });
 
   readonly key = getUniqueId('todo-card');
@@ -21,21 +20,21 @@ export class ToDoCardBase extends ToDoCard
       const onEditButtonClick = async () =>
       {
         await this.todosService.editToDoAsync(this.id);
-      }
+      };
 
       const completionDatePlanned = computed(() => this.datesService.formatDateOptional(this.completionDatePlanned));
-      const completionDateActual  = computed(() => this.datesService.formatDateOptional(this.completionDateActual));
+      const completionDateActual = computed(() => this.datesService.formatDateOptional(this.completionDateActual));
 
       return () => h(VToDoCard, {
         ...this.data,
 
         completionDatePlanned: completionDatePlanned.value,
-        completionDateActual : completionDateActual.value,
+        completionDateActual: completionDateActual.value,
 
         onEditButtonClick,
       });
     }
-  }
+  };
 
   constructor(
     protected todosService: ToDosService,

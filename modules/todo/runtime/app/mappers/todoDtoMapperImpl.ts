@@ -2,7 +2,6 @@ import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
-import { DatesService } from '@shared/interfaces/datesService';
 
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
@@ -18,7 +17,7 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
     updatePropertiesWithData(todo, {
       ...dto,
 
-      completionDateActual : this.datesService.fromStringOptional(dto.completionDateActual),
+      completionDateActual: this.datesService.fromStringOptional(dto.completionDateActual),
       completionDatePlanned: this.datesService.fromStringOptional(dto.completionDatePlanned),
     });
 

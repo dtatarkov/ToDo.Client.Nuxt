@@ -1,4 +1,4 @@
-export interface Destroyable
+export abstract class Destroyable
 {
-  destroy(): void;
+  abstract destroy(): void;
 }

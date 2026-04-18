@@ -1,8 +1,6 @@
-import { SSRLoader } from '@shared/interfaces/ssrLoader';
-
 enum SSRLoaderState
 {
-  initial     = 0,
+  initial = 0,
   initialized = 2,
 }
 
@@ -17,7 +15,7 @@ export class SSRLoaderImpl extends SSRLoader
     if (this.state === SSRLoaderState.initial)
     {
       const response = await useAsyncData(key, handler);
-      result         = response.data.value as T;
+      result = response.data.value as T;
 
       this.state = SSRLoaderState.initialized;
     }

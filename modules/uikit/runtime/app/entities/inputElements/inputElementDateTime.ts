@@ -1,17 +1,11 @@
 import { InputElementDate } from "./inputElementDate";
 import { InputElementComposedBase } from "./internal/InputElementComposedBase";
 import type { InputElement } from "../../interfaces/inputElement";
-import { DatesService } from '@shared/interfaces/datesService';
-import { StringsService } from '@shared/interfaces/stringsService';
-import { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
-import { TimeMapper } from '@shared/interfaces/timeMapper';
 import { InputElementTime } from "./inputElementTime";
-import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
 export class InputElementDateTime extends InputElementComposedBase<Date | undefined> implements InputElementDateTimeData
 {
-  protected children: Record<'inputDate' | 'inputTime', InputElement>
+  protected children: Record<'inputDate' | 'inputTime', InputElement>;
 
   constructor(
     protected datesService: DatesService,
@@ -27,8 +21,8 @@ export class InputElementDateTime extends InputElementComposedBase<Date | undefi
     this.children = {
       inputDate: new InputElementDate(zonedDateTimeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
       inputTime: new InputElementTime(timeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
-    }
-  }  
+    };
+  }
 
   get autofocus(): boolean
   {
@@ -42,7 +36,7 @@ export class InputElementDateTime extends InputElementComposedBase<Date | undefi
 
   get value(): Date | undefined
   {
-    const date               = this.children.inputDate.value;
+    const date = this.children.inputDate.value;
     const timeInMilliseconds = this.children.inputTime.value;
 
     if (!date || !timeInMilliseconds)

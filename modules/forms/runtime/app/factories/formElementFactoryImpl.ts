@@ -3,12 +3,6 @@ import type { FormElementCreateData } from "../types/formElementCreateData";
 import { FormElementBase } from "../entities/formElementBase";
 import type { FormElement } from "../interfaces/internal/formElement";
 import { FormElementType } from "../enums/formElementType";
-import type { DatesService } from "@shared/interfaces/datesService";
-import type { StringsService } from "@shared/interfaces/stringsService";
-import type { TimeMapper } from "@shared/interfaces/timeMapper";
-import type { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper";
-import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
 export class FormElementFactoryImpl extends FormElementFactory
 {
@@ -27,7 +21,7 @@ export class FormElementFactoryImpl extends FormElementFactory
   createElement(name: string, data: FormElementCreateData): FormElement
   {
     const inputElement = this.createInputElement(data.type);
-    const formElement  = new FormElementBase(inputElement);
+    const formElement = new FormElementBase(inputElement);
 
     formElement.setData({ ...data, name });
 

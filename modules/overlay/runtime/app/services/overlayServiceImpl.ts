@@ -2,7 +2,6 @@ import { OverlayService } from "../interfaces/overlayService";
 import type { Overlay } from "../interfaces/overlay";
 import { type OverlayElement } from "../interfaces/overlayElement";
 import type { Modal } from "../interfaces/modal";
-import type { Observable } from "@shared/interfaces/observable";
 
 export class OverlayServiceImpl extends OverlayService
 {

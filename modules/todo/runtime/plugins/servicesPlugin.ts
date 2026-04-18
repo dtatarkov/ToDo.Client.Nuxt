@@ -8,8 +8,6 @@ import { ToDosRepositoryImpl } from "../app/repositories/todosRepositoryImpl";
 import { TodosServiceImpl } from "../app/services/todosServiceImpl";
 import { ToDoElementsFactory } from "../app/interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../app/factories/todoElementsFactoryImpl";
-import { DatesService } from '@shared/interfaces/datesService';
-import { SSRLoader } from '@shared/interfaces/ssrLoader';
 
 export default defineNuxtPlugin(() =>
 {
@@ -18,7 +16,7 @@ export default defineNuxtPlugin(() =>
   registerServiceFactory(ToDoDtoMapper, () =>
   {
     const datesService = getService(DatesService);
-    const mapper       = new ToDoDtoMapperImpl(datesService);
+    const mapper = new ToDoDtoMapperImpl(datesService);
 
     return mapper;
   }, ServiceScope.Singleton);
@@ -26,18 +24,18 @@ export default defineNuxtPlugin(() =>
   registerServiceFactory(ToDosOwner, () =>
   {
     const todosRepository = getService(ToDosRepository);
-    const todoDtoMapper   = getService(ToDoDtoMapper);
-    const ssrLoader       = getService(SSRLoader);
-    const todoOwner       = new ToDosOwnerBase(todosRepository, todoDtoMapper, ssrLoader);
+    const todoDtoMapper = getService(ToDoDtoMapper);
+    const ssrLoader = getService(SSRLoader);
+    const todoOwner = new ToDosOwnerBase(todosRepository, todoDtoMapper, ssrLoader);
 
     return todoOwner;
   }, ServiceScope.Singleton);
 
   registerServiceFactory(ToDosService, () =>
   {
-    const todosOwner     = getService(ToDosOwner);
+    const todosOwner = getService(ToDosOwner);
     const overlayService = getService(OverlayService);
-    const formFactory    = getService(FormFactory);
+    const formFactory = getService(FormFactory);
 
     const todosService = new TodosServiceImpl(todosOwner, overlayService, formFactory);
 
@@ -53,4 +51,4 @@ export default defineNuxtPlugin(() =>
 
     return result;
   });
-})
+});

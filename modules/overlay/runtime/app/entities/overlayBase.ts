@@ -1,8 +1,6 @@
 import { Overlay } from "../interfaces/overlay";
 import { type OverlayElement } from "../interfaces/overlayElement";
 import { ModalBase } from "../entities/modalBase";
-import { ObservableBase } from "@shared/entities/observableBase";
-import type { Observable } from "@shared/interfaces/observable";
 
 export class OverlayBase extends Overlay
 {
@@ -15,7 +13,7 @@ export class OverlayBase extends Overlay
 
   override createModal()
   {
-    const modal  = new ModalBase();
+    const modal = new ModalBase();
     modal.parent = this;
 
     this.addElement(modal);
@@ -31,7 +29,7 @@ export class OverlayBase extends Overlay
     }
 
     const currentElements = this.elements.value;
-    const newElementsSet  = new Set(currentElements);
+    const newElementsSet = new Set(currentElements);
 
     newElementsSet.delete(element);
 
@@ -41,7 +39,7 @@ export class OverlayBase extends Overlay
   private addElement(element: OverlayElement): void
   {
     const currentElements = this.elements.value;
-    const newElementsSet  = new Set([...currentElements, element]);
+    const newElementsSet = new Set([...currentElements, element]);
 
     this.elements.value = [...newElementsSet];
   }

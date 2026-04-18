@@ -1,7 +1,4 @@
 import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./inputElementNuxtUIBase";
-import { StringsService } from '@shared/interfaces/stringsService';
-import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
 export type InputElementNuxtUIBaseStringProps = InputElementNuxtUIBaseProps<string>;
 export type InputElementNuxtUIBaseStringData = InputElementData<string>;

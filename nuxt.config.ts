@@ -2,8 +2,8 @@ import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools         : { enabled: true },
-  modules          : [
+  devtools: { enabled: true },
+  modules: [
     '@nuxt/test-utils/module',
     '@nuxt/ui',
   ],
@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 
   components: [
     {
-      path      : '~/components',
+      path: '~/components',
       pathPrefix: false,
     },
   ],
@@ -25,10 +25,6 @@ export default defineNuxtConfig({
     }
   },
 
-  alias: {
-    '@shared' : '../modules/shared/runtime/app',
-  },
-
   ui: {
     // @ts-ignore
     colorMode: process.env.NUXT_ALLOW_COLOR_MODE === 'true' ? {
@@ -39,11 +35,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: '',
-      locale    : 'ru'
+      locale: 'ru'
     },
   },
 
   experimental: {
     decorators: true,
   },
-})
+});

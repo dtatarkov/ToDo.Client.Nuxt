@@ -1,5 +1,7 @@
-export {}
+import { OverlayService as OverlayServiceImport } from './app/interfaces/overlayService';
+
+export { };
 
 declare global {
-  export { OverlayService } from './app/interfaces/overlayService';
+  export type OverlayService = OverlayServiceImport;
 }

@@ -1,25 +1,19 @@
 import { UInputDate } from "#components";
 import type { ZonedDateTime } from "@internationalized/date";
 import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./internal/inputElementNuxtUIBase";
-import type { StringsService } from "@shared/interfaces/stringsService";
-import type { ValueMapper } from "@shared/interfaces/valueMapper";
-import type { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper";
-import { OptionalValueMapper } from '@shared/mappers/optionalValueMapper';
-import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
-export type InputElementDateProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: string };
+export type InputElementDateProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: string; };
 
 export class InputElementDate extends InputElementNuxtUIBase<Date | undefined, InputElementDateProps, InputElementDateData> implements InputElementDateData
 {
-  protected optionalZonedDateTimeMapper: ValueMapper<Date | undefined, ZonedDateTime | undefined>
+  protected optionalZonedDateTimeMapper: ValueMapper<Date | undefined, ZonedDateTime | undefined>;
 
   readonly component = {
     setup: () =>
     {
       return () => h(UInputDate, this.data);
     }
-  }
+  };
 
   constructor(
     zonedDateTimeMapper: ZonedDateTimeMapper,
@@ -33,7 +27,8 @@ export class InputElementDate extends InputElementNuxtUIBase<Date | undefined, I
     this.optionalZonedDateTimeMapper = new OptionalValueMapper(zonedDateTimeMapper);
   }
 
-  protected override getPropsScheme(): VueComponentPropsScheme<InputElementDateProps> {
+  protected override getPropsScheme(): VueComponentPropsScheme<InputElementDateProps>
+  {
     return mergeDeep(super.getPropsScheme(), <Partial<VueComponentPropsScheme<InputElementDateProps>>>{
       hideTimeZone: {
         value: true,
@@ -45,7 +40,8 @@ export class InputElementDate extends InputElementNuxtUIBase<Date | undefined, I
     });
   }
 
-  protected override getDataScheme(): DataAdapterFieldsScheme<InputElementDateData, InputElementDateProps> {
+  protected override getDataScheme(): DataAdapterFieldsScheme<InputElementDateData, InputElementDateProps>
+  {
     return mergeDeep(super.getDataScheme(), <Partial<DataAdapterFieldsScheme<InputElementDateData, InputElementDateProps>>>{
       value: {
         mapper: this.optionalZonedDateTimeMapper,

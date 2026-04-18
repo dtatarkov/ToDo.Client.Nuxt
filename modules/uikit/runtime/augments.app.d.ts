@@ -1,6 +1,10 @@
-export {}
+import { InputElement as InputElementImport } from './app/interfaces/inputElement';
+import { UIElement as UIElementImport } from './app/interfaces/uiElement';
 
-declare global {
-  export { InputElement } from './app/interfaces/inputElement';
-  export { UIElement } from './app/interfaces/uiElement';
+export { };
+
+declare global
+{
+  export type InputElement<V = any> = InputElementImport<V>;
+  export type UIElement<Key extends string | number = string | number> = UIElementImport<Key>;
 }

@@ -1,13 +1,13 @@
 import { DateTime, Duration } from 'luxon';
 import { DatesService } from '../interfaces/datesService';
-import { AppPublicRuntimeConfig } from "../interfaces/appRuntimeConfig";
+import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
 
 export class DatesServiceImpl extends DatesService
 {
   secondInMilliseconds = 1000;
   minuteInMilliseconds = 60 * this.secondInMilliseconds;
-  hourInMilliseconds   = 60 * this.minuteInMilliseconds;
-  dayInMilliseconds    = 24 * this.hourInMilliseconds;
+  hourInMilliseconds = 60 * this.minuteInMilliseconds;
+  dayInMilliseconds = 24 * this.hourInMilliseconds;
 
   constructor(private config: AppPublicRuntimeConfig)
   {
@@ -20,7 +20,7 @@ export class DatesServiceImpl extends DatesService
 
     if (!dateTime.isValid)
     {
-      throw new Error(`Date(${ dateString }) parsing error`);
+      throw new Error(`Date(${dateString}) parsing error`);
     }
 
     return dateTime.toJSDate();
@@ -43,7 +43,7 @@ export class DatesServiceImpl extends DatesService
 
     if (!dateTime.isValid)
     {
-      throw new Error(`Invalid date(${ date.toString() })`);
+      throw new Error(`Invalid date(${date.toString()})`);
     }
 
     const result = dateTime
@@ -52,7 +52,7 @@ export class DatesServiceImpl extends DatesService
 
     if (!result)
     {
-      throw new Error(`Date(${ date.toString() }) formatting error`);
+      throw new Error(`Date(${date.toString()}) formatting error`);
     }
 
     return result;
@@ -83,13 +83,13 @@ export class DatesServiceImpl extends DatesService
 
     // Преобразуем дату в DateTime
     const datetime = DateTime.fromJSDate(date);
-    const time     = Duration.fromMillis(milliseconds);
+    const time = Duration.fromMillis(milliseconds);
 
     // Устанавливаем новое время
     const result = datetime.set({
-      hour       : time.hours,
-      minute     : time.minutes,
-      second     : time.seconds,
+      hour: time.hours,
+      minute: time.minutes,
+      second: time.seconds,
       millisecond: time.milliseconds
     });
 
