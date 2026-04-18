@@ -1,12 +1,16 @@
 import { UInputDate } from "#components";
 import type { ZonedDateTime } from "@internationalized/date";
-import { InputElementBase } from "./inputElementBase";
+import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./inputElementNuxtUIBase";
 import type { StringsService } from "@shared/interfaces/stringsService";
 import type { ValueMapper } from "@shared/interfaces/valueMapper";
 import type { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper";
 import { OptionalValueMapper } from '@shared/mappers/optionalValueMapper';
+import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
+import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
-export class InputElementDate extends InputElementBase<Date | undefined> implements InputElementDateData
+export type InputElementDateProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: string };
+
+export class InputElementDate extends InputElementNuxtUIBase<Date | undefined, InputElementDateProps, InputElementDateData> implements InputElementDateData
 {
   protected optionalZonedDateTimeMapper: ValueMapper<Date | undefined, ZonedDateTime | undefined>
 
@@ -20,27 +24,32 @@ export class InputElementDate extends InputElementBase<Date | undefined> impleme
   constructor(
     zonedDateTimeMapper: ZonedDateTimeMapper,
     stringsService: StringsService,
+    vueComponentPropsFactory: VueComponentPropsFactory,
+    dataAdapterFactory: DataAdapterFactory,
   )
   {
-    super(stringsService);
+    super(stringsService, vueComponentPropsFactory, dataAdapterFactory);
 
     this.optionalZonedDateTimeMapper = new OptionalValueMapper(zonedDateTimeMapper);
+  }
 
-    Object.assign(this.data, {
-      hideTimeZone: true,
-      granularity : 'day',
+  protected override getPropsScheme(): VueComponentPropsScheme<InputElementDateProps> {
+    return mergeDeep(super.getPropsScheme(), <Partial<VueComponentPropsScheme<InputElementDateProps>>>{
+      hideTimeZone: {
+        value: true,
+      },
+
+      granularity: {
+        value: 'day',
+      }
     });
   }
 
-  override get value(): Date | undefined
-  {
-    const date = this.optionalZonedDateTimeMapper.mapReverse(this.data.modelValue);
-
-    return date;
-  }
-
-  override set value(value: Date | undefined)
-  {
-    this.data.modelValue = this.optionalZonedDateTimeMapper.map(value);
+  protected override getDataScheme(): DataAdapterFieldsScheme<InputElementDateData, InputElementDateProps> {
+    return mergeDeep(super.getDataScheme(), <Partial<DataAdapterFieldsScheme<InputElementDateData, InputElementDateProps>>>{
+      value: {
+        mapper: this.optionalZonedDateTimeMapper,
+      }
+    });
   }
 }

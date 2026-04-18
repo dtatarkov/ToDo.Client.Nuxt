@@ -6,44 +6,29 @@ import { StringsService } from '@shared/interfaces/stringsService';
 import { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
 import { TimeMapper } from '@shared/interfaces/timeMapper';
 import { InputElementTime } from "./inputElementTime";
+import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
+import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
 export class InputElementDateTime extends InputElementComposedBase<Date | undefined> implements InputElementDateTimeData
 {
-  #name = ref('');
-
   protected children: Record<'inputDate' | 'inputTime', InputElement>
 
   constructor(
     protected datesService: DatesService,
     stringsService: StringsService,
     protected zonedDateTimeMapper: ZonedDateTimeMapper,
-    protected timeMapper: TimeMapper
+    protected timeMapper: TimeMapper,
+    protected vueComponentPropsFactory: VueComponentPropsFactory,
+    protected dataAdapterFactory: DataAdapterFactory,
   )
   {
     super(stringsService);
 
     this.children = {
-      inputDate: new InputElementDate(zonedDateTimeMapper, stringsService),
-      inputTime: new InputElementTime(timeMapper, stringsService),
+      inputDate: new InputElementDate(zonedDateTimeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
+      inputTime: new InputElementTime(timeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
     }
-  }
-
-  get name(): string
-  {
-    return this.#name.value
-  }
-
-  set name(value: string)
-  {
-    this.#name.value = value;
-
-    Object
-      .entries(this.children)
-      .forEach(([childName, child]) =>
-      {
-        child.name = this.stringsService.postfixNotEmpty(value, childName.toLowerCase(), '--');
-      });
-  }
+  }  
 
   get autofocus(): boolean
   {

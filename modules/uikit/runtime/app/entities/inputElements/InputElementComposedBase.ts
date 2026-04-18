@@ -4,6 +4,7 @@ import type { StringsService } from "@shared/interfaces/stringsService";
 export abstract class InputElementComposedBase<V> extends InputElement<V>
 {
   #id = ref('');
+  #name = ref('');
 
   protected abstract children: Record<string, InputElement>
   protected dataSetters: Record<string, Action<[any]>> = {}
@@ -58,6 +59,23 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
       .forEach(([childName, child]) =>
       {
         child.id = this.stringsService.postfixNotEmpty(newId, childName.toLowerCase());
+      });
+  }
+
+  get name(): string
+  {
+    return this.#name.value
+  }
+
+  set name(value: string)
+  {
+    this.#name.value = value;
+
+    Object
+      .entries(this.children)
+      .forEach(([childName, child]) =>
+      {
+        child.name = this.stringsService.postfixNotEmpty(value, childName.toLowerCase(), '--');
       });
   }
 }

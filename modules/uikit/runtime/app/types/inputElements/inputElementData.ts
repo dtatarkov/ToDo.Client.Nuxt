@@ -1,6 +1,6 @@
 export type InputElementData<V = any> = {
-  id: string;
-  name: string;
+  id: string | undefined;
+  name: string | undefined;
   autofocus: boolean;
   value: V;
 }

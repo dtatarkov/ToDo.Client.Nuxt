@@ -1,11 +1,8 @@
-import type { VueComponentPropScheme } from "../types/vueComponentPropScheme";
-import type { VueComponentPropsScheme } from "../types/vueComponentPropsScheme";
 import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
-import type { VueComponentPropsFactoryResult } from "../interfaces/vueComponentPropsFactory";
 
 export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
 {
-  create<S extends VueComponentPropsScheme>(propsScheme: S): VueComponentPropsFactoryResult<S>
+  create<Props extends Record<string, any>>(propsScheme: VueComponentPropsScheme<Props>): Props
   {
     const props: Record<string, any> = reactive({});
 
@@ -15,7 +12,7 @@ export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
       this.defineEmitHandler(props, propName, propScheme);
     }
 
-    return props as VueComponentPropsFactoryResult<S>;
+    return props as Props;
   }
 
   private defineProp(props: Record<string, any>, propName: string, scheme: VueComponentPropScheme)

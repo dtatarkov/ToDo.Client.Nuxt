@@ -1,8 +1,12 @@
 import { UTextarea } from "#components";
 import { InputElementWithPlaceholder } from "../../mixins/inputElementWithPlaceholder";
-import { InputElementBaseString } from "./inputElementBaseString";
+import { InputElementNuxtUIBaseString, type InputElementNuxtUIBaseStringProps } from "./inputElementNuxtUIBaseString";
 
-export class InputElementTextArea extends InputElementWithPlaceholder(InputElementBaseString) implements InputElementTextareaData
+type InputElementTextareaProps = InputElementNuxtUIBaseStringProps & {
+  placeholder: string;
+}
+
+export class InputElementTextArea extends InputElementWithPlaceholder(InputElementNuxtUIBaseString<InputElementTextareaProps, InputElementTextData>) implements InputElementTextareaData
 {
   readonly component = {
     setup: () =>

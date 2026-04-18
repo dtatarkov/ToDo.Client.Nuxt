@@ -1,8 +1,12 @@
 import { UInput } from "#components";
 import { InputElementWithPlaceholder } from "../../mixins/inputElementWithPlaceholder";
-import { InputElementBaseString } from "./inputElementBaseString";
+import { InputElementNuxtUIBaseString, type InputElementNuxtUIBaseStringProps } from "./inputElementNuxtUIBaseString";
 
-export class InputElementText extends InputElementWithPlaceholder(InputElementBaseString) implements InputElementTextData
+type InputElementTextProps = InputElementNuxtUIBaseStringProps & {
+  placeholder: string;
+}
+
+export class InputElementText extends InputElementWithPlaceholder(InputElementNuxtUIBaseString<InputElementTextProps, InputElementTextData>) implements InputElementTextData
 {
   readonly component = {
     setup: () =>

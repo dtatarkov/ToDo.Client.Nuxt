@@ -13,6 +13,8 @@ import { InputElementDate } from "@uikit/entities/inputElements/inputElementDate
 import { InputElementDateTime } from "@uikit/entities/inputElements/inputElementDateTime";
 import { InputElementTextArea } from "@uikit/entities/inputElements/inputElementTextarea";
 import { InputElementTime } from "@uikit/entities/inputElements/inputElementTime";
+import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
+import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
 export class FormElementFactoryImpl implements FormElementFactory
 {
@@ -21,6 +23,8 @@ export class FormElementFactoryImpl implements FormElementFactory
     private stringsService: StringsService,
     private zonedDateTimeMapper: ZonedDateTimeMapper,
     private timeMapper: TimeMapper,
+    protected vueComponentPropsFactory: VueComponentPropsFactory,
+    protected dataAdapterFactory: DataAdapterFactory,
   )
   {
   }
@@ -40,15 +44,15 @@ export class FormElementFactoryImpl implements FormElementFactory
     switch (type)
     {
       case FormElementType.inputText:
-        return new InputElementText(this.stringsService);
+        return new InputElementText(this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
       case FormElementType.textarea:
-        return new InputElementTextArea(this.stringsService);
+        return new InputElementTextArea(this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
       case FormElementType.inputDate:
-        return new InputElementDate(this.zonedDateTimeMapper, this.stringsService);
+        return new InputElementDate(this.zonedDateTimeMapper, this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
       case FormElementType.inputTime:
-        return new InputElementTime(this.timeMapper, this.stringsService);
+        return new InputElementTime(this.timeMapper, this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
       case FormElementType.inputDateTime:
-        return new InputElementDateTime(this.datesService, this.stringsService, this.zonedDateTimeMapper, this.timeMapper);
+        return new InputElementDateTime(this.datesService, this.stringsService, this.zonedDateTimeMapper, this.timeMapper, this.vueComponentPropsFactory, this.dataAdapterFactory);
     }
   }
 }

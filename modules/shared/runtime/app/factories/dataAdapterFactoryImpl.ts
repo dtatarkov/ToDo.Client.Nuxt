@@ -1,8 +1,8 @@
-import { DataAdapterFactory, type DataAdapterFactoryResult } from "../interfaces/dataAdapterFactory";
-import type { DataAdapterFieldsScheme } from "../types/dataAdapterFieldsScheme";
+import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
 
 export class DataAdapterFactoryImpl extends DataAdapterFactory {
-    createAdapter<Data extends Record<string, any>, S extends DataAdapterFieldsScheme<Data>>(data: Data, scheme: S): DataAdapterFactoryResult<Data, S> {
+    create<Data extends Record<string, any>, Source extends Record<string, any>>(data: Source, scheme: DataAdapterFieldsScheme<Data, Source>): Data 
+    {
         const adaptedData: Record<string, any> = {};
 
         for (const [fieldName, { from, mapper }] of Object.entries(scheme)) {
@@ -10,7 +10,7 @@ export class DataAdapterFactoryImpl extends DataAdapterFactory {
 
             Object.defineProperty(adaptedData, fieldName, {
                 get: () => {
-                    const sourceValue = data[sourceFieldName as keyof Data];
+                    const sourceValue = data[sourceFieldName as keyof Source];
                     const adaptedValue = mapper ? mapper.map(sourceValue) : sourceValue;
 
                     return adaptedValue;
@@ -18,13 +18,13 @@ export class DataAdapterFactoryImpl extends DataAdapterFactory {
 
                 set: (value) => {
                     const sourceValue = mapper ? mapper.mapReverse(value) : value;
-                    data[sourceFieldName as keyof Data] = sourceValue;
+                    data[sourceFieldName as keyof Source] = sourceValue;
                 },
 
                 enumerable: true,
             });
         }
 
-        return adaptedData as DataAdapterFactoryResult<Data, S>;
+        return adaptedData as Data;
     }
 }
