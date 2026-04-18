@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { UFormField } from "#components";
-import type { FormField } from "../interfaces/formField";
+import type { FormField } from "../interfaces/internal/formField";
 
 defineProps<{ field: FormField }>();
 </script>

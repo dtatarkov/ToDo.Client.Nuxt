@@ -1,7 +1,7 @@
-import { FormElementFactory } from "../interfaces/formElementFactory";
+import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import type { FormElementCreateData } from "../types/formElementCreateData";
 import { FormElementBase } from "../entities/formElementBase";
-import type { FormElement } from "../interfaces/formElement";
+import type { FormElement } from "../interfaces/internal/formElement";
 import { FormElementType } from "../enums/formElementType";
 import type { DatesService } from "@shared/interfaces/datesService";
 import type { StringsService } from "@shared/interfaces/stringsService";
@@ -10,7 +10,7 @@ import type { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper
 import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
 import { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
 
-export class FormElementFactoryImpl implements FormElementFactory
+export class FormElementFactoryImpl extends FormElementFactory
 {
   constructor(
     private datesService: DatesService,
@@ -21,6 +21,7 @@ export class FormElementFactoryImpl implements FormElementFactory
     protected dataAdapterFactory: DataAdapterFactory,
   )
   {
+    super();
   }
 
   createElement(name: string, data: FormElementCreateData): FormElement

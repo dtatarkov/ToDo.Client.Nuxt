@@ -1,4 +1,4 @@
-import { FormElementFactory } from "../app/interfaces/formElementFactory";
+import { FormElementFactory } from "../app/interfaces/internal/formElementFactory";
 import { FormFactory } from "../app/interfaces/formFactory";
 import { FormElementFactoryImpl } from "../app/factories/formElementFactoryImpl";
 import { FormFactoryImpl } from "../app/factories/formFactoryImpl";

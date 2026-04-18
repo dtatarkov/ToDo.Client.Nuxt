@@ -3,7 +3,6 @@ import { ToDo } from "../interfaces/todo";
 import type { ToDosOwner } from "../interfaces/todosOwner";
 import type { Observable } from "@shared/interfaces/observable";
 import type { OverlayService } from "@overlay/interfaces/overlayService";
-import type { FormFactory } from "@forms/interfaces/formFactory";
 
 export class TodosServiceImpl extends ToDosService
 {

@@ -26,7 +26,6 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '@forms'  : '../modules/forms/runtime/app',
     '@overlay': '../modules/overlay/runtime/app',
     '@shared' : '../modules/shared/runtime/app',
     '@todo'   : '../modules/todo/runtime/app',

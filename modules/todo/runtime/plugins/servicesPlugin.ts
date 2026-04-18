@@ -11,7 +11,6 @@ import { ToDoElementsFactoryImpl } from "../app/factories/todoElementsFactoryImp
 import { DatesService } from '@shared/interfaces/datesService';
 import { SSRLoader } from '@shared/interfaces/ssrLoader';
 import { OverlayService } from '@overlay/interfaces/overlayService';
-import { FormFactory } from '@forms/interfaces/formFactory';
 
 export default defineNuxtPlugin(() =>
 {

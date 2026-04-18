@@ -18,6 +18,16 @@ export default defineNuxtModule({
     addImportsDir(resolver.resolve('./runtime/app/composables'));
     addImportsDir(resolver.resolve('./runtime/app/types'));
 
+    addImports([
+      {
+        name: 'FormFactory', from: resolver.resolve('./runtime/app/interfaces/formFactory') 
+      },
+
+      {
+        name: 'Form', from: resolver.resolve('./runtime/app/interfaces/form') 
+      },
+    ]);
+
     addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },
 })

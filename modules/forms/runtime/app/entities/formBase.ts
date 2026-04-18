@@ -1,8 +1,8 @@
 import { VForm } from "#components";
 import type { FormElementCreateData } from "../types/formElementCreateData";
 import { Form } from "../interfaces/form";
-import { FormElementFactory } from "../interfaces/formElementFactory";
-import type { FormElement } from "../interfaces/formElement";
+import { FormElementFactory } from "../interfaces/internal/formElementFactory";
+import type { FormElement } from "../interfaces/internal/formElement";
 
 export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
 {

@@ -1,5 +1,5 @@
 import { VFormField } from "#components";
-import { FormField } from "../interfaces/formField";
+import { FormField } from "../interfaces/internal/formField";
 
 export class FormFieldBase extends FormField
 {
