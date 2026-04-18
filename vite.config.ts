@@ -10,8 +10,7 @@ export default defineConfig({
       '#composables': path.resolve(__dirname, 'app/composables'),
       '#storybook': path.resolve(__dirname, '.storybook'),
       '@': path.resolve(__dirname, 'app'),
-      '@shared': path.resolve(__dirname, 'modules/shared/runtime/app'),
-      '@todo': path.resolve(__dirname, 'modules/todo/runtime/app'),
+      '@@': path.resolve(__dirname, ''),
     },
   },
 })

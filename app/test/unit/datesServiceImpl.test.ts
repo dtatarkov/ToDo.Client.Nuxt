@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { DatesServiceImpl } from '@shared/services/datesServiceImpl';
+import { DatesServiceImpl } from '@@/modules/shared/runtime/app/services/datesServiceImpl';
 
 describe('DatesServiceImpl', () =>
 {

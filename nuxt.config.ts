@@ -28,7 +28,6 @@ export default defineNuxtConfig({
   alias: {
     '@overlay': '../modules/overlay/runtime/app',
     '@shared' : '../modules/shared/runtime/app',
-    '@todo'   : '../modules/todo/runtime/app',
   },
 
   ui: {

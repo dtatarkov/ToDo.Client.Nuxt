@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
-import VToDoCard from '@todo/components/VToDoCard.vue';
 import { fn } from "storybook/test";
+import VToDoCard from '@@/modules/todo/runtime/app/components/VToDoCard.vue';
 
 const meta: Meta<typeof VToDoCard> = {
   title    : 'Components/VToDoCard',
