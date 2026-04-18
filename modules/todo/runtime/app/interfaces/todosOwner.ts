@@ -1,4 +1,5 @@
 import { ToDo } from "../interfaces/todo";
+import type { Observable } from "@shared/interfaces/observable";
 
 export abstract class ToDosOwner
 {

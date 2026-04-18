@@ -1,6 +1,8 @@
 import { Overlay } from "../interfaces/overlay";
 import { type OverlayElement } from "../interfaces/overlayElement";
 import { ModalBase } from "../entities/modalBase";
+import { ObservableBase } from "@shared/entities/observableBase";
+import type { Observable } from "@shared/interfaces/observable";
 
 export class OverlayBase extends Overlay
 {

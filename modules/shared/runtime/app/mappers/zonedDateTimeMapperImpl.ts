@@ -1,4 +1,5 @@
 import { getLocalTimeZone, parseAbsolute, type ZonedDateTime } from "@internationalized/date";
+import { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
 
 export class ZonedDateTimeMapperImpl extends ZonedDateTimeMapper
 {

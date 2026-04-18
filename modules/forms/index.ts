@@ -16,15 +16,7 @@ export default defineNuxtModule({
 
     addImportsDir(resolver.resolve('./runtime/app/enums'));
     addImportsDir(resolver.resolve('./runtime/app/composables'));
-
-    addImports([
-      { from: resolver.resolve('./runtime/app/types/formElementCreateData'), name: 'FormElementCreateData' },
-    ]);
-
-    addImports([
-      { from: resolver.resolve('./runtime/app/interfaces/form'), name: 'Form' },
-      { from: resolver.resolve('./runtime/app/interfaces/formFactory'), name: 'FormFactory' },
-    ]);
+    addImportsDir(resolver.resolve('./runtime/app/types'));
 
     addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },

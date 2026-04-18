@@ -2,8 +2,13 @@ import { FormElementFactory } from "../app/interfaces/formElementFactory";
 import { FormFactory } from "../app/interfaces/formFactory";
 import { FormElementFactoryImpl } from "../app/factories/formElementFactoryImpl";
 import { FormFactoryImpl } from "../app/factories/formFactoryImpl";
+import { DatesService } from "@shared/interfaces/datesService";
+import { StringsService } from "@shared/interfaces/stringsService";
+import { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper";
+import { TimeMapper } from "@shared/interfaces/timeMapper";
+import { ServiceScope } from "@shared/enums/serviceScope";
 
-export default defineNuxtPlugin((nuxtApp) =>
+export default defineNuxtPlugin(() =>
 {
   registerServiceFactory(FormElementFactory, () =>
   {

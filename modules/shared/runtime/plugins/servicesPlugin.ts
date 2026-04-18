@@ -7,8 +7,11 @@ import { StringsServiceImpl } from "../app/services/stringsServiceImpl";
 import { SSRLoaderImpl } from "../app/services/ssrLoaderImpl";
 import { TimeMapperImpl } from "../app/mappers/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../app/mappers/zonedDateTimeMapperImpl";
+import { SSRLoader } from "../app/interfaces/ssrLoader";
+import { ZonedDateTimeMapper } from "../app/interfaces/zonedDateTimeMapper";
+import { TimeMapper } from "../app/interfaces/timeMapper";
 
-export default defineNuxtPlugin((nuxtApp) =>
+export default defineNuxtPlugin(() =>
 {
   registerServiceFactory(AppPublicRuntimeConfig, () =>
   {

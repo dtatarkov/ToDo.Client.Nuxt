@@ -1,4 +1,4 @@
-import type { VComponent } from "../types/vcomponent";
+import type { VComponent } from "../types/internal/vcomponent";
 
 export abstract class UIElement<Key extends string | number = string | number>
 {

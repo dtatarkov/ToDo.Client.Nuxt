@@ -1,3 +1,3 @@
-import type { FormElementCreateData } from "../types/formElementCreateData";
+import type { FormElementCreateData } from "../formElementCreateData";
 
 export type FormElementCreateDataWithName = FormElementCreateData & { name: string };

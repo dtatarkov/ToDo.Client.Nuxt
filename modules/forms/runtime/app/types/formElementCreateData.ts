@@ -1,5 +1,5 @@
 import { FormElementType } from "../enums/formElementType";
-import type { FormElementData } from "../types/formElementData";
+import type { FormElementData } from "./internal/formElementData";
 
 type ExcludeName<T> = Omit<T, 'name'>
 

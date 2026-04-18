@@ -1,3 +1,5 @@
+import { SSRLoader } from '@shared/interfaces/ssrLoader';
+
 enum SSRLoaderState
 {
   initial     = 0,

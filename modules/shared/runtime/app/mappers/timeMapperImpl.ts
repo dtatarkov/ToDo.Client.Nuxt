@@ -1,4 +1,6 @@
 import { Time } from "@internationalized/date";
+import { ValueMapper } from '../interfaces/valueMapper';
+import { DatesService } from '@shared/interfaces/datesService';
 
 export class TimeMapperImpl extends ValueMapper<number, Time>
 {

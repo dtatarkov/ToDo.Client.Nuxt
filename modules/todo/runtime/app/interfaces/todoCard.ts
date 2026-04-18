@@ -1,3 +1,5 @@
+import { UIElement } from "@uikit/interfaces/uiElement";
+
 export abstract class ToDoCard extends UIElement<string>
 {
   abstract id: string;

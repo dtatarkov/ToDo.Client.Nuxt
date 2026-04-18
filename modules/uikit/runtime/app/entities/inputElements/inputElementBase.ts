@@ -1,4 +1,6 @@
 import { getUniqueId } from "@@/modules/shared/runtime/app/utils/getUniqueId";
+import { InputElement } from "../../interfaces/inputElement";
+import type { StringsService } from "@shared/interfaces/stringsService";
 
 export abstract class InputElementBase<V = any> extends InputElement<V>
 {

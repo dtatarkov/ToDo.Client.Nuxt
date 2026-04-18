@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Modal } from '../interfaces/modal';
+
 const props = defineProps<{ modal: Modal }>();
 
 function handleOpen(isOpened: boolean)

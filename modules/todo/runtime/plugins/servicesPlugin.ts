@@ -8,8 +8,12 @@ import { ToDosRepositoryImpl } from "../app/repositories/todosRepositoryImpl";
 import { TodosServiceImpl } from "../app/services/todosServiceImpl";
 import { ToDoElementsFactory } from "../app/interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../app/factories/todoElementsFactoryImpl";
+import { DatesService } from '@shared/interfaces/datesService';
+import { SSRLoader } from '@shared/interfaces/ssrLoader';
+import { OverlayService } from '@overlay/interfaces/overlayService';
+import { FormFactory } from '@forms/interfaces/formFactory';
 
-export default defineNuxtPlugin((nuxtApp) =>
+export default defineNuxtPlugin(() =>
 {
   registerService(ToDosRepository, ToDosRepositoryImpl, ServiceScope.Singleton);
 

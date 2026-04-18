@@ -1,5 +1,7 @@
 import type { SubscriptionOptions } from "../types/subscriptionOptions";
+import type { Action } from "../types/action";
 import { EventBusBase } from "../entities/eventBusBase";
+import type { ObservableWritable } from "../interfaces/observableWritable";
 
 export class ObservableBase<T> implements ObservableWritable<T>
 {

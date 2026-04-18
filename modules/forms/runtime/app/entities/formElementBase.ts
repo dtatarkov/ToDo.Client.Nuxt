@@ -1,7 +1,7 @@
 import { FormFieldBase } from "../entities/formFieldBase";
-import type { FormElementCreateDataWithName } from "../types/formElementCreateDataWithName";
+import type { FormElementCreateDataWithName } from "../types/internal/formElementCreateDataWithName";
 import { FormElement } from "../interfaces/formElement";
-import { getUniqueId } from "@@/modules/shared/runtime/app/utils/getUniqueId";
+import { InputElement } from '@uikit/interfaces/inputElement';
 
 export class FormElementBase<V = any> extends FormElement
 {

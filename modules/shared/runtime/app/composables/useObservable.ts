@@ -1,3 +1,5 @@
+import type { Observable } from "../interfaces/observable";
+
 export function useObservable<T>(observable: Observable<T>)
 {
   const data        = shallowRef(observable.value);
