@@ -1,5 +1,3 @@
-import { UIElement } from "@uikit/interfaces/uiElement";
-
 export abstract class FormField extends UIElement<string>
 {
   abstract name: string;

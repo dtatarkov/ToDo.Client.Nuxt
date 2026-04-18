@@ -1,5 +1,5 @@
 import { InputElementDate } from "./inputElementDate";
-import { InputElementComposedBase } from "./InputElementComposedBase";
+import { InputElementComposedBase } from "./internal/InputElementComposedBase";
 import type { InputElement } from "../../interfaces/inputElement";
 import { DatesService } from '@shared/interfaces/datesService';
 import { StringsService } from '@shared/interfaces/stringsService';

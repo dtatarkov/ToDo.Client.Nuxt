@@ -1,4 +1,4 @@
-import type { InputElementNuxtUIBase, InputElementNuxtUIBaseProps } from "../entities/inputElements/inputElementNuxtUIBase";
+import type { InputElementNuxtUIBase, InputElementNuxtUIBaseProps } from "../entities/inputElements/internal/inputElementNuxtUIBase";
 
 export function InputElementWithPlaceholder<TBase extends AbstractConstructor<InputElementNuxtUIBase<any, InputElementNuxtUIBaseProps<any> & { placeholder: string }, InputElementData<any> & { placeholder: string }>>>(Base: TBase)
 {

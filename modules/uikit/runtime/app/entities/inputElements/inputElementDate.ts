@@ -1,6 +1,6 @@
 import { UInputDate } from "#components";
 import type { ZonedDateTime } from "@internationalized/date";
-import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./inputElementNuxtUIBase";
+import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./internal/inputElementNuxtUIBase";
 import type { StringsService } from "@shared/interfaces/stringsService";
 import type { ValueMapper } from "@shared/interfaces/valueMapper";
 import type { ZonedDateTimeMapper } from "@shared/interfaces/zonedDateTimeMapper";

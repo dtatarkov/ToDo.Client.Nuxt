@@ -1,4 +1,4 @@
-import { InputElement } from "../../interfaces/inputElement";
+import { InputElement } from "../../../interfaces/inputElement";
 import type { StringsService } from "@shared/interfaces/stringsService";
 
 export abstract class InputElementComposedBase<V> extends InputElement<V>

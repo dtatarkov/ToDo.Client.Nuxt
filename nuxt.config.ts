@@ -30,7 +30,6 @@ export default defineNuxtConfig({
     '@overlay': '../modules/overlay/runtime/app',
     '@shared' : '../modules/shared/runtime/app',
     '@todo'   : '../modules/todo/runtime/app',
-    '@uikit'  : '../modules/uikit/runtime/app',
   },
 
   ui: {

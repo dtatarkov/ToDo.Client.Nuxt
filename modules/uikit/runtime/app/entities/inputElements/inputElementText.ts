@@ -1,6 +1,6 @@
 import { UInput } from "#components";
 import { InputElementWithPlaceholder } from "../../mixins/inputElementWithPlaceholder";
-import { InputElementNuxtUIBaseString, type InputElementNuxtUIBaseStringProps } from "./inputElementNuxtUIBaseString";
+import { InputElementNuxtUIBaseString, type InputElementNuxtUIBaseStringProps } from "./internal/inputElementNuxtUIBaseString";
 
 type InputElementTextProps = InputElementNuxtUIBaseStringProps & {
   placeholder: string;

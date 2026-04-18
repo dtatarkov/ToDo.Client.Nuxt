@@ -1,4 +1,4 @@
-import { InputElement } from "../../interfaces/inputElement";
+import { InputElement } from "../../../interfaces/inputElement";
 import type { StringsService } from "@shared/interfaces/stringsService";
 import { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
 import type { DataAdapterFactory } from "@shared/interfaces/dataAdapterFactory";
