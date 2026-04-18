@@ -4,6 +4,7 @@ import { InputElementBase } from "./inputElementBase";
 import type { StringsService } from "@shared/interfaces/stringsService";
 import type { ValueMapper } from "@shared/interfaces/valueMapper";
 import type { TimeMapper } from "@shared/interfaces/timeMapper";
+import { OptionalValueMapper } from "@shared/mappers/optionalValueMapper";
 
 export class InputElementTime extends InputElementBase<number | undefined> implements InputElementTimeData
 {
