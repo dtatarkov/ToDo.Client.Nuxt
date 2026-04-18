@@ -2,7 +2,7 @@ import { UInputTime } from "#components";
 import type { Time, ZonedDateTime } from "@internationalized/date";
 import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./internal/inputElementNuxtUIBase";
 
-export type InputElementTimeProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: string; };
+export type InputElementTimeProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'minute'; };
 
 export class InputElementTime extends InputElementNuxtUIBase<number | undefined, InputElementTimeProps, InputElementTimeData>
 {
@@ -11,7 +11,7 @@ export class InputElementTime extends InputElementNuxtUIBase<number | undefined,
   readonly component = {
     setup: () =>
     {
-      return () => h(UInputTime, this.data);
+      return () => h(UInputTime, this.props);
     }
   };
 
@@ -35,7 +35,7 @@ export class InputElementTime extends InputElementNuxtUIBase<number | undefined,
       },
 
       granularity: {
-        value: 'day',
+        value: 'minute',
       }
     });
   }

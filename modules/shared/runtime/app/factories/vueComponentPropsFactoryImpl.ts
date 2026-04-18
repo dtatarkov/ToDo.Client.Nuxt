@@ -4,7 +4,7 @@ export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
 {
   create<Props extends Record<string, any>>(propsScheme: VueComponentPropsScheme<Props>): Props
   {
-    const props: Record<string, any> = reactive({});
+    const props: Record<string, any> = {};
 
     for (const [propName, propScheme] of Object.entries(propsScheme))
     {
@@ -12,7 +12,7 @@ export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
       this.defineEmitHandler(props, propName, propScheme);
     }
 
-    return props as Props;
+    return reactive(props) as Props;
   }
 
   private defineProp(props: Record<string, any>, propName: string, scheme: VueComponentPropScheme)
@@ -31,12 +31,12 @@ export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
 
     if (!prop)
     {
-      throw new Error(`Prop ${ propName } not defined`);
+      throw new Error(`Prop ${propName} not defined`);
     }
 
-    props[`update:${ propName }`] = (value: any) =>
+    props[`update:${propName}`] = (value: any) =>
     {
       prop.value = value;
-    }
+    };
   }
 }

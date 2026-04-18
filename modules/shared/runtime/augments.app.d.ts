@@ -2,6 +2,8 @@ import { AppPublicRuntimeConfig as AppPublicRuntimeConfigImport } from './app/in
 import { DataAdapterFactory as DataAdapterFactoryImport } from './app/interfaces/dataAdapterFactory';
 import { DatesService as DatesServiceImport } from './app/interfaces/datesService';
 import { Destroyable as DestroyableImport } from './app/interfaces/destroyable';
+import { LazyEntity as LazyEntityImport } from './app/interfaces/lazyEntity';
+import { LazyEntityBase as LazyEntityBaseImport } from './app/entities/lazyEntityBase';
 import { EventBus as EventBusImport } from './app/interfaces/eventBus';
 import { Observable as ObservableImport } from './app/interfaces/observable';
 import { ObservableWritable as ObservableWritableImport } from './app/interfaces/observableWritable';
@@ -21,6 +23,8 @@ declare global
   export type DataAdapterFactory = DataAdapterFactoryImport;
   export type DatesService = DatesServiceImport;
   export type Destroyable = DestroyableImport;
+  export type LazyEntity<T> = LazyEntityImport<T>;
+  export type LazyEntityBase<T> = LazyEntityBaseImport<T>;
   export type EventBus = EventBusImport;
   export type Observable<T> = ObservableImport<T>;
   export type ObservableWritable<T> = ObservableWritableImport<T>;

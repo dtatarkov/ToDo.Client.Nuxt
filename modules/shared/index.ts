@@ -22,6 +22,7 @@ export default defineNuxtModule({
       { name: 'DataAdapterFactory', from: resolver.resolve('./runtime/app/interfaces/dataAdapterFactory') },
       { name: 'DatesService', from: resolver.resolve('./runtime/app/interfaces/datesService') },
       { name: 'Destroyable', from: resolver.resolve('./runtime/app/interfaces/destroyable') },
+      { name: 'LazyEntity', from: resolver.resolve('./runtime/app/interfaces/lazyEntity') },
       { name: 'EventBus', from: resolver.resolve('./runtime/app/interfaces/eventBus') },
       { name: 'Observable', from: resolver.resolve('./runtime/app/interfaces/observable') },
       { name: 'ObservableWritable', from: resolver.resolve('./runtime/app/interfaces/observableWritable') },

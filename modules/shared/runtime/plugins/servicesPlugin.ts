@@ -10,6 +10,8 @@ import { ZonedDateTimeMapperImpl } from "../app/mappers/internal/zonedDateTimeMa
 import { SSRLoader } from "../app/interfaces/ssrLoader";
 import { ZonedDateTimeMapper } from "../app/interfaces/zonedDateTimeMapper";
 import { TimeMapper } from "../app/interfaces/timeMapper";
+import { VueComponentPropsFactoryImpl } from '../app/factories/vueComponentPropsFactoryImpl';
+import { DataAdapterFactoryImpl } from '../app/factories/dataAdapterFactoryImpl';
 
 export default defineNuxtPlugin(() =>
 {
@@ -39,5 +41,19 @@ export default defineNuxtPlugin(() =>
     const mapper = new TimeMapperImpl(datesService);
 
     return mapper;
+  }, ServiceScope.Singleton);
+
+  registerServiceFactory(VueComponentPropsFactory, () =>
+  {
+    const result = new VueComponentPropsFactoryImpl();
+
+    return result;
+  }, ServiceScope.Singleton);
+
+  registerServiceFactory(DataAdapterFactory, () =>
+  {
+    const result = new DataAdapterFactoryImpl();
+
+    return result;
   }, ServiceScope.Singleton);
 });
