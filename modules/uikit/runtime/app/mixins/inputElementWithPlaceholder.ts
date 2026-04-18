@@ -1,6 +1,6 @@
-import type { InputElementNuxtUIBase, InputElementNuxtUIBaseProps } from "../entities/inputElements/internal/inputElementNuxtUIBase";
+import type { InputElementNuxtUIBase, InputElementNuxtUIBaseProps } from "../entities/inputElements/base/inputElementNuxtUIBase";
 
-export function InputElementWithPlaceholder<TBase extends AbstractConstructor<InputElementNuxtUIBase<any, InputElementNuxtUIBaseProps<any> & { placeholder: string }, InputElementData<any> & { placeholder: string }>>>(Base: TBase)
+export function InputElementWithPlaceholder<TBase extends AbstractConstructor<InputElementNuxtUIBase<any, InputElementNuxtUIBaseProps<any> & { placeholder: string; }, InputElementData<any> & { placeholder: string; }>>>(Base: TBase)
 {
   abstract class WithPlaceholder extends Base
   {
@@ -35,7 +35,7 @@ export function InputElementWithPlaceholder<TBase extends AbstractConstructor<In
     protected override getDataScheme()
     {
       return mergeDeep(super.getDataScheme(), {
-        placeholder: { }
+        placeholder: {}
       });
     }
   }

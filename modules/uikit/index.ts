@@ -1,4 +1,4 @@
-import { createResolver, addComponentsDir, addImports, addImportsDir, defineNuxtModule } from "nuxt/kit";
+import { createResolver, addComponentsDir, addImports, addImportsDir, defineNuxtModule, addPlugin } from "nuxt/kit";
 
 export default defineNuxtModule({
   meta: {
@@ -15,17 +15,22 @@ export default defineNuxtModule({
 
     addImportsDir([
       resolver.resolve('./runtime/app/types/inputElements'),
-      resolver.resolve('./runtime/app/entities/inputElements')
     ]);
 
     addImports([
       {
-        name: 'InputElement', from: resolver.resolve('./runtime/app/interfaces/inputElement') 
+        name: 'InputElement', from: resolver.resolve('./runtime/app/interfaces/inputElement')
       },
 
       {
-        name: 'UIElement', from: resolver.resolve('./runtime/app/interfaces/uiElement') 
+        name: 'UIElement', from: resolver.resolve('./runtime/app/interfaces/uiElement')
+      },
+
+      {
+        name: 'UIKitElementsFactory', from: resolver.resolve('./runtime/app/interfaces/uiKitElementsFactory')
       }
     ]);
+
+    addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'));
   },
-})
+});

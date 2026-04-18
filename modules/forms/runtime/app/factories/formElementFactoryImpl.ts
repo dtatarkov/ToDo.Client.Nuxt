@@ -7,12 +7,7 @@ import { FormElementType } from "../enums/formElementType";
 export class FormElementFactoryImpl extends FormElementFactory
 {
   constructor(
-    private datesService: DatesService,
-    private stringsService: StringsService,
-    private zonedDateTimeMapper: ZonedDateTimeMapper,
-    private timeMapper: TimeMapper,
-    protected vueComponentPropsFactory: VueComponentPropsFactory,
-    protected dataAdapterFactory: DataAdapterFactory,
+    protected uiKitElementsFactory: UIKitElementsFactory,
   )
   {
     super();
@@ -33,15 +28,15 @@ export class FormElementFactoryImpl extends FormElementFactory
     switch (type)
     {
       case FormElementType.inputText:
-        return new InputElementText(this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
+        return this.uiKitElementsFactory.createInputText();
       case FormElementType.textarea:
-        return new InputElementTextArea(this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
+        return this.uiKitElementsFactory.createTextarea();
       case FormElementType.inputDate:
-        return new InputElementDate(this.zonedDateTimeMapper, this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
+        return this.uiKitElementsFactory.createInputDate();
       case FormElementType.inputTime:
-        return new InputElementTime(this.timeMapper, this.stringsService, this.vueComponentPropsFactory, this.dataAdapterFactory);
+        return this.uiKitElementsFactory.createInputTime();
       case FormElementType.inputDateTime:
-        return new InputElementDateTime(this.datesService, this.stringsService, this.zonedDateTimeMapper, this.timeMapper, this.vueComponentPropsFactory, this.dataAdapterFactory);
+        return this.uiKitElementsFactory.createInputDateTime();
     }
   }
 }

@@ -7,14 +7,8 @@ export default defineNuxtPlugin(() =>
 {
   registerServiceFactory(FormElementFactory, () =>
   {
-    const datesService = getService(DatesService);
-    const stringsService = getService(StringsService);
-    const zonedDateTimeMapper = getService(ZonedDateTimeMapper);
-    const timeMapper = getService(TimeMapper);
-    const vueComponentPropsFactory = getService(VueComponentPropsFactory);
-    const dataAdapterFactory = getService(DataAdapterFactory);
-
-    const result = new FormElementFactoryImpl(datesService, stringsService, zonedDateTimeMapper, timeMapper, vueComponentPropsFactory, dataAdapterFactory);
+    const uiKitElementsFactory = getService(UIKitElementsFactory);
+    const result = new FormElementFactoryImpl(uiKitElementsFactory);
 
     return result;
   }, ServiceScope.Singleton);

@@ -1,6 +1,6 @@
 import { UInputTime } from "#components";
 import type { Time, ZonedDateTime } from "@internationalized/date";
-import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./internal/inputElementNuxtUIBase";
+import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./base/inputElementNuxtUIBase";
 
 export type InputElementTimeProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'minute'; };
 
