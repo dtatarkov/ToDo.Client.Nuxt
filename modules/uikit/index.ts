@@ -14,16 +14,21 @@ export default defineNuxtModule({
     });
 
     addImportsDir([
+      resolver.resolve('./runtime/app/types'),
       resolver.resolve('./runtime/app/types/inputElements'),
     ]);
 
     addImports([
       {
+        name: 'UIElement', from: resolver.resolve('./runtime/app/interfaces/uiElement')
+      },
+
+      {
         name: 'InputElement', from: resolver.resolve('./runtime/app/interfaces/inputElement')
       },
 
       {
-        name: 'UIElement', from: resolver.resolve('./runtime/app/interfaces/uiElement')
+        name: 'ButtonElement', from: resolver.resolve('./runtime/app/interfaces/buttonElement')
       },
 
       {

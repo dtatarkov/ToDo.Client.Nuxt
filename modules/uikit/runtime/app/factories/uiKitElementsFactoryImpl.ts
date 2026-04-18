@@ -5,6 +5,7 @@ import { InputElementTextarea } from "../entities/inputElements/inputElementText
 import { InputElementDate } from "../entities/inputElements/inputElementDate";
 import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
+import { ButtonElementBase } from "../entities/buttonElementBase";
 
 export class UIKitElementsFactoryImpl extends UIKitElementsFactory
 {
@@ -68,5 +69,10 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
             this.vueComponentPropsFactory,
             this.dataAdapterFactory,
         );
+    }
+
+    createButton(): ButtonElement
+    {
+        return new ButtonElementBase();
     }
 }

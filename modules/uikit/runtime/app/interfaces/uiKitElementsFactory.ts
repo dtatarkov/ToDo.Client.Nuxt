@@ -5,4 +5,5 @@ export abstract class UIKitElementsFactory
     abstract createInputDate(): InputElement<Date | undefined>;
     abstract createInputTime(): InputElement<number | undefined>;
     abstract createInputDateTime(): InputElement<Date | undefined>;
+    abstract createButton(): ButtonElement;
 }
