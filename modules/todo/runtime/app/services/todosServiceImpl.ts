@@ -2,7 +2,6 @@ import { ToDosService } from "../interfaces/todosService";
 import { ToDo } from "../interfaces/todo";
 import type { ToDosOwner } from "../interfaces/todosOwner";
 import type { Observable } from "@shared/interfaces/observable";
-import type { OverlayService } from "@overlay/interfaces/overlayService";
 
 export class TodosServiceImpl extends ToDosService
 {

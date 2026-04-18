@@ -10,7 +10,6 @@ import { ToDoElementsFactory } from "../app/interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../app/factories/todoElementsFactoryImpl";
 import { DatesService } from '@shared/interfaces/datesService';
 import { SSRLoader } from '@shared/interfaces/ssrLoader';
-import { OverlayService } from '@overlay/interfaces/overlayService';
 
 export default defineNuxtPlugin(() =>
 {

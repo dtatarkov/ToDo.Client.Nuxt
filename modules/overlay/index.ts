@@ -14,6 +14,12 @@ export default defineNuxtModule({
       path: resolver.resolve('./runtime/app/widgets')
     });
 
+    addImports([
+      {
+        name: 'OverlayService', from: resolver.resolve('./runtime/app/interfaces/overlayService') 
+      },
+    ]);
+
     addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },
 })
