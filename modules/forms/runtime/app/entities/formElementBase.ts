@@ -25,7 +25,12 @@ export class FormElementBase<V = any> extends FormElement
     return this.formField.component;
   }
 
-  setValue(value: V): void
+  get value(): V
+  {
+    return this.inputElement.value;
+  }
+
+  set value(value: V)
   {
     this.inputElement.value = value;
   }

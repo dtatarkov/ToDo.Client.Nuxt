@@ -1,6 +1,4 @@
 import { VForm } from "#components";
-import type { FormElementCreateData } from "../types/formElementCreateData";
-import { Form } from "../interfaces/form";
 import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import type { FormElement } from "../interfaces/internal/formElement";
 
@@ -15,7 +13,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     {
       return () => h(VForm, { form: this });
     }
-  }
+  };
 
   constructor(
     protected formElementFactory: FormElementFactory
@@ -24,18 +22,30 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     super();
   }
 
-  get elements()
+  get elements(): FormElement[]
   {
-    return this.#elements.value
+    return this.#elements.value;
   }
 
-  setData(data: Record<string, any>)
+  getData(): Record<keyof TEntity, any>
+  {
+    const data: Record<string, any> = {};
+
+    for (const element of this.#elements.value)
+    {
+      data[element.name] = element.value;
+    }
+
+    return data as Record<keyof TEntity, any>;
+  }
+
+  setData(data: Record<keyof TEntity, any>)
   {
     for (const element of this.#elements.value)
     {
       if (element.name in data)
       {
-        element.setValue(data[element.name]);
+        element.value = data[element.name];
       }
     }
   }
