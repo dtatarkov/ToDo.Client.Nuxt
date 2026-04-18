@@ -29,7 +29,24 @@ export default defineNuxtConfig({
     // @ts-ignore
     colorMode: process.env.NUXT_ALLOW_COLOR_MODE === 'true' ? {
       preference: 'dark'
-    } : false
+    } : false,
+    // Only include the components we actually use
+    components: {
+      include: [
+        'UApp',
+        'UModal',
+        'UForm',
+        'UFormField',
+        'UCard',
+        'UButton',
+        'UInput',
+        'UTextarea',
+        'UInputDate',
+        'UInputTime'
+      ]
+    },
+    // Disable safelist colors to reduce CSS size
+    safelistColors: false
   },
 
   runtimeConfig: {
