@@ -7,4 +7,6 @@ export abstract class ToDosOwner
   abstract updateToDosAsync(): Promise<void>;
 
   abstract getToDoById(id: string): ToDo | undefined;
+
+  abstract saveToDoAsync(todo: ToDo): Promise<void>;
 }

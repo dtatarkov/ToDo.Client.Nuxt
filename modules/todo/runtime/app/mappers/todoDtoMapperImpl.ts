@@ -1,5 +1,6 @@
 import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
+import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
 
@@ -22,5 +23,14 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
     });
 
     return todo;
+  }
+
+  mapToUpdateDto(todo: ToDo): ToDoUpdateDto
+  {
+    return {
+      title: todo.title,
+      description: todo.description,
+      completionDatePlanned: todo.completionDatePlanned?.toISOString()
+    };
   }
 }

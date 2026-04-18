@@ -3,12 +3,12 @@ import { ToDo, type ToDoData } from "../interfaces/todo";
 export class ToDoBase extends ToDo
 {
   protected data: ToDoData = {
-    id                   : '',
-    title                : '',
-    description          : '',
+    id: '',
+    title: '',
+    description: '',
     completionDatePlanned: undefined,
-    completionDateActual : undefined
-  }
+    completionDateActual: undefined
+  };
 
   get id(): string
   {
@@ -65,5 +65,18 @@ export class ToDoBase extends ToDo
     return {
       ...this.data
     };
+  }
+
+  clone(): ToDo
+  {
+    const todo = new ToDoBase();
+
+    todo.id = this.id;
+    todo.title = this.title;
+    todo.description = this.description;
+    todo.completionDatePlanned = this.completionDatePlanned;
+    todo.completionDateActual = this.completionDateActual;
+
+    return todo;
   }
 }

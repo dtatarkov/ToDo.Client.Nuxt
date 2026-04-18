@@ -3,6 +3,8 @@ import { ToDo } from "../interfaces/todo";
 import type { ToDosRepository } from "../interfaces/todosRepository";
 import type { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
+import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
+import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
@@ -35,6 +37,30 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     const todos = todoDtos.map(todoDto => this.todoDtoMapper.mapToEntity(todoDto));
 
     this.todos.value = todos;
+  }
+
+  override async saveToDoAsync(todo: ToDo): Promise<void>
+  {
+    this.assertToDoExistence(todo.id);
+
+    const updateDto = this.todoDtoMapper.mapToUpdateDto(todo);
+    const updatedDto = await this.todosRepository.updateToDoAsync(todo.id, updateDto);
+    const updatedTodo = this.todoDtoMapper.mapToEntity(updatedDto);
+
+    this.assertToDoExistence(todo.id);
+
+    // Replace the todo in the collection
+    const newTodos = this.todos.value.map(t => t.id === todo.id ? updatedTodo : t);
+
+    this.todos.value = newTodos;
+  }
+
+  private assertToDoExistence(id: string): void
+  {
+    if (!this.todos.value.some(t => t.id === id))
+    {
+      throw new ToDoNotFoundException(id);
+    }
   }
 
   destroy()

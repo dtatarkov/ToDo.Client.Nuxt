@@ -16,6 +16,7 @@ export default defineNuxtModule({
     addImportsDir(resolver.resolve('./runtime/app/utils'));
     addImportsDir(resolver.resolve('./runtime/app/entities'));
     addImportsDir(resolver.resolve('./runtime/app/mappers'));
+    addImportsDir(resolver.resolve('./runtime/app/exceptions'));
 
     addImports([
       { name: 'AppPublicRuntimeConfig', from: resolver.resolve('./runtime/app/interfaces/appPublicRuntimeConfig') },

@@ -1,4 +1,4 @@
-import { addComponentsDir, addPlugin, defineNuxtModule } from "nuxt/kit";
+import { addComponentsDir, addImportsDir, addPlugin, defineNuxtModule } from "nuxt/kit";
 import { createResolver } from "nuxt/kit";
 
 export default defineNuxtModule({
@@ -13,6 +13,8 @@ export default defineNuxtModule({
     addComponentsDir({
       path: resolver.resolve('./runtime/app/widgets')
     });
+
+    addImportsDir(resolver.resolve('./runtime/app/exceptions'));
 
     addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },
