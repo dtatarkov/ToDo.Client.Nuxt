@@ -77,10 +77,5 @@ export class TodosServiceImpl extends ToDosService
     {
       form.submit();
     });
-
-    modal.buttonCancel.click.subscribe(() =>
-    {
-      modal.close();
-    });
   }
 }

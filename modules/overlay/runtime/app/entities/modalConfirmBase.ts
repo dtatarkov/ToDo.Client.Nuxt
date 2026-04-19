@@ -19,6 +19,11 @@ export class ModalConfirmBase extends ModalConfirm
         this.buttonCancel = uikitElementsFactory.createButton();
         this.buttonCancel.title = 'Отменить';
 
+        this.buttonCancel.click.subscribe(() =>
+        {
+            this.close();
+        });
+
         // Add buttons to modal controls
         this.modal.controls.push(this.buttonCancel, this.buttonConfirm);
     }
