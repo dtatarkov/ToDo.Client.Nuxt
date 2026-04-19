@@ -40,4 +40,14 @@ export class FormElementBase<V = any> extends FormElement
     updatePropertiesWithData(this.formField, data);
     updatePropertiesWithData(this.inputElement, data);
   }
+
+  override disable(): void
+  {
+    this.inputElement.disable();
+  }
+
+  override enable(): void
+  {
+    this.inputElement.enable();
+  }
 }

@@ -77,4 +77,18 @@ export abstract class InputElementComposedBase<V> extends InputElement<V>
         child.name = this.stringsService.postfixNotEmpty(value, childName.toLowerCase(), '--');
       });
   }
+
+  override disable(): void
+  {
+    Object
+      .values(this.children)
+      .forEach(child => child.disable());
+  }
+
+  override enable(): void
+  {
+    Object
+      .values(this.children)
+      .forEach(child => child.enable());
+  }
 }

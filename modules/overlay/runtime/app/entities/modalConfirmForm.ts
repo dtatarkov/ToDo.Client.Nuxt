@@ -1,6 +1,5 @@
 import { ModalConfirmBase } from './modalConfirmBase';
 
-
 export class ModalConfirmForm extends ModalConfirmBase
 {
     constructor(
@@ -9,6 +8,17 @@ export class ModalConfirmForm extends ModalConfirmBase
     )
     {
         super(uikitElementsFactory);
+    }
+
+    override init(): void
+    {
+        super.init();
+
+        this.form.onDisabledStateChange.subscribe(isDisabled =>
+        {
+            this.buttonConfirm.isDisabled = isDisabled;
+            this.buttonConfirm.isLoading = isDisabled;
+        });
     }
 
     protected override createButtonConfirm(): ButtonElement

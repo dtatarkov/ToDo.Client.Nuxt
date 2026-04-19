@@ -1,4 +1,4 @@
-export class FormBlockedException extends Error
+export class FormDisabledException extends Error
 {
     constructor()
     {

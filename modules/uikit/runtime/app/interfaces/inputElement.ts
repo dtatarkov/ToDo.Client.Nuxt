@@ -7,4 +7,7 @@ export abstract class InputElement<V = any> extends UIElement<string> implements
   abstract name: string | undefined;
   abstract autofocus: boolean;
   abstract value: V;
+
+  abstract disable(): void;
+  abstract enable(): void;
 }

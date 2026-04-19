@@ -7,6 +7,8 @@ export class ButtonElementBase extends ButtonElement
         label: '',
         color: <ButtonElementColor>'neutral',
         variant: 'outline',
+        disabled: false,
+        loading: false,
         class: 'cursor-pointer',
 
         onClick: () =>
@@ -44,5 +46,25 @@ export class ButtonElementBase extends ButtonElement
     set color(value: ButtonElementColor)
     {
         this.props.color = value;
+    }
+
+    get isDisabled(): boolean
+    {
+        return this.props.disabled;
+    }
+
+    set isDisabled(value: boolean)
+    {
+        this.props.disabled = value;
+    }
+
+    get isLoading(): boolean
+    {
+        return this.props.loading;
+    }
+
+    set isLoading(value: boolean)
+    {
+        this.props.loading = value;
     }
 }

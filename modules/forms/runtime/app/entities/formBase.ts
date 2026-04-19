@@ -4,8 +4,8 @@ import type { FormElement } from "../interfaces/internal/formElement";
 
 enum FormBaseState
 {
-  initial = 'initial',
-  blocked = 'blocked'
+  initial = 0,
+  disabled = 1,
 }
 
 export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
@@ -15,6 +15,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   readonly key = getUniqueId('form');
   readonly onSubmit = new EventBusBase<Record<keyof TEntity, any>>();
+  readonly onDisabledStateChange = new EventBusBase<boolean>();
 
   readonly component = {
     setup: () =>
@@ -35,6 +36,11 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.#elements.value;
   }
 
+  get isDisabled(): boolean
+  {
+    return this.#state === FormBaseState.disabled;
+  }
+
   getData(): Record<keyof TEntity, any>
   {
     const data: Record<string, any> = {};
@@ -49,9 +55,9 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   setData(data: Record<keyof TEntity, any>)
   {
-    if (this.#state === FormBaseState.blocked)
+    if (this.#state === FormBaseState.disabled)
     {
-      throw new FormBlockedException();
+      throw new FormDisabledException();
     }
 
     for (const element of this.#elements.value)
@@ -75,32 +81,41 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   submit(): void
   {
-    if (this.#state === FormBaseState.blocked)
+    if (this.#state === FormBaseState.disabled)
     {
-      throw new FormBlockedException();
+      throw new FormDisabledException();
     }
 
     this.onSubmit.emit(this.getData());
   }
 
-  block(): void
+  disable(): void
   {
-    this.#state = FormBaseState.blocked;
+    if (this.#state === FormBaseState.disabled)
+    {
+      throw new FormDisabledException();
+    }
+
+    this.#state = FormBaseState.disabled;
+    this.#elements.value.forEach(element => element.disable());
+    this.onDisabledStateChange.emit(true);
   }
 
-  unblock(): void
+  enable(): void
   {
+    if (this.#state !== FormBaseState.disabled)
+    {
+      return;
+    }
+
     this.#state = FormBaseState.initial;
+    this.#elements.value.forEach(element => element.enable());
+    this.onDisabledStateChange.emit(false);
   }
 
   async use(func: Func<Promise<void>>): Promise<void>
   {
-    if (this.#state === FormBaseState.blocked)
-    {
-      throw new FormBlockedException();
-    }
-
-    this.block();
+    this.disable();
 
     try
     {
@@ -108,7 +123,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
     finally
     {
-      this.unblock();
+      this.enable();
     }
   }
 }

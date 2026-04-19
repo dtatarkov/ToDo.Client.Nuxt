@@ -6,6 +6,7 @@ export type InputElementNuxtUIBaseProps<V> = {
   autofocus: boolean;
   class: string;
   modelValue: V;
+  disabled: boolean;
 };
 
 export abstract class InputElementNuxtUIBase<
@@ -91,6 +92,16 @@ export abstract class InputElementNuxtUIBase<
     this.data.value = value;
   }
 
+  override disable(): void
+  {
+    this.props.disabled = true;
+  }
+
+  override enable(): void
+  {
+    this.props.disabled = false;
+  }
+
   protected getPropsScheme(): VueComponentPropsScheme<Props>
   {
     const scheme = {
@@ -99,6 +110,7 @@ export abstract class InputElementNuxtUIBase<
       autofocus: { value: false },
       class: { value: 'w-full' },
       modelValue: { withEmit: true },
+      disabled: { value: false },
     } as VueComponentPropsScheme<Props>;
 
     return scheme;
