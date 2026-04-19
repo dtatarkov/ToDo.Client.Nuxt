@@ -59,11 +59,14 @@ export class TodosServiceImpl extends ToDosService
 
     form.onSubmit.subscribe(async (formData) =>
     {
-      todoToEdit.title = formData.title;
-      todoToEdit.description = formData.description;
-      todoToEdit.completionDatePlanned = formData.completionDatePlanned;
+      await form.use(async () =>
+      {
+        todoToEdit.title = formData.title;
+        todoToEdit.description = formData.description;
+        todoToEdit.completionDatePlanned = formData.completionDatePlanned;
 
-      await this.owner.saveToDoAsync(todoToEdit);
+        await this.owner.saveToDoAsync(todoToEdit);
+      });
 
       modal.close();
     });
