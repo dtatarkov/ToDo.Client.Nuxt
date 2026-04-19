@@ -25,12 +25,14 @@ export class TodosServiceImpl extends ToDosService
 
   override async editToDoAsync(todoId: string): Promise<void>
   {
-    let todo = this.owner.getToDoById(todoId);
+    const todo = this.owner.getToDoById(todoId);
 
     if (!todo)
     {
-      throw new Error(`ToDo(${todoId}) not found`);
+      throw new ToDoNotFoundException(todoId);
     }
+
+    const todoToEdit = todo.clone();
 
     const form = this.formFactory.create<ToDo>();
 
@@ -55,16 +57,13 @@ export class TodosServiceImpl extends ToDosService
 
     form.setData(todo);
 
-    form.onSubmit.subscribe(async () =>
+    form.onSubmit.subscribe(async (formData) =>
     {
-      const formData = form.getData();
-      const updatedTodo = todo.clone();
+      todoToEdit.title = formData.title;
+      todoToEdit.description = formData.description;
+      todoToEdit.completionDatePlanned = formData.completionDatePlanned;
 
-      updatedTodo.title = formData.title;
-      updatedTodo.description = formData.description;
-      updatedTodo.completionDatePlanned = formData.completionDatePlanned;
-
-      await this.owner.saveToDoAsync(updatedTodo);
+      await this.owner.saveToDoAsync(todoToEdit);
 
       modal.close();
     });

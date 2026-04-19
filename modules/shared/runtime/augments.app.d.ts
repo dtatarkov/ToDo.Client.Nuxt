@@ -30,7 +30,7 @@ declare global
   export type ObservableWritable<T> = ObservableWritableImport<T>;
   export type SSRLoader = SSRLoaderImport;
   export type StringsService = StringsServiceImport;
-  export type Subscribable = SubscribableImport;
+  export type Subscribable<T = void> = SubscribableImport<T>;
   export type TimeMapper = TimeMapperImport;
   export type ValueMapper<I, O> = ValueMapperImport<I, O>;
   export type VueComponentPropsFactory = VueComponentPropsFactoryImport;

@@ -7,7 +7,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   #elements: Ref<FormElement[]> = shallowRef([]);
 
   readonly key = getUniqueId('form');
-  readonly onSubmit = new EventBusBase();
+  readonly onSubmit = new EventBusBase<Record<keyof TEntity, any>>();
 
   readonly component = {
     setup: () =>
@@ -63,6 +63,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   submit(): void
   {
-    this.onSubmit.emit();
+    this.onSubmit.emit(this.getData());
   }
 }
