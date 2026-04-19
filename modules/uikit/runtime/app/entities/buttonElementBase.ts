@@ -8,7 +8,11 @@ export class ButtonElementBase extends ButtonElement
         color: <ButtonElementColor>'neutral',
         variant: 'outline',
         class: 'cursor-pointer',
-        onClick: () => this.click.emit(),
+
+        onClick: () =>
+        {
+            this.click.emit();
+        },
     });
 
     readonly key = getUniqueId('button-element');

@@ -55,8 +55,32 @@ export class TodosServiceImpl extends ToDosService
 
     form.setData(todo);
 
+    form.onSubmit.subscribe(async () =>
+    {
+      const formData = form.getData();
+      const updatedTodo = todo.clone();
+
+      updatedTodo.title = formData.title;
+      updatedTodo.description = formData.description;
+      updatedTodo.completionDatePlanned = formData.completionDatePlanned;
+
+      await this.owner.saveToDoAsync(updatedTodo);
+
+      modal.close();
+    });
+
     const modal = this.overlayService.createModalEdit();
     modal.title = 'Редактирование';
     modal.content = form;
+
+    modal.buttonConfirm.click.subscribe(async () =>
+    {
+      form.submit();
+    });
+
+    modal.buttonCancel.click.subscribe(() =>
+    {
+      modal.close();
+    });
   }
 }

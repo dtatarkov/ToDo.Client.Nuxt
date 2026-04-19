@@ -5,7 +5,7 @@ defineProps<{ form: Form }>();
 </script>
 
 <template>
-  <UForm class="p-4 flex flex-col gap-4">
+  <UForm class="p-4 flex flex-col gap-4" @submit="form.submit()">
     <component v-for="element of form.elements" :key="element.key" :is="element.component" />
   </UForm>
 </template>

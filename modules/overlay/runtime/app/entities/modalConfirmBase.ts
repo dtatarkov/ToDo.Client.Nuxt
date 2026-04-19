@@ -81,6 +81,6 @@ export class ModalConfirmBase extends ModalConfirm
 
     close(): void
     {
-        this.modal.close();
+        this.parent?.removeElement(this);
     }
 }
