@@ -4,7 +4,10 @@ import { ButtonElement } from "../interfaces/buttonElement";
 export class ButtonElementBase extends ButtonElement
 {
     protected readonly props = reactive({
-        title: '',
+        label: '',
+        color: <ButtonElementColor>'neutral',
+        variant: 'outline',
+        class: 'cursor-pointer',
         onClick: () => this.click.emit(),
     });
 
@@ -21,11 +24,21 @@ export class ButtonElementBase extends ButtonElement
 
     get title(): string
     {
-        return this.props.title;
+        return this.props.label;
     }
 
     set title(value: string)
     {
-        this.props.title = value;
+        this.props.label = value;
+    }
+
+    get color(): ButtonElementColor
+    {
+        return this.props.color;
+    }
+
+    set color(value: ButtonElementColor)
+    {
+        this.props.color = value;
     }
 }

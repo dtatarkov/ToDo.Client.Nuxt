@@ -22,10 +22,10 @@ function handleOpen(isOpened: boolean)
   >
     <template #content>
       <component v-if="modal.content" :is="modal.content.component" />
-    </template>
-
-    <template #footer>
-      <component v-for="control in modal.controls" :key="control.key" :is="control.component" />
+      
+      <div class="flex gap-2 justify-end p-2">
+        <component v-for="control in modal.controls" :key="control.key" :is="control.component" />
+      </div>
     </template>
   </UModal>
 </template>

@@ -55,7 +55,7 @@ export class TodosServiceImpl extends ToDosService
 
     form.setData(todo);
 
-    const modal = this.overlayService.createModalBase();
+    const modal = this.overlayService.createModalEdit();
     modal.title = 'Редактирование';
     modal.content = form;
   }

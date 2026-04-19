@@ -14,12 +14,13 @@ export class ModalConfirmBase extends ModalConfirm
 
         this.buttonConfirm = uikitElementsFactory.createButton();
         this.buttonConfirm.title = 'Сохранить';
+        this.buttonConfirm.color = 'primary';
 
         this.buttonCancel = uikitElementsFactory.createButton();
         this.buttonCancel.title = 'Отменить';
 
         // Add buttons to modal controls
-        this.modal.controls.push(this.buttonConfirm, this.buttonCancel);
+        this.modal.controls.push(this.buttonCancel, this.buttonConfirm);
     }
 
     // Delegated properties to modal
