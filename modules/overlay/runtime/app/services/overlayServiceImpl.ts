@@ -1,4 +1,3 @@
-import { OverlayService } from "../interfaces/overlayService";
 import type { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 
@@ -15,27 +14,24 @@ export class OverlayServiceImpl extends OverlayService
   createModalBase(): Modal
   {
     const modal = this.modalFactory.createModalBase();
-    modal.parent = this.overlay;
 
     this.overlay.addElement(modal);
 
     return modal;
   }
 
-  createModalAdd(): ModalConfirm
+  createModalAddForm(form: Form): ModalConfirm
   {
-    const modal = this.modalFactory.createModalAdd();
-    modal.parent = this.overlay;
+    const modal = this.modalFactory.createModalAddForm(form);
 
     this.overlay.addElement(modal);
 
     return modal;
   }
 
-  createModalEdit(): ModalConfirm
+  createModalEditForm(form: Form): ModalConfirm
   {
-    const modal = this.modalFactory.createModalEdit();
-    modal.parent = this.overlay;
+    const modal = this.modalFactory.createModalEditForm(form);
 
     this.overlay.addElement(modal);
 

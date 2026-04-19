@@ -6,6 +6,4 @@ export abstract class Modal extends OverlayElement
   abstract description: string;
   abstract content: UIElement | undefined;
   abstract controls: Array<UIElement>;
-
-  abstract close(): void;
 }

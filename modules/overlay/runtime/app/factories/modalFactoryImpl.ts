@@ -1,6 +1,6 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import { ModalBase } from "../entities/modalBase";
-import { ModalConfirmBase } from "../entities/modalConfirmBase";
+import { ModalConfirmForm } from '../entities/modalConfirmForm';
 
 export class ModalFactoryImpl extends ModalFactory
 {
@@ -14,16 +14,26 @@ export class ModalFactoryImpl extends ModalFactory
         return new ModalBase();
     }
 
-    createModalAdd(): ModalConfirm
+    createModalAddForm(form: Form): ModalConfirm
     {
-        const modal = new ModalConfirmBase(this.uikitElementsFactory);
+        const modal = this.createModalConfirmForm(form);
         modal.buttonConfirm.title = 'Добавить';
 
         return modal;
     }
 
-    createModalEdit(): ModalConfirm
+    createModalEditForm(form: Form): ModalConfirm
     {
-        return new ModalConfirmBase(this.uikitElementsFactory);
+        const modal = this.createModalConfirmForm(form);
+
+        return modal;
+    }
+
+    private createModalConfirmForm(form: Form)
+    {
+        const modal = new ModalConfirmForm(form, this.uikitElementsFactory);
+        modal.init();
+
+        return modal;
     }
 }

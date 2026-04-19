@@ -1,5 +1,4 @@
 import { Modal } from "../interfaces/modal";
-import type { Overlay } from "../interfaces/internal/overlay";
 import VModal from '../components/VModal.vue';
 
 export class ModalBase extends Modal
@@ -8,8 +7,6 @@ export class ModalBase extends Modal
     title: '',
     description: '',
   };
-
-  #parent: Overlay | undefined;
 
   #children = {
     content: <UIElement | undefined>undefined
@@ -25,6 +22,8 @@ export class ModalBase extends Modal
   };
 
   readonly controls = new Array<UIElement>();
+
+  readonly onClose = new EventBusBase();
 
   get title()
   {
@@ -46,16 +45,6 @@ export class ModalBase extends Modal
     this.#data.description = value;
   }
 
-  get parent()
-  {
-    return this.#parent;
-  }
-
-  set parent(value)
-  {
-    this.#parent = value;
-  }
-
   get content()
   {
     return this.#children.content;
@@ -68,11 +57,6 @@ export class ModalBase extends Modal
 
   close()
   {
-    if (!this.parent)
-    {
-      throw new Error('Parent is not defined');
-    }
-
-    this.parent.removeElement(this);
+    this.onClose.emit();
   }
 }

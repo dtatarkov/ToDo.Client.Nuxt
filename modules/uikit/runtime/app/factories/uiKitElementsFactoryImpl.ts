@@ -21,7 +21,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         super();
     }
 
-    createInputText(): InputElement<string>
+    override createInputText(): InputElement<string>
     {
         return new InputElementText(
             this.stringsService,
@@ -30,7 +30,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    createTextarea(): InputElement<string>
+    override createTextarea(): InputElement<string>
     {
         return new InputElementTextarea(
             this.stringsService,
@@ -39,7 +39,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    createInputDate(): InputElement<Date | undefined>
+    override createInputDate(): InputElement<Date | undefined>
     {
         return new InputElementDate(
             this.zonedDateTimeMapper,
@@ -49,7 +49,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    createInputTime(): InputElement<number | undefined>
+    override createInputTime(): InputElement<number | undefined>
     {
         return new InputElementTime(
             this.timeMapper,
@@ -59,7 +59,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    createInputDateTime(): InputElement<Date | undefined>
+    override createInputDateTime(): InputElement<Date | undefined>
     {
         return new InputElementDateTime(
             this.datesService,
@@ -71,7 +71,7 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    createButton(): ButtonElement
+    override createButton(): ButtonElement
     {
         return new ButtonElementBase();
     }

@@ -26,8 +26,19 @@ export class OverlayBase extends Overlay
 
   override addElement(element: OverlayElement): void
   {
-    const currentElements = this.elements.value;
-    const newElementsSet = new Set([...currentElements, element]);
+    const currentElementsSet = new Set(this.elements.value);
+
+    if (currentElementsSet.has(element))
+    {
+      return;
+    }
+
+    element.onClose.subscribe(() =>
+    {
+      this.removeElement(element);
+    });
+
+    const newElementsSet = new Set([...currentElementsSet, element]);
 
     this.elements.value = [...newElementsSet];
   }
