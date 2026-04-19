@@ -1,9 +1,10 @@
 export function useObservable<T>(observable: Observable<T>)
 {
   const data = shallowRef(observable.value);
-  const unsubscribe = observable.subscribe(() =>
+
+  const unsubscribe = observable.subscribe((newValue: T) =>
   {
-    data.value = observable.value;
+    data.value = newValue;
   });
 
   onScopeDispose(() =>

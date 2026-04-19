@@ -1,14 +1,8 @@
-export abstract class EventBus
+export abstract class EventBus<T = void>
 {
-  abstract subscribe(handler: Action, options?: EventBusSubscriptionOptions): Action;
+  abstract subscribe(handler: Action<[T]>): Action;
 
-  abstract onAwake(handler: Func<Action>): void;
-
-  abstract emit(): void;
+  abstract emit(data: T): void;
 
   abstract destroy(): void;
-}
-
-export type EventBusSubscriptionOptions = {
-  immediate?: boolean;
 }

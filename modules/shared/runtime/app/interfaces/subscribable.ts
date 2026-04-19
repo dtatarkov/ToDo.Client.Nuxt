@@ -1,5 +1,5 @@
-export abstract class Subscribable extends Destroyable
+export abstract class Subscribable<T = void> extends Destroyable
 {
-  abstract subscribe(handler: Action, options?: SubscriptionOptions): Action;
+  abstract subscribe(handler: Action<[T]>): Action;
 }
 

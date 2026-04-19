@@ -1,48 +1,25 @@
 import { EventBus } from "../interfaces/eventBus";
-
-export class EventBusBase extends EventBus
+export class EventBusBase<T = void> extends EventBus<T>
 {
-  #mainSubscriptions   = new Set<Action>();
-  #awakeSubscriptions  = new Set<Func<Action>>();
-  #asleepSubscriptions = new Set<Action>();
+  #subscriptions = new Set<Action<[T]>>();
 
-  override subscribe(handler: Action): Action
+  override subscribe(handler: Action<[T]>): Action
   {
-    this.#mainSubscriptions.add(handler);
-
-    if (this.#mainSubscriptions.size === 1)
-    {
-      this.#awakeSubscriptions.forEach(handler =>
-      {
-        const asleepHandler = handler();
-        this.#asleepSubscriptions.add(asleepHandler);
-      });
-    }
+    this.#subscriptions.add(handler);
 
     return () =>
     {
-      this.#mainSubscriptions.delete(handler);
-
-      if (this.#mainSubscriptions.size === 0)
-      {
-        this.#asleepSubscriptions.forEach(handler => handler());
-        this.#asleepSubscriptions.clear();
-      }
-    }
+      this.#subscriptions.delete(handler);
+    };
   }
 
-  override emit(): void
+  override emit(data: T): void
   {
-    this.#mainSubscriptions.forEach(handler => handler());
+    this.#subscriptions.forEach(handler => handler(data));
   }
 
   override destroy(): void
   {
-    this.#mainSubscriptions.clear();
-  }
-
-  override onAwake(handler: Func<Action>): void
-  {
-    this.#awakeSubscriptions.add(handler);
+    this.#subscriptions.clear();
   }
 }

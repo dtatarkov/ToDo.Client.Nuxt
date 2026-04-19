@@ -1,11 +1,9 @@
-import type { SubscriptionOptions } from "../types/subscriptionOptions";
-import type { Action } from "../types/action";
 import { EventBusBase } from "../entities/eventBusBase";
 import type { ObservableWritable } from "../interfaces/observableWritable";
 
 export class ObservableBase<T> implements ObservableWritable<T>
 {
-  protected eventbus = new EventBusBase();
+  protected eventbus = new EventBusBase<T>();
 
   constructor(private _value: T)
   {
@@ -19,19 +17,12 @@ export class ObservableBase<T> implements ObservableWritable<T>
   set value(value: T)
   {
     this._value = value;
-    this.eventbus.emit();
+    this.eventbus.emit(value);
   }
 
-  subscribe(handler: Action, options?: SubscriptionOptions): Action
+  subscribe(handler: Action<[T]>): Action
   {
-    const unsubscribe = this.eventbus.subscribe(handler);
-
-    if (options?.immediate)
-    {
-      handler();
-    }
-
-    return unsubscribe;
+    return this.eventbus.subscribe(handler);
   }
 
   destroy(): void
