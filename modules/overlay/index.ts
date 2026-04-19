@@ -1,4 +1,4 @@
-import { addComponentsDir, addImports, addImportsDir, addPlugin, defineNuxtModule } from "nuxt/kit";
+import { addComponentsDir, addImports, addPlugin, defineNuxtModule } from "nuxt/kit";
 import { createResolver } from "nuxt/kit";
 
 export default defineNuxtModule({
@@ -16,10 +16,18 @@ export default defineNuxtModule({
 
     addImports([
       {
-        name: 'OverlayService', from: resolver.resolve('./runtime/app/interfaces/overlayService') 
+        name: 'OverlayService', from: resolver.resolve('./runtime/app/interfaces/overlayService')
+      },
+
+      {
+        name: 'Modal', from: resolver.resolve('./runtime/app/interfaces/modal')
+      },
+
+      {
+        name: 'ModalConfirm', from: resolver.resolve('./runtime/app/interfaces/modalConfirm')
       },
     ]);
 
     addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },
-})
+});

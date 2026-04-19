@@ -23,5 +23,9 @@ function handleOpen(isOpened: boolean)
     <template #content>
       <component v-if="modal.content" :is="modal.content.component" />
     </template>
+
+    <template #footer>
+      <component v-for="control in modal.controls" :key="control.key" :is="control.component" />
+    </template>
   </UModal>
 </template>

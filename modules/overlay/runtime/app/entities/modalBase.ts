@@ -1,19 +1,19 @@
 import { Modal } from "../interfaces/modal";
-import type { Overlay } from "../interfaces/overlay";
-import VModal from '../components/VModal.vue'
+import type { Overlay } from "../interfaces/internal/overlay";
+import VModal from '../components/VModal.vue';
 
 export class ModalBase extends Modal
 {
   #data = {
-    title      : '',
+    title: '',
     description: '',
-  }
+  };
 
   #parent: Overlay | undefined;
 
   #children = {
     content: <UIElement | undefined>undefined
-  }
+  };
 
   readonly key = getUniqueId('modal');
 
@@ -22,7 +22,9 @@ export class ModalBase extends Modal
     {
       return () => h(VModal, { modal: this });
     }
-  }
+  };
+
+  readonly controls = new Array<UIElement>();
 
   get title()
   {

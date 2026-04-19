@@ -36,6 +36,6 @@ export default defineNuxtModule({
       }
     ]);
 
-    addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'));
+    addPlugin(resolver.resolve('./runtime/plugins/servicesPlugin'), { append: true });
   },
 });
