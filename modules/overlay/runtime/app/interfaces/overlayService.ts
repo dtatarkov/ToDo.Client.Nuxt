@@ -1,7 +1,7 @@
 export abstract class OverlayService
 {
-  abstract createModal(): Modal;
-  abstract createAddModal(): ModalConfirm;
-  abstract createEditModal(): ModalConfirm;
+  abstract createModalBase(): Modal;
+  abstract createModalAdd(): ModalConfirm;
+  abstract createModalEdit(): ModalConfirm;
   abstract getElements(): Observable<OverlayElement[]>;
 }

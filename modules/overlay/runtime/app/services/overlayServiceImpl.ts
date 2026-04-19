@@ -12,9 +12,9 @@ export class OverlayServiceImpl extends OverlayService
     super();
   }
 
-  createModal(): Modal
+  createModalBase(): Modal
   {
-    const modal = this.modalFactory.createModal();
+    const modal = this.modalFactory.createModalBase();
     modal.parent = this.overlay;
 
     this.overlay.addElement(modal);
@@ -22,9 +22,9 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createAddModal(): ModalConfirm
+  createModalAdd(): ModalConfirm
   {
-    const modal = this.modalFactory.createAddModal();
+    const modal = this.modalFactory.createModalAdd();
     modal.parent = this.overlay;
 
     this.overlay.addElement(modal);
@@ -32,9 +32,9 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createEditModal(): ModalConfirm
+  createModalEdit(): ModalConfirm
   {
-    const modal = this.modalFactory.createEditModal();
+    const modal = this.modalFactory.createModalEdit();
     modal.parent = this.overlay;
 
     this.overlay.addElement(modal);

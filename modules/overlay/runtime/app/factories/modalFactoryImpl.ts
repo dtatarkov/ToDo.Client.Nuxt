@@ -9,12 +9,12 @@ export class ModalFactoryImpl extends ModalFactory
         super();
     }
 
-    createModal(): Modal
+    createModalBase(): Modal
     {
         return new ModalBase();
     }
 
-    createAddModal(): ModalConfirm
+    createModalAdd(): ModalConfirm
     {
         const modal = new ModalConfirmBase(this.uikitElementsFactory);
         modal.buttonConfirm.title = 'Добавить';
@@ -22,7 +22,7 @@ export class ModalFactoryImpl extends ModalFactory
         return modal;
     }
 
-    createEditModal(): ModalConfirm
+    createModalEdit(): ModalConfirm
     {
         return new ModalConfirmBase(this.uikitElementsFactory);
     }
