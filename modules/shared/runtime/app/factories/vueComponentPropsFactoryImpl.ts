@@ -34,7 +34,7 @@ export class VueComponentPropsFactoryImpl extends VueComponentPropsFactory
       throw new Error(`Prop ${propName} not defined`);
     }
 
-    props[`update:${propName}`] = (value: any) =>
+    props[`onUpdate:${propName}`] = (value: any) =>
     {
       prop.value = value;
     };
