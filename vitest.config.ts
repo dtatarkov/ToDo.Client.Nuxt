@@ -1,5 +1,5 @@
-import { defineConfig, mergeConfig } from 'vitest/config'
-import viteConfig from './vite.config'
+import { defineConfig, mergeConfig } from 'vitest/config';
+import viteConfig from './vite.config';
 import { defineVitestProject } from "@nuxt/test-utils/config";
 
 export default mergeConfig(viteConfig, defineConfig({
@@ -7,17 +7,17 @@ export default mergeConfig(viteConfig, defineConfig({
     projects: [
       {
         extends: true,
-        
+
         test: {
           name: 'unit',
-          include: ['app/test/unit/*.{test,spec}.ts'],
+          include: ['modules/*/runtime/app/test/unit/*.{test,spec}.ts'],
           environment: 'node',
         },
       },
       await defineVitestProject({
         test: {
           name: 'nuxt',
-          include: ['app/test/nuxt/*.{test,spec}.ts'],
+          include: ['modules/*/runtime/app/test/nuxt/*.{test,spec}.ts'],
           environment: 'nuxt',
         },
       }),

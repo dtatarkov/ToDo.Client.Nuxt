@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { DatesServiceImpl } from '@@/modules/shared/runtime/app/services/datesServiceImpl';
+import { DatesServiceImpl } from '../../services/datesServiceImpl';
 
 describe('DatesServiceImpl', () =>
 {
   const config = {
-      apiBaseUrl: '',
-      locale: 'ru'
-  }
-  
+    apiBaseUrl: '',
+    locale: 'ru'
+  };
+
   const service = new DatesServiceImpl(config);
 
   describe('fromString', () =>
@@ -15,8 +15,8 @@ describe('DatesServiceImpl', () =>
 
     it('should convert ASP.NET Core date string to Date object', () =>
     {
-      const dateString   = '2023-10-15T10:00:00';
-      const expectedDate = new Date(2023, 9, 15, 10, 0, 0)
+      const dateString = '2023-10-15T10:00:00';
+      const expectedDate = new Date(2023, 9, 15, 10, 0, 0);
 
       const result = service.fromString(dateString);
 
@@ -45,7 +45,7 @@ describe('DatesServiceImpl', () =>
 
     it('should convert ISO date string with milliseconds', () =>
     {
-      const dateString   = '2023-10-15T10:00:00.123';
+      const dateString = '2023-10-15T10:00:00.123';
       const expectedDate = new Date(2023, 9, 15, 10, 0, 0, 123);
 
       const result = service.fromString(dateString);
@@ -76,7 +76,7 @@ describe('DatesServiceImpl', () =>
 
     it('should handle valid date string for fromStringOptional', () =>
     {
-      const dateString   = '2023-10-15T10:00:00';
+      const dateString = '2023-10-15T10:00:00';
       const expectedDate = new Date(2023, 9, 15, 10, 0, 0);
 
       const result = service.fromStringOptional(dateString);
@@ -90,10 +90,11 @@ describe('DatesServiceImpl', () =>
     });
   });
 
-  describe('isDate', () => {
+  describe('isDate', () =>
+  {
     it('should correctly identify Date objects', () =>
     {
-      const date   = new Date();
+      const date = new Date();
       const result = service.isDate(date);
       expect(result).toBe(true);
     });
@@ -107,11 +108,12 @@ describe('DatesServiceImpl', () =>
       expect(service.isDate({})).toBe(false);
     });
   });
-  
-  describe('formatDate', () => {
+
+  describe('formatDate', () =>
+  {
     it('should format date with default options', () =>
     {
-      const date   = new Date(2023, 9, 15, 10, 30, 45);
+      const date = new Date(2023, 9, 15, 10, 30, 45);
       const result = service.formatDate(date);
 
       expect(result).toBe('15.10.2023, 10:30'); // Russian locale formatting
@@ -136,17 +138,19 @@ describe('DatesServiceImpl', () =>
 
     it('should return formatted date for valid date in formatDateOptional', () =>
     {
-      const date   = new Date(2023, 9, 23, 10, 42, 45);
+      const date = new Date(2023, 9, 23, 10, 42, 45);
       const result = service.formatDateOptional(date);
 
       expect(result).toBe('23.10.2023, 10:42');
     });
   });
 
-  describe('setTime', () => {
+  describe('setTime', () =>
+  {
     const baseDate = new Date(2023, 0, 1, 12, 0, 0, 0); // 1 января 2023, 12:00:00
 
-    it('should set time correctly for valid milliseconds', () => {
+    it('should set time correctly for valid milliseconds', () =>
+    {
       const result = service.setTime(baseDate, 1000); // 1 секунда
 
       expect(result.getHours()).toBe(0);
@@ -155,7 +159,8 @@ describe('DatesServiceImpl', () =>
       expect(result.getMilliseconds()).toBe(0);
     });
 
-    it('should set time correctly for 24 hours', () => {
+    it('should set time correctly for 24 hours', () =>
+    {
       const maxMilliseconds = 24 * 60 * 60 * 1000; // 24 часа
       const result = service.setTime(baseDate, maxMilliseconds);
 
@@ -168,16 +173,19 @@ describe('DatesServiceImpl', () =>
       expect(result.getMilliseconds()).toBe(0);
     });
 
-    it('should throw error for negative milliseconds', () => {
+    it('should throw error for negative milliseconds', () =>
+    {
       expect(() => service.setTime(baseDate, -1000)).toThrow('Milliseconds cannot be negative');
     });
 
-    it('should throw error for milliseconds exceeding 24 hours', () => {
+    it('should throw error for milliseconds exceeding 24 hours', () =>
+    {
       const maxMilliseconds = 24 * 60 * 60 * 1000;
       expect(() => service.setTime(baseDate, maxMilliseconds + 1)).toThrow('Milliseconds cannot exceed 24 hours');
     });
 
-    it('should preserve date part when setting time', () => {
+    it('should preserve date part when setting time', () =>
+    {
       const result = service.setTime(baseDate, 1000); // 1 секунда
 
       expect(result.getFullYear()).toBe(2023);
@@ -185,29 +193,33 @@ describe('DatesServiceImpl', () =>
       expect(result.getDate()).toBe(1);
     });
   });
-  
-  describe('getTime', () => {
-    it('should return 0 for midnight', () => {
+
+  describe('getTime', () =>
+  {
+    it('should return 0 for midnight', () =>
+    {
       const date = new Date(2023, 0, 1, 0, 0, 0, 0);
       const result = service.getTime(date);
-      
+
       expect(result).toBe(0);
     });
 
-    it('should return correct milliseconds for 12:30:45', () => {
+    it('should return correct milliseconds for 12:30:45', () =>
+    {
       const date = new Date(2023, 0, 1, 12, 30, 45, 0);
       const expected = 12 * 60 * 60 * 1000 + 30 * 60 * 1000 + 45 * 1000;
       const result = service.getTime(date);
-      
+
       expect(result).toBe(expected);
     });
 
-    it('should return correct milliseconds for 23:59:59', () => {
+    it('should return correct milliseconds for 23:59:59', () =>
+    {
       const date = new Date(2023, 0, 1, 23, 59, 59, 0);
       const expected = 23 * 60 * 60 * 1000 + 59 * 60 * 1000 + 59 * 1000;
       const result = service.getTime(date);
-      
+
       expect(result).toBe(expected);
     });
-  })
+  });
 });
