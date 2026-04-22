@@ -2,7 +2,7 @@ import { Overlay } from "../interfaces/internal/overlay";
 
 export class OverlayBase extends Overlay
 {
-  private elements = new ObservableBase(new Array<OverlayElement>());
+  private elements = new ObservableSource(new Array<OverlayElement>());
 
   override getElements(): Observable<OverlayElement[]>
   {

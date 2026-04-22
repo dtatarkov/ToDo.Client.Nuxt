@@ -25,7 +25,7 @@ declare global
   export type Destroyable = DestroyableImport;
   export type LazyEntity<T> = LazyEntityImport<T>;
   export type LazyEntityBase<T> = LazyEntityBaseImport<T>;
-  export type EventBus = EventBusImport;
+  export type EventBus<T = void> = EventBusImport<T>;
   export type Observable<T> = ObservableImport<T>;
   export type ObservableWritable<T> = ObservableWritableImport<T>;
   export type SSRLoader = SSRLoaderImport;

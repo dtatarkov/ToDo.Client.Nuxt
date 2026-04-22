@@ -8,7 +8,7 @@ import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
-  protected todos = new ObservableBase(new Array<ToDo>());
+  protected todos = new ObservableSource(new Array<ToDo>());
 
   constructor(
     protected todosRepository: ToDosRepository,
