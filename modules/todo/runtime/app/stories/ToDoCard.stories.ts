@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import { fn } from "storybook/test";
-import VToDoCard from '@@/modules/todo/runtime/app/components/VToDoCard.vue';
+import VToDoCard from '../components/VToDoCard.vue';
 
 const meta: Meta<typeof VToDoCard> = {
-  title    : 'Components/VToDoCard',
+  title: 'Components/VToDoCard',
   component: VToDoCard,
 
   args: {
@@ -12,50 +12,50 @@ const meta: Meta<typeof VToDoCard> = {
 
   argTypes: {
     title: {
-      type   : 'string',
+      type: 'string',
       control: 'text'
     },
 
     description: {
-      type   : 'string',
+      type: 'string',
       control: 'text'
     },
 
     completionDatePlanned: {
-      type   : 'string',
+      type: 'string',
       control: 'text'
     },
 
     completionDateActual: {
-      type   : 'string',
+      type: 'string',
       control: 'text'
     }
   },
-}
+};
 
 export default meta;
 type Story = StoryObj<typeof VToDoCard>;
 
 export const Default: Story = {
   args: {
-    title      : 'Задача 1',
+    title: 'Задача 1',
     description: 'Описание задачи',
   }
 };
 
 export const Planned: Story = {
   args: {
-    title                : 'Запланированная задача',
-    description          : 'Описание задачи',
+    title: 'Запланированная задача',
+    description: 'Описание задачи',
     completionDatePlanned: '01.12.2023, 15:31'
   }
 };
 
 export const Completed: Story = {
   args: {
-    title                : 'Завершенная задача',
-    description          : 'Описание завершенной задачи',
+    title: 'Завершенная задача',
+    description: 'Описание завершенной задачи',
     completionDatePlanned: '01.11.2023, 12:17',
-    completionDateActual : '05.11.2023, 09:03'
+    completionDateActual: '05.11.2023, 09:03'
   }
 };
