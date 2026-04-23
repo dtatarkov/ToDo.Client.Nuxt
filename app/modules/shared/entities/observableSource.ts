@@ -1,3 +1,4 @@
+import { DestroyedException } from '../exceptions/destroyedException';
 import type { ObservableWritable } from '../interfaces/observableWritable';
 import type { Action } from '../types/action';
 import { ObservableBase } from './internal/observableBase';
@@ -47,7 +48,7 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
     {
         if (this.#isDestroyed)
         {
-            throw new Error('ObservableSource is destroyed');
+            throw new DestroyedException();
         }
     }
 }
