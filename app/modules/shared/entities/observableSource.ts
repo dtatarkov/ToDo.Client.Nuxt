@@ -4,6 +4,8 @@ import { ObservableBase } from './internal/observableBase';
 
 export class ObservableSource<T> extends ObservableBase<T> implements ObservableWritable<T>
 {
+    #isDestroyed = false;
+
     constructor(protected valueInternal: T)
     {
         super();
@@ -21,17 +23,31 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
 
     override set value(value: T)
     {
-        this.valueInternal = value;
-        this.eventbus.emit(value);
+        if (this.valueInternal !== value)
+        {
+            this.valueInternal = value;
+            this.eventbus.emit(value);
+        }
     }
 
     subscribe(handler: Action<[T]>): Action
     {
+        this.#assertNotDestroyed();
+
         return this.eventbus.subscribe(handler);
     }
 
     destroy(): void
     {
         this.eventbus.destroy();
+        this.#isDestroyed = true;
+    }
+
+    #assertNotDestroyed(): void
+    {
+        if (this.#isDestroyed)
+        {
+            throw new Error('ObservableSource is destroyed');
+        }
     }
 }
