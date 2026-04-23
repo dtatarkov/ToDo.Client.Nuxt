@@ -7,25 +7,48 @@ import type { EventBus } from '../interfaces/eventBus';
 import type { Observable } from '../interfaces/observable';
 import type { Action } from '../types/action';
 import type { Func } from '../types/func';
+import { DestroyedException } from '../exceptions/destroyedException';
 
 export class ObservableComputed<T> extends ObservableBase<T>
 {
     private _state: ObservableComputedState<T>;
-    private _states: Record<ObservableComputedStateType, ObservableComputedState<T>>;
+    private _states: Record<ObservableComputedStateType, Func<ObservableComputedState<T>>>;
 
     get value()
     {
         return this._state.value;
     }
 
-    constructor(private factory: () => T)
+    constructor(private _factory: () => T)
     {
         super();
 
         const observableComputed = this;
 
         const valueAccessor = {
-            value: this.factory()
+            _value: <T | undefined>undefined,
+            _initialized: false,
+
+            get value()
+            {
+                if (!this._initialized)
+                {
+                    this._initialized = true;
+                    this._value = observableComputed._factory();
+                }
+
+                return <T>this._value;
+            },
+
+            set value(value)
+            {
+                if (!this._initialized)
+                {
+                    this._initialized = true;
+                }
+
+                this._value = value;
+            }
         };
 
         const stateReader = {
@@ -50,13 +73,13 @@ export class ObservableComputed<T> extends ObservableBase<T>
         const dependencies = new Map<Observable<any>, Action>();
 
         this._states = {
-            [ObservableComputedStateType.sleeping]: new ObservableComputedStateSleeping(this.factory, this, this.eventbus),
-            [ObservableComputedStateType.active]: new ObservableComputedStateActive(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
-            [ObservableComputedStateType.computing]: new ObservableComputedStateComputing(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
-            [ObservableComputedStateType.destroyed]: new ObservableComputedStateDestroyed(),
+            [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this._factory, this, this.eventbus),
+            [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
+            [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
+            [ObservableComputedStateType.destroyed]: () => new ObservableComputedStateDestroyed(),
         };
 
-        this._state = this._states[ObservableComputedStateType.sleeping];
+        this._state = this._states[ObservableComputedStateType.sleeping]();
     }
 
     override subscribe(handler: Action<[T]>): Action
@@ -72,7 +95,7 @@ export class ObservableComputed<T> extends ObservableBase<T>
 
     setState(stateType: ObservableComputedStateType)
     {
-        this._state = this._states[stateType];
+        this._state = this._states[stateType]();
     }
 }
 
@@ -174,7 +197,7 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
 
         if (this.dependencies.size == 0)
         {
-            this.compute();
+            this.valueAccessor.value = this.compute();
         }
     }
 
@@ -334,6 +357,6 @@ class ObservableComputedStateDestroyed<T> implements ObservableComputedState<T>
 
     private createError()
     {
-        return new Error("ObservableComputed is disposed");
+        return new DestroyedException();
     }
 }
