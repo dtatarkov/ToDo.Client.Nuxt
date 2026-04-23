@@ -10,14 +10,14 @@ export default mergeConfig(viteConfig, defineConfig({
 
         test: {
           name: 'unit',
-          include: ['modules/*/runtime/app/test/unit/*.{test,spec}.ts'],
+          include: ['app/modules/*/test/unit/*.{test,spec}.ts'],
           environment: 'node',
         },
       },
       await defineVitestProject({
         test: {
           name: 'nuxt',
-          include: ['modules/*/runtime/app/test/nuxt/*.{test,spec}.ts'],
+          include: ['app/modules/*/test/nuxt/*.{test,spec}.ts'],
           environment: 'nuxt',
         },
       }),

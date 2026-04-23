@@ -10,6 +10,14 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  alias: {
+    '@shared': '../app/modules/shared',
+    '@forms': '../app/modules/forms',
+    '@overlay': '../app/modules/overlay',
+    '@todo': '../app/modules/todo',
+    '@uikit': '../app/modules/uikit',
+  },
+
   components: [
     {
       path: '~/components',

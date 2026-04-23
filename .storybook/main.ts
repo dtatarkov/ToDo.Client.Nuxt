@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@nuxtjs/storybook';
 
 const config: StorybookConfig = {
   stories: [
-    "../modules/*/runtime/app/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+    "../app/modules/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
 
   addons: [
