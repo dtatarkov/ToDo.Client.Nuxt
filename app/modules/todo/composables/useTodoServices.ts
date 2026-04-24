@@ -9,7 +9,7 @@ import { TodosServiceImpl } from "../services/todosServiceImpl";
 import { ToDoElementsFactory } from "../interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../factories/todoElementsFactoryImpl";
 import { ServiceScope } from "@/modules/shared/enums/serviceScope";
-import { registerService } from "@/modules/shared/utils/registerService";
+import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
 
 export function useTodoServices(): void
 {

@@ -14,9 +14,8 @@ import { VueComponentPropsFactoryImpl } from '../factories/vueComponentPropsFact
 import { DataAdapterFactoryImpl } from '../factories/dataAdapterFactoryImpl';
 import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
 import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
-import { registerService } from "@/modules/shared/utils/registerService";
+import { registerService, registerServiceFactory } from "@/modules/shared/serviceLocator/serviceLocator";
 import { useRuntimeConfig } from "#imports";
-import { registerServiceFactory } from '@/modules/shared/utils/registerServiceFactory';
 
 export function useSharedServices(): void
 {

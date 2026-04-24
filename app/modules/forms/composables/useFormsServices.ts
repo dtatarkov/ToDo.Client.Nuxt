@@ -3,7 +3,7 @@ import { FormFactory } from "../interfaces/formFactory";
 import { FormElementFactoryImpl } from "../factories/formElementFactoryImpl";
 import { FormFactoryImpl } from "../factories/formFactoryImpl";
 import { ServiceScope } from "@/modules/shared/enums/serviceScope";
-import { registerService } from "@/modules/shared/utils/registerService";
+import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
 
 export function useFormsServices(): void
 {
