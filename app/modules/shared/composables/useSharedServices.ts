@@ -15,7 +15,6 @@ import { DataAdapterFactoryImpl } from '../factories/dataAdapterFactoryImpl';
 import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
 import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
 import { registerService } from "@/modules/shared/utils/registerService";
-import { getService } from "@/modules/shared/utils/getService";
 import { useRuntimeConfig } from "#imports";
 import { registerServiceFactory } from '@/modules/shared/utils/registerServiceFactory';
 
@@ -31,28 +30,8 @@ export function useSharedServices(): void
     registerService(DatesService, DatesServiceImpl, ServiceScope.Singleton);
     registerService(StringsService, StringsServiceImpl, ServiceScope.Singleton);
     registerService(SSRLoader, SSRLoaderImpl, ServiceScope.Singleton);
-
     registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl);
-
-    registerServiceFactory(TimeMapper, () =>
-    {
-        const datesService = getService(DatesService);
-        const mapper = new TimeMapperImpl(datesService);
-
-        return mapper;
-    }, ServiceScope.Singleton);
-
-    registerServiceFactory(VueComponentPropsFactory, () =>
-    {
-        const result = new VueComponentPropsFactoryImpl();
-
-        return result;
-    }, ServiceScope.Singleton);
-
-    registerServiceFactory(DataAdapterFactory, () =>
-    {
-        const result = new DataAdapterFactoryImpl();
-
-        return result;
-    }, ServiceScope.Singleton);
+    registerService(TimeMapper, TimeMapperImpl, ServiceScope.Singleton);
+    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl, ServiceScope.Singleton);
+    registerService(DataAdapterFactory, DataAdapterFactoryImpl, ServiceScope.Singleton);
 }

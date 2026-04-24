@@ -3,9 +3,11 @@ import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
-import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(DatesService)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
   constructor(protected datesService: DatesService)

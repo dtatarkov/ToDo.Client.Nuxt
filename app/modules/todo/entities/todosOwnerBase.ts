@@ -1,15 +1,19 @@
 import { ToDosOwner } from "../interfaces/todosOwner";
 import { ToDo } from "../interfaces/todo";
-import type { ToDosRepository } from "../interfaces/todosRepository";
-import type { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
+import { ToDosRepository } from "../interfaces/todosRepository";
+import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { SSRLoader } from '@/modules/shared/interfaces/ssrLoader';
+import { SSRLoader } from '@/modules/shared/interfaces/ssrLoader';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(ToDosRepository)
+@dependency(ToDoDtoMapper)
+@dependency(SSRLoader)
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
   protected todos = new ObservableSource(new Array<ToDo>());

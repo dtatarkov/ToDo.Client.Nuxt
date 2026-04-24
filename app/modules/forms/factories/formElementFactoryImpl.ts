@@ -5,7 +5,9 @@ import type { FormElement } from "../interfaces/internal/formElement";
 import { FormElementType } from "../enums/formElementType";
 import { UIKitElementsFactory } from "@/modules/uikit/interfaces/uiKitElementsFactory";
 import { InputElement } from "@/modules/uikit/interfaces/inputElement";
+import { dependency } from "@/modules/shared/decorators/dependency";
 
+@dependency(UIKitElementsFactory)
 export class FormElementFactoryImpl extends FormElementFactory
 {
   constructor(

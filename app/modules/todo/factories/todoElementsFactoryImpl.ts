@@ -1,11 +1,14 @@
 import { ToDoElementsFactory } from "../interfaces/todoElementsFactory";
 import { ToDoCard } from "../interfaces/todoCard";
-import type { ToDosService } from "../interfaces/todosService";
+import { ToDosService } from "../interfaces/todosService";
 import type { ToDo } from "../interfaces/todo";
 import { ToDoCardBase } from "../viewmodels/todoCardBase";
-import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(ToDosService)
+@dependency(DatesService)
 export class ToDoElementsFactoryImpl extends ToDoElementsFactory
 {
   constructor(

@@ -18,23 +18,15 @@ export class ServiceLocatorBase extends ServiceLocator
   {
     const dependencies = getDependencies(service);
 
-    if (dependencies.length > 0)
+    const binding = this.container.bind(serviceIdentifier).toDynamicValue(() =>
     {
-      const binding = this.container.bind(serviceIdentifier).toDynamicValue(() =>
-      {
-        const resolvedDependencies = dependencies.map(dep =>
-          this.container.get(dep));
+      const resolvedDependencies = dependencies.map(dependency =>
+        this.container.get(dependency));
 
-        return Reflect.construct(service, resolvedDependencies);
-      });
+      return Reflect.construct(service, resolvedDependencies);
+    });
 
-      this.applyScope(binding, scope);
-    }
-    else
-    {
-      const binding = this.container.bind(serviceIdentifier).to(service);
-      this.applyScope(binding, scope);
-    }
+    this.applyScope(binding, scope);
   }
 
   registerFactory<T>(serviceIdentifier: ServiceIdentifier<T>, factory: () => T, scope = ServiceScope.Request): void

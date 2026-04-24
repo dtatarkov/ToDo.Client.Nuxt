@@ -5,7 +5,9 @@ import { Form } from '@/modules/forms/interfaces/form';
 import { ModalConfirm } from '../interfaces/modalConfirm';
 import { Modal } from '../interfaces/modal';
 import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(UIKitElementsFactory)
 export class ModalFactoryImpl extends ModalFactory
 {
     constructor(protected uikitElementsFactory: UIKitElementsFactory)

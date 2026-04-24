@@ -7,13 +7,20 @@ import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
 import { ButtonElementBase } from "../entities/buttonElementBase";
 import type { ButtonElement } from '../interfaces/buttonElement';
-import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
-import type { DatesService } from '@/modules/shared/interfaces/datesService';
-import type { StringsService } from '@/modules/shared/interfaces/stringsService';
-import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
-import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
-import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
+import { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import { DatesService } from '@/modules/shared/interfaces/datesService';
+import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
+import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(StringsService)
+@dependency(VueComponentPropsFactory)
+@dependency(DataAdapterFactory)
+@dependency(ZonedDateTimeMapper)
+@dependency(TimeMapper)
+@dependency(DatesService)
 export class UIKitElementsFactoryImpl extends UIKitElementsFactory
 {
     constructor(

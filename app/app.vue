@@ -1,6 +1,10 @@
 <template>
   <UApp :locale="locale">
     <NuxtPage />
+
+    <ClientOnly>
+      <VOverlayWidget />
+    </ClientOnly>
   </UApp>
 </template>
 
@@ -11,6 +15,7 @@ import { useUIKitServices } from '@/modules/uikit/composables/useUIKitServices';
 import { useFormsServices } from '@/modules/forms/composables/useFormsServices';
 import { useOverlayServices } from '@/modules/overlay/composables/useOverlayServices';
 import { useTodoServices } from '@/modules/todo/composables/useTodoServices';
+import VOverlayWidget from '@/modules/overlay/widgets/VOverlayWidget.vue';
 
 useSharedServices();
 useUIKitServices();

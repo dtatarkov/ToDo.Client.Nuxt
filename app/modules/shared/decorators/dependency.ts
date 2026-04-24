@@ -44,7 +44,7 @@ export function dependency<This, Args extends any[]>(dependency: Dependency)
             }
 
             // we don't check for duplicates since binding depends on dependency index in target class constructor arguments
-            dependencies.push(dependency);
+            dependencies.unshift(dependency);
         });
 
         // Return the original class

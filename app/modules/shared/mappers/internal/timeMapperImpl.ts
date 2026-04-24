@@ -1,7 +1,9 @@
 import { Time } from "@internationalized/date";
 import { ValueMapper } from '../../interfaces/valueMapper';
-import type { DatesService } from '../../interfaces/datesService';
+import { DatesService } from '../../interfaces/datesService';
+import { dependency } from '../../decorators/dependency';
 
+@dependency(DatesService)
 export class TimeMapperImpl extends ValueMapper<number, Time>
 {
   constructor(

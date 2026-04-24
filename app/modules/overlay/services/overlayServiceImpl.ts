@@ -1,4 +1,4 @@
-import type { Overlay } from "../interfaces/internal/overlay";
+import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import type { Observable } from '~/modules/shared/interfaces/observable';
 import type { Modal } from '../interfaces/modal';
@@ -6,7 +6,10 @@ import type { ModalConfirm } from '../interfaces/modalConfirm';
 import type { OverlayElement } from '../interfaces/overlayElement';
 import { OverlayService } from '../interfaces/overlayService';
 import { Form } from '@/modules/forms/interfaces/form';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(Overlay)
+@dependency(ModalFactory)
 export class OverlayServiceImpl extends OverlayService
 {
   constructor(
