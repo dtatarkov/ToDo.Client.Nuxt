@@ -32,6 +32,10 @@
 </template>
 
 <script setup lang="ts">
+import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
+import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
+import VDate from '@/modules/uikit/components/VDate.vue';
+
 const emits = defineEmits<{
   (e: 'edit-button-click'): void
 }>();

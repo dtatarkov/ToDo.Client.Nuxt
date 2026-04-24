@@ -1,8 +1,8 @@
 import { UButton } from "#components";
 import { ButtonElement } from "../interfaces/buttonElement";
 import type { ButtonElementColor } from '../types/buttonElementColor';
-import { EventBusBase } from '@shared/entities/eventBusBase';
-import { getUniqueId } from '@shared/utils/getUniqueId';
+import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
 export class ButtonElementBase extends ButtonElement
 {

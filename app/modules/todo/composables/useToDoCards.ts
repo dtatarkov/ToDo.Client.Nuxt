@@ -1,5 +1,5 @@
-import { useObservable } from '@shared/composables/useObservable';
-import { getService } from '@shared/utils/getService';
+import { useObservable } from '@/modules/shared/composables/useObservable';
+import { getService } from '@/modules/shared/utils/getService';
 import { ToDoElementsFactory } from "../interfaces/todoElementsFactory";
 import { ToDosService } from "../interfaces/todosService";
 

@@ -1,4 +1,4 @@
-import type { Subscribable } from '@shared/interfaces/subscribable';
+import type { Subscribable } from '@/modules/shared/interfaces/subscribable';
 import type { ButtonElementColor } from '../types/buttonElementColor';
 import { UIElement } from './uiElement';
 import type { ButtonElementData } from '../types/buttonElementData';

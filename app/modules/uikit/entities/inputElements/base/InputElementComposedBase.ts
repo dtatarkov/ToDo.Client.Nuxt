@@ -1,7 +1,7 @@
-import type { StringsService } from '@shared/interfaces/stringsService';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { InputElement } from "../../../interfaces/inputElement";
-import type { Action } from '@shared/types/action';
-import { getUniqueId } from '@shared/utils/getUniqueId';
+import type { Action } from '@/modules/shared/types/action';
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
 export abstract class InputElementComposedBase<V> extends InputElement<V>
 {

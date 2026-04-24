@@ -1,5 +1,5 @@
-import { ObservableSource } from '@shared/entities/observableSource';
-import type { Observable } from '@shared/interfaces/observable';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 import { Overlay } from "../interfaces/internal/overlay";
 import { OverlayElement } from '../interfaces/overlayElement';
 

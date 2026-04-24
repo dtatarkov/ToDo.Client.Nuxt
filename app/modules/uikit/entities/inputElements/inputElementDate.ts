@@ -1,15 +1,15 @@
 import { UInputDate } from "#components";
 import type { ZonedDateTime } from "@internationalized/date";
 import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./base/inputElementNuxtUIBase";
-import type { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
-import type { StringsService } from '@shared/interfaces/stringsService';
-import type { ValueMapper } from '@shared/interfaces/valueMapper';
-import type { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import type { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
-import { OptionalValueMapper } from '@shared/mappers/optionalValueMapper';
-import type { DataAdapterFieldsScheme } from '@shared/types/dataAdapterFieldsScheme';
-import type { VueComponentPropsScheme } from '@shared/types/vueComponentPropsScheme';
-import { mergeDeep } from '@shared/utils/mergeDeep';
+import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { ValueMapper } from '@/modules/shared/interfaces/valueMapper';
+import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
+import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
+import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
+import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
+import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
 import type { InputElementDateData } from '../../types/inputElements/InputElementDateData';
 
 export type InputElementDateProps = InputElementNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'day'; };

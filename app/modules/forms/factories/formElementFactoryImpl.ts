@@ -3,8 +3,8 @@ import type { FormElementCreateData } from "../types/formElementCreateData";
 import { FormElementBase } from "../entities/formElementBase";
 import type { FormElement } from "../interfaces/internal/formElement";
 import { FormElementType } from "../enums/formElementType";
-import { UIKitElementsFactory } from "@uikit/interfaces/uiKitElementsFactory";
-import { InputElement } from "@uikit/interfaces/inputElement";
+import { UIKitElementsFactory } from "@/modules/uikit/interfaces/uiKitElementsFactory";
+import { InputElement } from "@/modules/uikit/interfaces/inputElement";
 
 export class FormElementFactoryImpl extends FormElementFactory
 {

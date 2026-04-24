@@ -7,12 +7,12 @@ import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
 import { ButtonElementBase } from "../entities/buttonElementBase";
 import type { ButtonElement } from '../interfaces/buttonElement';
-import type { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
-import type { DatesService } from '@shared/interfaces/datesService';
-import type { StringsService } from '@shared/interfaces/stringsService';
-import type { TimeMapper } from '@shared/interfaces/timeMapper';
-import type { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import type { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
+import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
+import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 
 export class UIKitElementsFactoryImpl extends UIKitElementsFactory
 {

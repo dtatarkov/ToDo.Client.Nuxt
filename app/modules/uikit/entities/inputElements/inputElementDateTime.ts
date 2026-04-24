@@ -2,12 +2,12 @@ import { InputElementDate } from "./inputElementDate";
 import { InputElementComposedBase } from "./base/InputElementComposedBase";
 import type { InputElement } from "../../interfaces/inputElement";
 import { InputElementTime } from "./inputElementTime";
-import type { TimeMapper } from '@shared/interfaces/timeMapper';
-import type { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
-import type { DatesService } from '@shared/interfaces/datesService';
-import type { StringsService } from '@shared/interfaces/stringsService';
-import type { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import type { ZonedDateTimeMapper } from '@shared/interfaces/zonedDateTimeMapper';
+import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
+import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import type { InputElementDateTimeData } from '../../types/inputElements/InputElementDateTimeData';
 
 export class InputElementDateTime extends InputElementComposedBase<Date | undefined> implements InputElementDateTimeData

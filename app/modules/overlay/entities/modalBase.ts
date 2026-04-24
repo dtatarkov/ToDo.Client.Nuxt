@@ -1,8 +1,8 @@
 import { Modal } from "../interfaces/modal";
 import VModal from '../components/VModal.vue';
-import { EventBusBase } from '@shared/entities/eventBusBase';
-import { getUniqueId } from '@shared/utils/getUniqueId';
-import type { UIElement } from '@uikit/interfaces/uiElement';
+import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
 export class ModalBase extends Modal
 {

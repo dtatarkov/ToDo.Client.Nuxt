@@ -1,8 +1,8 @@
-import type { Observable } from '@shared/interfaces/observable';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from './modal';
 import type { ModalConfirm } from './modalConfirm';
 import type { OverlayElement } from './overlayElement';
-import { Form } from '@forms/interfaces/form';
+import { Form } from '@/modules/forms/interfaces/form';
 
 export abstract class OverlayService
 {

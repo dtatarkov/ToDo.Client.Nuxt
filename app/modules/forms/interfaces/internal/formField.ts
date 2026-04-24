@@ -1,4 +1,4 @@
-import { UIElement } from "@uikit/interfaces/uiElement";
+import { UIElement } from "@/modules/uikit/interfaces/uiElement";
 
 export abstract class FormField extends UIElement<string>
 {

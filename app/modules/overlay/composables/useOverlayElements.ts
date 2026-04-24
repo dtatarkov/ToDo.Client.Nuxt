@@ -1,7 +1,7 @@
 import { OverlayService } from "../interfaces/overlayService";
 import type { OverlayElement } from "../interfaces/overlayElement";
-import { useObservable } from '@shared/composables/useObservable';
-import { getService } from '@shared/utils/getService';
+import { useObservable } from '@/modules/shared/composables/useObservable';
+import { getService } from '@/modules/shared/utils/getService';
 
 export function useOverlayElements()
 {

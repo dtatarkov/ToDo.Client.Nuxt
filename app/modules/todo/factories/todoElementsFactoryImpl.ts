@@ -3,8 +3,8 @@ import { ToDoCard } from "../interfaces/todoCard";
 import type { ToDosService } from "../interfaces/todosService";
 import type { ToDo } from "../interfaces/todo";
 import { ToDoCardBase } from "../viewmodels/todoCardBase";
-import type { DatesService } from '@shared/interfaces/datesService';
-import { updatePropertiesWithData } from '@shared/utils/updatePropertiesWithData';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export class ToDoElementsFactoryImpl extends ToDoElementsFactory
 {

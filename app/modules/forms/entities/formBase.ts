@@ -1,10 +1,10 @@
 import VForm from "../components/VForm.vue";
 import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import type { FormElement } from "../interfaces/internal/formElement";
-import { Form } from "@forms/interfaces/form";
-import { getUniqueId } from "@shared/utils/getUniqueId";
-import { EventBusBase } from "@shared/entities/eventBusBase";
-import type { Func } from "@shared/types/func";
+import { Form } from "@/modules/forms/interfaces/form";
+import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
+import { EventBusBase } from "@/modules/shared/entities/eventBusBase";
+import type { Func } from "@/modules/shared/types/func";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementCreateData } from '../types/formElementCreateData';
 

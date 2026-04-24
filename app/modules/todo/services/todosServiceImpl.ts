@@ -1,10 +1,10 @@
 import { ToDosService } from "../interfaces/todosService";
 import { ToDo } from "../interfaces/todo";
 import type { ToDosOwner } from "../interfaces/todosOwner";
-import { FormElementType } from '@forms/enums/formElementType';
-import type { FormFactory } from '@forms/interfaces/formFactory';
-import type { OverlayService } from '@overlay/interfaces/overlayService';
-import type { Observable } from '@shared/interfaces/observable';
+import { FormElementType } from '@/modules/forms/enums/formElementType';
+import type { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 import { ToDoNotFoundException } from '../exceptions/toDoNotFoundException';
 
 export class TodosServiceImpl extends ToDosService

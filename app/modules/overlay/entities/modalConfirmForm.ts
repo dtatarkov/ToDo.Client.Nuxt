@@ -1,7 +1,7 @@
-import type { ButtonElement } from '@uikit/interfaces/buttonElement';
+import type { ButtonElement } from '@/modules/uikit/interfaces/buttonElement';
 import { ModalConfirmBase } from './modalConfirmBase';
-import type { UIKitElementsFactory } from '@uikit/interfaces/uiKitElementsFactory';
-import { Form } from '@forms/interfaces/form';
+import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import { Form } from '@/modules/forms/interfaces/form';
 
 export class ModalConfirmForm extends ModalConfirmBase
 {

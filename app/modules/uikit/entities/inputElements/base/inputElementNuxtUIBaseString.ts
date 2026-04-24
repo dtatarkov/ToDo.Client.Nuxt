@@ -1,8 +1,8 @@
-import type { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
-import type { StringsService } from '@shared/interfaces/stringsService';
-import type { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import type { VueComponentPropsScheme } from '@shared/types/vueComponentPropsScheme';
-import { mergeDeep } from '@shared/utils/mergeDeep';
+import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
+import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
 import type { InputElementData } from '~/modules/uikit/types/inputElements/inputElementData';
 import { InputElementNuxtUIBase, type InputElementNuxtUIBaseProps } from "./inputElementNuxtUIBase";
 

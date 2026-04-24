@@ -1,7 +1,7 @@
-import { UIElement } from "@uikit/interfaces/uiElement";
+import { UIElement } from "@/modules/uikit/interfaces/uiElement";
 import type { FormElementCreateData } from "../types/formElementCreateData";
-import type { Func } from "@shared/types/func";
-import type { Subscribable } from "@shared/interfaces/subscribable";
+import type { Func } from "@/modules/shared/types/func";
+import type { Subscribable } from "@/modules/shared/interfaces/subscribable";
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement
 {

@@ -3,8 +3,8 @@ import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
-import type { DatesService } from '@shared/interfaces/datesService';
-import { updatePropertiesWithData } from '@shared/utils/updatePropertiesWithData';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {

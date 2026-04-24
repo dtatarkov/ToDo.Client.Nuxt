@@ -5,10 +5,10 @@ import type { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
-import { ObservableSource } from '@shared/entities/observableSource';
-import type { Destroyable } from '@shared/interfaces/destroyable';
-import type { Observable } from '@shared/interfaces/observable';
-import type { SSRLoader } from '@shared/interfaces/ssrLoader';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
+import type { Observable } from '@/modules/shared/interfaces/observable';
+import type { SSRLoader } from '@/modules/shared/interfaces/ssrLoader';
 
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {

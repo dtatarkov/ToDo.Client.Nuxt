@@ -1,10 +1,10 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import { ModalBase } from "../entities/modalBase";
 import { ModalConfirmForm } from '../entities/modalConfirmForm';
-import { Form } from '@forms/interfaces/form';
+import { Form } from '@/modules/forms/interfaces/form';
 import { ModalConfirm } from '../interfaces/modalConfirm';
 import { Modal } from '../interfaces/modal';
-import { UIKitElementsFactory } from '@uikit/interfaces/uiKitElementsFactory';
+import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 
 export class ModalFactoryImpl extends ModalFactory
 {

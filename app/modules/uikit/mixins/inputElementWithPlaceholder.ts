@@ -1,6 +1,6 @@
-import { mergeDeep } from '@shared/utils/mergeDeep';
+import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
 import type { InputElementNuxtUIBase, InputElementNuxtUIBaseProps } from "../entities/inputElements/base/inputElementNuxtUIBase";
-import type { AbstractConstructor } from '@shared/types/abstractConstructor';
+import type { AbstractConstructor } from '@/modules/shared/types/abstractConstructor';
 import type { InputElementData } from '../types/inputElements/inputElementData';
 
 export function InputElementWithPlaceholder<TBase extends AbstractConstructor<InputElementNuxtUIBase<any, InputElementNuxtUIBaseProps<any> & { placeholder: string; }, InputElementData<any> & { placeholder: string; }>>>(Base: TBase)

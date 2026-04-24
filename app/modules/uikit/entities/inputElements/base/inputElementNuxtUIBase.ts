@@ -1,11 +1,11 @@
-import { LazyEntityBase } from '@shared/entities/lazyEntityBase';
-import type { DataAdapterFactory } from '@shared/interfaces/dataAdapterFactory';
-import type { StringsService } from '@shared/interfaces/stringsService';
-import type { VueComponentPropsFactory } from '@shared/interfaces/vueComponentPropsFactory';
-import type { DataAdapterFieldsScheme } from '@shared/types/dataAdapterFieldsScheme';
-import type { VueComponentPropsScheme } from '@shared/types/vueComponentPropsScheme';
-import { getUniqueId } from '@shared/utils/getUniqueId';
-import type { InputElementData } from '@uikit/types/inputElements/inputElementData';
+import { LazyEntityBase } from '@/modules/shared/entities/lazyEntityBase';
+import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
+import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
+import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import type { InputElementData } from '@/modules/uikit/types/inputElements/inputElementData';
 import { InputElement } from "../../../interfaces/inputElement";
 
 export type InputElementNuxtUIBaseProps<V> = {

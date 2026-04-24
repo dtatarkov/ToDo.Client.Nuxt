@@ -1,6 +1,6 @@
 import type { Modal } from '../modal';
 import type { ModalConfirm } from '../modalConfirm';
-import { Form } from '@forms/interfaces/form';
+import { Form } from '@/modules/forms/interfaces/form';
 
 export abstract class ModalFactory
 {

@@ -5,7 +5,7 @@ import type { Modal } from '../interfaces/modal';
 import type { ModalConfirm } from '../interfaces/modalConfirm';
 import type { OverlayElement } from '../interfaces/overlayElement';
 import { OverlayService } from '../interfaces/overlayService';
-import { Form } from '@forms/interfaces/form';
+import { Form } from '@/modules/forms/interfaces/form';
 
 export class OverlayServiceImpl extends OverlayService
 {

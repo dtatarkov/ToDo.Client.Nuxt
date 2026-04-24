@@ -1,8 +1,8 @@
 import { ToDoCard } from "../interfaces/todoCard";
 import type { ToDosService } from "../interfaces/todosService";
 import VToDoCard from "../components/VToDoCard.vue";
-import type { DatesService } from '@shared/interfaces/datesService';
-import { getUniqueId } from '@shared/utils/getUniqueId';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
 export class ToDoCardBase extends ToDoCard
 {
