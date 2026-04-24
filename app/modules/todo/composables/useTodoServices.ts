@@ -8,14 +8,13 @@ import { ToDosRepositoryImpl } from "../repositories/todosRepositoryImpl";
 import { TodosServiceImpl } from "../services/todosServiceImpl";
 import { ToDoElementsFactory } from "../interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../factories/todoElementsFactoryImpl";
-import { ServiceScope } from "@/modules/shared/enums/serviceScope";
 import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
 
 export function useTodoServices(): void
 {
-    registerService(ToDosRepository, ToDosRepositoryImpl, ServiceScope.Singleton);
-    registerService(ToDoDtoMapper, ToDoDtoMapperImpl, ServiceScope.Singleton);
-    registerService(ToDosOwner, ToDosOwnerBase, ServiceScope.Singleton);
-    registerService(ToDosService, TodosServiceImpl, ServiceScope.Singleton);
+    registerService(ToDosRepository, ToDosRepositoryImpl).asSingleton();
+    registerService(ToDoDtoMapper, ToDoDtoMapperImpl).asSingleton();
+    registerService(ToDosOwner, ToDosOwnerBase).asSingleton();
+    registerService(ToDosService, TodosServiceImpl).asSingleton();
     registerService(ToDoElementsFactory, ToDoElementsFactoryImpl);
 }

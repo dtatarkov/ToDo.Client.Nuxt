@@ -1,4 +1,3 @@
-import { ServiceScope } from "../enums/serviceScope";
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
 import { DatesService } from "../interfaces/datesService";
 import { StringsService } from "../interfaces/stringsService";
@@ -24,13 +23,13 @@ export function useSharedServices(): void
         const config = useRuntimeConfig();
 
         return config.public;
-    }, ServiceScope.Singleton);
+    }).asSingleton();
 
-    registerService(DatesService, DatesServiceImpl, ServiceScope.Singleton);
-    registerService(StringsService, StringsServiceImpl, ServiceScope.Singleton);
-    registerService(SSRLoader, SSRLoaderImpl, ServiceScope.Singleton);
-    registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl);
-    registerService(TimeMapper, TimeMapperImpl, ServiceScope.Singleton);
-    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl, ServiceScope.Singleton);
-    registerService(DataAdapterFactory, DataAdapterFactoryImpl, ServiceScope.Singleton);
+    registerService(DatesService, DatesServiceImpl).asSingleton();
+    registerService(StringsService, StringsServiceImpl).asSingleton();
+    registerService(SSRLoader, SSRLoaderImpl).asSingleton();
+    registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl).asScoped();
+    registerService(TimeMapper, TimeMapperImpl).asSingleton();
+    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl).asSingleton();
+    registerService(DataAdapterFactory, DataAdapterFactoryImpl).asSingleton();
 }

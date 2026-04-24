@@ -1,7 +1,6 @@
-import { Container } from "inversify";
+import { Container, type BindInWhenOnFluentSyntax } from "inversify";
 import type { ServiceIdentifier } from "../types/serviceIdentifier";
 import type { Constructor } from "../types/constructor";
-import { ServiceScope } from "../enums/serviceScope";
 import { getDependencies } from "../decorators/dependency";
 import { useNuxtApp } from "#imports";
 
@@ -21,19 +20,33 @@ function getContainer(): Container
     return container;
 }
 
-function applyScope<T>(
-    binding: any,
-    scope: ServiceScope
-): void
+abstract class ServiceRegistrationBuilder<T>
 {
-    switch (scope)
+    abstract asScoped(): void;
+    abstract asSingleton(): void;
+    abstract asTransient(): void;
+}
+
+class ServiceRegistrationBuilderImpl<T> extends ServiceRegistrationBuilder<T>
+{
+    constructor(private binding: BindInWhenOnFluentSyntax<T>)
     {
-        case ServiceScope.Request:
-            binding.inRequestScope();
-            break;
-        case ServiceScope.Singleton:
-            binding.inSingletonScope();
-            break;
+        super();
+    }
+
+    override asScoped(): void
+    {
+        this.binding.inRequestScope();
+    }
+
+    override asSingleton(): void
+    {
+        this.binding.inSingletonScope();
+    }
+
+    override asTransient(): void
+    {
+        this.binding.inTransientScope();
     }
 }
 
@@ -46,9 +59,8 @@ export function getService<T>(serviceIdentifier: ServiceIdentifier<T>): T
 
 export function registerService<T>(
     serviceIdentifier: ServiceIdentifier<T>,
-    service: Constructor<T>,
-    scope: ServiceScope = ServiceScope.Request
-): void
+    service: Constructor<T>
+): ServiceRegistrationBuilder<T>
 {
     const container = getContainer();
     const dependencies = getDependencies(service);
@@ -61,16 +73,19 @@ export function registerService<T>(
         return Reflect.construct(service, resolvedDependencies);
     });
 
-    applyScope(binding, scope);
+    const builder = new ServiceRegistrationBuilderImpl(binding);
+
+    return builder;
 }
 
 export function registerServiceFactory<T>(
     serviceIdentifier: ServiceIdentifier<T>,
-    factory: () => T,
-    scope: ServiceScope = ServiceScope.Request
-): void
+    factory: () => T
+): ServiceRegistrationBuilder<T>
 {
     const container = getContainer();
     const binding = container.bind(serviceIdentifier).toDynamicValue(factory);
-    applyScope(binding, scope);
+    const builder = new ServiceRegistrationBuilderImpl(binding);
+
+    return builder;
 }
