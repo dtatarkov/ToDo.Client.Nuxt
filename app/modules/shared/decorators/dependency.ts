@@ -1,9 +1,12 @@
+import type { AbstractConstructor } from '../types/abstractConstructor';
 import type { Constructor } from '../types/constructor';
 
 /**
  * Symbol used as the property key for storing dependencies on a class.
  */
 export const dependenciesSymbol = Symbol('dependencies');
+
+type Dependency = Constructor<any> | AbstractConstructor<any>;
 
 /**
  * Decorator that adds a single dependency to a class.
@@ -12,7 +15,7 @@ export const dependenciesSymbol = Symbol('dependencies');
  * @param dependency - Constructor function representing the dependency.
  * @returns A class decorator that adds the dependency to the class's dependencies array.
  */
-export function Dependency<This, Args extends any[]>(dependency: Constructor<any>)
+export function dependency<This, Args extends any[]>(dependency: Dependency)
 {
     return function (target: new (...args: Args) => This, context: ClassDecoratorContext<new (...args: Args) => This>): new (...args: Args) => This
     {
@@ -25,7 +28,7 @@ export function Dependency<This, Args extends any[]>(dependency: Constructor<any
         context.addInitializer(() =>
         {
             // Ensure the target has the dependencies property
-            let dependencies = (target as any)[dependenciesSymbol] as Constructor<any>[] | undefined;
+            let dependencies = (target as any)[dependenciesSymbol] as Dependency[] | undefined;
 
             if (!dependencies)
             {

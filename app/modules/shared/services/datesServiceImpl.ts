@@ -1,7 +1,9 @@
 import { DateTime, Duration } from 'luxon';
 import { DatesService } from '../interfaces/datesService';
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
+import { dependency } from '../decorators/dependency';
 
+@dependency(AppPublicRuntimeConfig)
 export class DatesServiceImpl extends DatesService
 {
   secondInMilliseconds = 1000;

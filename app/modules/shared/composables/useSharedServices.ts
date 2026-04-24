@@ -28,14 +28,7 @@ export function useSharedServices(): void
         return config.public;
     }, ServiceScope.Singleton);
 
-    registerServiceFactory(DatesService, () =>
-    {
-        const config = getService(AppPublicRuntimeConfig);
-        const result = new DatesServiceImpl(config);
-
-        return result;
-    }, ServiceScope.Singleton);
-
+    registerService(DatesService, DatesServiceImpl, ServiceScope.Singleton);
     registerService(StringsService, StringsServiceImpl, ServiceScope.Singleton);
     registerService(SSRLoader, SSRLoaderImpl, ServiceScope.Singleton);
 
