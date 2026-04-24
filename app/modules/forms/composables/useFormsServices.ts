@@ -6,6 +6,6 @@ import { registerService } from "@/modules/shared/serviceLocator/serviceLocator"
 
 export function useFormsServices(): void
 {
-    registerService(FormElementFactory, FormElementFactoryImpl).asSingleton();
-    registerService(FormFactory, FormFactoryImpl).asSingleton();
+    registerService(FormElementFactory, FormElementFactoryImpl).asTransient();
+    registerService(FormFactory, FormFactoryImpl).asTransient();
 }

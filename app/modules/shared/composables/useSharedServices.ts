@@ -25,11 +25,11 @@ export function useSharedServices(): void
         return config.public;
     }).asSingleton();
 
-    registerService(DatesService, DatesServiceImpl).asSingleton();
-    registerService(StringsService, StringsServiceImpl).asSingleton();
-    registerService(SSRLoader, SSRLoaderImpl).asSingleton();
-    registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl).asScoped();
-    registerService(TimeMapper, TimeMapperImpl).asSingleton();
-    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl).asSingleton();
-    registerService(DataAdapterFactory, DataAdapterFactoryImpl).asSingleton();
+    registerService(DatesService, DatesServiceImpl).asTransient();
+    registerService(StringsService, StringsServiceImpl).asTransient();
+    registerService(SSRLoader, SSRLoaderImpl).asScoped();
+    registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl).asTransient();
+    registerService(TimeMapper, TimeMapperImpl).asTransient();
+    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl).asTransient();
+    registerService(DataAdapterFactory, DataAdapterFactoryImpl).asTransient();
 }

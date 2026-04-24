@@ -4,5 +4,5 @@ import { registerService } from "@/modules/shared/serviceLocator/serviceLocator"
 
 export function useUIKitServices(): void
 {
-    registerService(UIKitElementsFactory, UIKitElementsFactoryImpl).asSingleton();
+    registerService(UIKitElementsFactory, UIKitElementsFactoryImpl).asTransient();
 }

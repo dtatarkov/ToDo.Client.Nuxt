@@ -36,7 +36,7 @@ class ServiceRegistrationBuilderImpl<T> extends ServiceRegistrationBuilder<T>
 
     override asScoped(): void
     {
-        this.binding.inRequestScope();
+        this.binding.inSingletonScope();
     }
 
     override asSingleton(): void

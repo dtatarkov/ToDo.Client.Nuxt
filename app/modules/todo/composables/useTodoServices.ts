@@ -12,9 +12,9 @@ import { registerService } from "@/modules/shared/serviceLocator/serviceLocator"
 
 export function useTodoServices(): void
 {
-    registerService(ToDosRepository, ToDosRepositoryImpl).asSingleton();
-    registerService(ToDoDtoMapper, ToDoDtoMapperImpl).asSingleton();
-    registerService(ToDosOwner, ToDosOwnerBase).asSingleton();
+    registerService(ToDosRepository, ToDosRepositoryImpl).asTransient();
+    registerService(ToDoDtoMapper, ToDoDtoMapperImpl).asTransient();
+    registerService(ToDosOwner, ToDosOwnerBase).asScoped();
     registerService(ToDosService, TodosServiceImpl).asSingleton();
-    registerService(ToDoElementsFactory, ToDoElementsFactoryImpl);
+    registerService(ToDoElementsFactory, ToDoElementsFactoryImpl).asTransient();
 }
