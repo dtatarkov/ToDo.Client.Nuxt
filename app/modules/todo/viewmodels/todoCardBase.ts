@@ -1,10 +1,10 @@
 import { ToDoCard } from "../interfaces/todoCard";
-import type { ToDosService } from "../interfaces/todosService";
 import type { ToDo } from "../interfaces/todo";
 import VToDoCard from "../components/VToDoCard.vue";
-import type { DatesService } from '@/modules/shared/interfaces/datesService';
+import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { useObservable } from '@/modules/shared/composables/useObservable';
+import { useService } from '@/modules/shared/composables/useService';
 
 export class ToDoCardBase extends ToDoCard
 {
@@ -13,15 +13,16 @@ export class ToDoCardBase extends ToDoCard
   readonly component = {
     setup: () =>
     {
+      const datesService = useService(DatesService);
       const todoData = useObservable(this.todo.data);
 
       const onEditButtonClick = async () =>
       {
-        await this.todosService.editToDoAsync(this.todo.id);
+        this.todo.showEditDialog();
       };
 
-      const completionDatePlanned = computed(() => this.datesService.formatDateOptional(todoData.value.completionDatePlanned));
-      const completionDateActual = computed(() => this.datesService.formatDateOptional(todoData.value.completionDateActual));
+      const completionDatePlanned = computed(() => datesService.formatDateOptional(todoData.value.completionDatePlanned));
+      const completionDateActual = computed(() => datesService.formatDateOptional(todoData.value.completionDateActual));
 
       return () => h(VToDoCard, {
         title: todoData.value.title,
@@ -36,8 +37,6 @@ export class ToDoCardBase extends ToDoCard
 
   constructor(
     protected todo: ToDo,
-    protected todosService: ToDosService,
-    protected datesService: DatesService
   )
   {
     super();
