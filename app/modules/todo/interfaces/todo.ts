@@ -1,4 +1,5 @@
 import type { ToDosOwner } from './todosOwner';
+import { Observable } from '@/modules/shared/interfaces/observable';
 
 export abstract class ToDo
 {
@@ -8,6 +9,8 @@ export abstract class ToDo
   abstract completionDatePlanned: Date | undefined;
   abstract completionDateActual: Date | undefined;
   abstract owner: ToDosOwner | undefined;
+
+  abstract readonly data: Observable<ToDoData>;
 
   abstract getData(): ToDoData;
   abstract clone(): ToDo;

@@ -4,7 +4,6 @@ import { ToDosService } from "../interfaces/todosService";
 import type { ToDo } from "../interfaces/todo";
 import { ToDoCardBase } from "../viewmodels/todoCardBase";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(ToDosService)
@@ -21,12 +20,6 @@ export class ToDoElementsFactoryImpl extends ToDoElementsFactory
 
   createToDoCard(todo: ToDo): ToDoCard
   {
-    const card = new ToDoCardBase(this.todosService, this.datesService);
-
-    updatePropertiesWithData(card, {
-      ...todo.getData(),
-    });
-
-    return card;
+    return new ToDoCardBase(todo, this.todosService, this.datesService);
   }
 }

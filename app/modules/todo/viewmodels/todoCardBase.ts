@@ -1,35 +1,31 @@
 import { ToDoCard } from "../interfaces/todoCard";
 import type { ToDosService } from "../interfaces/todosService";
+import type { ToDo } from "../interfaces/todo";
 import VToDoCard from "../components/VToDoCard.vue";
 import type { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { useObservable } from '@/modules/shared/composables/useObservable';
 
 export class ToDoCardBase extends ToDoCard
 {
-  protected data = reactive({
-    id: '',
-    title: '',
-    description: '',
-    completionDatePlanned: <Date | undefined>undefined,
-    completionDateActual: <Date | undefined>undefined,
-  });
-
   readonly key = getUniqueId('todo-card');
 
   readonly component = {
     setup: () =>
     {
+      const todoData = useObservable(this.todo.data);
+
       const onEditButtonClick = async () =>
       {
-        await this.todosService.editToDoAsync(this.id);
+        await this.todosService.editToDoAsync(this.todo.id);
       };
 
-      const completionDatePlanned = computed(() => this.datesService.formatDateOptional(this.completionDatePlanned));
-      const completionDateActual = computed(() => this.datesService.formatDateOptional(this.completionDateActual));
+      const completionDatePlanned = computed(() => this.datesService.formatDateOptional(todoData.value.completionDatePlanned));
+      const completionDateActual = computed(() => this.datesService.formatDateOptional(todoData.value.completionDateActual));
 
       return () => h(VToDoCard, {
-        ...this.data,
-
+        title: todoData.value.title,
+        description: todoData.value.description,
         completionDatePlanned: completionDatePlanned.value,
         completionDateActual: completionDateActual.value,
 
@@ -39,6 +35,7 @@ export class ToDoCardBase extends ToDoCard
   };
 
   constructor(
+    protected todo: ToDo,
     protected todosService: ToDosService,
     protected datesService: DatesService
   )
@@ -48,51 +45,26 @@ export class ToDoCardBase extends ToDoCard
 
   override get id()
   {
-    return this.data.id;
+    return this.todo.id;
   }
 
   override get title()
   {
-    return this.data.title;
+    return this.todo.title;
   }
 
   override get description()
   {
-    return this.data.description;
+    return this.todo.description;
   }
 
   override get completionDatePlanned()
   {
-    return this.data.completionDatePlanned;
+    return this.todo.completionDatePlanned;
   }
 
   override get completionDateActual()
   {
-    return this.data.completionDateActual;
-  }
-
-  override set id(value)
-  {
-    this.data.id = value;
-  }
-
-  override set title(value)
-  {
-    this.data.title = value;
-  }
-
-  override set description(value)
-  {
-    this.data.description = value;
-  }
-
-  override set completionDatePlanned(value)
-  {
-    this.data.completionDatePlanned = value;
-  }
-
-  override set completionDateActual(value)
-  {
-    this.data.completionDateActual = value;
+    return this.todo.completionDateActual;
   }
 }

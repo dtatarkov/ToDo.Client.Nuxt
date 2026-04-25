@@ -45,12 +45,6 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
   {
     this.assertToDoExistence(todo.id);
     await this.todosRepository.saveToDoAsync(todo);
-    this.assertToDoExistence(todo.id);
-
-    const todoCopy = todo.clone();
-    const newTodos = this.todos.value.map(t => t.id === todo.id ? todoCopy : t);
-
-    this.todos.value = newTodos;
   }
 
   destroy()

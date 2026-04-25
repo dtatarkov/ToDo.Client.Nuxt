@@ -1,17 +1,19 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
 import { ToDosOwner } from '../interfaces/todosOwner';
+import { ObservableSource } from '~/modules/shared/entities/observableSource';
+import { Observable } from '@/modules/shared/interfaces/observable';
 
 export class ToDoBase extends ToDo
 {
   private _owner: ToDosOwner | undefined;
 
-  protected data: ToDoData = {
+  private _data = new ObservableSource<ToDoData>({
     id: '',
     title: '',
     description: '',
     completionDatePlanned: undefined,
     completionDateActual: undefined
-  };
+  });
 
   get owner(): ToDosOwner | undefined
   {
@@ -23,60 +25,65 @@ export class ToDoBase extends ToDo
     this._owner = value;
   }
 
+  get data(): Observable<ToDoData>
+  {
+    return this._data;
+  }
+
   get id(): string
   {
-    return this.data.id;
+    return this._data.value.id;
   }
 
   get title(): string
   {
-    return this.data.title;
+    return this._data.value.title;
   }
 
   get description(): string
   {
-    return this.data.description;
+    return this._data.value.description;
   }
 
   get completionDatePlanned(): Date | undefined
   {
-    return this.data.completionDatePlanned;
+    return this._data.value.completionDatePlanned;
   }
 
   get completionDateActual(): Date | undefined
   {
-    return this.data.completionDateActual;
+    return this._data.value.completionDateActual;
   }
 
   set id(value: string)
   {
-    this.data.id = value;
+    this._data.value = { ...this._data.value, id: value };
   }
 
   set title(value: string)
   {
-    this.data.title = value;
+    this._data.value = { ...this._data.value, title: value };
   }
 
   set description(value: string)
   {
-    this.data.description = value;
+    this._data.value = { ...this._data.value, description: value };
   }
 
   set completionDatePlanned(value: Date | undefined)
   {
-    this.data.completionDatePlanned = value;
+    this._data.value = { ...this._data.value, completionDatePlanned: value };
   }
 
   set completionDateActual(value: Date | undefined)
   {
-    this.data.completionDateActual = value;
+    this._data.value = { ...this._data.value, completionDateActual: value };
   }
 
   getData(): ToDoData
   {
     return {
-      ...this.data
+      ...this._data.value
     };
   }
 
