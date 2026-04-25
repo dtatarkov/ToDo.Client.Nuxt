@@ -1,9 +1,8 @@
-import type { ToDoGetDto } from "../types/toDoGetDto";
-import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
+import type { ToDo } from "./todo";
 
 export abstract class ToDosRepository
 {
-  abstract getAllToDosAsync(): Promise<ToDoGetDto[]>;
+  abstract getAllToDosAsync(): Promise<ToDo[]>;
 
-  abstract updateToDoAsync(id: string, data: ToDoUpdateDto): Promise<ToDoGetDto>;
+  abstract saveToDoAsync(todo: ToDo): Promise<void>;
 }

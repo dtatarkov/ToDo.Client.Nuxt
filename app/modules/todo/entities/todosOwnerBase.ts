@@ -1,28 +1,18 @@
 import { ToDosOwner } from "../interfaces/todosOwner";
 import { ToDo } from "../interfaces/todo";
 import { ToDosRepository } from "../interfaces/todosRepository";
-import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
-import type { ToDoGetDto } from "../types/toDoGetDto";
-import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import { SSRLoader } from '@/modules/shared/interfaces/ssrLoader';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(ToDosRepository)
-@dependency(ToDoDtoMapper)
-@dependency(SSRLoader)
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
   protected todos = new ObservableSource(new Array<ToDo>());
 
-  constructor(
-    protected todosRepository: ToDosRepository,
-    protected todoDtoMapper: ToDoDtoMapper,
-    protected ssrLoader: SSRLoader
-  )
+  constructor(protected todosRepository: ToDosRepository)
   {
     super();
   }
@@ -39,10 +29,14 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     return result;
   }
 
-  override async updateToDosAsync()
+  override async updateToDosAsync(): Promise<void>
   {
-    const todoDtos: ToDoGetDto[] = await this.ssrLoader.loadAsync('todos', () => this.todosRepository.getAllToDosAsync());
-    const todos = todoDtos.map(todoDto => this.todoDtoMapper.mapToEntity(todoDto));
+    const todos = await this.todosRepository.getAllToDosAsync();
+
+    for (const todo of todos)
+    {
+      todo.owner = this;
+    }
 
     this.todos.value = todos;
   }
@@ -50,17 +44,18 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
   override async saveToDoAsync(todo: ToDo): Promise<void>
   {
     this.assertToDoExistence(todo.id);
-
-    const updateDto = this.todoDtoMapper.mapToUpdateDto(todo);
-    const updatedDto = await this.todosRepository.updateToDoAsync(todo.id, updateDto);
-    const updatedTodo = this.todoDtoMapper.mapToEntity(updatedDto);
-
+    await this.todosRepository.saveToDoAsync(todo);
     this.assertToDoExistence(todo.id);
 
-    // Replace the todo in the collection
-    const newTodos = this.todos.value.map(t => t.id === todo.id ? updatedTodo : t);
+    const todoCopy = todo.clone();
+    const newTodos = this.todos.value.map(t => t.id === todo.id ? todoCopy : t);
 
     this.todos.value = newTodos;
+  }
+
+  destroy()
+  {
+    this.todos.destroy();
   }
 
   private assertToDoExistence(id: string): void
@@ -69,10 +64,5 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     {
       throw new ToDoNotFoundException(id);
     }
-  }
-
-  destroy()
-  {
-    this.todos.destroy();
   }
 }

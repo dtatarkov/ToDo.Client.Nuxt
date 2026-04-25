@@ -1,7 +1,10 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
+import { ToDosOwner } from '../interfaces/todosOwner';
 
 export class ToDoBase extends ToDo
 {
+  private _owner: ToDosOwner | undefined;
+
   protected data: ToDoData = {
     id: '',
     title: '',
@@ -9,6 +12,16 @@ export class ToDoBase extends ToDo
     completionDatePlanned: undefined,
     completionDateActual: undefined
   };
+
+  get owner(): ToDosOwner | undefined
+  {
+    return this._owner;
+  }
+
+  set owner(value: ToDosOwner | undefined)
+  {
+    this._owner = value;
+  }
 
   get id(): string
   {
@@ -76,7 +89,18 @@ export class ToDoBase extends ToDo
     todo.description = this.description;
     todo.completionDatePlanned = this.completionDatePlanned;
     todo.completionDateActual = this.completionDateActual;
+    todo.owner = this.owner;
 
     return todo;
+  }
+
+  async saveAsync(): Promise<void> 
+  {
+    if (!this.owner)
+    {
+      throw new Error('Owner is not available');
+    }
+
+    this._owner?.saveToDoAsync(this);
   }
 }

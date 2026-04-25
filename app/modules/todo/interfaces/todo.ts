@@ -1,3 +1,5 @@
+import type { ToDosOwner } from './todosOwner';
+
 export abstract class ToDo
 {
   abstract id: string;
@@ -5,9 +7,11 @@ export abstract class ToDo
   abstract description: string;
   abstract completionDatePlanned: Date | undefined;
   abstract completionDateActual: Date | undefined;
+  abstract owner: ToDosOwner | undefined;
 
   abstract getData(): ToDoData;
   abstract clone(): ToDo;
+  abstract saveAsync(): Promise<void>;
 }
 
 export type ToDoData = {

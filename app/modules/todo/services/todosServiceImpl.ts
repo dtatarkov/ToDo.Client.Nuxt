@@ -41,8 +41,6 @@ export class TodosServiceImpl extends ToDosService
       throw new ToDoNotFoundException(todoId);
     }
 
-    const todoToEdit = todo.clone();
-
     const form = this.formFactory.create<ToDo>();
 
     form.setElements({
@@ -70,11 +68,11 @@ export class TodosServiceImpl extends ToDosService
     {
       await form.use(async () =>
       {
-        todoToEdit.title = formData.title;
-        todoToEdit.description = formData.description;
-        todoToEdit.completionDatePlanned = formData.completionDatePlanned;
+        todo.title = formData.title;
+        todo.description = formData.description;
+        todo.completionDatePlanned = formData.completionDatePlanned;
 
-        await this.owner.saveToDoAsync(todoToEdit);
+        await todo.saveAsync();
       });
 
       modal.close();
