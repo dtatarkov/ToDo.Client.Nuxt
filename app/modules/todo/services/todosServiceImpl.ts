@@ -31,16 +31,4 @@ export class TodosServiceImpl extends ToDosService
   {
     await this.owner.updateToDosAsync();
   }
-
-  override async editToDoAsync(todoId: string): Promise<void>
-  {
-    const todo = this.owner.getToDoById(todoId);
-
-    if (!todo)
-    {
-      throw new ToDoNotFoundException(todoId);
-    }
-
-    todo.showEditDialog();
-  }
 }
