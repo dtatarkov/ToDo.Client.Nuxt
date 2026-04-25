@@ -1,8 +1,8 @@
 import { UIKitElementsFactory } from "../interfaces/uiKitElementsFactory";
 import { UIKitElementsFactoryImpl } from "../factories/uiKitElementsFactoryImpl";
-import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
+import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
 export function useUIKitServices(): void
 {
-    registerService(UIKitElementsFactory).to(UIKitElementsFactoryImpl).asTransient();
+    useServiceRegistration(UIKitElementsFactory).to(UIKitElementsFactoryImpl).asTransient();
 }

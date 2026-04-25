@@ -8,13 +8,13 @@ import { ToDosRepositoryImpl } from "../repositories/todosRepositoryImpl";
 import { TodosServiceImpl } from "../services/todosServiceImpl";
 import { ToDoElementsFactory } from "../interfaces/todoElementsFactory";
 import { ToDoElementsFactoryImpl } from "../factories/todoElementsFactoryImpl";
-import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
+import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
 export function useTodoServices(): void
 {
-    registerService(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
-    registerService(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
-    registerService(ToDosOwner).to(ToDosOwnerBase).asScoped();
-    registerService(ToDosService).to(TodosServiceImpl).asTransient();
-    registerService(ToDoElementsFactory).to(ToDoElementsFactoryImpl).asTransient();
+    useServiceRegistration(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
+    useServiceRegistration(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
+    useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asScoped();
+    useServiceRegistration(ToDosService).to(TodosServiceImpl).asTransient();
+    useServiceRegistration(ToDoElementsFactory).to(ToDoElementsFactoryImpl).asTransient();
 }

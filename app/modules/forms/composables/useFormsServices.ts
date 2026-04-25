@@ -2,10 +2,10 @@ import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import { FormFactory } from "../interfaces/formFactory";
 import { FormElementFactoryImpl } from "../factories/formElementFactoryImpl";
 import { FormFactoryImpl } from "../factories/formFactoryImpl";
-import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
+import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
 export function useFormsServices(): void
 {
-    registerService(FormElementFactory).to(FormElementFactoryImpl).asTransient();
-    registerService(FormFactory).to(FormFactoryImpl).asTransient();
+    useServiceRegistration(FormElementFactory).to(FormElementFactoryImpl).asTransient();
+    useServiceRegistration(FormFactory).to(FormFactoryImpl).asTransient();
 }

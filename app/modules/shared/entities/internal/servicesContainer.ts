@@ -23,7 +23,7 @@ const defaultContainerSettings: ContainerSettings = {
  * Abstract scope for service resolution with hierarchical support.
  * Provides methods to get services, destroy the scope, and create child scopes.
  */
-abstract class ServicesScope
+export abstract class ServicesScope
 {
     /**
      * Get a service instance by its identifier.
