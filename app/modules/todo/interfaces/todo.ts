@@ -15,6 +15,7 @@ export abstract class ToDo
   abstract getData(): ToDoData;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
+  abstract showEditDialog(): void;
 }
 
 export type ToDoData = {

@@ -2,6 +2,9 @@ import { ToDo, type ToDoData } from "../interfaces/todo";
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { ObservableSource } from '~/modules/shared/entities/observableSource';
 import { Observable } from '@/modules/shared/interfaces/observable';
+import { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import { FormElementType } from '@/modules/forms/enums/formElementType';
 
 export class ToDoBase extends ToDo
 {
@@ -14,6 +17,14 @@ export class ToDoBase extends ToDo
     completionDatePlanned: undefined,
     completionDateActual: undefined
   });
+
+  constructor(
+    private _formFactory: FormFactory,
+    private _overlayService: OverlayService
+  )
+  {
+    super();
+  }
 
   get owner(): ToDosOwner | undefined
   {
@@ -89,7 +100,7 @@ export class ToDoBase extends ToDo
 
   clone(): ToDo
   {
-    const todo = new ToDoBase();
+    const todo = new ToDoBase(this._formFactory, this._overlayService);
 
     todo.id = this.id;
     todo.title = this.title;
@@ -109,5 +120,49 @@ export class ToDoBase extends ToDo
     }
 
     this._owner?.saveToDoAsync(this);
+  }
+
+  showEditDialog(): void
+  {
+    const form = this._formFactory.create<ToDo>();
+
+    form.setElements({
+      title: {
+        type: FormElementType.inputText,
+        label: 'Название задачи',
+        placeholder: 'Введите название задачи',
+      },
+
+      description: {
+        type: FormElementType.textarea,
+        label: 'Описание задачи',
+        placeholder: 'Введите описание задачи'
+      },
+
+      completionDatePlanned: {
+        type: FormElementType.inputDateTime,
+        label: 'Плановая дата выполнения',
+      }
+    });
+
+    form.setData(this);
+
+    form.onSubmit.subscribe(async (formData) =>
+    {
+      await form.use(async () =>
+      {
+        this.title = formData.title;
+        this.description = formData.description;
+        this.completionDatePlanned = formData.completionDatePlanned;
+
+        await this.saveAsync();
+      });
+
+      modal.close();
+    });
+
+    const modal = this._overlayService.createModalEditForm(form);
+    modal.title = 'Редактирование';
+    modal.content = form;
   }
 }

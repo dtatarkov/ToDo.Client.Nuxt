@@ -41,45 +41,6 @@ export class TodosServiceImpl extends ToDosService
       throw new ToDoNotFoundException(todoId);
     }
 
-    const form = this.formFactory.create<ToDo>();
-
-    form.setElements({
-      title: {
-        type: FormElementType.inputText,
-        label: 'Название задачи',
-        placeholder: 'Введите название задачи',
-      },
-
-      description: {
-        type: FormElementType.textarea,
-        label: 'Описание задачи',
-        placeholder: 'Введите описание задачи'
-      },
-
-      completionDatePlanned: {
-        type: FormElementType.inputDateTime,
-        label: 'Плановая дата выполнения',
-      }
-    });
-
-    form.setData(todo);
-
-    form.onSubmit.subscribe(async (formData) =>
-    {
-      await form.use(async () =>
-      {
-        todo.title = formData.title;
-        todo.description = formData.description;
-        todo.completionDatePlanned = formData.completionDatePlanned;
-
-        await todo.saveAsync();
-      });
-
-      modal.close();
-    });
-
-    const modal = this.overlayService.createModalEditForm(form);
-    modal.title = 'Редактирование';
-    modal.content = form;
+    todo.showEditDialog();
   }
 }

@@ -4,20 +4,28 @@ import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
+import { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(DatesService)
+@dependency(FormFactory)
+@dependency(OverlayService)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
-  constructor(protected datesService: DatesService)
+  constructor(
+    protected datesService: DatesService,
+    protected formFactory: FormFactory,
+    protected overlayService: OverlayService
+  )
   {
     super();
   }
 
   mapToEntity(dto: ToDoGetDto): ToDo
   {
-    const todo = new ToDoBase();
+    const todo = new ToDoBase(this.formFactory, this.overlayService);
 
     updatePropertiesWithData(todo, {
       ...dto,
