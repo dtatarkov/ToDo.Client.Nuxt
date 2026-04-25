@@ -1,10 +1,8 @@
-import type { Action } from '../types/action';
+import { Subscribable } from './subscribable';
 
-export abstract class EventBus<T = void>
+export abstract class EventBus<T = void> extends Subscribable<T>
 {
   abstract subscriptionsCount: number;
 
-  abstract subscribe(handler: Action<[T]>): Action;
   abstract emit(data: T): void;
-  abstract destroy(): void;
 }
