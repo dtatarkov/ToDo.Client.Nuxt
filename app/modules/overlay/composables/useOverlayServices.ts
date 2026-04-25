@@ -8,7 +8,7 @@ import { registerService } from "@/modules/shared/serviceLocator/serviceLocator"
 
 export function useOverlayServices(): void
 {
-    registerService(Overlay, OverlayBase).asScoped();
-    registerService(OverlayService, OverlayServiceImpl).asTransient();
-    registerService(ModalFactory, ModalFactoryImpl).asTransient();
+    registerService(Overlay).to(OverlayBase).asSingleton();
+    registerService(OverlayService).to(OverlayServiceImpl).asTransient();
+    registerService(ModalFactory).to(ModalFactoryImpl).asTransient();
 }

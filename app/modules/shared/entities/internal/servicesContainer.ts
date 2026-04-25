@@ -19,16 +19,11 @@ const defaultContainerSettings: ContainerSettings = {
     defaultScope: BindingScope.Scoped
 };
 
-type ServicesScopeLookupResult<T> = {
-    value: T | undefined;
-    hasValue: boolean;
-};
-
 /**
  * Abstract scope for service resolution with hierarchical support.
  * Provides methods to get services, destroy the scope, and create child scopes.
  */
-export abstract class ServicesScope
+abstract class ServicesScope
 {
     /**
      * Get a service instance by its identifier.
@@ -36,8 +31,6 @@ export abstract class ServicesScope
      * @returns Resolved service instance
      */
     abstract get<T>(identifier: ServiceIdentifier<T>): T;
-
-    abstract lookup<T>(identifier: ServiceIdentifier<T>): ServicesScopeLookupResult<T>;
 
     /**
      * Destroy this scope, clearing all scoped service instances.
@@ -55,7 +48,7 @@ export abstract class ServicesScope
  * Concrete implementation of ServicesScope for hierarchical service resolution.
  * Stores scoped service instances and delegates to parent for binding resolution.
  */
-export class ServicesScopeImpl extends ServicesScope
+class ServicesScopeImpl extends ServicesScope
 {
     private instancesMap = new Map<ServiceIdentifier<any>, any>();
     private destroyables = new Set<Destroyable>();
@@ -67,31 +60,6 @@ export class ServicesScopeImpl extends ServicesScope
     )
     {
         super();
-    }
-
-    override lookup<T>(identifier: ServiceIdentifier<T>): ServicesScopeLookupResult<T>
-    {
-        this.assertNotDestroyed();
-
-        let result: ServicesScopeLookupResult<T>;
-
-        if (this.instancesMap.has(identifier))
-        {
-            result = {
-                value: this.instancesMap.get(identifier),
-                hasValue: true,
-            };
-        }
-        else if (this.parent != undefined)
-        {
-            result = this.parent.lookup(identifier);
-        }
-        else 
-        {
-            result = { value: undefined, hasValue: false };
-        }
-
-        return result;
     }
 
     override get<T>(identifier: ServiceIdentifier<T>): T
@@ -148,14 +116,20 @@ export class ServicesScopeImpl extends ServicesScope
         let instance: T;
 
         // Determine scope and resolve accordingly
-        switch (binding.scope)
+        switch (binding.bindingScope)
         {
             case BindingScope.Singleton:
                 instance = this.resolveSingleton(binding);
+                break;
+
             case BindingScope.Scoped:
                 instance = this.resolveScoped(binding);
+                break;
+
             case BindingScope.Transient:
                 instance = this.resolveTransient(binding);
+                break;
+
             default:
                 throw new Error(`Unknown binding scope for ${binding.identifier.name || binding.identifier}`);
         }
@@ -165,7 +139,7 @@ export class ServicesScopeImpl extends ServicesScope
 
     private createBindingInstance<T>(binding: Binding<T>)
     {
-        const instance = binding.createInstance();
+        const instance = binding.createInstance(this);
 
         if (Destroyable.isDestroyable(instance))
         {
@@ -208,17 +182,6 @@ export class ServicesScopeImpl extends ServicesScope
             return instance;
         }
 
-        // Not found in current scope, ask parent if exists
-        if (this.parent)
-        {
-            const { value, hasValue } = this.parent.lookup(binding.identifier);
-
-            if (hasValue)
-            {
-                return value as T;
-            }
-        }
-
         // Create new instance and store in current scope
         const instance = this.createBindingInstance(binding);
         this.instancesMap.set(binding.identifier, instance);
@@ -237,29 +200,29 @@ export class ServicesScopeImpl extends ServicesScope
 
 abstract class Binding<T>
 {
-    private _scope: BindingScope | undefined;
+    private _bindingScope: BindingScope | undefined;
 
     constructor(
         protected settings: ContainerSettings,
         public readonly identifier: ServiceIdentifier<T>
     ) { }
 
-    get scope(): BindingScope
+    get bindingScope(): BindingScope
     {
-        return this._scope ?? this.settings.defaultScope;
+        return this._bindingScope ?? this.settings.defaultScope;
     }
 
-    setScope(scope: BindingScope): void
+    setBindingScope(scope: BindingScope): void
     {
-        if (this._scope !== undefined)
+        if (this._bindingScope !== undefined)
         {
             throw new Error('Scope already set');
         }
 
-        this._scope = scope;
+        this._bindingScope = scope;
     }
 
-    abstract createInstance(): T;
+    abstract createInstance(servicesScope: ServicesScope): T;
 }
 
 class ConstructorBinding<T> extends Binding<T>
@@ -267,19 +230,18 @@ class ConstructorBinding<T> extends Binding<T>
     constructor(
         settings: ContainerSettings,
         identifier: ServiceIdentifier<T>,
-        private container: ServicesContainer,
         private constructorFn: Constructor<T>
     )
     {
         super(settings, identifier);
     }
 
-    createInstance(): T
+    createInstance(servicesScope: ServicesScope): T
     {
         const dependencies = getDependencies(this.constructorFn);
 
         const resolvedDependencies = dependencies.map(dep =>
-            this.container.get(dep));
+            servicesScope.get(dep));
 
         const instance = Reflect.construct(this.constructorFn, resolvedDependencies);
 
@@ -304,24 +266,32 @@ class FactoryBinding<T> extends Binding<T>
     }
 }
 
-export class BindingBuilder<T>
+export abstract class BindingBuilder<T>
+{
+    abstract to(implementation: Constructor<T>): BindingScopeBuilder;
+    abstract toDynamicValue(factory: () => T): BindingScopeBuilder;
+}
+
+class BindingBuilderImpl<T> extends BindingBuilder<T>
 {
     constructor(
         private bindings: Map<ServiceIdentifier<any>, Binding<any>>,
         private identifier: ServiceIdentifier<T>,
-        private container: ServicesContainer,
         private settings: ContainerSettings
-    ) { }
-
-    to(implementation: Constructor<T>): BindingScopeBuilder<T>
+    )
     {
-        const binding = new ConstructorBinding(this.settings, this.identifier, this.container, implementation);
+        super();
+    }
+
+    override to(implementation: Constructor<T>): BindingScopeBuilder
+    {
+        const binding = new ConstructorBinding(this.settings, this.identifier, implementation);
         const builder = this.addBinding(binding);
 
         return builder;
     }
 
-    toDynamicValue(factory: () => T): BindingScopeBuilder<T>
+    override toDynamicValue(factory: () => T): BindingScopeBuilder
     {
         const binding = new FactoryBinding(this.settings, this.identifier, factory);
         const builder = this.addBinding(binding);
@@ -329,7 +299,7 @@ export class BindingBuilder<T>
         return builder;
     }
 
-    private addBinding(binding: Binding<T>): BindingScopeBuilder<T>
+    private addBinding(binding: Binding<T>): BindingScopeBuilder
     {
         if (this.bindings.has(this.identifier))
         {
@@ -338,31 +308,41 @@ export class BindingBuilder<T>
 
         this.bindings.set(this.identifier, binding);
 
-        const builder = new BindingScopeBuilder(binding);
+        const builder = new BindingScopeBuilderImpl(binding);
 
         return builder;
     }
 }
 
-export class BindingScopeBuilder<T>
+export abstract class BindingScopeBuilder
+{
+    abstract asTransient(): void;
+    abstract asScoped(): void;
+    abstract asSingleton(): void;
+}
+
+class BindingScopeBuilderImpl<T> extends BindingScopeBuilder
 {
     constructor(
         private binding: Binding<T>
-    ) { }
-
-    asTransient(): void
+    )
     {
-        this.binding.setScope(BindingScope.Transient);
+        super();
     }
 
-    asScoped(): void
+    override asTransient(): void
     {
-        this.binding.setScope(BindingScope.Scoped);
+        this.binding.setBindingScope(BindingScope.Transient);
     }
 
-    asSingleton(): void
+    override asScoped(): void
     {
-        this.binding.setScope(BindingScope.Singleton);
+        this.binding.setBindingScope(BindingScope.Scoped);
+    }
+
+    override asSingleton(): void
+    {
+        this.binding.setBindingScope(BindingScope.Singleton);
     }
 }
 
@@ -378,9 +358,9 @@ export class ServicesContainer
         this.rootScope = new ServicesScopeImpl(this.bindings);
     }
 
-    bind<T>(identifier: ServiceIdentifier<T>): BindingBuilder<T>
+    bind<T>(identifier: ServiceIdentifier<T>): BindingBuilderImpl<T>
     {
-        return new BindingBuilder(this.bindings, identifier, this, this.settings);
+        return new BindingBuilderImpl(this.bindings, identifier, this.settings);
     }
 
     get<T>(identifier: ServiceIdentifier<T>): T

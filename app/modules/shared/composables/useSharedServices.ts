@@ -13,23 +13,23 @@ import { VueComponentPropsFactoryImpl } from '../factories/vueComponentPropsFact
 import { DataAdapterFactoryImpl } from '../factories/dataAdapterFactoryImpl';
 import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
 import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
-import { registerService, registerServiceFactory } from "@/modules/shared/serviceLocator/serviceLocator";
+import { registerService } from "@/modules/shared/serviceLocator/serviceLocator";
 import { useRuntimeConfig } from "#imports";
 
 export function useSharedServices(): void
 {
-    registerServiceFactory(AppPublicRuntimeConfig, () =>
+    registerService(AppPublicRuntimeConfig).toDynamicValue(() =>
     {
         const config = useRuntimeConfig();
 
         return config.public;
     }).asSingleton();
 
-    registerService(DatesService, DatesServiceImpl).asTransient();
-    registerService(StringsService, StringsServiceImpl).asTransient();
-    registerService(SSRLoader, SSRLoaderImpl).asScoped();
-    registerService(ZonedDateTimeMapper, ZonedDateTimeMapperImpl).asTransient();
-    registerService(TimeMapper, TimeMapperImpl).asTransient();
-    registerService(VueComponentPropsFactory, VueComponentPropsFactoryImpl).asTransient();
-    registerService(DataAdapterFactory, DataAdapterFactoryImpl).asTransient();
+    registerService(DatesService).to(DatesServiceImpl).asTransient();
+    registerService(StringsService).to(StringsServiceImpl).asTransient();
+    registerService(SSRLoader).to(SSRLoaderImpl).asScoped();
+    registerService(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
+    registerService(TimeMapper).to(TimeMapperImpl).asTransient();
+    registerService(VueComponentPropsFactory).to(VueComponentPropsFactoryImpl).asTransient();
+    registerService(DataAdapterFactory).to(DataAdapterFactoryImpl).asTransient();
 }
