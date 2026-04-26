@@ -1,4 +1,4 @@
-import type { ButtonElement } from '~/modules/uikit/interfaces/buttonElement';
+import type { ButtonElement } from '@/modules/uikit/interfaces/buttonElement';
 import { Modal } from './modal';
 
 

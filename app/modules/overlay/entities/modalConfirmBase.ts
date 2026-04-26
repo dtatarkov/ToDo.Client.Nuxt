@@ -1,7 +1,7 @@
-import { NotInitializedException } from '~/modules/shared/exceptions/notInitializedException';
-import type { ButtonElement } from '~/modules/uikit/interfaces/buttonElement';
-import type { UIElement } from '~/modules/uikit/interfaces/uiElement';
-import type { UIKitElementsFactory } from '~/modules/uikit/interfaces/uiKitElementsFactory';
+import { NotInitializedException } from '@/modules/shared/exceptions/notInitializedException';
+import type { ButtonElement } from '@/modules/uikit/interfaces/buttonElement';
+import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 import { ModalConfirm } from '../interfaces/modalConfirm';
 import { ModalBase } from './modalBase';
 

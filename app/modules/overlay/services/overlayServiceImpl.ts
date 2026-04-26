@@ -1,6 +1,6 @@
 import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
-import type { Observable } from '~/modules/shared/interfaces/observable';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from '../interfaces/modal';
 import type { ModalConfirm } from '../interfaces/modalConfirm';
 import type { OverlayElement } from '../interfaces/overlayElement';

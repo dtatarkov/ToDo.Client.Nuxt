@@ -1,6 +1,6 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
 import { ToDosOwner } from '../interfaces/todosOwner';
-import { ObservableSource } from '~/modules/shared/entities/observableSource';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import { Observable } from '@/modules/shared/interfaces/observable';
 import { FormFactory } from '@/modules/forms/interfaces/formFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';

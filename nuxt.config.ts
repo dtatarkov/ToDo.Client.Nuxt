@@ -9,11 +9,11 @@ export default defineNuxtConfig({
     '@nuxt/ui',
   ],
 
-  css: ['~/assets/css/main.css'],
+  css: ['@/assets/css/main.css'],
 
   components: [
     {
-      path: '~/components',
+      path: '@/components',
       pathPrefix: false,
     },
   ],
@@ -60,4 +60,19 @@ export default defineNuxtConfig({
   experimental: {
     decorators: true,
   },
+
+  hooks: {
+    'prepare:types'({ tsConfig })
+    {
+      const aliasesToRemoveFromAutocomplete = ['~', '~/*', '~~', '~~/*'];
+
+      for (const alias of aliasesToRemoveFromAutocomplete)
+      {
+        if (tsConfig.compilerOptions?.paths[alias])
+        {
+          delete tsConfig.compilerOptions.paths[alias];
+        }
+      }
+    }
+  }
 });

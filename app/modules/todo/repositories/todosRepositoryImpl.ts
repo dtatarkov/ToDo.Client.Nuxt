@@ -4,7 +4,7 @@ import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import { ToDo } from "../interfaces/todo";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoGetDto } from '../types/toDoGetDto';
-import { updatePropertiesWithData } from '~/modules/shared/utils/updatePropertiesWithData';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { SSRLoader } from '@/modules/shared/interfaces/ssrLoader';
 
 @dependency(AppPublicRuntimeConfig)
