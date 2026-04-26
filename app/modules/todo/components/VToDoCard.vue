@@ -20,11 +20,11 @@
     <template #footer v-if="hasFooter">
       <VInfoBlock>
         <VInfoRow label="Выполнено" v-if="props.completionDateActual.length">
-          <VDate :date="props.completionDateActual" />
+          {{ props.completionDateActual }}
         </VInfoRow>
 
         <VInfoRow label="Выполнить до" v-else-if="props.completionDatePlanned.length">
-          <VDate :date="props.completionDatePlanned" />
+          {{ props.completionDatePlanned }}
         </VInfoRow>
       </VInfoBlock>
     </template>
@@ -34,7 +34,6 @@
 <script setup lang="ts">
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
-import VDate from '@/modules/uikit/components/VDate.vue';
 
 const emits = defineEmits<{
   (e: 'edit-button-click'): void
