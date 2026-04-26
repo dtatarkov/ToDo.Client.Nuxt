@@ -18,18 +18,13 @@
     <div class="todo-card__description">{{ props.description }}</div>
 
     <template #footer v-if="hasFooter">
-      <VInfoBlock>
-        <component :is="completionDateActualRow.component" v-if="props.completionDateActual.length" />
-        <component :is="completionDatePlannedRow.component" v-if="props.completionDatePlanned.length" />
-      </VInfoBlock>
+      <component :is="infoBlock.component" />
     </template>
   </UCard>
 </template>
 
 <script setup lang="ts">
 import { useService } from '@/modules/shared/composables/useService';
-import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
-import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 
 const uikitElementsFactory = useService(UIKitElementsFactory);
@@ -55,13 +50,17 @@ const cardUIOptions = {
   header: 'flex gap-4 items-center text-primary'
 }
 
-const completionDateActualRow = uikitElementsFactory.createInfoRow();
-completionDateActualRow.label = 'Выполнено';
-completionDateActualRow.content = props.completionDateActual;
-
-const completionDatePlannedRow = uikitElementsFactory.createInfoRow();
-completionDatePlannedRow.label = 'Выполнить до';
-completionDatePlannedRow.content = props.completionDatePlanned;
+const infoBlock = uikitElementsFactory.createInfoBlock();
+const completionDateActualRow = infoBlock.createRow({ label: 'Выполнено' });
+const completionDatePlannedRow = infoBlock.createRow({ label: 'Выполнить до'});
 
 const hasFooter = computed(() => props.completionDateActual.length > 0 || props.completionDatePlanned.length > 0);
+
+watchEffect(() => {
+  completionDateActualRow.content = props.completionDateActual;
+});
+
+watchEffect(() => {
+  completionDatePlannedRow.content = props.completionDatePlanned;
+});
 </script>

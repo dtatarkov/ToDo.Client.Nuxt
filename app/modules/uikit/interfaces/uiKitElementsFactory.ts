@@ -3,7 +3,7 @@ import type { InputElement } from './inputElement';
 import type { Grid } from './grid';
 import type { UIElement } from './uiElement';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { InfoRow } from './infoRow';
+import type { InfoBlock } from './infoBlock';
 
 export abstract class UIKitElementsFactory
 {
@@ -14,5 +14,5 @@ export abstract class UIKitElementsFactory
     abstract createInputDateTime(): InputElement<Date | undefined>;
     abstract createButton(): ButtonElement;
     abstract createGrid<T extends UIElement = UIElement>(elements: Observable<T[]>): Grid<T>;
-    abstract createInfoRow(): InfoRow;
+    abstract createInfoBlock(): InfoBlock;
 }
