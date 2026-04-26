@@ -7,9 +7,11 @@ import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
 import { ButtonElementBase } from "../entities/buttonElementBase";
 import { GridBase } from "../entities/gridBase";
+import { InfoRowBase } from "../entities/infoRowBase";
 import type { ButtonElement } from '../interfaces/buttonElement';
 import type { Grid } from '../interfaces/grid';
 import type { UIElement } from '../interfaces/uiElement';
+import type { InfoRow } from '../interfaces/infoRow';
 import { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
@@ -97,5 +99,10 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
     override createGrid<T extends UIElement = UIElement>(elements: Observable<T[]>): Grid<T>
     {
         return new GridBase<T>(elements);
+    }
+
+    override createInfoRow(): InfoRow
+    {
+        return new InfoRowBase();
     }
 }
