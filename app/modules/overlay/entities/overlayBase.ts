@@ -2,10 +2,13 @@ import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { Overlay } from "../interfaces/internal/overlay";
 import { OverlayElement } from '../interfaces/overlayElement';
+import type { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
+import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
 
 export class OverlayBase extends Overlay
 {
   private elements = new ObservableSource(new Array<OverlayElement>());
+  private elementEffects = new Map<OverlayElement, EffectsContainer>();
 
   override getElements(): Observable<OverlayElement[]>
   {
@@ -25,6 +28,9 @@ export class OverlayBase extends Overlay
     newElementsSet.delete(element);
 
     this.elements.value = [...newElementsSet];
+
+    const effectsContainer = this.elementEffects.get(element);
+    effectsContainer?.destroy();
   }
 
   override addElement(element: OverlayElement): void
@@ -36,13 +42,18 @@ export class OverlayBase extends Overlay
       return;
     }
 
-    element.onClose.subscribe(() =>
-    {
-      this.removeElement(element);
-    });
-
     const newElementsSet = new Set([...currentElementsSet, element]);
-
     this.elements.value = [...newElementsSet];
+
+    const effectsContainer = new EffectsContainerBase();
+    this.elementEffects.set(element, effectsContainer);
+
+    effectsContainer.withContainer(() =>
+    {
+      element.onClose.subscribe(() =>
+      {
+        this.removeElement(element);
+      });
+    });
   }
 }

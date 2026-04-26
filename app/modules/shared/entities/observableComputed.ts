@@ -8,11 +8,14 @@ import type { Observable } from '../interfaces/observable';
 import type { Action } from '../types/action';
 import type { Func } from '../types/func';
 import { DestroyedException } from '../exceptions/destroyedException';
+import type { EffectsContainer } from '../interfaces/effectsContainer';
+import { EffectsContainerBase } from './effectsContainerBase';
 
 export class ObservableComputed<T> extends ObservableBase<T>
 {
     private _state: ObservableComputedState<T>;
     private _states: Record<ObservableComputedStateType, Func<ObservableComputedState<T>>>;
+    private _effectsContainer = new EffectsContainerBase();
 
     get value()
     {
@@ -70,12 +73,12 @@ export class ObservableComputed<T> extends ObservableBase<T>
             }
         };
 
-        const dependencies = new Map<Observable<any>, Action>();
+        const dependencies = new Set<Observable<any>>();
 
         this._states = {
             [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this._factory, this, this.eventbus),
-            [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
-            [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this, this.eventbus),
+            [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this._effectsContainer, this, this.eventbus),
+            [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this._effectsContainer, this, this.eventbus),
             [ObservableComputedStateType.destroyed]: () => new ObservableComputedStateDestroyed(),
         };
 
@@ -90,7 +93,7 @@ export class ObservableComputed<T> extends ObservableBase<T>
     override destroy(): void
     {
         this._state.destroy();
-
+        this._effectsContainer.destroy();
     }
 
     setState(stateType: ObservableComputedStateType)
@@ -187,7 +190,8 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
         protected stateReader: ValueReader<ObservableComputedState<T>>,
         protected valueAccessor: ValueAccessor<T>,
         protected contextAccessor: ValueAccessor<ObservableTrackingContext | undefined>,
-        protected dependencies: Map<Observable<any>, Action>,
+        protected dependencies: Set<Observable<any>>,
+        protected effectsContainer: EffectsContainer,
         observableComputed: ObservableComputed<T>,
 
         eventbus: EventBus<T>,
@@ -213,6 +217,7 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
     {
         super.handleDestroy();
         this.clearDependencies();
+        this.effectsContainer.destroy();
     }
 
     protected compute(): T
@@ -247,21 +252,20 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
             return;
         }
 
-        const unsubscribe = observable.subscribe(() =>
+        this.effectsContainer.withContainer(() =>
         {
-            this.stateReader.value.handleChange();
-        });
+            observable.subscribe(() =>
+            {
+                this.stateReader.value.handleChange();
+            });
 
-        this.dependencies.set(observable, unsubscribe);
+            this.dependencies.add(observable);
+        });
     }
 
     private clearDependencies(): void
     {
-        for (const unsubscribe of this.dependencies.values())
-        {
-            unsubscribe();
-        }
-
+        this.effectsContainer.clear();
         this.dependencies.clear();
     }
 }

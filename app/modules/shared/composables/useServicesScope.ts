@@ -1,7 +1,7 @@
 import type { ServicesScope } from '../entities/internal/servicesContainer';
-import { servicesScopeKey } from './useService';
 import { useServicesContainer } from './useServicesContainer';
 
+export const servicesScopeKey: InjectionKey<ServicesScope | undefined> = Symbol('$ServicesScope');
 
 export function useServicesScope(): ServicesScope
 {

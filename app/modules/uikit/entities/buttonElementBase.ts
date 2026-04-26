@@ -70,4 +70,9 @@ export class ButtonElementBase extends ButtonElement
     {
         this.props.loading = value;
     }
+
+    override destroy(): void
+    {
+        this.click.destroy();
+    }
 }

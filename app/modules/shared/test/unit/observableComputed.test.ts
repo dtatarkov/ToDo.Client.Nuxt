@@ -3,9 +3,22 @@ import { ObservableComputed } from '../../entities/observableComputed';
 import { ObservableSource } from '../../entities/observableSource';
 import { DestroyedException } from '../../exceptions/destroyedException';
 import { awaitMicrotasks } from '../../utils/awaitMicrotasks';
+import { EffectsContainer } from '../../interfaces/effectsContainer';
+import { EffectsContainerBase } from '../../entities/effectsContainerBase';
 
 describe('ObservableComputed', () =>
 {
+    beforeEach(() =>
+    {
+        EffectsContainer.current = new EffectsContainerBase();
+    });
+
+    afterEach(() =>
+    {
+        EffectsContainer.current?.destroy();
+        EffectsContainer.current = undefined;
+    });
+
     describe('initialization', () =>
     {
         it('should compute initial value from factory', () =>

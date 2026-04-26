@@ -1,8 +1,21 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { ObservableSource } from '../../entities/observableSource';
+import { EffectsContainer } from '../../interfaces/effectsContainer';
+import { EffectsContainerBase } from '../../entities/effectsContainerBase';
 
 describe('ObservableSource', () =>
 {
+    beforeEach(() =>
+    {
+        EffectsContainer.current = new EffectsContainerBase();
+    });
+
+    afterEach(() =>
+    {
+        EffectsContainer.current?.destroy();
+        EffectsContainer.current = undefined;
+    });
+
     describe('initialization', () =>
     {
         it('should hold initial value', () =>

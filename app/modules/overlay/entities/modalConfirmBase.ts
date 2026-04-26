@@ -116,6 +116,8 @@ export class ModalConfirmBase extends ModalConfirm
     {
         this.assertInitialization();
         this.modal.close();
+        this._buttonConfirm?.destroy();
+        this._buttonCancel?.destroy();
     }
 
     protected createButtonConfirm(): ButtonElement

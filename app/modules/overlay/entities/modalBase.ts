@@ -3,6 +3,7 @@ import VModal from '../components/VModal.vue';
 import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
 export class ModalBase extends Modal
 {
@@ -61,5 +62,19 @@ export class ModalBase extends Modal
   close()
   {
     this.onClose.emit();
+    this.onClose.destroy();
+
+    if (Destroyable.isDestroyable(this.content))
+    {
+      this.content.destroy();
+    }
+
+    for (const control of this.controls)
+    {
+      if (Destroyable.isDestroyable(control))
+      {
+        control.destroy();
+      }
+    }
   }
 }

@@ -1,17 +1,22 @@
 import type { Observable } from '../interfaces/observable';
+import { useEffectsContainer } from './useEffectsContainer';
 
 export function useObservable<T>(observable: Observable<T>)
 {
+  const effectsContainer = useEffectsContainer();
   const data = shallowRef(observable.value);
 
-  const unsubscribe = observable.subscribe((newValue: T) =>
+  effectsContainer.withContainer(() =>
   {
-    data.value = newValue;
+    observable.subscribe((newValue: T) =>
+    {
+      data.value = newValue;
+    });
   });
 
   onScopeDispose(() =>
   {
-    unsubscribe();
+    effectsContainer.destroy();
   });
 
   return data;

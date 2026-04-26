@@ -5,6 +5,7 @@ import { Observable } from '@/modules/shared/interfaces/observable';
 import { FormFactory } from '@/modules/forms/interfaces/formFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
+import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
 
 export class ToDoBase extends ToDo
 {
@@ -124,45 +125,55 @@ export class ToDoBase extends ToDo
 
   showEditDialog(): void
   {
-    const form = this._formFactory.create<ToDo>();
+    const effectsContainer = new EffectsContainerBase();
 
-    form.setElements({
-      title: {
-        type: FormElementType.inputText,
-        label: 'Название задачи',
-        placeholder: 'Введите название задачи',
-      },
-
-      description: {
-        type: FormElementType.textarea,
-        label: 'Описание задачи',
-        placeholder: 'Введите описание задачи'
-      },
-
-      completionDatePlanned: {
-        type: FormElementType.inputDateTime,
-        label: 'Плановая дата выполнения',
-      }
-    });
-
-    form.setData(this);
-
-    form.onSubmit.subscribe(async (formData) =>
+    effectsContainer.withContainer(() =>
     {
-      await form.use(async () =>
-      {
-        this.title = formData.title;
-        this.description = formData.description;
-        this.completionDatePlanned = formData.completionDatePlanned;
+      const form = this._formFactory.create<ToDo>();
 
-        await this.saveAsync();
+      form.setElements({
+        title: {
+          type: FormElementType.inputText,
+          label: 'Название задачи',
+          placeholder: 'Введите название задачи',
+        },
+
+        description: {
+          type: FormElementType.textarea,
+          label: 'Описание задачи',
+          placeholder: 'Введите описание задачи'
+        },
+
+        completionDatePlanned: {
+          type: FormElementType.inputDateTime,
+          label: 'Плановая дата выполнения',
+        }
       });
 
-      modal.close();
-    });
+      form.setData(this);
 
-    const modal = this._overlayService.createModalEditForm(form);
-    modal.title = 'Редактирование';
-    modal.content = form;
+      form.onSubmit.subscribe(async (formData) =>
+      {
+        await form.use(async () =>
+        {
+          this.title = formData.title;
+          this.description = formData.description;
+          this.completionDatePlanned = formData.completionDatePlanned;
+
+          await this.saveAsync();
+        });
+
+        modal.close();
+      });
+
+      const modal = this._overlayService.createModalEditForm(form);
+      modal.title = 'Редактирование';
+      modal.content = form;
+
+      modal.onClose.subscribe(() =>
+      {
+        effectsContainer.destroy();
+      });
+    });
   }
 }
