@@ -1,11 +1,12 @@
 import { DestroyedException } from '../exceptions/destroyedException';
 import type { ObservableWritable } from '../interfaces/observableWritable';
 import type { Action } from '../types/action';
+import { DestroyTokenBase } from './destroyTokenBase';
 import { ObservableBase } from './internal/observableBase';
 
 export class ObservableSource<T> extends ObservableBase<T> implements ObservableWritable<T>
 {
-    #isDestroyed = false;
+    private destroyToken = new DestroyTokenBase();
 
     constructor(protected valueInternal: T)
     {
@@ -14,6 +15,8 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
 
     override get value(): T
     {
+        this.destroyToken.assertNotDestroyed();
+
         if (this.context)
         {
             this.context.register(this);
@@ -24,6 +27,8 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
 
     override set value(value: T)
     {
+        this.destroyToken.assertNotDestroyed();
+
         if (this.valueInternal !== value)
         {
             this.valueInternal = value;
@@ -33,7 +38,7 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
 
     subscribe(handler: Action<[T]>): Action
     {
-        this.#assertNotDestroyed();
+        this.destroyToken.assertNotDestroyed();
 
         return this.eventbus.subscribe(handler);
     }
@@ -41,14 +46,6 @@ export class ObservableSource<T> extends ObservableBase<T> implements Observable
     destroy(): void
     {
         this.eventbus.destroy();
-        this.#isDestroyed = true;
-    }
-
-    #assertNotDestroyed(): void
-    {
-        if (this.#isDestroyed)
-        {
-            throw new DestroyedException();
-        }
+        this.destroyToken.destroy();
     }
 }

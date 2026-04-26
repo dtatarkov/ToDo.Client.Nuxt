@@ -121,7 +121,7 @@ describe('ObservableSource', () =>
             source.subscribe(() => callCount++);
 
             source.destroy();
-            source.value = 1;
+            expect(() => { source.value = 1; }).toThrow();
             expect(callCount).toBe(0);
         });
     });
@@ -135,7 +135,7 @@ describe('ObservableSource', () =>
             source.subscribe(() => callCount++);
 
             source.destroy();
-            source.value = 1;
+            expect(() => { source.value = 1; }).toThrow();
             expect(callCount).toBe(0);
         });
 

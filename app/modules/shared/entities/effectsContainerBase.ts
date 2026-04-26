@@ -1,15 +1,15 @@
 import { EffectsContainer } from '../interfaces/effectsContainer';
-import { DestroyedException } from '../exceptions/destroyedException';
 import type { Action } from '../types/action';
+import { DestroyTokenBase } from './destroyTokenBase';
 
 export class EffectsContainerBase extends EffectsContainer
 {
     private destroyCallbacks = new Set<Action>();
-    private isDestroyed = false;
+    private destroyToken = new DestroyTokenBase();
 
     override withContainer(action: Action): void
     {
-        this.assertNotDestroyed();
+        this.destroyToken.assertNotDestroyed();
 
         const previous = EffectsContainer.current;
         EffectsContainer.current = this;
@@ -26,33 +26,25 @@ export class EffectsContainerBase extends EffectsContainer
 
     override register(onDestroy: Action): void
     {
-        this.assertNotDestroyed();
+        this.destroyToken.assertNotDestroyed();
         this.destroyCallbacks.add(onDestroy);
     }
 
     override clear(): void
     {
-        this.assertNotDestroyed();
+        this.destroyToken.assertNotDestroyed();
         this.destroyCallbacks.forEach(callback => callback());
         this.destroyCallbacks.clear();
     }
 
     override destroy(): void
     {
-        if (this.isDestroyed)
+        if (this.destroyToken.isDestroyed)
         {
             return;
         }
 
         this.clear();
-        this.isDestroyed = true;
-    }
-
-    private assertNotDestroyed(): void
-    {
-        if (this.isDestroyed)
-        {
-            throw new DestroyedException();
-        }
+        this.destroyToken.destroy();
     }
 }
