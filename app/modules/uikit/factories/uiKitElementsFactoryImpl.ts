@@ -6,7 +6,10 @@ import { InputElementDate } from "../entities/inputElements/inputElementDate";
 import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
 import { ButtonElementBase } from "../entities/buttonElementBase";
+import { GridBase } from "../entities/gridBase";
 import type { ButtonElement } from '../interfaces/buttonElement';
+import type { Grid } from '../interfaces/grid';
+import type { UIElement } from '../interfaces/uiElement';
 import { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
@@ -14,6 +17,7 @@ import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -88,5 +92,10 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
     override createButton(): ButtonElement
     {
         return new ButtonElementBase();
+    }
+
+    override createGrid<T extends UIElement = UIElement>(elements: Observable<T[]>): Grid<T>
+    {
+        return new GridBase<T>(elements);
     }
 }

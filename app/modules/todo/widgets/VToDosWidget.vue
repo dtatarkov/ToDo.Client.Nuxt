@@ -1,14 +1,21 @@
 <script lang="ts" setup>
-import VGrid from "@/modules/uikit/components/VGrid.vue";
-import { useToDoCards } from "../composables/useToDoCards";
+import { useService } from '@/modules/shared/composables/useService';
+import { ToDosService } from '../interfaces/todosService';
+import { ToDoElementsFactory } from '../interfaces/todoElementsFactory';
+import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 
-const { cards } = await useToDoCards();
+const todosService = useService(ToDosService);
+const todoElementsFactory = useService(ToDoElementsFactory);
+const uikitElementsFactory = useService(UIKitElementsFactory);
+
+const todos = await todosService.getAllToDosAsync();
+const cards = new ObservableComputed(() => todos.value.map(todo => todoElementsFactory.createToDoCard(todo)));
+const grid = uikitElementsFactory.createGrid(cards);
 </script>
 
 <template>
   <div class="p-4">
-    <VGrid>
-      <component v-for="card of cards" :key="card.key" :is="card.component" />
-    </VGrid>
+    <component :is="grid.component" />
   </div>
 </template>
