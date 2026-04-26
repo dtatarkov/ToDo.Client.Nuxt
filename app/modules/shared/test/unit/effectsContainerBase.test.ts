@@ -108,6 +108,63 @@ describe('EffectsContainerBase', () =>
         });
     });
 
+    describe('clear', () =>
+    {
+        it('should execute all registered callbacks', () =>
+        {
+            const container = new EffectsContainerBase();
+            const callback1 = vi.fn();
+            const callback2 = vi.fn();
+
+            container.register(callback1);
+            container.register(callback2);
+            container.clear();
+
+            expect(callback1).toHaveBeenCalledTimes(1);
+            expect(callback2).toHaveBeenCalledTimes(1);
+        });
+
+        it('should clear callbacks after execution', () =>
+        {
+            const container = new EffectsContainerBase();
+            const callback = vi.fn();
+
+            container.register(callback);
+            container.clear();
+
+            // If clear is called again, callback should not be called
+            callback.mockClear();
+            container.clear();
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('should not mark container as destroyed', () =>
+        {
+            const container = new EffectsContainerBase();
+            container.clear();
+
+            // Container should still be usable
+            expect(() => container.withContainer(() => { })).not.toThrow();
+            expect(() => container.register(() => { })).not.toThrow();
+        });
+
+        it('should allow registering new callbacks after clear', () =>
+        {
+            const container = new EffectsContainerBase();
+            const callback1 = vi.fn();
+            const callback2 = vi.fn();
+
+            container.register(callback1);
+            container.clear();
+            expect(callback1).toHaveBeenCalledTimes(1);
+
+            // Register new callback
+            container.register(callback2);
+            container.clear();
+            expect(callback2).toHaveBeenCalledTimes(1);
+        });
+    });
+
     describe('destroy', () =>
     {
         it('should execute all registered callbacks', () =>

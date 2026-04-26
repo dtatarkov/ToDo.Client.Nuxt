@@ -30,6 +30,13 @@ export class EffectsContainerBase extends EffectsContainer
         this.destroyCallbacks.add(onDestroy);
     }
 
+    override clear(): void
+    {
+        this.assertNotDestroyed();
+        this.destroyCallbacks.forEach(callback => callback());
+        this.destroyCallbacks.clear();
+    }
+
     override destroy(): void
     {
         if (this.isDestroyed)
@@ -37,9 +44,8 @@ export class EffectsContainerBase extends EffectsContainer
             return;
         }
 
+        this.clear();
         this.isDestroyed = true;
-        this.destroyCallbacks.forEach(callback => callback());
-        this.destroyCallbacks.clear();
     }
 
     private assertNotDestroyed(): void

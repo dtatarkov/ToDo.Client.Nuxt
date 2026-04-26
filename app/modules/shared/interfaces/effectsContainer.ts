@@ -7,4 +7,5 @@ export abstract class EffectsContainer extends Destroyable
 
     abstract withContainer(action: Action): void;
     abstract register(onDestroy: Action): void;
+    abstract clear(): void;
 }
