@@ -15,31 +15,13 @@ export class OverlayBase extends Overlay
     return this.elements;
   }
 
-  override removeElement(element: OverlayElement): void
-  {
-    if (!this.elements.value.includes(element))
-    {
-      return;
-    }
-
-    const currentElements = this.elements.value;
-    const newElementsSet = new Set(currentElements);
-
-    newElementsSet.delete(element);
-
-    this.elements.value = [...newElementsSet];
-
-    const effectsContainer = this.elementEffects.get(element);
-    effectsContainer?.destroy();
-  }
-
   override addElement(element: OverlayElement): void
   {
     const currentElementsSet = new Set(this.elements.value);
 
     if (currentElementsSet.has(element))
     {
-      return;
+      throw new Error('OverlayElement already added');
     }
 
     const newElementsSet = new Set([...currentElementsSet, element]);
@@ -55,5 +37,29 @@ export class OverlayBase extends Overlay
         this.removeElement(element);
       });
     });
+  }
+
+  override removeElement(element: OverlayElement): void
+  {
+    if (!this.elements.value.includes(element))
+    {
+      throw new Error('OverlayElement does not exist in Overlay');
+    }
+
+    const currentElements = this.elements.value;
+    const newElementsSet = new Set(currentElements);
+
+    newElementsSet.delete(element);
+
+    this.elements.value = [...newElementsSet];
+
+    const effectsContainer = this.elementEffects.get(element);
+
+    if (effectsContainer == undefined)
+    {
+      throw new Error('EffectsContainer for element is missing');
+    }
+
+    effectsContainer.destroy();
   }
 }
