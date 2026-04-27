@@ -5,6 +5,7 @@ import type { Viewmodel } from './viewmodel';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { InfoBlockViewmodel } from './infoBlockViewmodel';
 import type { ButtonIconViewmodel, ButtonIconViewmodelData } from './buttonIconViewmodel';
+import type { CardViewmodel } from './cardViewmodel';
 
 export abstract class UIKitViewmodelsFactory
 {
@@ -17,4 +18,5 @@ export abstract class UIKitViewmodelsFactory
     abstract createButtonGeneral(data?: Partial<ButtonGeneralViewmodelData>): ButtonGeneralViewmodel;
     abstract createGrid<T extends Viewmodel = Viewmodel>(elements: Observable<T[]>): GridViewmodel<T>;
     abstract createInfoBlock(): InfoBlockViewmodel;
+    abstract createCard(): CardViewmodel;
 }

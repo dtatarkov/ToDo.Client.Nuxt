@@ -1,10 +1,11 @@
 import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
 import type { ToDo } from "../interfaces/todo";
-import VToDoCard from "../components/VToDoCard.vue";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { useObservable } from '@/modules/shared/composables/useObservable';
 import { useService } from '@/modules/shared/composables/useService';
+import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
+import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
+import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
@@ -14,24 +15,34 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     setup: () =>
     {
       const datesService = useService(DatesService);
-      const todoData = useObservable(this.todo.data);
+      const uikitFactory = useService(UIKitViewmodelsFactory);
 
-      const onEditButtonClick = async () =>
+      const card = uikitFactory.createCard();
+
+      const infoBlock = uikitFactory.createInfoBlock();
+      const completionDateActualRow = infoBlock.createRow({ label: 'Выполнено' });
+      const completionDatePlannedRow = infoBlock.createRow({ label: 'Выполнить до' });
+
+      const editButton = uikitFactory.createButtonIcon({ icon: 'i-heroicons-pencil-square' });
+
+      card.actions = [editButton];
+      card.footer = infoBlock;
+
+      useObservableSubscription(this.todo.data, todoData =>
+      {
+        card.title = todoData.title;
+        card.description = todoData.description;
+
+        completionDateActualRow.content = datesService.formatDateOptional(todoData.completionDateActual);
+        completionDatePlannedRow.content = datesService.formatDateOptional(todoData.completionDatePlanned);
+      });
+
+      useSubscribable(editButton.click, () =>
       {
         this.todo.showEditDialog();
-      };
-
-      const completionDatePlanned = computed(() => datesService.formatDateOptional(todoData.value.completionDatePlanned));
-      const completionDateActual = computed(() => datesService.formatDateOptional(todoData.value.completionDateActual));
-
-      return () => h(VToDoCard, {
-        title: todoData.value.title,
-        description: todoData.value.description,
-        completionDatePlanned: completionDatePlanned.value,
-        completionDateActual: completionDateActual.value,
-
-        onEditButtonClick,
       });
+
+      return () => h(card.component);
     }
   };
 

@@ -23,6 +23,8 @@ import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { ButtonIconViewmodel, ButtonIconViewmodelData } from '../interfaces/buttonIconViewmodel';
 import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIconImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import type { CardViewmodel } from '../interfaces/cardViewmodel';
+import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -126,5 +128,10 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
     override createInfoBlock(): InfoBlockViewmodel
     {
         return new InfoBlockViewmodelBase();
+    }
+
+    override createCard(): CardViewmodel
+    {
+        return new CardViewmodelImpl();
     }
 }
