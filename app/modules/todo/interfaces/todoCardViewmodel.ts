@@ -1,6 +1,6 @@
 import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
-export abstract class ToDoCard extends Viewmodel<string>
+export abstract class ToDoCardViewmodel extends Viewmodel<string>
 {
   abstract readonly id: string;
   abstract readonly title: string;

@@ -1,4 +1,4 @@
-import { ToDoCard } from "../interfaces/todoCard";
+import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
 import type { ToDo } from "../interfaces/todo";
 import VToDoCard from "../components/VToDoCard.vue";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
@@ -6,7 +6,7 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 import { useService } from '@/modules/shared/composables/useService';
 
-export class ToDoCardBase extends ToDoCard
+export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
   readonly key = getUniqueId('todo-card');
 

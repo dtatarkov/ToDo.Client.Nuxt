@@ -1,7 +1,7 @@
 import { ToDoViewmodelsFactory } from "../interfaces/todoViewmodelsFactory";
-import { ToDoCard } from "../interfaces/todoCard";
+import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
 import type { ToDo } from "../interfaces/todo";
-import { ToDoCardBase } from "../viewmodels/todoCardBase";
+import { ToDoCardViewmodelImpl } from "../viewmodels/todoCardViewmodelImpl";
 
 export class ToDoViewmodelsFactoryImpl extends ToDoViewmodelsFactory
 {
@@ -10,8 +10,8 @@ export class ToDoViewmodelsFactoryImpl extends ToDoViewmodelsFactory
     super();
   }
 
-  createToDoCard(todo: ToDo): ToDoCard
+  createToDoCard(todo: ToDo): ToDoCardViewmodel
   {
-    return new ToDoCardBase(todo);
+    return new ToDoCardViewmodelImpl(todo);
   }
 }
