@@ -25,7 +25,7 @@ export class InfoBlockBase extends InfoBlock
         }
     };
 
-    private readonly _rows = ref(new Array<InfoRow>());
+    private readonly _rows = shallowRef(new Array<InfoRow>());
 
     get rows(): InfoRow[]
     {
@@ -41,7 +41,7 @@ export class InfoBlockBase extends InfoBlock
             updatePropertiesWithData(row, data);
         }
 
-        this._rows.value.push(row);
+        this._rows.value = [...this._rows.value, row];
 
         return row;
     }
