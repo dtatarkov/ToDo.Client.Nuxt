@@ -120,7 +120,7 @@ export class ToDoBase extends ToDo
       throw new Error('Owner is not available');
     }
 
-    this._owner?.saveToDoAsync(this);
+    await this._owner?.saveToDoAsync(this);
   }
 
   showEditDialog(): void
@@ -163,6 +163,7 @@ export class ToDoBase extends ToDo
           await this.saveAsync();
         });
 
+        console.log('beforeClose');
         modal.close();
       });
 
