@@ -1,13 +1,13 @@
 import type { ButtonViewmodelColor } from '../types/buttonViewmodelColor';
-import { ButtonViewmodelBase, type ButtonViewmodelBaseData } from './buttonViewmodelBase';
+import { ButtonBaseViewmodel, type ButtonBaseViewmodelData } from './buttonBaseViewmodel';
 
-export type ButtonElementGeneralData = ButtonViewmodelBaseData & {
+export type ButtonGeneralViewmodelData = ButtonBaseViewmodelData & {
     title: string;
     isLoading: boolean;
     color: ButtonViewmodelColor;
 };
 
-export abstract class ButtonViewmodelGeneral extends ButtonViewmodelBase
+export abstract class ButtonGeneralViewmodel extends ButtonBaseViewmodel
 {
     abstract title: string;
     abstract isLoading: boolean;

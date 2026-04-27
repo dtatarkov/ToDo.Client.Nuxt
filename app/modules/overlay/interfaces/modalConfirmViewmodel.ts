@@ -1,9 +1,9 @@
-import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
+import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import { ModalViewmodel } from './modalViewmodel';
 
 
 export abstract class ModalConfirmViewmodel extends ModalViewmodel
 {
-    abstract buttonConfirm: ButtonViewmodelGeneral;
-    abstract buttonCancel: ButtonViewmodelGeneral;
+    abstract buttonConfirm: ButtonGeneralViewmodel;
+    abstract buttonCancel: ButtonGeneralViewmodel;
 }

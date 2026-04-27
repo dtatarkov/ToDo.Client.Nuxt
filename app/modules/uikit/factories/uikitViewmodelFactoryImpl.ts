@@ -8,7 +8,7 @@ import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmod
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
 import { GridViewmodelBase } from "../viewmodels/gridViewmodelBase";
 import { InfoBlockViewmodelBase } from "../viewmodels/infoBlockViewmodelBase";
-import type { ButtonViewmodelGeneral, ButtonElementGeneralData } from '../interfaces/buttonViewmodelGeneral';
+import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from '../interfaces/buttonGeneralViewmodel';
 import type { GridViewmodel } from '../interfaces/gridViewmodel';
 import type { Viewmodel } from '../interfaces/viewmodel';
 import type { InfoBlockViewmodel } from '../interfaces/infoBlockViewmodel';
@@ -20,7 +20,7 @@ import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueCompone
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ButtonViewmodelIcon, ButtonViewmodelIconData } from '../interfaces/buttonViewmodelIcon';
+import type { ButtonIconViewmodel, ButtonIconViewmodelData } from '../interfaces/buttonIconViewmodel';
 import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIconImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
@@ -94,7 +94,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createButtonGeneral(data?: Partial<ButtonElementGeneralData>): ButtonViewmodelGeneral
+    override createButtonGeneral(data?: Partial<ButtonGeneralViewmodelData>): ButtonGeneralViewmodel
     {
         const button = new ButtonViewmodelGeneralImpl();
 
@@ -106,7 +106,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         return button;
     }
 
-    override createButtonIcon(data?: Partial<ButtonViewmodelIconData>): ButtonViewmodelIcon
+    override createButtonIcon(data?: Partial<ButtonIconViewmodelData>): ButtonIconViewmodel
     {
         const button = new ButtonViewmodelIconImpl();
 

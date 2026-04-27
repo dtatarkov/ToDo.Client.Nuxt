@@ -1,8 +1,8 @@
-import { ButtonViewmodelGeneral } from "../../interfaces/buttonViewmodelGeneral";
+import { ButtonGeneralViewmodel } from "../../interfaces/buttonGeneralViewmodel";
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
 
-export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implements ButtonViewmodelGeneral
+export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implements ButtonGeneralViewmodel
 {
     get title(): string
     {

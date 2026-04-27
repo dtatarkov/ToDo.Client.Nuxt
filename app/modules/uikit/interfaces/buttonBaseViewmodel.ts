@@ -2,11 +2,11 @@ import type { Subscribable } from '@/modules/shared/interfaces/subscribable';
 import { Viewmodel } from './viewmodel';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
-export type ButtonViewmodelBaseData = {
+export type ButtonBaseViewmodelData = {
     isDisabled: boolean;
 };
 
-export abstract class ButtonViewmodelBase extends Viewmodel<string> implements Destroyable
+export abstract class ButtonBaseViewmodel extends Viewmodel<string> implements Destroyable
 {
     abstract isDisabled: boolean;
 

@@ -1,10 +1,10 @@
-import type { ButtonViewmodelGeneral, ButtonElementGeneralData } from './buttonViewmodelGeneral';
+import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from './buttonGeneralViewmodel';
 import type { InputViewmodel } from './inputViewmodel';
 import type { GridViewmodel } from './gridViewmodel';
 import type { Viewmodel } from './viewmodel';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { InfoBlockViewmodel } from './infoBlockViewmodel';
-import type { ButtonViewmodelIcon, ButtonViewmodelIconData } from './buttonViewmodelIcon';
+import type { ButtonIconViewmodel, ButtonIconViewmodelData } from './buttonIconViewmodel';
 
 export abstract class UIKitViewmodelsFactory
 {
@@ -13,8 +13,8 @@ export abstract class UIKitViewmodelsFactory
     abstract createInputDate(): InputViewmodel<Date | undefined>;
     abstract createInputTime(): InputViewmodel<number | undefined>;
     abstract createInputDateTime(): InputViewmodel<Date | undefined>;
-    abstract createButtonIcon(data?: Partial<ButtonViewmodelIconData>): ButtonViewmodelIcon;
-    abstract createButtonGeneral(data?: Partial<ButtonElementGeneralData>): ButtonViewmodelGeneral;
+    abstract createButtonIcon(data?: Partial<ButtonIconViewmodelData>): ButtonIconViewmodel;
+    abstract createButtonGeneral(data?: Partial<ButtonGeneralViewmodelData>): ButtonGeneralViewmodel;
     abstract createGrid<T extends Viewmodel = Viewmodel>(elements: Observable<T[]>): GridViewmodel<T>;
     abstract createInfoBlock(): InfoBlockViewmodel;
 }

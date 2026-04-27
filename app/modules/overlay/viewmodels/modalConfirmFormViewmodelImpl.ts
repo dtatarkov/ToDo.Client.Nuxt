@@ -1,4 +1,4 @@
-import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
+import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
@@ -24,7 +24,7 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
         });
     }
 
-    protected override createButtonConfirm(): ButtonViewmodelGeneral
+    protected override createButtonConfirm(): ButtonGeneralViewmodel
     {
         const buttonConfirm = super.createButtonConfirm();
 

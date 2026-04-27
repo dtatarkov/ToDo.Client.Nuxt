@@ -1,5 +1,5 @@
 import { NotInitializedException } from '@/modules/shared/exceptions/notInitializedException';
-import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
+import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
@@ -13,8 +13,8 @@ enum ModalConfirmBaseState
 
 export class ModalConfirmViewmodelImpl extends ModalConfirmViewmodel
 {
-    private _buttonConfirm: ButtonViewmodelGeneral | undefined;
-    private _buttonCancel: ButtonViewmodelGeneral | undefined;
+    private _buttonConfirm: ButtonGeneralViewmodel | undefined;
+    private _buttonCancel: ButtonGeneralViewmodel | undefined;
 
     protected modal = new ModalViewmodelImpl();
     protected state = ModalConfirmBaseState.initial;
@@ -61,16 +61,16 @@ export class ModalConfirmViewmodelImpl extends ModalConfirmViewmodel
         this.modal.content = value;
     }
 
-    get buttonConfirm(): ButtonViewmodelGeneral
+    get buttonConfirm(): ButtonGeneralViewmodel
     {
         this.assertInitialization();
-        return this._buttonConfirm as ButtonViewmodelGeneral;
+        return this._buttonConfirm as ButtonGeneralViewmodel;
     }
 
-    get buttonCancel(): ButtonViewmodelGeneral
+    get buttonCancel(): ButtonGeneralViewmodel
     {
         this.assertInitialization();
-        return this._buttonCancel as ButtonViewmodelGeneral;
+        return this._buttonCancel as ButtonGeneralViewmodel;
     }
 
     get controls(): Array<Viewmodel>
@@ -120,7 +120,7 @@ export class ModalConfirmViewmodelImpl extends ModalConfirmViewmodel
         this._buttonCancel?.destroy();
     }
 
-    protected createButtonConfirm(): ButtonViewmodelGeneral
+    protected createButtonConfirm(): ButtonGeneralViewmodel
     {
         const buttonConfirm = this.uikitElementsFactory.createButtonGeneral({
             title: 'Сохранить',
@@ -130,7 +130,7 @@ export class ModalConfirmViewmodelImpl extends ModalConfirmViewmodel
         return buttonConfirm;
     }
 
-    protected createButtonCancel(): ButtonViewmodelGeneral
+    protected createButtonCancel(): ButtonGeneralViewmodel
     {
         const buttonCancel = this.uikitElementsFactory.createButtonGeneral({
             title: 'Отменить'

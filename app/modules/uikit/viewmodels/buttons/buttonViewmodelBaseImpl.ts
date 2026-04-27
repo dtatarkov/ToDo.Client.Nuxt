@@ -1,6 +1,6 @@
 import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
 import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
-import { ButtonViewmodelBase as ButtonViewmodelBase } from '../../interfaces/buttonViewmodelBase';
+import { ButtonBaseViewmodel as ButtonBaseViewmodel } from '../../interfaces/buttonBaseViewmodel';
 import type { Action } from '@/modules/shared/types/action';
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
@@ -19,7 +19,7 @@ type ButtonViewmodelProps = {
     onClick: Action;
 };
 
-export abstract class ButtonViewmodelBaseImpl extends ButtonViewmodelBase
+export abstract class ButtonViewmodelBaseImpl extends ButtonBaseViewmodel
 {
     protected destroyToken = new DestroyTokenBase();
     protected readonly props = reactive(this.createProps());
