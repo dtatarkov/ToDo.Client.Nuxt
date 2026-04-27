@@ -2,7 +2,7 @@ import { ToDo, type ToDoData } from "../interfaces/todo";
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import { Observable } from '@/modules/shared/interfaces/observable';
-import { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
@@ -20,7 +20,7 @@ export class ToDoBase extends ToDo
   });
 
   constructor(
-    private _formFactory: FormFactory,
+    private _formFactory: FormViewmodelFactory,
     private _overlayService: OverlayService
   )
   {

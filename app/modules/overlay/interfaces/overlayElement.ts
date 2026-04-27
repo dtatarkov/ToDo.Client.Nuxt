@@ -1,7 +1,7 @@
 import type { Subscribable } from '@/modules/shared/interfaces/subscribable';
-import { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
-export abstract class OverlayElement extends UIElement<string>
+export abstract class OverlayElement extends Viewmodel<string>
 {
   abstract readonly onClose: Subscribable;
 

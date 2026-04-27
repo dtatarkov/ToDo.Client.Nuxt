@@ -1,17 +1,17 @@
 import { FormFieldBase } from "./formFieldBase";
-import type { FormElementCreateDataWithName } from "../types/internal/formElementCreateDataWithName";
-import { FormElement } from "../interfaces/internal/formElement";
+import { FormElementViewmodel } from "../interfaces/formElementViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import type { InputElement } from "@/modules/uikit/interfaces/inputElement";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
+import type { InputViewmodel } from '@/modules/uikit/interfaces/inputViewmodel';
+import type { FormElementViewmodelCreateDataWithName } from '../types/formElementViewmodelCreateDataWithName';
 
-export class FormElementBase<V = any> extends FormElement
+export class FormElementBase<V = any> extends FormElementViewmodel
 {
   readonly key = getUniqueId('form-element');
 
   protected formField = new FormFieldBase();
 
-  constructor(protected inputElement: InputElement<V>)
+  constructor(protected inputElement: InputViewmodel<V>)
   {
     super();
 
@@ -38,7 +38,7 @@ export class FormElementBase<V = any> extends FormElement
     this.inputElement.value = value;
   }
 
-  setData(data: FormElementCreateDataWithName): void
+  setData(data: FormElementViewmodelCreateDataWithName): void
   {
     updatePropertiesWithData(this.formField, data);
     updatePropertiesWithData(this.inputElement, data);

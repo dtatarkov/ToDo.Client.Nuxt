@@ -2,12 +2,12 @@
 import { useService } from '@/modules/shared/composables/useService';
 import { ToDosService } from '../interfaces/todosService';
 import { ToDoElementsFactory } from '../interfaces/todoElementsFactory';
-import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 
 const todosService = useService(ToDosService);
 const todoElementsFactory = useService(ToDoElementsFactory);
-const uikitElementsFactory = useService(UIKitElementsFactory);
+const uikitElementsFactory = useService(UIKitViewmodelsFactory);
 
 const todos = await todosService.getAllToDosAsync();
 const cards = new ObservableComputed(() => todos.value.map(todo => todoElementsFactory.createToDoCard(todo)));

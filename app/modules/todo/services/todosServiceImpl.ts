@@ -1,20 +1,20 @@
 import { ToDosService } from "../interfaces/todosService";
 import { ToDo } from "../interfaces/todo";
 import { ToDosOwner } from "../interfaces/todosOwner";
-import { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(ToDosOwner)
 @dependency(OverlayService)
-@dependency(FormFactory)
+@dependency(FormViewmodelFactory)
 export class TodosServiceImpl extends ToDosService
 {
   constructor(
     protected owner: ToDosOwner,
     protected overlayService: OverlayService,
-    protected formFactory: FormFactory
+    protected formFactory: FormViewmodelFactory
   )
   {
     super();

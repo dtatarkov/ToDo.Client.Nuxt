@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { UFormField } from "#components";
-import type { FormField } from "../interfaces/internal/formField";
+import type { FormFieldViewmodel } from "../interfaces/formFieldViewmodel";
 
-defineProps<{ field: FormField }>();
+defineProps<{ field: FormFieldViewmodel }>();
 </script>
 
 <template>

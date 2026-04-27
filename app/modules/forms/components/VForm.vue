@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { Form } from "../interfaces/form";
+import type { FormViewmodel } from "../interfaces/formViewmodel";
 
-defineProps<{ form: Form }>();
+defineProps<{ form: FormViewmodel }>();
 </script>
 
 <template>

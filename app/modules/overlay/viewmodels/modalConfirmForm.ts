@@ -1,13 +1,13 @@
-import type { ButtonElementGeneral } from '@/modules/uikit/interfaces/buttonElementGeneral';
+import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
 import { ModalConfirmBase } from './modalConfirmBase';
-import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
-import { Form } from '@/modules/forms/interfaces/form';
+import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
+import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 
 export class ModalConfirmForm extends ModalConfirmBase
 {
     constructor(
-        protected form: Form,
-        uikitElementsFactory: UIKitElementsFactory
+        protected form: FormViewmodel,
+        uikitElementsFactory: UIKitViewmodelsFactory
     )
     {
         super(uikitElementsFactory);
@@ -24,7 +24,7 @@ export class ModalConfirmForm extends ModalConfirmBase
         });
     }
 
-    protected override createButtonConfirm(): ButtonElementGeneral
+    protected override createButtonConfirm(): ButtonViewmodelGeneral
     {
         const buttonConfirm = super.createButtonConfirm();
 

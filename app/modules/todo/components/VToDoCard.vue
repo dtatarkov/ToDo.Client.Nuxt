@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import { useService } from '@/modules/shared/composables/useService';
 import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
-import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 
-const uikitElementsFactory = useService(UIKitElementsFactory);
+const uikitElementsFactory = useService(UIKitViewmodelsFactory);
 
 const emits = defineEmits<{
   (e: 'edit-button-click'): void

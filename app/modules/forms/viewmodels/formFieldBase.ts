@@ -1,9 +1,9 @@
 import VFormField from "../components/VFormField.vue";
-import { FormField } from "../interfaces/internal/formField";
-import { UIElement } from "@/modules/uikit/interfaces/uiElement";
+import { FormFieldViewmodel } from "../interfaces/formFieldViewmodel";
+import { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 
-export class FormFieldBase extends FormField
+export class FormFieldBase extends FormFieldViewmodel
 {
   private _data = reactive({
     label: '',
@@ -11,7 +11,7 @@ export class FormFieldBase extends FormField
   });
 
   private _children = {
-    content: <UIElement | undefined>undefined
+    content: <Viewmodel | undefined>undefined
   };
 
   readonly key = getUniqueId('form-field');

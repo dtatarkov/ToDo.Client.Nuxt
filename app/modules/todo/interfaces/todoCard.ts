@@ -1,6 +1,6 @@
-import { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
-export abstract class ToDoCard extends UIElement<string>
+export abstract class ToDoCard extends Viewmodel<string>
 {
   abstract readonly id: string;
   abstract readonly title: string;

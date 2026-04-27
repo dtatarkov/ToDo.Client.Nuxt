@@ -5,7 +5,7 @@ import type { Modal } from '../interfaces/modal';
 import type { ModalConfirm } from '../interfaces/modalConfirm';
 import type { OverlayElement } from '../interfaces/overlayElement';
 import { OverlayService } from '../interfaces/overlayService';
-import { Form } from '@/modules/forms/interfaces/form';
+import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(Overlay)
@@ -29,7 +29,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createModalAddForm(form: Form): ModalConfirm
+  createModalAddForm(form: FormViewmodel): ModalConfirm
   {
     const modal = this.modalFactory.createModalAddForm(form);
 
@@ -38,7 +38,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createModalEditForm(form: Form): ModalConfirm
+  createModalEditForm(form: FormViewmodel): ModalConfirm
   {
     const modal = this.modalFactory.createModalEditForm(form);
 

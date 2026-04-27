@@ -1,11 +1,11 @@
-import { FormElementFactory } from "../interfaces/internal/formElementFactory";
-import { FormFactory } from "../interfaces/formFactory";
-import { FormElementFactoryImpl } from "../factories/formElementFactoryImpl";
-import { FormFactoryImpl } from "../factories/formFactoryImpl";
+import { FormElementViewmodelFactoryImpl } from '../factories/formElementViewmodelFactoryImpl';
+import { FormViewmodelFactoryImpl } from '../factories/formViewmodelFactoryImpl';
+import { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
+import { FormViewmodelFactory } from "../interfaces/formViewmodelFactory";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
 export function useFormsServices(): void
 {
-    useServiceRegistration(FormElementFactory).to(FormElementFactoryImpl).asTransient();
-    useServiceRegistration(FormFactory).to(FormFactoryImpl).asTransient();
+    useServiceRegistration(FormElementViewmodelFactory).to(FormElementViewmodelFactoryImpl).asTransient();
+    useServiceRegistration(FormViewmodelFactory).to(FormViewmodelFactoryImpl).asTransient();
 }

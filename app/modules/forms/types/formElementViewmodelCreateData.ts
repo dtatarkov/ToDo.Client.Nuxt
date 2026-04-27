@@ -1,0 +1,16 @@
+import { FormElementType } from "../enums/formElementType";
+import type { FormElementViewmodelData } from "./formElementViewmodelData";
+import type { InputViewmodelTextData } from "@/modules/uikit/types/inputViewmodels/inputViewmodelTextData";
+import type { InputViewmodelDateData } from "@/modules/uikit/types/inputViewmodels/InputViewmodelDateData";
+import type { InputViewmodelTimeData } from "@/modules/uikit/types/inputViewmodels/inputViewmodelTimeData";
+import type { InputViewmodelDateTimeData } from "@/modules/uikit/types/inputViewmodels/InputViewmodelDateTimeData";
+import type { InputViewmodelTextareaData } from "@/modules/uikit/types/inputViewmodels/inputViewmodelTextareaData";
+
+type ExcludeName<T> = Omit<T, 'name'>;
+
+export type FormElementViewmodelCreateData =
+  ExcludeName<{ type: FormElementType.inputText; } & FormElementViewmodelData & Partial<InputViewmodelTextData>> |
+  ExcludeName<{ type: FormElementType.inputDate; } & FormElementViewmodelData & Partial<InputViewmodelDateData>> |
+  ExcludeName<{ type: FormElementType.inputTime; } & FormElementViewmodelData & Partial<InputViewmodelTimeData>> |
+  ExcludeName<{ type: FormElementType.inputDateTime; } & FormElementViewmodelData & Partial<InputViewmodelDateTimeData>> |
+  ExcludeName<{ type: FormElementType.textarea; } & FormElementViewmodelData & Partial<InputViewmodelTextareaData>>;

@@ -4,19 +4,19 @@ import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
 import { ToDoBase } from "../entities/todoBase";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
-import { FormFactory } from '@/modules/forms/interfaces/formFactory';
+import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(DatesService)
-@dependency(FormFactory)
+@dependency(FormViewmodelFactory)
 @dependency(OverlayService)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
   constructor(
     protected datesService: DatesService,
-    protected formFactory: FormFactory,
+    protected formFactory: FormViewmodelFactory,
     protected overlayService: OverlayService
   )
   {

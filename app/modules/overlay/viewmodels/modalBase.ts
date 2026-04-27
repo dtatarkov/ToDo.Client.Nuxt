@@ -2,7 +2,7 @@ import { Modal } from "../interfaces/modal";
 import VModal from '../components/VModal.vue';
 import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
 export class ModalBase extends Modal
@@ -13,7 +13,7 @@ export class ModalBase extends Modal
   };
 
   #children = {
-    content: <UIElement | undefined>undefined
+    content: <Viewmodel | undefined>undefined
   };
 
   readonly key = getUniqueId('modal');
@@ -25,7 +25,7 @@ export class ModalBase extends Modal
     }
   };
 
-  readonly controls = new Array<UIElement>();
+  readonly controls = new Array<Viewmodel>();
 
   readonly onClose = new EventBusBase();
 

@@ -1,7 +1,7 @@
 import { NotInitializedException } from '@/modules/shared/exceptions/notInitializedException';
-import type { ButtonElementGeneral } from '@/modules/uikit/interfaces/buttonElementGeneral';
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
-import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
+import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
+import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
+import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ModalConfirm } from '../interfaces/modalConfirm';
 import { ModalBase } from './modalBase';
 
@@ -13,13 +13,13 @@ enum ModalConfirmBaseState
 
 export class ModalConfirmBase extends ModalConfirm
 {
-    private _buttonConfirm: ButtonElementGeneral | undefined;
-    private _buttonCancel: ButtonElementGeneral | undefined;
+    private _buttonConfirm: ButtonViewmodelGeneral | undefined;
+    private _buttonCancel: ButtonViewmodelGeneral | undefined;
 
     protected modal = new ModalBase();
     protected state = ModalConfirmBaseState.initial;
 
-    constructor(protected uikitElementsFactory: UIKitElementsFactory)
+    constructor(protected uikitElementsFactory: UIKitViewmodelsFactory)
     {
         super();
     }
@@ -49,31 +49,31 @@ export class ModalConfirmBase extends ModalConfirm
         this.modal.description = value;
     }
 
-    get content(): UIElement | undefined
+    get content(): Viewmodel | undefined
     {
         this.assertInitialization();
         return this.modal.content;
     }
 
-    set content(value: UIElement | undefined)
+    set content(value: Viewmodel | undefined)
     {
         this.assertInitialization();
         this.modal.content = value;
     }
 
-    get buttonConfirm(): ButtonElementGeneral
+    get buttonConfirm(): ButtonViewmodelGeneral
     {
         this.assertInitialization();
-        return this._buttonConfirm as ButtonElementGeneral;
+        return this._buttonConfirm as ButtonViewmodelGeneral;
     }
 
-    get buttonCancel(): ButtonElementGeneral
+    get buttonCancel(): ButtonViewmodelGeneral
     {
         this.assertInitialization();
-        return this._buttonCancel as ButtonElementGeneral;
+        return this._buttonCancel as ButtonViewmodelGeneral;
     }
 
-    get controls(): Array<UIElement>
+    get controls(): Array<Viewmodel>
     {
         this.assertInitialization();
         return this.modal.controls;
@@ -120,7 +120,7 @@ export class ModalConfirmBase extends ModalConfirm
         this._buttonCancel?.destroy();
     }
 
-    protected createButtonConfirm(): ButtonElementGeneral
+    protected createButtonConfirm(): ButtonViewmodelGeneral
     {
         const buttonConfirm = this.uikitElementsFactory.createButtonGeneral({
             title: 'Сохранить',
@@ -130,7 +130,7 @@ export class ModalConfirmBase extends ModalConfirm
         return buttonConfirm;
     }
 
-    protected createButtonCancel(): ButtonElementGeneral
+    protected createButtonCancel(): ButtonViewmodelGeneral
     {
         const buttonCancel = this.uikitElementsFactory.createButtonGeneral({
             title: 'Отменить'
