@@ -1,14 +1,16 @@
 import type { Subscribable } from '@/modules/shared/interfaces/subscribable';
-import type { ButtonElementColor } from '../types/buttonElementColor';
 import { UIElement } from './uiElement';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
-export abstract class ButtonElement extends UIElement<string> implements Destroyable
+export type ButtonElementBaseData = {
+    isDisabled: boolean;
+};
+
+export abstract class ButtonElementBase extends UIElement<string> implements Destroyable
 {
-    abstract title: string;
     abstract isDisabled: boolean;
-    abstract isLoading: boolean;
-    abstract color: ButtonElementColor;
+
     abstract readonly click: Subscribable;
+
     abstract destroy(): void;
 }

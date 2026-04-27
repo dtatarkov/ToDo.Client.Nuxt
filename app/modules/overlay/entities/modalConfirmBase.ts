@@ -1,5 +1,5 @@
 import { NotInitializedException } from '@/modules/shared/exceptions/notInitializedException';
-import type { ButtonElement } from '@/modules/uikit/interfaces/buttonElement';
+import type { ButtonElementGeneral } from '@/modules/uikit/interfaces/buttonElementGeneral';
 import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
 import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 import { ModalConfirm } from '../interfaces/modalConfirm';
@@ -13,8 +13,8 @@ enum ModalConfirmBaseState
 
 export class ModalConfirmBase extends ModalConfirm
 {
-    private _buttonConfirm: ButtonElement | undefined;
-    private _buttonCancel: ButtonElement | undefined;
+    private _buttonConfirm: ButtonElementGeneral | undefined;
+    private _buttonCancel: ButtonElementGeneral | undefined;
 
     protected modal = new ModalBase();
     protected state = ModalConfirmBaseState.initial;
@@ -61,16 +61,16 @@ export class ModalConfirmBase extends ModalConfirm
         this.modal.content = value;
     }
 
-    get buttonConfirm(): ButtonElement
+    get buttonConfirm(): ButtonElementGeneral
     {
         this.assertInitialization();
-        return this._buttonConfirm as ButtonElement;
+        return this._buttonConfirm as ButtonElementGeneral;
     }
 
-    get buttonCancel(): ButtonElement
+    get buttonCancel(): ButtonElementGeneral
     {
         this.assertInitialization();
-        return this._buttonCancel as ButtonElement;
+        return this._buttonCancel as ButtonElementGeneral;
     }
 
     get controls(): Array<UIElement>
@@ -120,9 +120,9 @@ export class ModalConfirmBase extends ModalConfirm
         this._buttonCancel?.destroy();
     }
 
-    protected createButtonConfirm(): ButtonElement
+    protected createButtonConfirm(): ButtonElementGeneral
     {
-        const buttonConfirm = this.uikitElementsFactory.createButton();
+        const buttonConfirm = this.uikitElementsFactory.createButtonGeneral();
 
         buttonConfirm.title = 'Сохранить';
         buttonConfirm.color = 'primary';
@@ -130,9 +130,9 @@ export class ModalConfirmBase extends ModalConfirm
         return buttonConfirm;
     }
 
-    protected createButtonCancel(): ButtonElement
+    protected createButtonCancel(): ButtonElementGeneral
     {
-        const buttonCancel = this.uikitElementsFactory.createButton();
+        const buttonCancel = this.uikitElementsFactory.createButtonGeneral();
         buttonCancel.title = 'Отменить';
 
         buttonCancel.click.subscribe(() =>

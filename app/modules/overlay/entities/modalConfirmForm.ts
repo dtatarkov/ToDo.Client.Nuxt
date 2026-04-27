@@ -1,4 +1,4 @@
-import type { ButtonElement } from '@/modules/uikit/interfaces/buttonElement';
+import type { ButtonElementGeneral } from '@/modules/uikit/interfaces/buttonElementGeneral';
 import { ModalConfirmBase } from './modalConfirmBase';
 import type { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 import { Form } from '@/modules/forms/interfaces/form';
@@ -24,7 +24,7 @@ export class ModalConfirmForm extends ModalConfirmBase
         });
     }
 
-    protected override createButtonConfirm(): ButtonElement
+    protected override createButtonConfirm(): ButtonElementGeneral
     {
         const buttonConfirm = super.createButtonConfirm();
 

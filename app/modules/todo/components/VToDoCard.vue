@@ -4,14 +4,7 @@
       <div class="todo-card__title font-semibold text-lg grow">{{ props.title }}</div>
 
       <div class="todo-card__actions">
-        <UButton
-            class="cursor-pointer"
-            variant="link"
-            color="secondary"
-            icon="i-heroicons-pencil-square"
-            size="sm"
-            @click="() => emits('edit-button-click')"
-        />
+        <component :is="editButton.component" />        
       </div>
     </template>
 
@@ -25,6 +18,7 @@
 
 <script setup lang="ts">
 import { useService } from '@/modules/shared/composables/useService';
+import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
 import { UIKitElementsFactory } from '@/modules/uikit/interfaces/uiKitElementsFactory';
 
 const uikitElementsFactory = useService(UIKitElementsFactory);
@@ -49,6 +43,12 @@ const cardUIOptions = {
   root  : 'rounded-sm',
   header: 'flex gap-4 items-center text-primary'
 }
+
+const editButton = uikitElementsFactory.createButtonIcon({ icon: 'i-heroicons-pencil-square' });
+
+useSubscribable(editButton.click, () => {
+  emits('edit-button-click');
+});
 
 const infoBlock = uikitElementsFactory.createInfoBlock();
 const completionDateActualRow = infoBlock.createRow({ label: 'Выполнено' });

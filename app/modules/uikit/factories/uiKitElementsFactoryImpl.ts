@@ -5,10 +5,10 @@ import { InputElementTextarea } from "../entities/inputElements/inputElementText
 import { InputElementDate } from "../entities/inputElements/inputElementDate";
 import { InputElementTime } from "../entities/inputElements/inputElementTime";
 import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
-import { ButtonElementBase } from "../entities/buttonElementBase";
+import { ButtonElementGeneralImpl } from "../entities/buttons/buttonElementGeneralImpl";
 import { GridBase } from "../entities/gridBase";
 import { InfoBlockBase } from "../entities/infoBlockBase";
-import type { ButtonElement } from '../interfaces/buttonElement';
+import type { ButtonElementGeneral, ButtonElementGeneralData } from '../interfaces/buttonElementGeneral';
 import type { Grid } from '../interfaces/grid';
 import type { UIElement } from '../interfaces/uiElement';
 import type { InfoBlock } from '../interfaces/infoBlock';
@@ -20,6 +20,9 @@ import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueCompone
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { Observable } from '@/modules/shared/interfaces/observable';
+import type { ButtonElementIcon, ButtonElementIconData } from '../interfaces/buttonElementIcon';
+import { ButtonElementIconImpl } from '../entities/buttons/buttonElementIconImpl';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -91,9 +94,28 @@ export class UIKitElementsFactoryImpl extends UIKitElementsFactory
         );
     }
 
-    override createButton(): ButtonElement
+    override createButtonGeneral(data?: Partial<ButtonElementGeneralData>): ButtonElementGeneral
     {
-        return new ButtonElementBase();
+        const button = new ButtonElementGeneralImpl();
+
+        if (data != undefined)
+        {
+            updatePropertiesWithData(button, data);
+        }
+
+        return button;
+    }
+
+    override createButtonIcon(data?: Partial<ButtonElementIconData>): ButtonElementIcon
+    {
+        const button = new ButtonElementIconImpl();
+
+        if (data != undefined)
+        {
+            updatePropertiesWithData(button, data);
+        }
+
+        return button;
     }
 
     override createGrid<T extends UIElement = UIElement>(elements: Observable<T[]>): Grid<T>
