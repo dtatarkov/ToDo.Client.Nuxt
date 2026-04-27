@@ -4,15 +4,18 @@ import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
+import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
 
 export class ModalViewmodelImpl extends ModalViewmodel
 {
-  #data = {
+  protected destroyToken = new DestroyTokenBase();
+
+  protected data = {
     title: '',
     description: '',
   };
 
-  #children = {
+  protected children = {
     content: <Viewmodel | undefined>undefined
   };
 
@@ -31,35 +34,52 @@ export class ModalViewmodelImpl extends ModalViewmodel
 
   get title()
   {
-    return this.#data.title;
+    this.destroyToken.assertNotDestroyed();
+    return this.data.title;
   }
 
   set title(value)
   {
-    this.#data.title = value;
+    this.destroyToken.assertNotDestroyed();
+    this.data.title = value;
   }
 
   get description()
   {
-    return this.#data.description;
+    this.destroyToken.assertNotDestroyed();
+    return this.data.description;
   }
 
   set description(value)
   {
-    this.#data.description = value;
+    this.destroyToken.assertNotDestroyed();
+    this.data.description = value;
   }
 
   get content()
   {
-    return this.#children.content;
+    this.destroyToken.assertNotDestroyed();
+    return this.children.content;
   }
 
   set content(content)
   {
-    this.#children.content = content;
+    this.destroyToken.assertNotDestroyed();
+    this.children.content = content;
   }
 
   close()
+  {
+    if (this.destroyToken.isDestroyed)
+    {
+      return;
+    }
+
+    this.handleClose();
+    this.destroyToken.destroy();
+  }
+
+  protected handleClose(): void
   {
     this.onClose.emit();
     this.onClose.destroy();

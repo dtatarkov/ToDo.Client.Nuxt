@@ -38,7 +38,6 @@ export class ModalFactoryImpl extends ModalFactory
     private createModalConfirmForm(form: FormViewmodel)
     {
         const modal = new ModalConfirmFormViewmodelImpl(form, this.uikitElementsFactory);
-        modal.init();
 
         return modal;
     }

@@ -11,13 +11,8 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
     )
     {
         super(uikitElementsFactory);
-    }
 
-    override init(): void
-    {
-        super.init();
-
-        this.form.onDisabledStateChange.subscribe(isDisabled =>
+        form.onDisabledStateChange.subscribe(isDisabled =>
         {
             this.buttonConfirm.isDisabled = isDisabled;
             this.buttonConfirm.isLoading = isDisabled;
