@@ -1,21 +1,21 @@
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { Overlay } from "../interfaces/internal/overlay";
-import { OverlayElement } from '../interfaces/overlayElement';
+import { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
 import type { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
 import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
 
 export class OverlayBase extends Overlay
 {
-  private elements = new ObservableSource(new Array<OverlayElement>());
-  private elementEffects = new Map<OverlayElement, EffectsContainer>();
+  private elements = new ObservableSource(new Array<OverlayElementViewmodel>());
+  private elementEffects = new Map<OverlayElementViewmodel, EffectsContainer>();
 
-  override getElements(): Observable<OverlayElement[]>
+  override getElements(): Observable<OverlayElementViewmodel[]>
   {
     return this.elements;
   }
 
-  override addElement(element: OverlayElement): void
+  override addElement(element: OverlayElementViewmodel): void
   {
     const currentElementsSet = new Set(this.elements.value);
 
@@ -39,7 +39,7 @@ export class OverlayBase extends Overlay
     });
   }
 
-  override removeElement(element: OverlayElement): void
+  override removeElement(element: OverlayElementViewmodel): void
   {
     if (!this.elements.value.includes(element))
     {

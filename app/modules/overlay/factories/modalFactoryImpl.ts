@@ -1,9 +1,9 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
-import { ModalBase } from "../viewmodels/modalBase";
-import { ModalConfirmForm } from '../viewmodels/modalConfirmForm';
+import { ModalViewmodelImpl } from "../viewmodels/modalViewmodelImpl";
+import { ModalConfirmFormViewmodelImpl } from '../viewmodels/modalConfirmFormViewmodelImpl';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
-import { ModalConfirm } from '../interfaces/modalConfirm';
-import { Modal } from '../interfaces/modal';
+import { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
+import { ModalViewmodel } from '../interfaces/modalViewmodel';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
@@ -15,12 +15,12 @@ export class ModalFactoryImpl extends ModalFactory
         super();
     }
 
-    createModalBase(): Modal
+    createModalBase(): ModalViewmodel
     {
-        return new ModalBase();
+        return new ModalViewmodelImpl();
     }
 
-    createModalAddForm(form: FormViewmodel): ModalConfirm
+    createModalAddForm(form: FormViewmodel): ModalConfirmViewmodel
     {
         const modal = this.createModalConfirmForm(form);
         modal.buttonConfirm.title = 'Добавить';
@@ -28,7 +28,7 @@ export class ModalFactoryImpl extends ModalFactory
         return modal;
     }
 
-    createModalEditForm(form: FormViewmodel): ModalConfirm
+    createModalEditForm(form: FormViewmodel): ModalConfirmViewmodel
     {
         const modal = this.createModalConfirmForm(form);
 
@@ -37,7 +37,7 @@ export class ModalFactoryImpl extends ModalFactory
 
     private createModalConfirmForm(form: FormViewmodel)
     {
-        const modal = new ModalConfirmForm(form, this.uikitElementsFactory);
+        const modal = new ModalConfirmFormViewmodelImpl(form, this.uikitElementsFactory);
         modal.init();
 
         return modal;

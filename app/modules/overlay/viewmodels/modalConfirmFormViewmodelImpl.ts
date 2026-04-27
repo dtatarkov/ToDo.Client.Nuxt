@@ -1,9 +1,9 @@
 import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
-import { ModalConfirmBase } from './modalConfirmBase';
+import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 
-export class ModalConfirmForm extends ModalConfirmBase
+export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
 {
     constructor(
         protected form: FormViewmodel,

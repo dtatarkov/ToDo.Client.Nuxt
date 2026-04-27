@@ -1,11 +1,11 @@
-import { Modal } from "../interfaces/modal";
+import { ModalViewmodel } from "../interfaces/modalViewmodel";
 import VModal from '../components/VModal.vue';
 import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
-export class ModalBase extends Modal
+export class ModalViewmodelImpl extends ModalViewmodel
 {
   #data = {
     title: '',

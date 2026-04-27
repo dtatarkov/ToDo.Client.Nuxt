@@ -1,7 +1,7 @@
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
-import { OverlayElement } from "../interfaces/overlayElement";
+import { OverlayElementViewmodel } from "./overlayElementViewmodel";
 
-export abstract class Modal extends OverlayElement
+export abstract class ModalViewmodel extends OverlayElementViewmodel
 {
   abstract title: string;
   abstract description: string;

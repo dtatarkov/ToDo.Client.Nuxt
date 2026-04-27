@@ -2,8 +2,8 @@ import { NotInitializedException } from '@/modules/shared/exceptions/notInitiali
 import type { ButtonViewmodelGeneral } from '@/modules/uikit/interfaces/buttonViewmodelGeneral';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
-import { ModalConfirm } from '../interfaces/modalConfirm';
-import { ModalBase } from './modalBase';
+import { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
+import { ModalViewmodelImpl } from './modalViewmodelImpl';
 
 enum ModalConfirmBaseState
 {
@@ -11,12 +11,12 @@ enum ModalConfirmBaseState
     initialized = 1,
 }
 
-export class ModalConfirmBase extends ModalConfirm
+export class ModalConfirmViewmodelImpl extends ModalConfirmViewmodel
 {
     private _buttonConfirm: ButtonViewmodelGeneral | undefined;
     private _buttonCancel: ButtonViewmodelGeneral | undefined;
 
-    protected modal = new ModalBase();
+    protected modal = new ModalViewmodelImpl();
     protected state = ModalConfirmBaseState.initial;
 
     constructor(protected uikitElementsFactory: UIKitViewmodelsFactory)

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Modal } from '../interfaces/modal';
+import { ModalViewmodel } from '../interfaces/modalViewmodel';
 
-const props = defineProps<{ modal: Modal }>();
+const props = defineProps<{ modal: ModalViewmodel }>();
 
 function handleOpen(isOpened: boolean)
 {

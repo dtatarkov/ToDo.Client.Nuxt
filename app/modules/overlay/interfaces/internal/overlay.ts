@@ -1,11 +1,11 @@
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { OverlayElement } from '../overlayElement';
+import type { OverlayElementViewmodel } from '../overlayElementViewmodel';
 
 export abstract class Overlay
 {
-  abstract getElements(): Observable<OverlayElement[]>;
+  abstract getElements(): Observable<OverlayElementViewmodel[]>;
 
-  abstract addElement(element: OverlayElement): void;
+  abstract addElement(element: OverlayElementViewmodel): void;
 
-  abstract removeElement(element: OverlayElement): void;
+  abstract removeElement(element: OverlayElementViewmodel): void;
 }

@@ -1,9 +1,9 @@
 import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { Modal } from '../interfaces/modal';
-import type { ModalConfirm } from '../interfaces/modalConfirm';
-import type { OverlayElement } from '../interfaces/overlayElement';
+import type { ModalViewmodel } from '../interfaces/modalViewmodel';
+import type { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
+import type { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
 import { OverlayService } from '../interfaces/overlayService';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';
@@ -20,7 +20,7 @@ export class OverlayServiceImpl extends OverlayService
     super();
   }
 
-  createModalBase(): Modal
+  createModalBase(): ModalViewmodel
   {
     const modal = this.modalFactory.createModalBase();
 
@@ -29,7 +29,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createModalAddForm(form: FormViewmodel): ModalConfirm
+  createModalAddForm(form: FormViewmodel): ModalConfirmViewmodel
   {
     const modal = this.modalFactory.createModalAddForm(form);
 
@@ -38,7 +38,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createModalEditForm(form: FormViewmodel): ModalConfirm
+  createModalEditForm(form: FormViewmodel): ModalConfirmViewmodel
   {
     const modal = this.modalFactory.createModalEditForm(form);
 
@@ -47,7 +47,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  getElements(): Observable<OverlayElement[]>
+  getElements(): Observable<OverlayElementViewmodel[]>
   {
     return this.overlay.getElements();
   }
