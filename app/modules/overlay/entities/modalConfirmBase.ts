@@ -122,18 +122,19 @@ export class ModalConfirmBase extends ModalConfirm
 
     protected createButtonConfirm(): ButtonElementGeneral
     {
-        const buttonConfirm = this.uikitElementsFactory.createButtonGeneral();
-
-        buttonConfirm.title = 'Сохранить';
-        buttonConfirm.color = 'primary';
+        const buttonConfirm = this.uikitElementsFactory.createButtonGeneral({
+            title: 'Сохранить',
+            color: 'primary'
+        });
 
         return buttonConfirm;
     }
 
     protected createButtonCancel(): ButtonElementGeneral
     {
-        const buttonCancel = this.uikitElementsFactory.createButtonGeneral();
-        buttonCancel.title = 'Отменить';
+        const buttonCancel = this.uikitElementsFactory.createButtonGeneral({
+            title: 'Отменить'
+        });
 
         buttonCancel.click.subscribe(() =>
         {
