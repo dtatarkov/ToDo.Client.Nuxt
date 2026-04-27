@@ -1,6 +1,6 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
-import { ModalBase } from "../entities/modalBase";
-import { ModalConfirmForm } from '../entities/modalConfirmForm';
+import { ModalBase } from "../viewmodels/modalBase";
+import { ModalConfirmForm } from '../viewmodels/modalConfirmForm';
 import { Form } from '@/modules/forms/interfaces/form';
 import { ModalConfirm } from '../interfaces/modalConfirm';
 import { Modal } from '../interfaces/modal';

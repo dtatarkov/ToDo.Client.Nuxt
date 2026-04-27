@@ -1,4 +1,4 @@
-import { FormFieldBase } from "../entities/formFieldBase";
+import { FormFieldBase } from "./formFieldBase";
 import type { FormElementCreateDataWithName } from "../types/internal/formElementCreateDataWithName";
 import { FormElement } from "../interfaces/internal/formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";

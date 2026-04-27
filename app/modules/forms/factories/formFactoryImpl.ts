@@ -1,5 +1,5 @@
 import { Form } from "../interfaces/form";
-import { FormBase } from "../entities/formBase";
+import { FormBase } from "../viewmodels/formBase";
 import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import { FormFactory } from "../interfaces/formFactory";
 import { dependency } from "@/modules/shared/decorators/dependency";

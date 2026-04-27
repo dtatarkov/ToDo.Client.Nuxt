@@ -1,6 +1,6 @@
 import { FormElementFactory } from "../interfaces/internal/formElementFactory";
 import type { FormElementCreateData } from "../types/formElementCreateData";
-import { FormElementBase } from "../entities/formElementBase";
+import { FormElementBase } from "../viewmodels/formElementBase";
 import type { FormElement } from "../interfaces/internal/formElement";
 import { FormElementType } from "../enums/formElementType";
 import { UIKitElementsFactory } from "@/modules/uikit/interfaces/uiKitElementsFactory";

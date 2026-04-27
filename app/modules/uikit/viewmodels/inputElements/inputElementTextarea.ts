@@ -1,5 +1,5 @@
 import { UTextarea } from "#components";
-import { InputElementWithPlaceholder } from "../../mixins/inputElementWithPlaceholder";
+import { InputElementWithPlaceholder } from "./mixins/inputElementWithPlaceholder";
 import type { InputElementTextareaData } from '../../types/inputElements/inputElementTextareaData';
 import type { InputElementTextData } from '../../types/inputElements/inputElementTextData';
 import { InputElementNuxtUIBaseString, type InputElementNuxtUIBaseStringProps } from "./base/inputElementNuxtUIBaseString";

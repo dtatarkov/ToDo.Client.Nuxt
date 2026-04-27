@@ -1,13 +1,13 @@
 import { UIKitElementsFactory } from "../interfaces/uiKitElementsFactory";
 import { InputElement } from "../interfaces/inputElement";
-import { InputElementText } from "../entities/inputElements/inputElementText";
-import { InputElementTextarea } from "../entities/inputElements/inputElementTextarea";
-import { InputElementDate } from "../entities/inputElements/inputElementDate";
-import { InputElementTime } from "../entities/inputElements/inputElementTime";
-import { InputElementDateTime } from "../entities/inputElements/inputElementDateTime";
-import { ButtonElementGeneralImpl } from "../entities/buttons/buttonElementGeneralImpl";
-import { GridBase } from "../entities/gridBase";
-import { InfoBlockBase } from "../entities/infoBlockBase";
+import { InputElementText } from "../viewmodels/inputElements/inputElementText";
+import { InputElementTextarea } from "../viewmodels/inputElements/inputElementTextarea";
+import { InputElementDate } from "../viewmodels/inputElements/inputElementDate";
+import { InputElementTime } from "../viewmodels/inputElements/inputElementTime";
+import { InputElementDateTime } from "../viewmodels/inputElements/inputElementDateTime";
+import { ButtonElementGeneralImpl } from "../viewmodels/buttons/buttonElementGeneralImpl";
+import { GridBase } from "../viewmodels/gridBase";
+import { InfoBlockBase } from "../viewmodels/infoBlockBase";
 import type { ButtonElementGeneral, ButtonElementGeneralData } from '../interfaces/buttonElementGeneral';
 import type { Grid } from '../interfaces/grid';
 import type { UIElement } from '../interfaces/uiElement';
@@ -21,7 +21,7 @@ import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMa
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { ButtonElementIcon, ButtonElementIconData } from '../interfaces/buttonElementIcon';
-import { ButtonElementIconImpl } from '../entities/buttons/buttonElementIconImpl';
+import { ButtonElementIconImpl } from '../viewmodels/buttons/buttonElementIconImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 @dependency(StringsService)
