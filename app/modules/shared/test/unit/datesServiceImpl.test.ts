@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { DatesServiceImpl } from '../../services/datesServiceImpl';
+import type { AppPublicRuntimeConfig } from '../../interfaces/appPublicRuntimeConfig';
 
 describe('DatesServiceImpl', () =>
 {
-  const config = {
+  const config: AppPublicRuntimeConfig = {
     apiBaseUrl: '',
-    locale: 'ru'
+    locale: 'ru',
+    longTaskSpinnerDelay: 500
   };
 
   const service = new DatesServiceImpl(config);

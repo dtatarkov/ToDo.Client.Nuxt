@@ -2,14 +2,16 @@ import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGe
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
 
 export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
 {
     private loaderTimeout: NodeJS.Timeout | undefined;
 
     constructor(
+        uikitElementsFactory: UIKitViewmodelsFactory,
+        private config: AppPublicRuntimeConfig,
         protected form: FormViewmodel,
-        uikitElementsFactory: UIKitViewmodelsFactory
     )
     {
         super(uikitElementsFactory);
@@ -49,7 +51,7 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
             this.loaderTimeout = setTimeout(() =>
             {
                 this.buttonConfirm.isLoading = isLoaderEnabled;
-            }, 500);
+            }, this.config.longTaskSpinnerDelay);
         }
         else
         {

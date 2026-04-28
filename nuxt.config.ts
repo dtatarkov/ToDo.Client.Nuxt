@@ -52,7 +52,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBaseUrl: '',
-      locale: 'ru'
+      locale: 'ru',
+      longTaskSpinnerDelay: 500 // ms
     },
   },
 
