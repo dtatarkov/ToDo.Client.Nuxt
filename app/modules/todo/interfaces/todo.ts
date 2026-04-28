@@ -10,6 +10,8 @@ export abstract class ToDo
   abstract completionDateActual: Date | undefined;
   abstract owner: ToDosOwner | undefined;
 
+  abstract get isNew(): boolean;
+
   abstract readonly data: Observable<ToDoData>;
 
   abstract getData(): ToDoData;

@@ -1,22 +1,35 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
-import { ToDo } from '../../interfaces/todo';
+import { ToDo, type ToDoData } from '../../interfaces/todo';
 import { ToDoFactory } from '../../interfaces/todoFactory';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { DestroyedException } from '@/modules/shared/exceptions/destroyedException';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
 // Simple mock ToDo
-const createMockToDo = (id: string, title: string = 'Test', description: string = 'Description'): ToDo =>
+const createMockToDo = (
+    data: Partial<ToDoData> = {}
+): ToDo =>
 {
-    return {
-        id,
-        title,
-        description,
+    const defaultData: ToDoData = {
+        id: '',
+        title: 'Test',
+        description: 'Description',
         completionDatePlanned: undefined,
         completionDateActual: undefined,
+    };
+
+    const mergedData = { ...defaultData, ...data };
+
+    return {
+        id: mergedData.id,
+        title: mergedData.title,
+        description: mergedData.description,
+        completionDatePlanned: mergedData.completionDatePlanned,
+        completionDateActual: mergedData.completionDateActual,
         owner: undefined,
-        data: new ObservableSource({ id, title, description, completionDatePlanned: undefined, completionDateActual: undefined }),
+        isNew: mergedData.id == '',
+        data: new ObservableSource(mergedData),
         getData: vi.fn(),
         clone: vi.fn(),
         saveAsync: vi.fn(),
@@ -46,7 +59,7 @@ describe('ToDosOwnerBase', () =>
     {
         it('should return observable with todos', async () =>
         {
-            const mockTodos = [createMockToDo('1'), createMockToDo('2')];
+            const mockTodos = [createMockToDo({ id: '1' }), createMockToDo({ id: '2' })];
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
@@ -67,7 +80,7 @@ describe('ToDosOwnerBase', () =>
 
         it('should initialize only once', async () =>
         {
-            const mockTodos = [createMockToDo('1')];
+            const mockTodos = [createMockToDo({ id: '1' })];
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
@@ -83,8 +96,8 @@ describe('ToDosOwnerBase', () =>
     {
         it('should update todos', async () =>
         {
-            const initialTodos = [createMockToDo('1')];
-            const updatedTodos = [createMockToDo('2')];
+            const initialTodos = [createMockToDo({ id: '1' })];
+            const updatedTodos = [createMockToDo({ id: '2' })];
 
             mockRepository.getAllToDosAsync
                 .mockResolvedValueOnce(initialTodos)
@@ -101,7 +114,7 @@ describe('ToDosOwnerBase', () =>
 
         it('should initialize if not initialized', async () =>
         {
-            const mockTodos = [createMockToDo('1')];
+            const mockTodos = [createMockToDo({ id: '1' })];
             mockRepository.getAllToDosAsync = vi.fn().mockResolvedValue(mockTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
@@ -125,8 +138,8 @@ describe('ToDosOwnerBase', () =>
     {
         it('should save todo', async () =>
         {
-            const todo = createMockToDo('1');
-            const mockTodos = [createMockToDo('1')];
+            const todo = createMockToDo({ id: '1' });
+            const mockTodos = [createMockToDo({ id: '1' })];
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
@@ -136,10 +149,25 @@ describe('ToDosOwnerBase', () =>
             expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(todo);
         });
 
+        it('should save new todo and add to list', async () =>
+        {
+            const newTodo = createMockToDo();
+            // The initial list is empty (or doesn't contain this id)
+            mockRepository.getAllToDosAsync.mockResolvedValue([]);
+
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            await owner.saveToDoAsync(newTodo);
+
+            expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(newTodo);
+            // Verify that the todo is added to the internal list
+            const todosObservable = await owner.getAllToDosAsync();
+            expect(todosObservable.value).toContain(newTodo);
+        });
+
         it('should throw if todo not found', async () =>
         {
-            const todo = createMockToDo('999');
-            const mockTodos = [createMockToDo('1')];
+            const todo = createMockToDo({ id: '999' });
+            const mockTodos = [createMockToDo({ id: '1' })];
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
@@ -152,7 +180,7 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
-            const todo = createMockToDo('1');
+            const todo = createMockToDo({ id: '1' });
 
             await expect(owner.saveToDoAsync(todo)).rejects.toThrow(DestroyedException);
         });
@@ -162,7 +190,7 @@ describe('ToDosOwnerBase', () =>
     {
         it('should create a todo using factory', () =>
         {
-            const mockTodo = createMockToDo('new');
+            const mockTodo = createMockToDo();
             mockTodoFactory.create.mockReturnValue(mockTodo);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
@@ -190,7 +218,7 @@ describe('ToDosOwnerBase', () =>
             owner.destroy();
 
             await expect(owner.getAllToDosAsync()).rejects.toThrow(DestroyedException);
-            await expect(owner.saveToDoAsync(createMockToDo('1'))).rejects.toThrow(DestroyedException);
+            await expect(owner.saveToDoAsync(createMockToDo({ id: '1' }))).rejects.toThrow(DestroyedException);
             await expect(owner.updateToDosAsync()).rejects.toThrow(DestroyedException);
         });
 
@@ -206,8 +234,8 @@ describe('ToDosOwnerBase', () =>
     {
         it('should set owner on todos', async () =>
         {
-            const todo1 = createMockToDo('1');
-            const todo2 = createMockToDo('2');
+            const todo1 = createMockToDo({ id: '1' });
+            const todo2 = createMockToDo({ id: '2' });
             const mockTodos = [todo1, todo2];
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);

@@ -51,7 +51,14 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
   {
     this._destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
-    this.assertToDoExistence(todo.id);
+
+    this.assertNewOrExistingToDo(todo);
+
+    if (todo.isNew)
+    {
+      this.addToDo(todo);
+    }
+
     await this._todosRepository.saveToDoAsync(todo);
   }
 
@@ -76,12 +83,20 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     this._destroyToken.destroy();
   }
 
-  private assertToDoExistence(id: string): void
+  private assertNewOrExistingToDo(todo: ToDo): void
   {
-    if (!this._todos.value.some(t => t.id === id))
+    if (!todo.isNew)
     {
-      throw new ToDoNotFoundException(id);
+      if (!this._todos.value.some(t => t.id === todo.id))
+      {
+        throw new ToDoNotFoundException(todo.id);
+      }
     }
+  }
+
+  private addToDo(todo: ToDo)
+  {
+    this._todos.value = [...this._todos.value, todo];
   }
 
   private async updateToDosInternalAsync(): Promise<void>

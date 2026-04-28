@@ -6,6 +6,7 @@ import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFa
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class ToDoBase extends ToDo
 {
@@ -21,7 +22,8 @@ export class ToDoBase extends ToDo
 
   constructor(
     private _formFactory: FormViewmodelFactory,
-    private _overlayService: OverlayService
+    private _overlayService: OverlayService,
+    private _stringsService: StringsService,
   )
   {
     super();
@@ -92,6 +94,11 @@ export class ToDoBase extends ToDo
     this._data.value = { ...this._data.value, completionDateActual: value };
   }
 
+  get isNew()
+  {
+    return this._stringsService.isStringEmpty(this.id);
+  }
+
   getData(): ToDoData
   {
     return {
@@ -101,7 +108,7 @@ export class ToDoBase extends ToDo
 
   clone(): ToDo
   {
-    const todo = new ToDoBase(this._formFactory, this._overlayService);
+    const todo = new ToDoBase(this._formFactory, this._overlayService, this._stringsService);
 
     todo.id = this.id;
     todo.title = this.title;

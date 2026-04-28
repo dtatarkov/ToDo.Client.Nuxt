@@ -5,14 +5,17 @@ import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDo, ToDoData } from '../interfaces/todo';
+import { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 @dependency(FormViewmodelFactory)
 @dependency(OverlayService)
+@dependency(StringsService)
 export class ToDoFactoryImpl extends ToDoFactory
 {
     constructor(
-        private formFactory: FormViewmodelFactory,
-        private overlayService: OverlayService
+        private _formFactory: FormViewmodelFactory,
+        private _overlayService: OverlayService,
+        private _stringService: StringsService,
     )
     {
         super();
@@ -20,7 +23,7 @@ export class ToDoFactoryImpl extends ToDoFactory
 
     create(data?: Partial<ToDoData>): ToDo
     {
-        const todo = new ToDoBase(this.formFactory, this.overlayService);
+        const todo = new ToDoBase(this._formFactory, this._overlayService, this._stringService);
 
         if (data)
         {
