@@ -2,22 +2,17 @@ import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import { ToDo } from "../interfaces/todo";
-import { ToDoBase } from "../entities/todoBase";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import { ToDoFactory } from "../interfaces/todoFactory";
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(DatesService)
-@dependency(FormViewmodelFactory)
-@dependency(OverlayService)
+@dependency(ToDoFactory)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
   constructor(
-    protected datesService: DatesService,
-    protected formFactory: FormViewmodelFactory,
-    protected overlayService: OverlayService
+    private _datesService: DatesService,
+    private _todoFactory: ToDoFactory
   )
   {
     super();
@@ -25,13 +20,11 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
 
   mapToEntity(dto: ToDoGetDto): ToDo
   {
-    const todo = new ToDoBase(this.formFactory, this.overlayService);
-
-    updatePropertiesWithData(todo, {
+    const todo = this._todoFactory.create({
       ...dto,
 
-      completionDateActual: this.datesService.fromStringOptional(dto.completionDateActual),
-      completionDatePlanned: this.datesService.fromStringOptional(dto.completionDatePlanned),
+      completionDateActual: this._datesService.fromStringOptional(dto.completionDateActual),
+      completionDatePlanned: this._datesService.fromStringOptional(dto.completionDatePlanned),
     });
 
     return todo;

@@ -9,6 +9,8 @@ import { TodosServiceImpl } from "../services/todosServiceImpl";
 import { ToDoViewmodelsFactory } from "../interfaces/todoViewmodelsFactory";
 import { ToDoViewmodelsFactoryImpl } from "../factories/todoViewmodelsFactoryImpl";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
+import { ToDoFactory } from '../interfaces/todoFactory';
 
 export function useTodoServices(): void
 {
@@ -17,4 +19,5 @@ export function useTodoServices(): void
     useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asScoped();
     useServiceRegistration(ToDosService).to(TodosServiceImpl).asTransient();
     useServiceRegistration(ToDoViewmodelsFactory).to(ToDoViewmodelsFactoryImpl).asTransient();
+    useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
 }
