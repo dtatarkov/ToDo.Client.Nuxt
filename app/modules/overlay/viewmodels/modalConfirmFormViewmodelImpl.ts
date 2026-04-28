@@ -5,6 +5,8 @@ import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 
 export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
 {
+    private loaderTimeout: NodeJS.Timeout | undefined;
+
     constructor(
         protected form: FormViewmodel,
         uikitElementsFactory: UIKitViewmodelsFactory
@@ -15,9 +17,16 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
         form.onDisabledStateChange.subscribe(isDisabled =>
         {
             this.buttonConfirm.isDisabled = isDisabled;
-            this.buttonConfirm.isLoading = isDisabled;
+
             this.buttonCancel.isDisabled = isDisabled;
             this.isDisabled = isDisabled;
+
+            this.toggleLoader(isDisabled);
+        });
+
+        form.onSubmitted.subscribe(() =>
+        {
+            this.close();
         });
     }
 
@@ -31,5 +40,24 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
         });
 
         return buttonConfirm;
+    }
+
+    private toggleLoader(isLoaderEnabled: boolean)
+    {
+        if (isLoaderEnabled)
+        {
+            this.loaderTimeout = setTimeout(() =>
+            {
+                this.buttonConfirm.isLoading = isLoaderEnabled;
+            }, 500);
+        }
+        else
+        {
+            if (this.loaderTimeout)
+            {
+                clearTimeout(this.loaderTimeout);
+                this.loaderTimeout = undefined;
+            }
+        }
     }
 }

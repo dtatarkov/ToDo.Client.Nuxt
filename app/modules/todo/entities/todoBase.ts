@@ -136,7 +136,16 @@ export class ToDoBase extends ToDo
 
     effectsContainer.withContainer(() =>
     {
-      const form = this._formFactory.create<ToDo>();
+      const form = this._formFactory.create<ToDo>({
+        submit: async formData =>
+        {
+          this.title = formData.title;
+          this.description = formData.description;
+          this.completionDatePlanned = formData.completionDatePlanned;
+
+          await this.saveAsync();
+        }
+      });
 
       form.setElements({
         title: {
@@ -158,20 +167,6 @@ export class ToDoBase extends ToDo
       });
 
       form.setData(this);
-
-      form.onSubmit.subscribe(async (formData) =>
-      {
-        await form.use(async () =>
-        {
-          this.title = formData.title;
-          this.description = formData.description;
-          this.completionDatePlanned = formData.completionDatePlanned;
-
-          await this.saveAsync();
-        });
-
-        modal.close();
-      });
 
       const modal = this._overlayService.createModalEditForm(form);
       modal.title = 'Редактирование';

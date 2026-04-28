@@ -1,4 +1,5 @@
 import { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
+import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
 import { FormViewmodel } from "../interfaces/formViewmodel";
 import { FormViewmodelFactory } from '../interfaces/formViewmodelFactory';
 import { FormViewmodelBase } from "../viewmodels/formViewmodelBase";
@@ -11,8 +12,8 @@ export class FormViewmodelFactoryImpl implements FormViewmodelFactory
   {
   }
 
-  create<TEntity extends Record<string, any> = Record<string, any>>(): FormViewmodel<TEntity>
+  create<TEntity extends Record<string, any> = Record<string, any>>(submitHandler: FormSubmitHandler): FormViewmodel<TEntity>
   {
-    return new FormViewmodelBase(this.formElementFactory);
+    return new FormViewmodelBase(this.formElementFactory, submitHandler);
   }
 }

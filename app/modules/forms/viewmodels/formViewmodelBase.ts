@@ -2,11 +2,11 @@ import VForm from "../components/VForm.vue";
 import { FormViewmodel } from "@/modules/forms/interfaces/formViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { EventBusBase } from "@/modules/shared/entities/eventBusBase";
-import type { Func } from "@/modules/shared/types/func";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { FormElementViewmodel } from '../interfaces/formElementViewmodel';
 import type { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
+import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
 
 enum FormBaseState
 {
@@ -20,8 +20,8 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
   #state = FormBaseState.initial;
 
   readonly key = getUniqueId('form');
-  readonly onSubmit = new EventBusBase<Record<keyof TEntity, any>>();
   readonly onDisabledStateChange = new EventBusBase<boolean>();
+  readonly onSubmitted = new EventBusBase();
 
   readonly component = {
     setup: () =>
@@ -31,7 +31,8 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
   };
 
   constructor(
-    protected formElementFactory: FormElementViewmodelFactory
+    private formElementFactory: FormElementViewmodelFactory,
+    private formSubmitHandler: FormSubmitHandler,
   )
   {
     super();
@@ -85,17 +86,29 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     });
   }
 
-  submit(): void
+  async submit(): Promise<void>
   {
     if (this.#state === FormBaseState.disabled)
     {
       throw new FormDisabledException();
     }
 
-    this.onSubmit.emit(this.getData());
+    this.disable();
+
+    try
+    {
+      const data = this.getData();
+      await this.formSubmitHandler.submit(data);
+
+      this.onSubmitted.emit();
+    }
+    finally
+    {
+      this.enable();
+    }
   }
 
-  disable(): void
+  private disable(): void
   {
     if (this.#state === FormBaseState.disabled)
     {
@@ -107,7 +120,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     this.onDisabledStateChange.emit(true);
   }
 
-  enable(): void
+  private enable(): void
   {
     if (this.#state !== FormBaseState.disabled)
     {
@@ -117,19 +130,5 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     this.#state = FormBaseState.initial;
     this.#elements.value.forEach(element => element.enable());
     this.onDisabledStateChange.emit(false);
-  }
-
-  async use(func: Func<Promise<void>>): Promise<void>
-  {
-    this.disable();
-
-    try
-    {
-      await func();
-    }
-    finally
-    {
-      this.enable();
-    }
   }
 }

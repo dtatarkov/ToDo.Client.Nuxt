@@ -54,12 +54,12 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
     this.assertNewOrExistingToDo(todo);
 
+    await this._todosRepository.saveToDoAsync(todo);
+
     if (todo.isNew)
     {
       this.addToDo(todo);
     }
-
-    await this._todosRepository.saveToDoAsync(todo);
   }
 
   override createToDo()
