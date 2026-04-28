@@ -163,7 +163,6 @@ export class ToDoBase extends ToDo
           await this.saveAsync();
         });
 
-        console.log('beforeClose');
         modal.close();
       });
 

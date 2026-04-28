@@ -61,11 +61,7 @@ describe('ObservableComputed', () =>
                 return source.value * 2;
             });
 
-            console.log('created');
-
             computed.subscribe(() => { });
-
-            console.log('subscribed');
 
             // initial compute
             expect(computed.value).toBe(2);
