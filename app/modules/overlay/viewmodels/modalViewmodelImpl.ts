@@ -10,25 +10,33 @@ export class ModalViewmodelImpl extends ModalViewmodel
 {
   protected destroyToken = new DestroyTokenBase();
 
-  protected data = {
+  protected data = reactive({
     title: '',
     description: '',
-  };
+    isDisabled: false,
+  });
 
-  protected children = {
+  protected children = shallowReactive({
     content: <Viewmodel | undefined>undefined
-  };
+  });
 
   readonly key = getUniqueId('modal');
 
   readonly component = {
     setup: () =>
     {
-      return () => h(VModal, { modal: this });
+      return () => h(VModal, {
+        title: this.data.title,
+        description: this.data.description,
+        isDismissible: !this.data.isDisabled
+      }, {
+        content: () => this.children.content ? h(this.children.content.component, { key: this.children.content.key }) : undefined,
+        controls: () => this.controls.map(control => h(control.component, { key: control.key }))
+      });
     }
   };
 
-  readonly controls = new Array<Viewmodel>();
+  readonly controls = shallowReactive(new Array<Viewmodel>());
 
   readonly onClose = new EventBusBase();
 
@@ -54,6 +62,16 @@ export class ModalViewmodelImpl extends ModalViewmodel
   {
     this.destroyToken.assertNotDestroyed();
     this.data.description = value;
+  }
+
+  get isDisabled()
+  {
+    return this.data.isDisabled;
+  }
+
+  set isDisabled(value)
+  {
+    this.data.isDisabled = value;
   }
 
   get content()

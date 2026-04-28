@@ -1,30 +1,33 @@
 <script setup lang="ts">
-import { ModalViewmodel } from '../interfaces/modalViewmodel';
+const props = defineProps<{ 
+  title: string,
+  description: string,
+  isDismissible: boolean,
+ }>();
 
-const props = defineProps<{ modal: ModalViewmodel }>();
+ const emits = defineEmits<{
+   (e: 'open', isOpened: boolean): void
+ }>();
 
-function handleOpen(isOpened: boolean)
-{
-  if (!isOpened)
-  {
-    props.modal.close();
-  }
-}
+ function handleOpen(isOpened: boolean) {
+  emits('open', isOpened)
+ }
 </script>
 
 <template>
   <UModal
       :defaultOpen="true"
       :transition="false"
-      :title="modal.title"
-      :description="modal.description"
+      :title="props.title"
+      :description="props.description"
+      :dismissible="props.isDismissible"
       @update:open="handleOpen"
   >
     <template #content>
-      <component v-if="modal.content" :is="modal.content.component" />
+      <slot name="content" />
       
-      <div class="flex gap-2 justify-end p-2">
-        <component v-for="control in modal.controls" :key="control.key" :is="control.component" />
+      <div class="flex gap-2 justify-end p-2" v-if="$slots.controls">
+        <slot name="controls" />
       </div>
     </template>
   </UModal>

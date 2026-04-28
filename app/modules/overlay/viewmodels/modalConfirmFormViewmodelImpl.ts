@@ -16,8 +16,8 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
         {
             this.buttonConfirm.isDisabled = isDisabled;
             this.buttonConfirm.isLoading = isDisabled;
-
             this.buttonCancel.isDisabled = isDisabled;
+            this.isDisabled = isDisabled;
         });
     }
 

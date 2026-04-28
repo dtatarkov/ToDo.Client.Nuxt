@@ -7,4 +7,5 @@ export abstract class ModalViewmodel extends OverlayElementViewmodel
   abstract description: string;
   abstract content: Viewmodel | undefined;
   abstract controls: Array<Viewmodel>;
+  abstract isDisabled: boolean;
 }
