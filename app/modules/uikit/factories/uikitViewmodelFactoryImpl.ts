@@ -25,6 +25,8 @@ import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIc
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { CardViewmodel } from '../interfaces/cardViewmodel';
 import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
+import type { ToolbarViewmodel } from '../interfaces/toolbarViewmodel';
+import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -133,5 +135,10 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
     override createCard(): CardViewmodel
     {
         return new CardViewmodelImpl();
+    }
+
+    override createToolbar<T extends Viewmodel = Viewmodel<string | number>>(): ToolbarViewmodel<T>
+    {
+        return new ToolbarViewmodelImpl();
     }
 }
