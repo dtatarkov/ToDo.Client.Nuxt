@@ -7,15 +7,20 @@ import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
+import { ToDoFactory } from '../interfaces/todoFactory';
 
 @dependency(ToDosRepository)
+@dependency(ToDoFactory)
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
   private _initializationPromise: Promise<void> | undefined;
   private _todos = new ObservableSource(new Array<ToDo>());
   private _destroyToken = new DestroyTokenBase();
 
-  constructor(protected todosRepository: ToDosRepository)
+  constructor(
+    private _todosRepository: ToDosRepository,
+    private _todoFactory: ToDoFactory
+  )
   {
     super();
   }
@@ -47,7 +52,17 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     this._destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
     this.assertToDoExistence(todo.id);
-    await this.todosRepository.saveToDoAsync(todo);
+    await this._todosRepository.saveToDoAsync(todo);
+  }
+
+  override createToDo()
+  {
+    this._destroyToken.assertNotDestroyed();
+
+    const todo = this._todoFactory.create();
+    todo.owner = this;
+
+    return todo;
   }
 
   destroy()
@@ -71,7 +86,7 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   private async updateToDosInternalAsync(): Promise<void>
   {
-    const todos = await this.todosRepository.getAllToDosAsync();
+    const todos = await this._todosRepository.getAllToDosAsync();
 
     for (const todo of todos)
     {

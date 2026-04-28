@@ -5,4 +5,5 @@ export abstract class ToDosService
 {
   abstract getAllToDosAsync(): Promise<Observable<ToDo[]>>;
   abstract updateToDosAsync(): Promise<void>;
+  abstract showAddToDoDialog(): void;
 }

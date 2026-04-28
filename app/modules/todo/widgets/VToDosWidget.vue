@@ -20,7 +20,7 @@ const addToDoButton = uikitFactory.createButtonGeneral({ title: 'Добавит�
 toolbar.addElement(addToDoButton);
 
 useSubscribable(addToDoButton.click, () => {
-  console.log('add todo requested');
+  todosService.showAddToDoDialog();
 });
 </script>
 

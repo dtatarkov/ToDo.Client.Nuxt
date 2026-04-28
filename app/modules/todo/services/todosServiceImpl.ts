@@ -1,20 +1,15 @@
 import { ToDosService } from "../interfaces/todosService";
 import { ToDo } from "../interfaces/todo";
 import { ToDosOwner } from "../interfaces/todosOwner";
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
+import { ToDoFactory } from '../interfaces/todoFactory';
 
 @dependency(ToDosOwner)
-@dependency(OverlayService)
-@dependency(FormViewmodelFactory)
 export class TodosServiceImpl extends ToDosService
 {
   constructor(
-    protected owner: ToDosOwner,
-    protected overlayService: OverlayService,
-    protected formFactory: FormViewmodelFactory
+    private _owner: ToDosOwner,
   )
   {
     super();
@@ -22,11 +17,17 @@ export class TodosServiceImpl extends ToDosService
 
   override getAllToDosAsync(): Promise<Observable<ToDo[]>>
   {
-    return this.owner.getAllToDosAsync();
+    return this._owner.getAllToDosAsync();
   }
 
   override async updateToDosAsync(): Promise<void>
   {
-    await this.owner.updateToDosAsync();
+    await this._owner.updateToDosAsync();
+  }
+
+  override showAddToDoDialog(): void
+  {
+    const todo = this._owner.createToDo();
+    todo.showEditDialog();
   }
 }

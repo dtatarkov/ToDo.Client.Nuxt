@@ -1,9 +1,8 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
 import { ToDo } from '../../interfaces/todo';
+import { ToDoFactory } from '../../interfaces/todoFactory';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
-import { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
-import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
 import { DestroyedException } from '@/modules/shared/exceptions/destroyedException';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
@@ -32,10 +31,15 @@ describe('ToDosOwnerBase', () =>
         saveToDoAsync: vi.fn()
     };
 
+    const mockTodoFactory = {
+        create: vi.fn()
+    };
+
     beforeEach(() =>
     {
         mockRepository.getAllToDosAsync.mockReset();
         mockRepository.saveToDoAsync.mockReset();
+        mockTodoFactory.create.mockReset();
     });
 
     describe('getAllToDosAsync', () =>
@@ -45,7 +49,7 @@ describe('ToDosOwnerBase', () =>
             const mockTodos = [createMockToDo('1'), createMockToDo('2')];
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             const observable = await owner.getAllToDosAsync();
 
             expect(observable).toBeDefined();
@@ -55,7 +59,7 @@ describe('ToDosOwnerBase', () =>
 
         it('should throw if destroyed', async () =>
         {
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
             await expect(owner.getAllToDosAsync()).rejects.toThrow(DestroyedException);
@@ -66,7 +70,7 @@ describe('ToDosOwnerBase', () =>
             const mockTodos = [createMockToDo('1')];
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.getAllToDosAsync();
             await owner.getAllToDosAsync();
             await owner.getAllToDosAsync();
@@ -86,7 +90,7 @@ describe('ToDosOwnerBase', () =>
                 .mockResolvedValueOnce(initialTodos)
                 .mockResolvedValueOnce(updatedTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.getAllToDosAsync();
             await owner.updateToDosAsync();
 
@@ -100,7 +104,7 @@ describe('ToDosOwnerBase', () =>
             const mockTodos = [createMockToDo('1')];
             mockRepository.getAllToDosAsync = vi.fn().mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.updateToDosAsync();
 
             const observable = await owner.getAllToDosAsync();
@@ -110,7 +114,7 @@ describe('ToDosOwnerBase', () =>
 
         it('should throw if destroyed', async () =>
         {
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
             await expect(owner.updateToDosAsync()).rejects.toThrow(DestroyedException);
@@ -126,7 +130,7 @@ describe('ToDosOwnerBase', () =>
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.saveToDoAsync(todo);
 
             expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(todo);
@@ -139,13 +143,13 @@ describe('ToDosOwnerBase', () =>
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await expect(owner.saveToDoAsync(todo)).rejects.toThrow(ToDoNotFoundException);
         });
 
         it('should throw if destroyed', async () =>
         {
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
             const todo = createMockToDo('1');
@@ -154,11 +158,35 @@ describe('ToDosOwnerBase', () =>
         });
     });
 
+    describe('createToDo', () =>
+    {
+        it('should create a todo using factory', () =>
+        {
+            const mockTodo = createMockToDo('new');
+            mockTodoFactory.create.mockReturnValue(mockTodo);
+
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const result = owner.createToDo();
+
+            expect(mockTodoFactory.create).toHaveBeenCalledTimes(1);
+            expect(result).toBe(mockTodo);
+            expect(result.owner).toBe(owner);
+        });
+
+        it('should throw if destroyed', () =>
+        {
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            owner.destroy();
+
+            expect(() => owner.createToDo()).toThrow(DestroyedException);
+        });
+    });
+
     describe('destroy', () =>
     {
         it('should prevent operations after destroy', async () =>
         {
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
             await expect(owner.getAllToDosAsync()).rejects.toThrow(DestroyedException);
@@ -168,7 +196,7 @@ describe('ToDosOwnerBase', () =>
 
         it('should be idempotent', () =>
         {
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
             expect(() => owner.destroy()).not.toThrow();
         });
@@ -184,7 +212,7 @@ describe('ToDosOwnerBase', () =>
 
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository);
+            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.getAllToDosAsync();
 
             expect(todo1.owner).toBe(owner);
