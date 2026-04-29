@@ -5,8 +5,8 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
 export abstract class InputViewmodelComposedBase<V> extends InputViewmodel<V>
 {
-  #id = ref('');
-  #name = ref('');
+  private idInternal = ref('');
+  private nameInternal = ref('');
 
   protected abstract children: Record<string, InputViewmodel>;
   protected dataSetters: Record<string, Action<[any]>> = {};
@@ -49,12 +49,12 @@ export abstract class InputViewmodelComposedBase<V> extends InputViewmodel<V>
 
   get id(): string
   {
-    return this.#id.value;
+    return this.idInternal.value;
   }
 
   set id(newId)
   {
-    this.#id.value = newId;
+    this.idInternal.value = newId;
 
     Object
       .entries(this.children)
@@ -66,12 +66,12 @@ export abstract class InputViewmodelComposedBase<V> extends InputViewmodel<V>
 
   get name(): string
   {
-    return this.#name.value;
+    return this.nameInternal.value;
   }
 
   set name(value: string)
   {
-    this.#name.value = value;
+    this.nameInternal.value = value;
 
     Object
       .entries(this.children)

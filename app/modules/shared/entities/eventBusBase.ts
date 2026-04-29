@@ -5,11 +5,11 @@ import type { Action } from '../types/action';
 import { once } from '../utils/once';
 export class EventBusBase<T = void> extends EventBus<T>
 {
-  #subscriptions = new Set<Action<[T]>>();
+  private subscriptionsInternal = new Set<Action<[T]>>();
 
   get subscriptionsCount(): number
   {
-    return this.#subscriptions.size;
+    return this.subscriptionsInternal.size;
   }
 
   override subscribe(handler: Action<[T]>): Action
@@ -21,11 +21,11 @@ export class EventBusBase<T = void> extends EventBus<T>
       throw new EffectsContainerMissingException();
     }
 
-    this.#subscriptions.add(handler);
+    this.subscriptionsInternal.add(handler);
 
     const unsubscribe = once(() =>
     {
-      this.#subscriptions.delete(handler);
+      this.subscriptionsInternal.delete(handler);
     });
 
     effectsContainer.register(unsubscribe);
@@ -35,11 +35,11 @@ export class EventBusBase<T = void> extends EventBus<T>
 
   override emit(data: T): void
   {
-    this.#subscriptions.forEach(handler => handler(data));
+    this.subscriptionsInternal.forEach(handler => handler(data));
   }
 
   override destroy(): void
   {
-    this.#subscriptions.clear();
+    this.subscriptionsInternal.clear();
   }
 }

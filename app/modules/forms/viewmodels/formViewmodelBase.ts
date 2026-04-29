@@ -16,8 +16,8 @@ enum FormBaseState
 
 export class FormViewmodelBase<TEntity extends Record<string, any> = Record<string, any>> extends FormViewmodel
 {
-  #elements: Ref<FormElementViewmodel[]> = shallowRef([]);
-  #state = FormBaseState.initial;
+  private elementsInternal: Ref<FormElementViewmodel[]> = shallowRef([]);
+  private state = FormBaseState.initial;
 
   readonly key = getUniqueId('form');
   readonly onDisabledStateChange = new EventBusBase<boolean>();
@@ -40,19 +40,19 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
   get elements(): FormElementViewmodel[]
   {
-    return this.#elements.value;
+    return this.elementsInternal.value;
   }
 
   get isDisabled(): boolean
   {
-    return this.#state === FormBaseState.disabled;
+    return this.state === FormBaseState.disabled;
   }
 
   getData(): Record<keyof TEntity, any>
   {
     const data: Record<string, any> = {};
 
-    for (const element of this.#elements.value)
+    for (const element of this.elementsInternal.value)
     {
       data[element.name] = element.value;
     }
@@ -62,12 +62,12 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
   setData(data: Record<keyof TEntity, any>)
   {
-    if (this.#state === FormBaseState.disabled)
+    if (this.state === FormBaseState.disabled)
     {
       throw new FormDisabledException();
     }
 
-    for (const element of this.#elements.value)
+    for (const element of this.elementsInternal.value)
     {
       if (element.name in data)
       {
@@ -78,7 +78,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
   setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>)
   {
-    this.#elements.value = Object.entries(elements).map(([name, createData]) =>
+    this.elementsInternal.value = Object.entries(elements).map(([name, createData]) =>
     {
       const element = this.formElementFactory.createElement(name, createData as FormElementViewmodelCreateData);
 
@@ -88,7 +88,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
   async submit(): Promise<void>
   {
-    if (this.#state === FormBaseState.disabled)
+    if (this.state === FormBaseState.disabled)
     {
       throw new FormDisabledException();
     }
@@ -110,25 +110,25 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
   private disable(): void
   {
-    if (this.#state === FormBaseState.disabled)
+    if (this.state === FormBaseState.disabled)
     {
       throw new FormDisabledException();
     }
 
-    this.#state = FormBaseState.disabled;
-    this.#elements.value.forEach(element => element.disable());
+    this.state = FormBaseState.disabled;
+    this.elementsInternal.value.forEach(element => element.disable());
     this.onDisabledStateChange.emit(true);
   }
 
   private enable(): void
   {
-    if (this.#state !== FormBaseState.disabled)
+    if (this.state !== FormBaseState.disabled)
     {
       return;
     }
 
-    this.#state = FormBaseState.initial;
-    this.#elements.value.forEach(element => element.enable());
+    this.state = FormBaseState.initial;
+    this.elementsInternal.value.forEach(element => element.enable());
     this.onDisabledStateChange.emit(false);
   }
 }
