@@ -10,6 +10,7 @@ import type { Func } from '../types/func';
 import { DestroyedException } from '../exceptions/destroyedException';
 import type { EffectsContainer } from '../interfaces/effectsContainer';
 import { EffectsContainerBase } from './effectsContainerBase';
+import { ValueAccessorDefaulted } from './valueAccessorDefaulted';
 
 export class ObservableComputed<T> extends ObservableBase<T>
 {
@@ -27,32 +28,7 @@ export class ObservableComputed<T> extends ObservableBase<T>
         super();
 
         const observableComputed = this;
-
-        const valueAccessor = {
-            valueInternal: <T | undefined>undefined,
-            isInitializedInternal: false,
-
-            get value()
-            {
-                if (!this.isInitializedInternal)
-                {
-                    this.isInitializedInternal = true;
-                    this.valueInternal = observableComputed.factory();
-                }
-
-                return <T>this.valueInternal;
-            },
-
-            set value(value)
-            {
-                if (!this.isInitializedInternal)
-                {
-                    this.isInitializedInternal = true;
-                }
-
-                this.valueInternal = value;
-            }
-        };
+        const valueAccessor = new ValueAccessorDefaulted(this.factory);
 
         const stateReader = {
             get value()
