@@ -23,8 +23,8 @@ export abstract class InputViewmodelNuxtUIBase<
   Data extends InputViewmodelData<V>
 > extends InputViewmodel<V>
 {
-  private readonly _propsLazy: LazyEntityBase<Props>;
-  private readonly _dataLazy: LazyEntityBase<Data>;
+  private readonly propsLazy: LazyEntityBase<Props>;
+  private readonly dataLazy: LazyEntityBase<Data>;
 
   readonly key = getUniqueId('input-element-base');
 
@@ -36,21 +36,21 @@ export abstract class InputViewmodelNuxtUIBase<
   {
     super();
 
-    this._propsLazy = new LazyEntityBase(() =>
+    this.propsLazy = new LazyEntityBase(() =>
       this.vueComponentPropsFactory.create(this.getPropsScheme()));
 
-    this._dataLazy = new LazyEntityBase(() =>
+    this.dataLazy = new LazyEntityBase(() =>
       this.dataAdapterFactory.create(this.props, this.getDataScheme()));
   }
 
   protected get props(): Props
   {
-    return this._propsLazy.value;
+    return this.propsLazy.value;
   }
 
   protected get data(): Data
   {
-    return this._dataLazy.value;
+    return this.dataLazy.value;
   }
 
   get id(): string | undefined

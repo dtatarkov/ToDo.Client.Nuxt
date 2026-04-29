@@ -6,13 +6,13 @@ import type { Viewmodel } from "../interfaces/viewmodel";
 
 export class CardViewmodelImpl extends CardViewmodel
 {
-    private readonly _props = reactive({
+    private readonly props = reactive({
         title: '',
         description: '',
     });
 
-    private readonly _actions = shallowRef<Viewmodel[]>([]);
-    private readonly _footer = shallowRef<Viewmodel | undefined>(undefined);
+    private readonly actionsInternal = shallowRef<Viewmodel[]>([]);
+    private readonly footerInternal = shallowRef<Viewmodel | undefined>(undefined);
 
     readonly key = getUniqueId('card');
 
@@ -21,9 +21,9 @@ export class CardViewmodelImpl extends CardViewmodel
         {
             return () =>
             {
-                const props = this._props;
-                const actions = this._actions.value;
-                const footer = this._footer.value;
+                const props = this.props;
+                const actions = this.actionsInternal.value;
+                const footer = this.footerInternal.value;
 
                 return h(VCard, props, {
                     actions: () => actions.map(action =>
@@ -37,41 +37,41 @@ export class CardViewmodelImpl extends CardViewmodel
 
     get title(): string
     {
-        return this._props.title;
+        return this.props.title;
     }
 
     set title(value: string)
     {
-        this._props.title = value;
+        this.props.title = value;
     }
 
     get description(): string
     {
-        return this._props.description;
+        return this.props.description;
     }
 
     set description(value: string)
     {
-        this._props.description = value;
+        this.props.description = value;
     }
 
     get actions(): Viewmodel[]
     {
-        return this._actions.value;
+        return this.actionsInternal.value;
     }
 
     set actions(value: Viewmodel[])
     {
-        this._actions.value = value;
+        this.actionsInternal.value = value;
     }
 
     get footer(): Viewmodel | undefined
     {
-        return this._footer.value;
+        return this.footerInternal.value;
     }
 
     set footer(value: Viewmodel | undefined)
     {
-        this._footer.value = value;
+        this.footerInternal.value = value;
     }
 }

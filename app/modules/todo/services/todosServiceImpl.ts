@@ -9,7 +9,7 @@ import { ToDoFactory } from '../interfaces/todoFactory';
 export class TodosServiceImpl extends ToDosService
 {
   constructor(
-    private _owner: ToDosOwner,
+    private owner: ToDosOwner,
   )
   {
     super();
@@ -17,17 +17,17 @@ export class TodosServiceImpl extends ToDosService
 
   override getAllToDosAsync(): Promise<Observable<ToDo[]>>
   {
-    return this._owner.getAllToDosAsync();
+    return this.owner.getAllToDosAsync();
   }
 
   override async updateToDosAsync(): Promise<void>
   {
-    await this._owner.updateToDosAsync();
+    await this.owner.updateToDosAsync();
   }
 
   override showAddToDoDialog(): void
   {
-    const todo = this._owner.createToDo();
+    const todo = this.owner.createToDo();
     todo.showEditDialog();
   }
 }

@@ -11,8 +11,8 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
   constructor(
-    private _datesService: DatesService,
-    private _todoFactory: ToDoFactory
+    private datesService: DatesService,
+    private todoFactory: ToDoFactory
   )
   {
     super();
@@ -20,11 +20,11 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
 
   mapToEntity(dto: ToDoGetDto): ToDo
   {
-    const todo = this._todoFactory.create({
+    const todo = this.todoFactory.create({
       ...dto,
 
-      completionDateActual: this._datesService.fromStringOptional(dto.completionDateActual),
-      completionDatePlanned: this._datesService.fromStringOptional(dto.completionDatePlanned),
+      completionDateActual: this.datesService.fromStringOptional(dto.completionDateActual),
+      completionDatePlanned: this.datesService.fromStringOptional(dto.completionDatePlanned),
     });
 
     return todo;

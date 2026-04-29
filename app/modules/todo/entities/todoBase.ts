@@ -10,9 +10,9 @@ import type { StringsService } from '@/modules/shared/interfaces/stringsService'
 
 export class ToDoBase extends ToDo
 {
-  private _owner: ToDosOwner | undefined;
+  private ownerInternal: ToDosOwner | undefined;
 
-  private _data = new ObservableSource<ToDoData>({
+  private dataInternal = new ObservableSource<ToDoData>({
     id: '',
     title: '',
     description: '',
@@ -21,9 +21,9 @@ export class ToDoBase extends ToDo
   });
 
   constructor(
-    private _formFactory: FormViewmodelFactory,
-    private _overlayService: OverlayService,
-    private _stringsService: StringsService,
+    private formFactory: FormViewmodelFactory,
+    private overlayService: OverlayService,
+    private stringsService: StringsService,
   )
   {
     super();
@@ -31,84 +31,84 @@ export class ToDoBase extends ToDo
 
   get owner(): ToDosOwner | undefined
   {
-    return this._owner;
+    return this.ownerInternal;
   }
 
   set owner(value: ToDosOwner | undefined)
   {
-    this._owner = value;
+    this.ownerInternal = value;
   }
 
   get data(): Observable<ToDoData>
   {
-    return this._data;
+    return this.dataInternal;
   }
 
   get id(): string
   {
-    return this._data.value.id;
+    return this.dataInternal.value.id;
   }
 
   get title(): string
   {
-    return this._data.value.title;
+    return this.dataInternal.value.title;
   }
 
   get description(): string
   {
-    return this._data.value.description;
+    return this.dataInternal.value.description;
   }
 
   get completionDatePlanned(): Date | undefined
   {
-    return this._data.value.completionDatePlanned;
+    return this.dataInternal.value.completionDatePlanned;
   }
 
   get completionDateActual(): Date | undefined
   {
-    return this._data.value.completionDateActual;
+    return this.dataInternal.value.completionDateActual;
   }
 
   set id(value: string)
   {
-    this._data.value = { ...this._data.value, id: value };
+    this.dataInternal.value = { ...this.dataInternal.value, id: value };
   }
 
   set title(value: string)
   {
-    this._data.value = { ...this._data.value, title: value };
+    this.dataInternal.value = { ...this.dataInternal.value, title: value };
   }
 
   set description(value: string)
   {
-    this._data.value = { ...this._data.value, description: value };
+    this.dataInternal.value = { ...this.dataInternal.value, description: value };
   }
 
   set completionDatePlanned(value: Date | undefined)
   {
-    this._data.value = { ...this._data.value, completionDatePlanned: value };
+    this.dataInternal.value = { ...this.dataInternal.value, completionDatePlanned: value };
   }
 
   set completionDateActual(value: Date | undefined)
   {
-    this._data.value = { ...this._data.value, completionDateActual: value };
+    this.dataInternal.value = { ...this.dataInternal.value, completionDateActual: value };
   }
 
   get isNew()
   {
-    return this._stringsService.isStringEmpty(this.id);
+    return this.stringsService.isStringEmpty(this.id);
   }
 
   getData(): ToDoData
   {
     return {
-      ...this._data.value
+      ...this.dataInternal.value
     };
   }
 
   clone(): ToDo
   {
-    const todo = new ToDoBase(this._formFactory, this._overlayService, this._stringsService);
+    const todo = new ToDoBase(this.formFactory, this.overlayService, this.stringsService);
 
     todo.id = this.id;
     todo.title = this.title;
@@ -127,7 +127,7 @@ export class ToDoBase extends ToDo
       throw new Error('Owner is not available');
     }
 
-    await this._owner?.saveToDoAsync(this);
+    await this.ownerInternal?.saveToDoAsync(this);
   }
 
   showEditDialog(): void
@@ -136,7 +136,7 @@ export class ToDoBase extends ToDo
 
     effectsContainer.withContainer(() =>
     {
-      const form = this._formFactory.create<ToDo>({
+      const form = this.formFactory.create<ToDo>({
         submit: async formData =>
         {
           this.title = formData.title;
@@ -168,7 +168,7 @@ export class ToDoBase extends ToDo
 
       form.setData(this);
 
-      const modal = this._overlayService.createModalEditForm(form);
+      const modal = this.overlayService.createModalEditForm(form);
       modal.title = 'Редактирование';
       modal.content = form;
 

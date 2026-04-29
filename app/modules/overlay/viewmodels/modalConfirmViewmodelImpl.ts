@@ -4,37 +4,37 @@ import { ModalViewmodelImpl } from './modalViewmodelImpl';
 
 export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
 {
-    private _buttonConfirm: ButtonGeneralViewmodel | undefined;
-    private _buttonCancel: ButtonGeneralViewmodel | undefined;
+    private buttonConfirmInternal: ButtonGeneralViewmodel | undefined;
+    private buttonCancelInternal: ButtonGeneralViewmodel | undefined;
 
     constructor(protected uikitElementsFactory: UIKitViewmodelsFactory)
     {
         super();
 
-        this._buttonConfirm = this.createButtonConfirm();
-        this._buttonCancel = this.createButtonCancel();
+        this.buttonConfirmInternal = this.createButtonConfirm();
+        this.buttonCancelInternal = this.createButtonCancel();
 
-        this.controls.push(this._buttonCancel, this._buttonConfirm);
+        this.controls.push(this.buttonCancelInternal, this.buttonConfirmInternal);
     }
 
     get buttonConfirm(): ButtonGeneralViewmodel
     {
         this.destroyToken.assertNotDestroyed();
-        return this._buttonConfirm as ButtonGeneralViewmodel;
+        return this.buttonConfirmInternal as ButtonGeneralViewmodel;
     }
 
     get buttonCancel(): ButtonGeneralViewmodel
     {
         this.destroyToken.assertNotDestroyed();
-        return this._buttonCancel as ButtonGeneralViewmodel;
+        return this.buttonCancelInternal as ButtonGeneralViewmodel;
     }
 
     protected override handleClose(): void
     {
         super.handleClose();
 
-        this._buttonConfirm?.destroy();
-        this._buttonCancel?.destroy();
+        this.buttonConfirmInternal?.destroy();
+        this.buttonCancelInternal?.destroy();
     }
 
     protected createButtonConfirm(): ButtonGeneralViewmodel

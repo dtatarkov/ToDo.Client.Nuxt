@@ -5,12 +5,12 @@ import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 
 export class FormFieldBase extends FormFieldViewmodel
 {
-  private _data = reactive({
+  private data = reactive({
     label: '',
     name: '',
   });
 
-  private _children = {
+  private children = {
     content: <Viewmodel | undefined>undefined
   };
 
@@ -25,31 +25,31 @@ export class FormFieldBase extends FormFieldViewmodel
 
   get label(): string
   {
-    return this._data.label;
+    return this.data.label;
   }
 
   set label(value: string)
   {
-    this._data.label = value;
+    this.data.label = value;
   }
 
   get name(): string
   {
-    return this._data.name;
+    return this.data.name;
   }
 
   set name(value: string)
   {
-    this._data.name = value;
+    this.data.name = value;
   }
 
   get content()
   {
-    return this._children.content;
+    return this.children.content;
   }
 
   set content(value)
   {
-    this._children.content = value;
+    this.children.content = value;
   }
 }

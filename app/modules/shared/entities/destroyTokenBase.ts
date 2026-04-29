@@ -7,14 +7,14 @@ import { DestroyedException } from '../exceptions/destroyedException';
  */
 export class DestroyTokenBase extends DestroyToken
 {
-    private _isDestroyed = false;
+    private isDestroyedInternal = false;
 
     /**
      * Gets whether the token has been destroyed.
      */
     get isDestroyed(): boolean
     {
-        return this._isDestroyed;
+        return this.isDestroyedInternal;
     }
 
     /**
@@ -23,7 +23,7 @@ export class DestroyTokenBase extends DestroyToken
      */
     assertNotDestroyed(): void
     {
-        if (this._isDestroyed)
+        if (this.isDestroyedInternal)
         {
             throw new DestroyedException();
         }
@@ -35,11 +35,11 @@ export class DestroyTokenBase extends DestroyToken
      */
     override destroy(): void
     {
-        if (this._isDestroyed)
+        if (this.isDestroyedInternal)
         {
             return;
         }
 
-        this._isDestroyed = true;
+        this.isDestroyedInternal = true;
     }
 }

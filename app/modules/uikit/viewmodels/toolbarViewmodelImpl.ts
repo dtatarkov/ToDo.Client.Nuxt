@@ -5,7 +5,7 @@ import type { Viewmodel } from "../interfaces/viewmodel";
 
 export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends ToolbarViewmodel<T>
 {
-    private _elements = shallowReactive(new Array<T>());
+    private elementsInternal = shallowReactive(new Array<T>());
 
     readonly key = getUniqueId('toolbar');
 
@@ -14,7 +14,7 @@ export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends Toolb
         {
             return () =>
                 h(VToolbar, {}, {
-                    default: () => this._elements.map(element =>
+                    default: () => this.elementsInternal.map(element =>
                         h(element.component, { key: element.key }))
                 });
         }
@@ -22,11 +22,11 @@ export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends Toolb
 
     get elements()
     {
-        return this._elements;
+        return this.elementsInternal;
     }
 
     override addElement(element: T): void
     {
-        this._elements.push(element);
+        this.elementsInternal.push(element);
     }
 }

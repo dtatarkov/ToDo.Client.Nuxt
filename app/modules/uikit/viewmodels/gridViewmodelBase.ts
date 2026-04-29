@@ -13,7 +13,7 @@ export class GridViewmodelBase<T extends Viewmodel = Viewmodel> extends GridView
     readonly component = {
         setup: () =>
         {
-            const elements = useObservable(this._elements);
+            const elements = useObservable(this.source);
 
             return () =>
                 h(VGrid, {}, {
@@ -23,13 +23,13 @@ export class GridViewmodelBase<T extends Viewmodel = Viewmodel> extends GridView
         }
     };
 
-    constructor(private _elements: Observable<T[]>)
+    constructor(private source: Observable<T[]>)
     {
         super();
     }
 
     get elements()
     {
-        return this._elements.value;
+        return this.source.value;
     }
 }

@@ -3,8 +3,8 @@ import type { Func } from '../types/func';
 
 export class LazyEntityBase<T> extends LazyEntity<T>
 {
-    private _isInitialized = false;
-    private _value: T | undefined;
+    private isInitialized = false;
+    private valueInternal: T | undefined;
 
     constructor(private factory: Func<T>)
     {
@@ -13,12 +13,12 @@ export class LazyEntityBase<T> extends LazyEntity<T>
 
     override get value(): T
     {
-        if (!this._isInitialized)
+        if (!this.isInitialized)
         {
-            this._value = this.factory();
-            this._isInitialized = true;
+            this.valueInternal = this.factory();
+            this.isInitialized = true;
         }
 
-        return this._value as T;
+        return this.valueInternal as T;
     }
 };

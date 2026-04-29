@@ -13,9 +13,9 @@ import { StringsService } from '@/modules/shared/interfaces/stringsService';
 export class ToDoFactoryImpl extends ToDoFactory
 {
     constructor(
-        private _formFactory: FormViewmodelFactory,
-        private _overlayService: OverlayService,
-        private _stringService: StringsService,
+        private formFactory: FormViewmodelFactory,
+        private overlayService: OverlayService,
+        private stringService: StringsService,
     )
     {
         super();
@@ -23,7 +23,7 @@ export class ToDoFactoryImpl extends ToDoFactory
 
     create(data?: Partial<ToDoData>): ToDo
     {
-        const todo = new ToDoBase(this._formFactory, this._overlayService, this._stringService);
+        const todo = new ToDoBase(this.formFactory, this.overlayService, this.stringService);
 
         if (data)
         {

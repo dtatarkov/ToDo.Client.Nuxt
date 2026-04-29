@@ -16,7 +16,7 @@ export class InfoBlockViewmodelBase extends InfoBlockViewmodel
         {
             const stringsService = useService(StringsService);
 
-            const visibleRows = computed(() => this._rows.value.filter(row => !stringsService.isStringEmpty(row.content)));
+            const visibleRows = computed(() => this.rowsInternal.value.filter(row => !stringsService.isStringEmpty(row.content)));
 
             return () => h(VInfoBlock, {}, {
                 default: () => visibleRows.value.map(row =>
@@ -25,11 +25,11 @@ export class InfoBlockViewmodelBase extends InfoBlockViewmodel
         }
     };
 
-    private readonly _rows = shallowRef(new Array<InfoRowViewmodel>());
+    private readonly rowsInternal = shallowRef(new Array<InfoRowViewmodel>());
 
     get rows(): InfoRowViewmodel[]
     {
-        return this._rows.value;
+        return this.rowsInternal.value;
     }
 
     override createRow(data?: Partial<InfoRowData>): InfoRowViewmodel
@@ -41,7 +41,7 @@ export class InfoBlockViewmodelBase extends InfoBlockViewmodel
             updatePropertiesWithData(row, data);
         }
 
-        this._rows.value = [...this._rows.value, row];
+        this.rowsInternal.value = [...this.rowsInternal.value, row];
 
         return row;
     }

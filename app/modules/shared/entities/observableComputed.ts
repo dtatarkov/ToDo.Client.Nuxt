@@ -13,51 +13,51 @@ import { EffectsContainerBase } from './effectsContainerBase';
 
 export class ObservableComputed<T> extends ObservableBase<T>
 {
-    private _state: ObservableComputedState<T>;
-    private _states: Record<ObservableComputedStateType, Func<ObservableComputedState<T>>>;
-    private _effectsContainer = new EffectsContainerBase();
+    private state: ObservableComputedState<T>;
+    private states: Record<ObservableComputedStateType, Func<ObservableComputedState<T>>>;
+    private effectsContainer = new EffectsContainerBase();
 
     get value()
     {
-        return this._state.value;
+        return this.state.value;
     }
 
-    constructor(private _factory: () => T)
+    constructor(private factory: () => T)
     {
         super();
 
         const observableComputed = this;
 
         const valueAccessor = {
-            _value: <T | undefined>undefined,
-            _initialized: false,
+            valueInternal: <T | undefined>undefined,
+            isInitializedInternal: false,
 
             get value()
             {
-                if (!this._initialized)
+                if (!this.isInitializedInternal)
                 {
-                    this._initialized = true;
-                    this._value = observableComputed._factory();
+                    this.isInitializedInternal = true;
+                    this.valueInternal = observableComputed.factory();
                 }
 
-                return <T>this._value;
+                return <T>this.valueInternal;
             },
 
             set value(value)
             {
-                if (!this._initialized)
+                if (!this.isInitializedInternal)
                 {
-                    this._initialized = true;
+                    this.isInitializedInternal = true;
                 }
 
-                this._value = value;
+                this.valueInternal = value;
             }
         };
 
         const stateReader = {
             get value()
             {
-                return observableComputed._state;
+                return observableComputed.state;
             }
         };
 
@@ -75,30 +75,30 @@ export class ObservableComputed<T> extends ObservableBase<T>
 
         const dependencies = new Set<Observable<any>>();
 
-        this._states = {
-            [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this._factory, this, this.eventbus),
-            [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this._effectsContainer, this, this.eventbus),
-            [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this._factory, stateReader, valueAccessor, contextAccessor, dependencies, this._effectsContainer, this, this.eventbus),
+        this.states = {
+            [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this.factory, this, this.eventbus),
+            [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this.effectsContainer, this, this.eventbus),
+            [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this.effectsContainer, this, this.eventbus),
             [ObservableComputedStateType.destroyed]: () => new ObservableComputedStateDestroyed(),
         };
 
-        this._state = this._states[ObservableComputedStateType.sleeping]();
+        this.state = this.states[ObservableComputedStateType.sleeping]();
     }
 
     override subscribe(handler: Action<[T]>): Action
     {
-        return this._state.subscribe(handler);
+        return this.state.subscribe(handler);
     }
 
     override destroy(): void
     {
-        this._state.destroy();
-        this._effectsContainer.destroy();
+        this.state.destroy();
+        this.effectsContainer.destroy();
     }
 
     setState(stateType: ObservableComputedStateType)
     {
-        this._state = this._states[stateType]();
+        this.state = this.states[stateType]();
     }
 }
 

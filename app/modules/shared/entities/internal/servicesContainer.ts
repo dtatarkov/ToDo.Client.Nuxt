@@ -200,7 +200,7 @@ class ServicesScopeImpl extends ServicesScope
 
 abstract class Binding<T>
 {
-    private _bindingScope: BindingScope | undefined;
+    private bindingScopeInternal: BindingScope | undefined;
 
     constructor(
         protected settings: ContainerSettings,
@@ -209,17 +209,17 @@ abstract class Binding<T>
 
     get bindingScope(): BindingScope
     {
-        return this._bindingScope ?? this.settings.defaultScope;
+        return this.bindingScopeInternal ?? this.settings.defaultScope;
     }
 
     setBindingScope(scope: BindingScope): void
     {
-        if (this._bindingScope !== undefined)
+        if (this.bindingScopeInternal !== undefined)
         {
             throw new Error('Scope already set');
         }
 
-        this._bindingScope = scope;
+        this.bindingScopeInternal = scope;
     }
 
     abstract createInstance(servicesScope: ServicesScope): T;

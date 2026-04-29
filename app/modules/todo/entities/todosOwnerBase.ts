@@ -13,13 +13,13 @@ import { ToDoFactory } from '../interfaces/todoFactory';
 @dependency(ToDoFactory)
 export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
-  private _initializationPromise: Promise<void> | undefined;
-  private _todos = new ObservableSource(new Array<ToDo>());
-  private _destroyToken = new DestroyTokenBase();
+  private initializationPromise: Promise<void> | undefined;
+  private todos = new ObservableSource(new Array<ToDo>());
+  private destroyToken = new DestroyTokenBase();
 
   constructor(
-    private _todosRepository: ToDosRepository,
-    private _todoFactory: ToDoFactory
+    private todosRepository: ToDosRepository,
+    private todoFactory: ToDoFactory
   )
   {
     super();
@@ -27,17 +27,17 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override async getAllToDosAsync(): Promise<Observable<ToDo[]>>
   {
-    this._destroyToken.assertNotDestroyed();
+    this.destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
 
-    return this._todos;
+    return this.todos;
   }
 
   override async updateToDosAsync(): Promise<void>
   {
-    this._destroyToken.assertNotDestroyed();
+    this.destroyToken.assertNotDestroyed();
 
-    if (!this._initializationPromise)
+    if (!this.initializationPromise)
     {
       await this.initializeToDosAsync();
     }
@@ -49,12 +49,12 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override async saveToDoAsync(todo: ToDo): Promise<void>
   {
-    this._destroyToken.assertNotDestroyed();
+    this.destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
 
     this.assertNewOrExistingToDo(todo);
 
-    await this._todosRepository.saveToDoAsync(todo);
+    await this.todosRepository.saveToDoAsync(todo);
 
     if (todo.isNew)
     {
@@ -64,9 +64,9 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override createToDo()
   {
-    this._destroyToken.assertNotDestroyed();
+    this.destroyToken.assertNotDestroyed();
 
-    const todo = this._todoFactory.create();
+    const todo = this.todoFactory.create();
     todo.owner = this;
 
     return todo;
@@ -74,20 +74,20 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   destroy()
   {
-    if (this._destroyToken.isDestroyed)
+    if (this.destroyToken.isDestroyed)
     {
       return;
     }
 
-    this._todos.destroy();
-    this._destroyToken.destroy();
+    this.todos.destroy();
+    this.destroyToken.destroy();
   }
 
   private assertNewOrExistingToDo(todo: ToDo): void
   {
     if (!todo.isNew)
     {
-      if (!this._todos.value.some(t => t.id === todo.id))
+      if (!this.todos.value.some(t => t.id === todo.id))
       {
         throw new ToDoNotFoundException(todo.id);
       }
@@ -96,28 +96,28 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   private addToDo(todo: ToDo)
   {
-    this._todos.value = [...this._todos.value, todo];
+    this.todos.value = [...this.todos.value, todo];
   }
 
   private async updateToDosInternalAsync(): Promise<void>
   {
-    const todos = await this._todosRepository.getAllToDosAsync();
+    const todos = await this.todosRepository.getAllToDosAsync();
 
     for (const todo of todos)
     {
       todo.owner = this;
     }
 
-    this._todos.value = todos;
+    this.todos.value = todos;
   }
 
   private initializeToDosAsync(): Promise<void>
   {
-    if (this._initializationPromise == undefined)
+    if (this.initializationPromise == undefined)
     {
-      this._initializationPromise = this.updateToDosInternalAsync();
+      this.initializationPromise = this.updateToDosInternalAsync();
     }
 
-    return this._initializationPromise;
+    return this.initializationPromise;
   }
 }
