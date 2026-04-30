@@ -1,12 +1,9 @@
-import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import type { Observable } from '../interfaces/observable';
+import { useEffectsContainer } from './useEffectsContainer';
 
 export function useObservable<T>(observable: Observable<T>)
 {
-  const effectsContainer = new EffectsContainerImpl();
-  const data = shallowRef(observable.value);
-
-  effectsContainer.withContainer(() =>
+  useEffectsContainer(() =>
   {
     observable.subscribe((newValue: T) =>
     {
@@ -14,10 +11,7 @@ export function useObservable<T>(observable: Observable<T>)
     });
   });
 
-  onScopeDispose(() =>
-  {
-    effectsContainer.destroy();
-  });
+  const data = shallowRef(observable.value);
 
   return data;
 }
