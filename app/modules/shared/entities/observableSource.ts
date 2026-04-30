@@ -1,4 +1,3 @@
-import { DestroyedException } from '../exceptions/destroyedException';
 import type { ObservableWritable } from '../interfaces/observableWritable';
 import type { Action } from '../types/action';
 import { DestroyTokenBase } from './destroyTokenBase';

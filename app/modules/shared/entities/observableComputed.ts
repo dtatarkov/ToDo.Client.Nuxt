@@ -52,7 +52,7 @@ export class ObservableComputed<T> extends ObservableBase<T>
         const dependencies = new Set<Observable<any>>();
 
         this.states = {
-            [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this.factory, this, this.eventbus),
+            [ObservableComputedStateType.sleeping]: () => new ObservableComputedStateSleeping(this.factory, stateReader, this, this.eventbus),
             [ObservableComputedStateType.active]: () => new ObservableComputedStateActive(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this.effectsContainer, this, this.eventbus),
             [ObservableComputedStateType.computing]: () => new ObservableComputedStateComputing(this.factory, stateReader, valueAccessor, contextAccessor, dependencies, this.effectsContainer, this, this.eventbus),
             [ObservableComputedStateType.destroyed]: () => new ObservableComputedStateDestroyed(),
@@ -94,6 +94,7 @@ abstract class ObservableComputedState<T>
     abstract recompute(): void;
     abstract subscribe(handler: Action<[T]>): Action;
     abstract handleChange(): void;
+    abstract handleUnsubscribe(): void;
     abstract destroy(): void;
 }
 
@@ -103,6 +104,7 @@ abstract class ObservableComputedStateBase<T> implements ObservableComputedState
 
     constructor(
         protected observableComputed: ObservableComputed<T>,
+        protected stateReader: ValueReader<ObservableComputedState<T>>,
         protected eventbus: EventBus<T>,
     )
     {
@@ -123,11 +125,16 @@ abstract class ObservableComputedStateBase<T> implements ObservableComputedState
         return () =>
         {
             unsubscribe();
-            this.handleUnsubscribe();
+            this.stateReader.value.handleUnsubscribe();
         };
     }
 
     handleChange(): void
+    {
+
+    }
+
+    handleUnsubscribe()
     {
 
     }
@@ -139,11 +146,6 @@ abstract class ObservableComputedStateBase<T> implements ObservableComputedState
     }
 
     protected handleSubscribe()
-    {
-
-    }
-
-    protected handleUnsubscribe()
     {
 
     }
@@ -163,17 +165,16 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
 
     constructor(
         protected factory: Func<T>,
-        protected stateReader: ValueReader<ObservableComputedState<T>>,
+        stateReader: ValueReader<ObservableComputedState<T>>,
         protected valueAccessor: ValueAccessor<T>,
         protected contextAccessor: ValueAccessor<ObservableTrackingContext | undefined>,
         protected dependencies: Set<Observable<any>>,
         protected effectsContainer: EffectsContainer,
         observableComputed: ObservableComputed<T>,
-
         eventbus: EventBus<T>,
     )
     {
-        super(observableComputed, eventbus);
+        super(observableComputed, stateReader, eventbus);
 
         if (this.dependencies.size == 0)
         {
@@ -181,11 +182,14 @@ class ObservableComputedStateWithTracking<T> extends ObservableComputedStateBase
         }
     }
 
-    protected override handleUnsubscribe(): void
+    override handleUnsubscribe(): void
     {
+        super.handleUnsubscribe();
+
         if (this.eventbus.subscriptionsCount == 0)
         {
             this.observableComputed.setState(ObservableComputedStateType.sleeping);
+            this.clearDependencies();
         }
     }
 
@@ -250,11 +254,12 @@ class ObservableComputedStateSleeping<T> extends ObservableComputedStateBase<T>
 {
     constructor(
         protected factory: Func<T>,
+        stateReader: ValueReader<ObservableComputedState<T>>,
         observableComputed: ObservableComputed<T>,
         eventbus: EventBus<T>,
     )
     {
-        super(observableComputed, eventbus);
+        super(observableComputed, stateReader, eventbus);
     }
 
     override get value(): T
@@ -321,6 +326,11 @@ class ObservableComputedStateDestroyed<T> implements ObservableComputedState<T>
     }
 
     handleChange(): void
+    {
+
+    }
+
+    handleUnsubscribe(): void
     {
 
     }

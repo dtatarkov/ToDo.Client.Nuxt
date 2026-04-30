@@ -19,6 +19,11 @@ export abstract class ObservableBase<T> implements Observable<T>
     ObservableBase.currentContext = context;
   }
 
+  get subscriptionsCount()
+  {
+    return this.eventbus.subscriptionsCount;
+  }
+
   abstract get value(): T;
 
   abstract subscribe(handler: Action<[T]>): Action;
