@@ -1,10 +1,10 @@
-import { EffectsContainerBase } from '../entities/effectsContainerBase';
+import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import type { Observable } from '../interfaces/observable';
 import type { Action } from '../types/action';
 
 export function useObservableSubscription<T>(observable: Observable<T>, handler: Action<[T]>)
 {
-    const effectsContainer = new EffectsContainerBase();
+    const effectsContainer = new EffectsContainerImpl();
 
     effectsContainer.withContainer(() =>
     {

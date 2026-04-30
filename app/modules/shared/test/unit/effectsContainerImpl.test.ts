@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { EffectsContainerBase } from '../../entities/effectsContainerBase';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { EffectsContainerImpl } from '../../entities/effectsContainerImpl';
 import { EffectsContainer } from '../../interfaces/effectsContainer';
 import { DestroyedException } from '../../exceptions/destroyedException';
 
-describe('EffectsContainerBase', () =>
+describe('EffectsContainerIml', () =>
 {
     beforeEach(() =>
     {
@@ -15,7 +15,7 @@ describe('EffectsContainerBase', () =>
     {
         it('should set itself as current during action execution', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             let capturedCurrent: EffectsContainer | undefined;
 
             container.withContainer(() =>
@@ -28,8 +28,8 @@ describe('EffectsContainerBase', () =>
 
         it('should restore previous current after action execution', () =>
         {
-            const previousContainer = new EffectsContainerBase();
-            const newContainer = new EffectsContainerBase();
+            const previousContainer = new EffectsContainerImpl();
+            const newContainer = new EffectsContainerImpl();
 
             EffectsContainer.current = previousContainer;
 
@@ -43,8 +43,8 @@ describe('EffectsContainerBase', () =>
 
         it('should restore previous current even if action throws', () =>
         {
-            const previousContainer = new EffectsContainerBase();
-            const newContainer = new EffectsContainerBase();
+            const previousContainer = new EffectsContainerImpl();
+            const newContainer = new EffectsContainerImpl();
 
             EffectsContainer.current = previousContainer;
 
@@ -61,7 +61,7 @@ describe('EffectsContainerBase', () =>
 
         it('should throw DestroyedException if container is destroyed', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             container.destroy();
 
             expect(() =>
@@ -75,7 +75,7 @@ describe('EffectsContainerBase', () =>
     {
         it('should register a destroy callback', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             const callback = vi.fn();
 
             container.register(callback);
@@ -86,7 +86,7 @@ describe('EffectsContainerBase', () =>
 
         it('should not register duplicate callbacks', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             const callback = vi.fn();
 
             container.register(callback);
@@ -98,7 +98,7 @@ describe('EffectsContainerBase', () =>
 
         it('should throw DestroyedException if container is destroyed', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             container.destroy();
 
             expect(() =>
@@ -112,7 +112,7 @@ describe('EffectsContainerBase', () =>
     {
         it('should execute all registered callbacks', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             const callback1 = vi.fn();
             const callback2 = vi.fn();
 
@@ -126,7 +126,7 @@ describe('EffectsContainerBase', () =>
 
         it('should clear callbacks after execution', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             const callback = vi.fn();
 
             container.register(callback);
@@ -140,7 +140,7 @@ describe('EffectsContainerBase', () =>
 
         it('should mark container as destroyed', () =>
         {
-            const container = new EffectsContainerBase();
+            const container = new EffectsContainerImpl();
             container.destroy();
 
             expect(() => container.withContainer(() => { })).toThrow(DestroyedException);

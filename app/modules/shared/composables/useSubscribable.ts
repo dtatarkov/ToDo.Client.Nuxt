@@ -1,10 +1,10 @@
-import { EffectsContainerBase } from '../entities/effectsContainerBase';
+import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import type { Subscribable } from '../interfaces/subscribable';
 import type { Action } from '../types/action';
 
 export function useSubscribable<T>(subscribable: Subscribable<T>, handler: Action<[T]>)
 {
-    const effectsContainer = new EffectsContainerBase();
+    const effectsContainer = new EffectsContainerImpl();
 
     effectsContainer.withContainer(() =>
     {

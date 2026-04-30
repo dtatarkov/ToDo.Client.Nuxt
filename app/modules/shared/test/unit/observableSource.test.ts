@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { ObservableSource } from '../../entities/observableSource';
 import { EffectsContainer } from '../../interfaces/effectsContainer';
-import { EffectsContainerBase } from '../../entities/effectsContainerBase';
+import { EffectsContainerImpl } from '../../entities/effectsContainerImpl';
 
 describe('ObservableSource', () =>
 {
     beforeEach(() =>
     {
-        EffectsContainer.current = new EffectsContainerBase();
+        EffectsContainer.current = new EffectsContainerImpl();
     });
 
     afterEach(() =>

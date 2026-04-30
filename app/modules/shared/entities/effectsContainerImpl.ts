@@ -2,7 +2,7 @@ import { EffectsContainer } from '../interfaces/effectsContainer';
 import type { Action } from '../types/action';
 import { DestroyTokenBase } from './destroyTokenBase';
 
-export class EffectsContainerBase extends EffectsContainer
+export class EffectsContainerImpl extends EffectsContainer
 {
     private destroyCallbacks = new Set<Action>();
     private destroyToken = new DestroyTokenBase();

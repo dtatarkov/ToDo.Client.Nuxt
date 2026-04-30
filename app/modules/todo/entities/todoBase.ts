@@ -5,7 +5,7 @@ import { Observable } from '@/modules/shared/interfaces/observable';
 import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
-import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
+import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class ToDoBase extends ToDo
@@ -132,7 +132,7 @@ export class ToDoBase extends ToDo
 
   showEditDialog(): void
   {
-    const effectsContainer = new EffectsContainerBase();
+    const effectsContainer = new EffectsContainerImpl();
 
     effectsContainer.withContainer(() =>
     {

@@ -3,7 +3,7 @@ import type { Observable } from '@/modules/shared/interfaces/observable';
 import { Overlay } from "../interfaces/internal/overlay";
 import { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
 import type { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
-import { EffectsContainerBase } from '@/modules/shared/entities/effectsContainerBase';
+import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
 
 export class OverlayBase extends Overlay
 {
@@ -27,7 +27,7 @@ export class OverlayBase extends Overlay
     const newElementsSet = new Set([...currentElementsSet, element]);
     this.elements.value = [...newElementsSet];
 
-    const effectsContainer = new EffectsContainerBase();
+    const effectsContainer = new EffectsContainerImpl();
     this.elementEffects.set(element, effectsContainer);
 
     effectsContainer.withContainer(() =>

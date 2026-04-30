@@ -9,14 +9,14 @@ import type { Action } from '../types/action';
 import type { Func } from '../types/func';
 import { DestroyedException } from '../exceptions/destroyedException';
 import type { EffectsContainer } from '../interfaces/effectsContainer';
-import { EffectsContainerBase } from './effectsContainerBase';
+import { EffectsContainerImpl } from './effectsContainerImpl';
 import { ValueAccessorDefaulted } from './valueAccessorDefaulted';
 
 export class ObservableComputed<T> extends ObservableBase<T>
 {
     private state: ObservableComputedState<T>;
     private states: Record<ObservableComputedStateType, Func<ObservableComputedState<T>>>;
-    private effectsContainer = new EffectsContainerBase();
+    private effectsContainer = new EffectsContainerImpl();
 
     get value()
     {

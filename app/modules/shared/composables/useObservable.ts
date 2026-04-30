@@ -1,9 +1,9 @@
-import { EffectsContainerBase } from '../entities/effectsContainerBase';
+import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import type { Observable } from '../interfaces/observable';
 
 export function useObservable<T>(observable: Observable<T>)
 {
-  const effectsContainer = new EffectsContainerBase();
+  const effectsContainer = new EffectsContainerImpl();
   const data = shallowRef(observable.value);
 
   effectsContainer.withContainer(() =>
