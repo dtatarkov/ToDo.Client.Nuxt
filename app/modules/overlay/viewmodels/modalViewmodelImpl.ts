@@ -41,8 +41,6 @@ export class ModalViewmodelImpl extends ModalViewmodel
 
   readonly controls = shallowReactive(new Array<Viewmodel>());
 
-  readonly onClose = new EventBusBase();
-
   get title()
   {
     this.destroyToken.assertNotDestroyed();
@@ -115,8 +113,6 @@ export class ModalViewmodelImpl extends ModalViewmodel
   protected handleClose(): void
   {
     this.overlay?.removeElement(this);
-    this.onClose.emit();
-    this.onClose.destroy();
 
     if (Destroyable.isDestroyable(this.content))
     {

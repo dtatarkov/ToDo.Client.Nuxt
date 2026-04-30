@@ -1,11 +1,14 @@
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ModalViewmodelImpl } from './modalViewmodelImpl';
+import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
 
 export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
 {
     private buttonConfirmInternal: ButtonGeneralViewmodel | undefined;
     private buttonCancelInternal: ButtonGeneralViewmodel | undefined;
+
+    protected effectsContainer = new EffectsContainerImpl();
 
     constructor(protected uikitElementsFactory: UIKitViewmodelsFactory)
     {
@@ -35,6 +38,7 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
 
         this.buttonConfirmInternal?.destroy();
         this.buttonCancelInternal?.destroy();
+        this.effectsContainer.destroy();
     }
 
     protected createButtonConfirm(): ButtonGeneralViewmodel
@@ -53,9 +57,12 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
             title: 'Отменить'
         });
 
-        buttonCancel.click.subscribe(() =>
+        this.effectsContainer.withContainer(() =>
         {
-            this.close();
+            buttonCancel.click.subscribe(() =>
+            {
+                this.close();
+            });
         });
 
         return buttonCancel;

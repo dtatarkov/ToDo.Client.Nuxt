@@ -16,19 +16,22 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
     {
         super(uikitElementsFactory);
 
-        form.onDisabledStateChange.subscribe(isDisabled =>
+        this.effectsContainer.withContainer(() =>
         {
-            this.buttonConfirm.isDisabled = isDisabled;
+            form.onDisabledStateChange.subscribe(isDisabled =>
+            {
+                this.buttonConfirm.isDisabled = isDisabled;
 
-            this.buttonCancel.isDisabled = isDisabled;
-            this.isDisabled = isDisabled;
+                this.buttonCancel.isDisabled = isDisabled;
+                this.isDisabled = isDisabled;
 
-            this.toggleLoader(isDisabled);
-        });
+                this.toggleLoader(isDisabled);
+            });
 
-        form.onSubmitted.subscribe(() =>
-        {
-            this.close();
+            form.onSubmitted.subscribe(() =>
+            {
+                this.close();
+            });
         });
     }
 
@@ -36,12 +39,21 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
     {
         const buttonConfirm = super.createButtonConfirm();
 
-        buttonConfirm.click.subscribe(() =>
+        this.effectsContainer.withContainer(() =>
         {
-            this.form.submit();
+            buttonConfirm.click.subscribe(() =>
+            {
+                this.form.submit();
+            });
         });
 
         return buttonConfirm;
+    }
+
+    protected override handleClose(): void
+    {
+        super.handleClose();
+        this.toggleLoader(false);
     }
 
     private toggleLoader(isLoaderEnabled: boolean)

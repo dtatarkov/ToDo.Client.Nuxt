@@ -132,50 +132,40 @@ export class ToDoBase extends ToDo
 
   showEditDialog(): void
   {
-    const effectsContainer = new EffectsContainerImpl();
-
-    effectsContainer.withContainer(() =>
-    {
-      const form = this.formFactory.create<ToDo>({
-        submit: async formData =>
-        {
-          this.title = formData.title;
-          this.description = formData.description;
-          this.completionDatePlanned = formData.completionDatePlanned;
-
-          await this.saveAsync();
-        }
-      });
-
-      form.setElements({
-        title: {
-          type: FormElementType.inputText,
-          label: 'Название задачи',
-          placeholder: 'Введите название задачи',
-        },
-
-        description: {
-          type: FormElementType.textarea,
-          label: 'Описание задачи',
-          placeholder: 'Введите описание задачи'
-        },
-
-        completionDatePlanned: {
-          type: FormElementType.inputDateTime,
-          label: 'Плановая дата выполнения',
-        }
-      });
-
-      form.setData(this);
-
-      const modal = this.overlayService.createModalEditForm(form);
-      modal.title = 'Редактирование';
-      modal.content = form;
-
-      modal.onClose.subscribe(() =>
+    const form = this.formFactory.create<ToDo>({
+      submit: async formData =>
       {
-        effectsContainer.destroy();
-      });
+        this.title = formData.title;
+        this.description = formData.description;
+        this.completionDatePlanned = formData.completionDatePlanned;
+
+        await this.saveAsync();
+      }
     });
+
+    form.setElements({
+      title: {
+        type: FormElementType.inputText,
+        label: 'Название задачи',
+        placeholder: 'Введите название задачи',
+      },
+
+      description: {
+        type: FormElementType.textarea,
+        label: 'Описание задачи',
+        placeholder: 'Введите описание задачи'
+      },
+
+      completionDatePlanned: {
+        type: FormElementType.inputDateTime,
+        label: 'Плановая дата выполнения',
+      }
+    });
+
+    form.setData(this);
+
+    const modal = this.overlayService.createModalEditForm(form);
+    modal.title = 'Редактирование';
+    modal.content = form;
   }
 }
