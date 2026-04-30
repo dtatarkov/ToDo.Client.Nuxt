@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { OverlayBase } from '../../entities/overlayBase';
-import { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
 
 const createMockOverlayElement = (id: string) =>
 {
@@ -17,6 +16,7 @@ const createMockOverlayElement = (id: string) =>
         },
 
         close: vi.fn(),
+        setOverlay: vi.fn(),
     };
 };
 
@@ -32,7 +32,6 @@ describe('OverlayBase', () =>
             expect(observable.value).toEqual([]);
         });
     });
-
     describe('addElement', () =>
     {
         it('should add element to elements list', () =>
@@ -45,6 +44,16 @@ describe('OverlayBase', () =>
             expect(elements.length).toBe(1);
         });
 
+        it('should set element overlay', () =>
+        {
+            const overlay = new OverlayBase();
+            const element = createMockOverlayElement('1');
+
+            overlay.addElement(element);
+            expect(element.setOverlay).toHaveBeenCalledWith(overlay);
+            expect(overlay.getElements().value).toContain(element);
+        });
+
         it('should not add duplicate element', () =>
         {
             const overlay = new OverlayBase();
@@ -54,13 +63,14 @@ describe('OverlayBase', () =>
             expect(() => overlay.addElement(element)).toThrow();
         });
 
-        it('should subscribe to element onClose', () =>
+        it('should call setOverlay on element with overlay instance', () =>
         {
             const overlay = new OverlayBase();
             const element = createMockOverlayElement('1');
             overlay.addElement(element);
 
-            expect(element.onClose.subscribe).toHaveBeenCalledTimes(1);
+            expect(element.setOverlay).toHaveBeenCalledTimes(1);
+            expect(element.setOverlay).toHaveBeenCalledWith(overlay);
         });
     });
 
@@ -88,46 +98,5 @@ describe('OverlayBase', () =>
             expect(() => overlay.removeElement(otherElement)).toThrow();
         });
 
-        it('should unsubscribe from onClose when removing element', () =>
-        {
-            const overlay = new OverlayBase();
-            const element = createMockOverlayElement('1');
-            const unsubscribeMock = vi.fn();
-
-            element.onClose.subscribe.mockImplementation(() =>
-            {
-                EffectsContainer.current?.register(unsubscribeMock);
-                return unsubscribeMock;
-            });
-
-            overlay.addElement(element);
-            overlay.removeElement(element);
-
-            expect(unsubscribeMock).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    describe('integration', () =>
-    {
-        it('should remove element when onClose emits', () =>
-        {
-            const overlay = new OverlayBase();
-            const element = createMockOverlayElement('1');
-
-            let closeCallback: (() => void) | undefined;
-
-            element.onClose.subscribe.mockImplementation((cb) =>
-            {
-                closeCallback = cb;
-                return vi.fn();
-            });
-
-            overlay.addElement(element);
-            expect(overlay.getElements().value).toContain(element);
-
-            // Simulate onClose emission
-            closeCallback?.();
-            expect(overlay.getElements().value).not.toContain(element);
-        });
     });
 });

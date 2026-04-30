@@ -5,9 +5,12 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
+import type { Overlay } from '../interfaces/internal/overlay';
 
 export class ModalViewmodelImpl extends ModalViewmodel
 {
+  private overlay: Overlay | undefined;
+
   protected destroyToken = new DestroyTokenBase();
 
   protected data = reactive({
@@ -86,7 +89,7 @@ export class ModalViewmodelImpl extends ModalViewmodel
     this.children.content = content;
   }
 
-  close()
+  override close()
   {
     if (this.destroyToken.isDestroyed)
     {
@@ -97,8 +100,21 @@ export class ModalViewmodelImpl extends ModalViewmodel
     this.destroyToken.destroy();
   }
 
+  override setOverlay(overlay: Overlay)
+  {
+    this.destroyToken.assertNotDestroyed();
+
+    if (this.overlay)
+    {
+      throw new Error('Overlay change is forbidden');
+    }
+
+    this.overlay = overlay;
+  }
+
   protected handleClose(): void
   {
+    this.overlay?.removeElement(this);
     this.onClose.emit();
     this.onClose.destroy();
 
