@@ -28,7 +28,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
       card.actions = [editButton];
       card.footer = infoBlock;
 
-      useObservableSubscription(this.todo.data, todoData =>
+      useObservableSubscription(this.todo.toObservableData(), todoData =>
       {
         card.title = todoData.title;
         card.description = todoData.description;

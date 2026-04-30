@@ -5,20 +5,19 @@ import { Observable } from '@/modules/shared/interfaces/observable';
 import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
-import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class ToDoBase extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
 
-  private dataInternal = new ObservableSource<ToDoData>({
+  private dataInternal = new ObservableSource<ToDoData>(Object.freeze({
     id: '',
     title: '',
     description: '',
     completionDatePlanned: undefined,
     completionDateActual: undefined
-  });
+  }));
 
   constructor(
     private formFactory: FormViewmodelFactory,
@@ -37,11 +36,6 @@ export class ToDoBase extends ToDo
   set owner(value: ToDosOwner | undefined)
   {
     this.ownerInternal = value;
-  }
-
-  get data(): Observable<ToDoData>
-  {
-    return this.dataInternal;
   }
 
   get id(): string
@@ -71,27 +65,27 @@ export class ToDoBase extends ToDo
 
   set id(value: string)
   {
-    this.dataInternal.value = { ...this.dataInternal.value, id: value };
+    this.updateData({ id: value });
   }
 
   set title(value: string)
   {
-    this.dataInternal.value = { ...this.dataInternal.value, title: value };
+    this.updateData({ title: value });
   }
 
   set description(value: string)
   {
-    this.dataInternal.value = { ...this.dataInternal.value, description: value };
+    this.updateData({ description: value });
   }
 
   set completionDatePlanned(value: Date | undefined)
   {
-    this.dataInternal.value = { ...this.dataInternal.value, completionDatePlanned: value };
+    this.updateData({ completionDatePlanned: value });
   }
 
   set completionDateActual(value: Date | undefined)
   {
-    this.dataInternal.value = { ...this.dataInternal.value, completionDateActual: value };
+    this.updateData({ completionDateActual: value });
   }
 
   get isNew()
@@ -101,9 +95,12 @@ export class ToDoBase extends ToDo
 
   getData(): ToDoData
   {
-    return {
-      ...this.dataInternal.value
-    };
+    return this.dataInternal.value;
+  }
+
+  toObservableData(): Observable<ToDoData>
+  {
+    return this.dataInternal;
   }
 
   clone(): ToDo
@@ -167,5 +164,13 @@ export class ToDoBase extends ToDo
     const modal = this.overlayService.createModalEditForm(form);
     modal.title = 'Редактирование';
     modal.content = form;
+  }
+
+  private updateData(modifiedDataPart: Partial<ToDoData>)
+  {
+    const newData = { ...this.dataInternal.value, ...modifiedDataPart };
+    Object.freeze(newData);
+
+    this.dataInternal.value = newData;
   }
 }

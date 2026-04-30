@@ -4,7 +4,6 @@ import { ToDo, type ToDoData } from '../../interfaces/todo';
 import { ToDoFactory } from '../../interfaces/todoFactory';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { DestroyedException } from '@/modules/shared/exceptions/destroyedException';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
 // Simple mock ToDo
 const createMockToDo = (
@@ -29,11 +28,11 @@ const createMockToDo = (
         completionDateActual: mergedData.completionDateActual,
         owner: undefined,
         isNew: mergedData.id == '',
-        data: new ObservableSource(mergedData),
         getData: vi.fn(),
         clone: vi.fn(),
         saveAsync: vi.fn(),
-        showEditDialog: vi.fn()
+        showEditDialog: vi.fn(),
+        toObservableData: vi.fn(),
     };
 };
 

@@ -12,9 +12,8 @@ export abstract class ToDo
 
   abstract get isNew(): boolean;
 
-  abstract readonly data: Observable<ToDoData>;
-
   abstract getData(): ToDoData;
+  abstract toObservableData(): Observable<ToDoData>;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
   abstract showEditDialog(): void;
