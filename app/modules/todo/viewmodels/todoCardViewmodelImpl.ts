@@ -7,6 +7,11 @@ import { useObservableSubscription } from '@/modules/shared/composables/useObser
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
 import type { Action } from '@/modules/shared/types/action';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
+import type { Observable } from '@/modules/shared/interfaces/observable';
+import { toObservable } from '@/modules/shared/utils/toObservable';
+import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
+import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
@@ -18,6 +23,16 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     completionDateActual: undefined,
     completionDatePlanned: undefined,
   });
+
+  private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
+    title: '',
+    description: '',
+    completionDateActual: undefined,
+    completionDatePlanned: undefined,
+  }));
+
+  private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
+  private clickHandler: Action | undefined;
 
   readonly component = {
     setup: () =>
@@ -36,67 +51,43 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
       card.actions = [editButton];
       card.footer = infoBlock;
 
-      this.setup?.({ editButton });
-
-      useObservableSubscription(this.data, data =>
+      useObservableSubscription(this.source, source =>
       {
-        card.title = data.title;
-        card.description = data.description;
+        card.title = source.title;
+        card.description = source.description;
 
-        completionDateActualRow.content = datesService.formatDateOptional(data.completionDateActual);
-        completionDatePlannedRow.content = datesService.formatDateOptional(data.completionDatePlanned);
+        completionDateActualRow.content = datesService.formatDateOptional(source.completionDateActual);
+        completionDatePlannedRow.content = datesService.formatDateOptional(source.completionDatePlanned);
 
         card.footer = !infoBlock.isEmpty ? infoBlock : undefined;
+      });
+
+      useSubscribable(editButton.click, () =>
+      {
+        this.clickHandler?.();
       });
 
       return () => h(card.component);
     }
   };
 
-  constructor(
-    private readonly setup?: Action<[ToDoCardViewmodelSetupContext]>,
-  )
+  constructor()
   {
     super();
   }
 
-  override get title()
+  override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
   {
-    return this.data.value.title;
+    this.sourceWrapper.value = toObservable(source);
   }
 
-  override set title(value: string)
+  override setClickHandler(handler: Action)
   {
-    this.data.mutate({ title: value });
-  }
+    if (this.clickHandler)
+    {
+      throw new Error('Click handler already set');
+    }
 
-  override get description()
-  {
-    return this.data.value.description;
-  }
-
-  override set description(value: string)
-  {
-    this.data.mutate({ description: value });
-  }
-
-  override get completionDatePlanned()
-  {
-    return this.data.value.completionDatePlanned;
-  }
-
-  override set completionDatePlanned(value: Date | undefined)
-  {
-    this.data.mutate({ completionDatePlanned: value });
-  }
-
-  override get completionDateActual()
-  {
-    return this.data.value.completionDateActual;
-  }
-
-  override set completionDateActual(value: Date | undefined)
-  {
-    this.data.mutate({ completionDateActual: value });
+    this.clickHandler = handler;
   }
 }

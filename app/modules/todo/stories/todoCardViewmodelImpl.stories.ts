@@ -1,13 +1,10 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { fn } from 'storybook/test';
+import { action } from 'storybook/actions';
 import { ToDoCardViewmodelImpl } from '../viewmodels/todoCardViewmodelImpl';
 import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { useAppServices } from '@/composables/useAppServices';
-import type { Action } from '@/modules/shared/types/action';
-import { useEffectsContainer } from '@/modules/shared/composables/useEffectsContainer';
 
-type ToDoCardViewmodelStoryArgs = Partial<ToDoCardViewmodelData & { click: Action; }>;
+type ToDoCardViewmodelStoryArgs = Partial<ToDoCardViewmodelData>;
 
 const meta: Meta<ToDoCardViewmodelStoryArgs> = {
     title: 'ToDo/ToDoCard',
@@ -16,18 +13,17 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
     {
         useAppServices();
 
-        const card = new ToDoCardViewmodelImpl(({ editButton }) =>
-        {
-            if (args.click)
-            {
-                useEffectsContainer(() =>
-                {
-                    editButton.click.subscribe(args.click as Action);
-                });
-            }
-        });
+        const source: ToDoCardViewmodelData = {
+            title: '',
+            description: '',
+            completionDatePlanned: undefined,
+            completionDateActual: undefined,
+            ...args
+        };
 
-        updatePropertiesWithData(card, args);
+        const card = new ToDoCardViewmodelImpl();
+        card.setSource(source);
+        card.setClickHandler(action('click'));
 
         return {
             setup()
@@ -86,22 +82,5 @@ export const EmptyDescription: Story = {
     args: {
         title: 'Task without description',
         description: '',
-    }
-};
-
-export const Minimal: Story = {
-    args: {
-        title: 'Minimal task',
-        description: '',
-        completionDatePlanned: undefined,
-        completionDateActual: undefined,
-    }
-};
-
-export const WithEditAction: Story = {
-    args: {
-        title: 'Task with edit button',
-        description: 'Click the edit button to see action.',
-        click: fn(),
     }
 };

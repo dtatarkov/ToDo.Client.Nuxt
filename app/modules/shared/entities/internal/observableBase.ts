@@ -1,9 +1,8 @@
 import type { ObservableTrackingContext } from '../../interfaces/internal/observableTrackingContext';
-import type { Observable } from '../../interfaces/observable';
-import type { Action } from '../../types/action';
+import { Observable } from '../../interfaces/observable';
 import { EventBusBase } from '../eventBusBase';
 
-export abstract class ObservableBase<T> implements Observable<T>
+export abstract class ObservableBase<T> extends Observable<T>
 {
   protected static currentContext: ObservableTrackingContext | undefined;
 
@@ -23,9 +22,4 @@ export abstract class ObservableBase<T> implements Observable<T>
   {
     return this.eventbus.subscriptionsCount;
   }
-
-  abstract get value(): T;
-
-  abstract subscribe(handler: Action<[T]>): Action;
-  abstract destroy(): void;
 }
