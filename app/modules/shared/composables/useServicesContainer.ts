@@ -3,11 +3,11 @@ import { ServicesContainer } from '../entities/internal/servicesContainer';
 
 export const containerKey = "$ServicesContainer";
 
-export function useServicesContainer(): ServicesContainer
+export function useServicesContainer(forceNew = false): ServicesContainer
 {
     const nuxtApp = useNuxtApp();
 
-    if (!nuxtApp[containerKey])
+    if (forceNew || !nuxtApp[containerKey])
     {
         nuxtApp[containerKey] = new ServicesContainer();
     }
