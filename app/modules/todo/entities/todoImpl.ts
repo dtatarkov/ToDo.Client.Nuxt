@@ -7,7 +7,7 @@ import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
-export class ToDoBase extends ToDo
+export class ToDoImpl extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
 
@@ -105,7 +105,7 @@ export class ToDoBase extends ToDo
 
   clone(): ToDo
   {
-    const todo = new ToDoBase(this.formFactory, this.overlayService, this.stringsService);
+    const todo = new ToDoImpl(this.formFactory, this.overlayService, this.stringsService);
 
     todo.id = this.id;
     todo.title = this.title;
