@@ -71,11 +71,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     }
   };
 
-  constructor()
-  {
-    super();
-  }
-
   override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
   {
     this.sourceWrapper.value = toObservable(source);

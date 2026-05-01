@@ -10,15 +10,19 @@ export class ToDoViewmodelsFactoryImpl extends ToDoViewmodelsFactory
     super();
   }
 
-  createToDoCard(todo: ToDo): ToDoCardViewmodel
+  createToDoCard(todo?: ToDo): ToDoCardViewmodel
   {
     const card = new ToDoCardViewmodelImpl();
-    card.setSource(todo);
 
-    card.setClickHandler(() =>
+    if (todo)
     {
-      todo.showEditDialog();
-    });
+      card.setSource(todo);
+
+      card.setClickHandler(() =>
+      {
+        todo.showEditDialog();
+      });
+    }
 
     return card;
   }

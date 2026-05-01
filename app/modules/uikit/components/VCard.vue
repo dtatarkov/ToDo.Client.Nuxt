@@ -28,7 +28,8 @@ const props = withDefaults(defineProps<{
 });
 
 const cardUIOptions = {
-  root  : 'rounded-sm',
-  header: 'flex gap-4 items-center text-primary'
+  root  : 'rounded-sm flex flex-col',
+  header: 'flex gap-4 items-start text-primary',
+  body: 'grow'
 }
 </script>

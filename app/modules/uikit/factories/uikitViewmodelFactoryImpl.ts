@@ -19,7 +19,6 @@ import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { ButtonIconViewmodel, ButtonIconViewmodelData } from '../interfaces/buttonIconViewmodel';
 import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIconImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
@@ -27,6 +26,7 @@ import type { CardViewmodel } from '../interfaces/cardViewmodel';
 import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
 import type { ToolbarViewmodel } from '../interfaces/toolbarViewmodel';
 import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
+import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -122,9 +122,12 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         return button;
     }
 
-    override createGrid<T extends Viewmodel = Viewmodel>(elements: Observable<T[]>): GridViewmodel<T>
+    override createGrid<T extends Viewmodel = Viewmodel>(source: MaybeObservable<T[]>): GridViewmodel<T>
     {
-        return new GridViewmodelImpl<T>(elements);
+        const grid = new GridViewmodelImpl<T>();
+        grid.setSource(source);
+
+        return grid;
     }
 
     override createInfoBlock(): InfoBlockViewmodel
