@@ -13,10 +13,13 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
     readonly component = {
         setup: () =>
         {
-            return () => h(VInfoBlock, {}, {
-                default: () => this.rowsVisible.value.map(row =>
-                    h(row.component, { key: row.key }))
-            });
+            return () => !this.isEmpty ?
+                h(VInfoBlock, {}, {
+                    default: () => this.rowsVisible.value.map(row =>
+                        h(row.component, { key: row.key }))
+                }) :
+
+                undefined;
         }
     };
 

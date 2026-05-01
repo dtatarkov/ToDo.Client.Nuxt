@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center gap-2 text-sm">
+  <div class="flex justify-between items-center gap-2 text-sm items-start">
     <span class="min-w-[100px]">{{ label }}</span>
     
     <span>
