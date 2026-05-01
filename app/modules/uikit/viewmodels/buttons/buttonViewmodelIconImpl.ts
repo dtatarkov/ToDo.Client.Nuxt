@@ -1,9 +1,34 @@
+import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { ButtonIconViewmodel } from "../../interfaces/buttonIconViewmodel";
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
+import { UButton } from '#components';
 
 export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements ButtonIconViewmodel
 {
+    protected readonly props = reactive({
+        color: <ButtonViewmodelColor>'secondary',
+        variant: 'link',
+        size: 'sm',
+        disabled: false,
+        class: 'cursor-pointer hover:text-primar',
+        icon: '',
+
+        onClick: () =>
+        {
+            this.click.emit();
+        },
+    });
+
+    readonly key = getUniqueId('button-element-icon');
+
+    readonly component = {
+        setup: () =>
+        {
+            return () => h(<any>UButton, this.props);
+        }
+    };
+
     get icon(): string
     {
         this.destroyToken.assertNotDestroyed();
@@ -16,20 +41,16 @@ export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements 
         this.props.icon = value;
     }
 
-    protected override createProps()
+    get isDisabled(): boolean
     {
-        const baseProps = super.createProps();
+        this.destroyToken.assertNotDestroyed();
+        return this.props.disabled;
+    }
 
-        const props = {
-            ...baseProps,
-
-            variant: 'link',
-            color: <ButtonViewmodelColor>'secondary',
-            size: 'sm',
-            class: `${baseProps.class} hover:text-primary`
-        };
-
-        return props;
+    set isDisabled(value: boolean)
+    {
+        this.destroyToken.assertNotDestroyed();
+        this.props.disabled = value;
     }
 }
 
