@@ -89,6 +89,65 @@ describe('ObservableSource', () =>
         });
     });
 
+    describe('mutate', () =>
+    {
+        it('should mutate object properties and emit', () =>
+        {
+            const source = new ObservableSource({ a: 1, b: 2 });
+            let receivedValue: { a: number; b: number; } | undefined;
+
+            source.subscribe((value) => { receivedValue = value; });
+            source.mutate({ a: 3 });
+
+            expect(source.value).toEqual({ a: 3, b: 2 });
+            expect(receivedValue).toEqual({ a: 3, b: 2 });
+        });
+
+        it('should not emit if mutation data is empty object', () =>
+        {
+            const source = new ObservableSource({ a: 1 });
+            let callCount = 0;
+
+            source.subscribe(() => callCount++);
+            source.mutate({});
+
+            expect(callCount).toBe(0);
+            expect(source.value).toEqual({ a: 1 });
+        });
+
+        it('should throw if value is not an object', () =>
+        {
+            const source = new ObservableSource(42);
+            expect(() => (source as ObservableSource<any>).mutate({})).toThrow();
+        });
+
+        it('should throw if mutation data is not an object', () =>
+        {
+            const source = new ObservableSource({ a: 1 });
+
+            expect(() => source.mutate(123 as any)).toThrow();
+        });
+
+        it('should handle multiple mutations', () =>
+        {
+            const source = new ObservableSource({ x: 0, y: 0 });
+            const capturedValues: Array<{ x: number; y: number; }> = [];
+
+            source.subscribe((value) => capturedValues.push({ ...value }));
+            source.mutate({ x: 1 });
+            source.mutate({ y: 2 });
+            source.mutate({ x: 3, y: 4 });
+
+            expect(capturedValues).toEqual([
+                { x: 1, y: 0 },
+                { x: 1, y: 2 },
+                { x: 3, y: 4 }
+            ]);
+
+            expect(source.value).toEqual({ x: 3, y: 4 });
+        });
+    });
+
     describe('subscription', () =>
     {
         it('should allow unsubscribing', () =>

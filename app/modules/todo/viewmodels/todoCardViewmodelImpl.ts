@@ -1,15 +1,23 @@
-import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
-import type { ToDo } from "../interfaces/todo";
+import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelSetupContext } from "../interfaces/todoCardViewmodel";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { useService } from '@/modules/shared/composables/useService';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
-import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
+import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
+import type { Action } from '@/modules/shared/types/action';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
   readonly key = getUniqueId('todo-card');
+
+  private readonly data = new ObservableSource<ToDoCardViewmodelData>({
+    title: '',
+    description: '',
+    completionDateActual: undefined,
+    completionDatePlanned: undefined,
+  });
 
   readonly component = {
     setup: () =>
@@ -28,18 +36,15 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
       card.actions = [editButton];
       card.footer = infoBlock;
 
-      useObservableSubscription(this.todo.toObservableData(), todoData =>
-      {
-        card.title = todoData.title;
-        card.description = todoData.description;
+      this.setup?.({ editButton });
 
-        completionDateActualRow.content = datesService.formatDateOptional(todoData.completionDateActual);
-        completionDatePlannedRow.content = datesService.formatDateOptional(todoData.completionDatePlanned);
-      });
-
-      useSubscribable(editButton.click, () =>
+      useObservableSubscription(this.data, data =>
       {
-        this.todo.showEditDialog();
+        card.title = data.title;
+        card.description = data.description;
+
+        completionDateActualRow.content = datesService.formatDateOptional(data.completionDateActual);
+        completionDatePlannedRow.content = datesService.formatDateOptional(data.completionDatePlanned);
       });
 
       return () => h(card.component);
@@ -47,34 +52,49 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   };
 
   constructor(
-    protected todo: ToDo,
+    private readonly setup?: Action<[ToDoCardViewmodelSetupContext]>,
   )
   {
     super();
   }
 
-  override get id()
-  {
-    return this.todo.id;
-  }
-
   override get title()
   {
-    return this.todo.title;
+    return this.data.value.title;
+  }
+
+  override set title(value: string)
+  {
+    this.data.mutate({ title: value });
   }
 
   override get description()
   {
-    return this.todo.description;
+    return this.data.value.description;
+  }
+
+  override set description(value: string)
+  {
+    this.data.mutate({ description: value });
   }
 
   override get completionDatePlanned()
   {
-    return this.todo.completionDatePlanned;
+    return this.data.value.completionDatePlanned;
+  }
+
+  override set completionDatePlanned(value: Date | undefined)
+  {
+    this.data.mutate({ completionDatePlanned: value });
   }
 
   override get completionDateActual()
   {
-    return this.todo.completionDateActual;
+    return this.data.value.completionDateActual;
+  }
+
+  override set completionDateActual(value: Date | undefined)
+  {
+    this.data.mutate({ completionDateActual: value });
   }
 }
