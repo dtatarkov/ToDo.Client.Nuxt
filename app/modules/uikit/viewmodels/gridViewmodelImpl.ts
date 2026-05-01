@@ -6,7 +6,7 @@ import { h } from "vue";
 import { useObservable } from '@/modules/shared/composables/useObservable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 
-export class GridViewmodelBase<T extends Viewmodel = Viewmodel> extends GridViewmodel<T>
+export class GridViewmodelImpl<T extends Viewmodel = Viewmodel> extends GridViewmodel<T>
 {
     readonly key = getUniqueId('grid');
 

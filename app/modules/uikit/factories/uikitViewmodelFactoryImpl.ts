@@ -6,7 +6,7 @@ import { InputViewmodelDate } from "../viewmodels/inputElements/inputViewmodelDa
 import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
 import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmodelDateTime";
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
-import { GridViewmodelBase } from "../viewmodels/gridViewmodelBase";
+import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
 import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
 import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from '../interfaces/buttonGeneralViewmodel';
 import type { GridViewmodel } from '../interfaces/gridViewmodel';
@@ -124,7 +124,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createGrid<T extends Viewmodel = Viewmodel>(elements: Observable<T[]>): GridViewmodel<T>
     {
-        return new GridViewmodelBase<T>(elements);
+        return new GridViewmodelImpl<T>(elements);
     }
 
     override createInfoBlock(): InfoBlockViewmodel
