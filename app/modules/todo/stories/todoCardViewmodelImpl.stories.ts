@@ -1,28 +1,32 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import type { ToDoData } from '../interfaces/todo';
+import { fn } from 'storybook/test';
 import { ToDoCardViewmodelImpl } from '../viewmodels/todoCardViewmodelImpl';
 import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
-import { useServicesContainer } from '@/modules/shared/composables/useServicesContainer';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
-import { useUIKitServices } from '@/modules/uikit/composables/useUIKitServices';
-import { useFormsServices } from '@/modules/forms/composables/useFormsServices';
-import { useOverlayServices } from '@/modules/overlay/composables/useOverlayServices';
-import { useTodoServices } from '../composables/useTodoServices';
+import { useAppServices } from '@/composables/useAppServices';
+import type { Action } from '@/modules/shared/types/action';
+import { useEffectsContainer } from '@/modules/shared/composables/useEffectsContainer';
 
-const meta: Meta<ToDoCardViewmodelData> = {
+type ToDoCardViewmodelStoryArgs = Partial<ToDoCardViewmodelData & { click: Action; }>;
+
+const meta: Meta<ToDoCardViewmodelStoryArgs> = {
     title: 'ToDo/ToDoCard',
 
     render: (args) =>
     {
-        useServicesContainer(true);
-        useSharedServices();
-        useUIKitServices();
-        useFormsServices();
-        useOverlayServices();
-        useTodoServices();
+        useAppServices();
 
-        const card = new ToDoCardViewmodelImpl();
+        const card = new ToDoCardViewmodelImpl(({ editButton }) =>
+        {
+            if (args.click)
+            {
+                useEffectsContainer(() =>
+                {
+                    editButton.click.subscribe(args.click as Action);
+                });
+            }
+        });
+
         updatePropertiesWithData(card, args);
 
         return {
@@ -37,11 +41,67 @@ const meta: Meta<ToDoCardViewmodelData> = {
 };
 
 export default meta;
-type Story = StoryObj<Partial<ToDoData>>;
+type Story = StoryObj<ToDoCardViewmodelStoryArgs>;
 
 export const Default: Story = {
     args: {
         title: 'Title',
         description: 'Description',
+    }
+};
+
+export const WithPlannedDate: Story = {
+    args: {
+        title: 'Task with planned date',
+        description: 'This task has a planned completion date.',
+        completionDatePlanned: new Date('2026-12-31'),
+    }
+};
+
+export const WithActualDate: Story = {
+    args: {
+        title: 'Completed task',
+        description: 'This task has been completed.',
+        completionDateActual: new Date('2026-05-01'),
+    }
+};
+
+export const WithBothDates: Story = {
+    args: {
+        title: 'Task with both dates',
+        description: 'Planned and actual completion dates are set.',
+        completionDatePlanned: new Date('2026-06-15'),
+        completionDateActual: new Date('2026-06-10'),
+    }
+};
+
+export const LongContent: Story = {
+    args: {
+        title: 'This is a very long title that might overflow the card layout and need to be truncated or wrapped appropriately',
+        description: 'This is a lengthy description that could potentially span multiple lines and test the card\'s ability to handle overflow. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    }
+};
+
+export const EmptyDescription: Story = {
+    args: {
+        title: 'Task without description',
+        description: '',
+    }
+};
+
+export const Minimal: Story = {
+    args: {
+        title: 'Minimal task',
+        description: '',
+        completionDatePlanned: undefined,
+        completionDateActual: undefined,
+    }
+};
+
+export const WithEditAction: Story = {
+    args: {
+        title: 'Task with edit button',
+        description: 'Click the edit button to see action.',
+        click: fn(),
     }
 };
