@@ -1,4 +1,5 @@
 import type { Preview } from '@nuxtjs/storybook';
+import '../app/assets/css/main.css';
 
 const preview: Preview = {
   parameters: {
@@ -11,13 +12,6 @@ const preview: Preview = {
   },
 
   tags: ['autodocs'],
-  decorators: [() => ({
-    template: `<div class="dark">
-        <div style="background-color: var(--ui-bg); color: var(--ui-text);">
-          <story/>
-        </div>
-      </div>`
-  })]
 };
 
 export default preview;

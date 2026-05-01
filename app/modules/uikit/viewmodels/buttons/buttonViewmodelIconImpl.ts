@@ -11,7 +11,7 @@ export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements 
         variant: 'link',
         size: 'sm',
         disabled: false,
-        class: 'cursor-pointer hover:text-primar',
+        class: 'cursor-pointer hover:text-primary',
         icon: '',
 
         onClick: () =>
