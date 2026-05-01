@@ -1,0 +1,28 @@
+.sbdocs-wrapper {
+    background-color: inherit !important;
+}
+
+.sbdocs-title {
+    color: #fff !important;
+}
+
+.sbdocs-preview {
+    background: inherit !important;
+
+    [role=toolbar] {
+        background: inherit !important;
+    }
+}
+
+.sb-anchor h3 {
+    color: #fff !important;
+}
+
+.docblock-argstable tr > * {
+    background-color: inherit !important;
+    color: #fff !important;
+}
+
+.docblock-argstable tr span {
+    color: #fff !important;
+}
