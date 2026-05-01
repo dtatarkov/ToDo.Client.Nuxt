@@ -8,7 +8,9 @@
       </div>
     </template>
 
-    <div class="todo-card__description">{{ props.description }}</div>
+    <template v-if="props.description" #default>
+      <div  class="todo-card__description">{{ props.description }}</div>
+    </template>    
 
     <template #footer v-if="$slots.footer">
       <slot name="footer" />

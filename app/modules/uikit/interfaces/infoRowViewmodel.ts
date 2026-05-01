@@ -10,4 +10,5 @@ export abstract class InfoRowViewmodel extends Viewmodel<string> implements Info
 {
     abstract label: string;
     abstract content: string;
+    abstract readonly isEmpty: boolean;
 }

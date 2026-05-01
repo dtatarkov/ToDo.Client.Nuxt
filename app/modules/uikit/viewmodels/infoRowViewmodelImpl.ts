@@ -1,8 +1,9 @@
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import VInfoRow from "../components/VInfoRow.vue";
 import { InfoRowViewmodel } from "../interfaces/infoRowViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 
-export class InfoRowViewmodelBase extends InfoRowViewmodel
+export class InfoRowViewmodelImpl extends InfoRowViewmodel
 {
     private readonly props = reactive({
         label: '',
@@ -19,6 +20,13 @@ export class InfoRowViewmodelBase extends InfoRowViewmodel
             });
         }
     };
+
+    constructor(
+        private stringsService: StringsService
+    )
+    {
+        super();
+    }
 
     get label(): string
     {
@@ -38,5 +46,10 @@ export class InfoRowViewmodelBase extends InfoRowViewmodel
     set content(value: string)
     {
         this.props.content = value;
+    }
+
+    get isEmpty(): boolean
+    {
+        return this.stringsService.isStringEmpty(this.props.content);
     }
 }

@@ -45,6 +45,8 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
         completionDateActualRow.content = datesService.formatDateOptional(data.completionDateActual);
         completionDatePlannedRow.content = datesService.formatDateOptional(data.completionDatePlanned);
+
+        card.footer = !infoBlock.isEmpty ? infoBlock : undefined;
       });
 
       return () => h(card.component);

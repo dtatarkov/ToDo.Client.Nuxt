@@ -7,7 +7,7 @@ import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTi
 import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmodelDateTime";
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
 import { GridViewmodelBase } from "../viewmodels/gridViewmodelBase";
-import { InfoBlockViewmodelBase } from "../viewmodels/infoBlockViewmodelBase";
+import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
 import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from '../interfaces/buttonGeneralViewmodel';
 import type { GridViewmodel } from '../interfaces/gridViewmodel';
 import type { Viewmodel } from '../interfaces/viewmodel';
@@ -129,7 +129,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createInfoBlock(): InfoBlockViewmodel
     {
-        return new InfoBlockViewmodelBase();
+        return new InfoBlockViewmodelImpl(this.stringsService);
     }
 
     override createCard(): CardViewmodel
