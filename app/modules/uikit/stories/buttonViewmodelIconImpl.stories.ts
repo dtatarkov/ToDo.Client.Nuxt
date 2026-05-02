@@ -14,19 +14,23 @@ const meta: Meta<ButtonIconViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const button = uikitFactory.createButtonIcon();
-
-        button.icon = args.icon;
-        button.isDisabled = args.isDisabled;
-
-        button.setClickHandler(action('click'));
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const button = uikitFactory.createButtonIcon();
+
+
+                button.setClickHandler(action('click'));
+
+                watchEffect(() =>
+                {
+                    button.icon = args.icon;
+                    button.isDisabled = args.isDisabled;
+                });
+
                 return { button };
             },
 
