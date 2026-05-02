@@ -6,7 +6,7 @@ import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
+import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import { ToDoFactory } from '../interfaces/todoFactory';
 
 @dependency(ToDosRepository)
@@ -15,7 +15,7 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 {
   private initializationPromise: Promise<void> | undefined;
   private todos = new ObservableSource(new Array<ToDo>());
-  private destroyToken = new DestroyTokenBase();
+  private destroyToken = new DestroyTokenImpl();
 
   constructor(
     private todosRepository: ToDosRepository,

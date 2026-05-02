@@ -1,12 +1,12 @@
 import type { ObservableWritable } from '../interfaces/observableWritable';
 import type { Action } from '../types/action';
 import { isObject } from '../utils/isObject';
-import { DestroyTokenBase } from './destroyTokenBase';
+import { DestroyTokenImpl } from './destroyTokenImpl';
 import { ObservableBase } from './internal/observableBase';
 
 export class ObservableSource<T> extends ObservableBase<T> implements ObservableWritable<T>
 {
-    private destroyToken = new DestroyTokenBase();
+    private destroyToken = new DestroyTokenImpl();
 
     constructor(protected valueInternal: T)
     {

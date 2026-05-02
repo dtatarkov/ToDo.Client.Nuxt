@@ -5,7 +5,7 @@ import { DestroyedException } from '../exceptions/destroyedException';
  * Base implementation of DestroyToken.
  * Provides basic destruction state tracking and assertion.
  */
-export class DestroyTokenBase extends DestroyToken
+export class DestroyTokenImpl extends DestroyToken
 {
     private isDestroyedInternal = false;
 

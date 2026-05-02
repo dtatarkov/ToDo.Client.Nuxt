@@ -1,17 +1,16 @@
 import { ModalViewmodel } from "../interfaces/modalViewmodel";
 import VModal from '../components/VModal.vue';
-import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
-import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
+import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from '../interfaces/internal/overlay';
 
 export class ModalViewmodelImpl extends ModalViewmodel
 {
   private overlay: Overlay | undefined;
 
-  protected destroyToken = new DestroyTokenBase();
+  protected destroyToken = new DestroyTokenImpl();
 
   protected data = reactive({
     title: '',
@@ -67,11 +66,13 @@ export class ModalViewmodelImpl extends ModalViewmodel
 
   get isDisabled()
   {
+    this.destroyToken.assertNotDestroyed();
     return this.data.isDisabled;
   }
 
   set isDisabled(value)
   {
+    this.destroyToken.assertNotDestroyed();
     this.data.isDisabled = value;
   }
 
@@ -89,13 +90,7 @@ export class ModalViewmodelImpl extends ModalViewmodel
 
   override close()
   {
-    if (this.destroyToken.isDestroyed)
-    {
-      return;
-    }
-
-    this.handleClose();
-    this.destroyToken.destroy();
+    this.destroy();
   }
 
   override setOverlay(overlay: Overlay)
@@ -110,7 +105,18 @@ export class ModalViewmodelImpl extends ModalViewmodel
     this.overlay = overlay;
   }
 
-  protected handleClose(): void
+  destroy()
+  {
+    if (this.destroyToken.isDestroyed)
+    {
+      return;
+    }
+
+    this.handleDestroy();
+    this.destroyToken.destroy();
+  }
+
+  protected handleDestroy(): void
   {
     this.overlay?.removeElement(this);
 
