@@ -6,12 +6,12 @@ export abstract class ButtonViewmodelBaseImpl extends ButtonBaseViewmodel
 {
     protected clickHandler = new HandlerWrapper();
 
-    setClickHandler(handler: Action): void
+    override setClickHandler(handler: Action): void
     {
         this.clickHandler.setHandler(handler);
     }
 
-    applyHandlers(handlers: Partial<ButtonBaseViewmodelHandlers>): void
+    override applyHandlers(handlers: Partial<ButtonBaseViewmodelHandlers>): void
     {
         if (handlers.click)
         {

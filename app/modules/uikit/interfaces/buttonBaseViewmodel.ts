@@ -12,4 +12,7 @@ export type ButtonBaseViewmodelHandlers = {
 export abstract class ButtonBaseViewmodel extends Viewmodel<string>
 {
     abstract isDisabled: boolean;
+
+    abstract setClickHandler(handler: Action): void;
+    abstract applyHandlers(handlers: ButtonBaseViewmodelHandlers): void;
 }
