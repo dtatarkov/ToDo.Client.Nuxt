@@ -3,7 +3,7 @@ import { InputViewmodel } from "../interfaces/inputViewmodel";
 import { InputTextViewmodelImpl } from "../viewmodels/inputElements/inputTextViewmodelImpl";
 import { InputTextareaViewmodelImpl } from "../viewmodels/inputElements/inputTextareaViewmodelImpl";
 import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
-import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
+import { InputTimeViewmodelImpl } from "../viewmodels/inputElements/inputTimeViewmodelImpl";
 import { InputDateTimeViewmodelImpl } from "../viewmodels/inputElements/inputDateTimeViewmodelImpl";
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
 import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
@@ -80,7 +80,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createInputTime(): InputViewmodel<number | undefined>
     {
-        return new InputViewmodelTime(
+        return new InputTimeViewmodelImpl(
             this.timeMapper,
             this.stringsService,
             this.vueComponentPropsFactory,

@@ -1,7 +1,7 @@
 import { InputDateViewmodelImpl } from "./inputDateViewmodelImpl";
 import { InputViewmodelComposedBase } from "./base/inputViewmodelComposedBase";
 import type { InputViewmodel } from "../../interfaces/inputViewmodel";
-import { InputViewmodelTime } from "./inputViewmodelTime";
+import { InputTimeViewmodelImpl } from "./inputTimeViewmodelImpl";
 import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
 import type { DatesService } from '@/modules/shared/interfaces/datesService';
@@ -27,7 +27,7 @@ export class InputDateTimeViewmodelImpl extends InputViewmodelComposedBase<Date 
 
     this.children = {
       inputDate: new InputDateViewmodelImpl(zonedDateTimeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
-      inputTime: new InputViewmodelTime(timeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
+      inputTime: new InputTimeViewmodelImpl(timeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
     };
   }
 

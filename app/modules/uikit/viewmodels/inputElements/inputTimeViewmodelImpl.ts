@@ -10,11 +10,11 @@ import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMappe
 import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
-import type { InputViewmodelTimeData } from '../../types/inputViewmodels/inputViewmodelTimeData';
+import type { InputTimeViewmodelData } from '../../types/inputViewmodels/inputTimeViewmodelData';
 
 export type InputElementTimeProps = InputViewmodelNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'minute'; };
 
-export class InputViewmodelTime extends InputViewmodelNuxtUIBase<number | undefined, InputElementTimeProps, InputViewmodelTimeData>
+export class InputTimeViewmodelImpl extends InputViewmodelNuxtUIBase<number | undefined, InputElementTimeProps, InputTimeViewmodelData>
 {
   protected optionalTimeMapper: ValueMapper<number | undefined, Time | undefined>;
 
@@ -50,9 +50,9 @@ export class InputViewmodelTime extends InputViewmodelNuxtUIBase<number | undefi
     });
   }
 
-  protected override getDataScheme(): DataAdapterFieldsScheme<InputViewmodelTimeData, InputElementTimeProps>
+  protected override getDataScheme(): DataAdapterFieldsScheme<InputTimeViewmodelData, InputElementTimeProps>
   {
-    return mergeDeep(super.getDataScheme(), <Partial<DataAdapterFieldsScheme<InputViewmodelTimeData, InputElementTimeProps>>>{
+    return mergeDeep(super.getDataScheme(), <Partial<DataAdapterFieldsScheme<InputTimeViewmodelData, InputElementTimeProps>>>{
       value: {
         mapper: this.optionalTimeMapper,
       }
