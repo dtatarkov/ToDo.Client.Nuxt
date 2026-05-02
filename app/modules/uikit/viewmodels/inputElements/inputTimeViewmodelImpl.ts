@@ -47,6 +47,10 @@ export class InputTimeViewmodelImpl extends InputViewmodelNuxtUIBase<number | un
 
       granularity: {
         value: 'minute',
+      },
+
+      hourCycle: {
+        value: 24
       }
     });
   }
