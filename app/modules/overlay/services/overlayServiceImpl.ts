@@ -38,9 +38,9 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  createModalEditForm(form: FormViewmodel): ModalConfirmViewmodel
+  createEditFormModal(form: FormViewmodel): ModalConfirmViewmodel
   {
-    const modal = this.modalFactory.createModalEditForm(form);
+    const modal = this.modalFactory.createEditFormModal(form);
 
     this.overlay.addElement(modal);
 

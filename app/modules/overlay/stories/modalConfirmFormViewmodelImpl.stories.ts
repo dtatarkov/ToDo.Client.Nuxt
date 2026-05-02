@@ -40,7 +40,7 @@ const meta: Meta<ModalConfirmFormViewmodelStoryArgs> = {
                     }
                 });
 
-                const modal = modalFactory.createModalEditForm(form);
+                const modal = modalFactory.createEditFormModal(form);
 
                 watchEffect(() =>
                 {

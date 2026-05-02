@@ -13,7 +13,7 @@ const mockFormFactory = {
 const mockOverlayService = {
     createModalBase: vi.fn(),
     createModalAddForm: vi.fn(),
-    createModalEditForm: vi.fn(),
+    createEditFormModal: vi.fn(),
     getElements: vi.fn(),
 } satisfies OverlayService;
 
@@ -157,14 +157,14 @@ describe('ToDoImpl', () =>
             const mockForm = { setElements: vi.fn(), setData: vi.fn() };
             const mockModal = { title: '' };
             mockFormFactory.create.mockReturnValue(mockForm);
-            mockOverlayService.createModalEditForm.mockReturnValue(mockModal);
+            mockOverlayService.createEditFormModal.mockReturnValue(mockModal);
 
             todo.showEditDialog();
 
             expect(mockFormFactory.create).toHaveBeenCalledTimes(1);
             expect(mockForm.setElements).toHaveBeenCalledTimes(1);
             expect(mockForm.setData).toHaveBeenCalledWith(todo);
-            expect(mockOverlayService.createModalEditForm).toHaveBeenCalledWith(mockForm);
+            expect(mockOverlayService.createEditFormModal).toHaveBeenCalledWith(mockForm);
         });
     });
 });

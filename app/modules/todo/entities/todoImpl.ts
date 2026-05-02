@@ -161,7 +161,7 @@ export class ToDoImpl extends ToDo
 
     form.setData(this);
 
-    const modal = this.overlayService.createModalEditForm(form);
+    const modal = this.overlayService.createEditFormModal(form);
     modal.title = 'Редактирование';
   }
 

@@ -33,7 +33,7 @@ export class ModalFactoryImpl extends ModalFactory
         return modal;
     }
 
-    createModalEditForm(form: FormViewmodel): ModalConfirmViewmodel
+    createEditFormModal(form: FormViewmodel): ModalConfirmViewmodel
     {
         const modal = this.createModalConfirmForm(form);
 
