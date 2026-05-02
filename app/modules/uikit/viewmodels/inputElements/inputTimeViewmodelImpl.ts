@@ -10,11 +10,12 @@ import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMappe
 import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
+import type { InputTimeViewmodel } from '../../interfaces/inputTimeViewmodel';
 import type { InputTimeViewmodelData } from '../../types/inputViewmodels/inputTimeViewmodelData';
 
 export type InputElementTimeProps = InputViewmodelNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'minute'; };
 
-export class InputTimeViewmodelImpl extends InputViewmodelNuxtUIBase<number | undefined, InputElementTimeProps, InputTimeViewmodelData>
+export class InputTimeViewmodelImpl extends InputViewmodelNuxtUIBase<number | undefined, InputElementTimeProps, InputTimeViewmodelData> implements InputTimeViewmodel 
 {
   protected optionalTimeMapper: ValueMapper<number | undefined, Time | undefined>;
 

@@ -29,6 +29,9 @@ import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
 import type { InputTextViewmodel } from '../interfaces/inputTextViewmodel';
 import type { InputDateViewmodel } from '../interfaces/inputDateViewmodel';
+import type { InputTextareaViewmodel } from '../interfaces/inputTextareaViewmodel';
+import type { InputTimeViewmodel } from '../interfaces/inputTimeViewmodel';
+import type { InputDateTimeViewmodel } from '../interfaces/inputDateTimeViewmodel';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -59,7 +62,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createTextarea(): InputViewmodel<string>
+    override createTextarea(): InputTextareaViewmodel
     {
         return new InputTextareaViewmodelImpl(
             this.stringsService,
@@ -78,7 +81,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createInputTime(): InputViewmodel<number | undefined>
+    override createInputTime(): InputTimeViewmodel
     {
         return new InputTimeViewmodelImpl(
             this.timeMapper,
@@ -88,7 +91,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createInputDateTime(): InputViewmodel<Date | undefined>
+    override createInputDateTime(): InputDateTimeViewmodel
     {
         return new InputDateTimeViewmodelImpl(
             this.datesService,
