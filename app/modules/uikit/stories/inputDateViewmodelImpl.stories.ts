@@ -7,7 +7,7 @@ type InputDateStoryArgs = {
     value: Date | undefined;
     id: string;
     name: string;
-    autofocus: boolean;
+    hasAutofocus: boolean;
     isDisabled: boolean;
 };
 
@@ -29,7 +29,7 @@ const meta: Meta<InputDateStoryArgs> = {
                     input.value = args.value;
                     input.id = args.id;
                     input.name = args.name;
-                    input.autofocus = args.autofocus;
+                    input.hasAutofocus = args.hasAutofocus;
                     input.isDisabled = args.isDisabled;
                 });
 
@@ -50,7 +50,7 @@ const meta: Meta<InputDateStoryArgs> = {
         name: {
             control: 'text',
         },
-        autofocus: {
+        hasAutofocus: {
             control: 'boolean',
         },
         isDisabled: {
@@ -69,7 +69,7 @@ export const Autofocus: Story = {
         value: new Date('2026-02-20'),
         id: 'input-date-3',
         name: 'inputDate',
-        autofocus: true,
+        hasAutofocus: true,
         isDisabled: false,
     },
 };
@@ -79,7 +79,7 @@ export const Empty: Story = {
         value: undefined,
         id: 'input-date-2',
         name: 'inputDate',
-        autofocus: false,
+        hasAutofocus: false,
         isDisabled: false,
     },
 };
@@ -89,7 +89,7 @@ export const Disabled: Story = {
         value: new Date('2026-03-10'),
         id: 'input-date-4',
         name: 'inputDate',
-        autofocus: false,
+        hasAutofocus: false,
         isDisabled: true,
     },
 };

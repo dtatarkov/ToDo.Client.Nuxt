@@ -29,7 +29,7 @@ const meta: Meta<InputTimeStoryArgs> = {
                     input.value = args.value;
                     input.id = args.id;
                     input.name = args.name;
-                    input.autofocus = args.autofocus;
+                    input.hasAutofocus = args.autofocus;
                     input.isDisabled = args.isDisabled;
                 });
 

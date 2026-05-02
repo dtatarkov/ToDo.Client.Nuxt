@@ -8,7 +8,7 @@ type InputTextareaStoryArgs = {
     placeholder: string;
     id: string;
     name: string;
-    autofocus: boolean;
+    hasAutofocus: boolean;
     isDisabled: boolean;
 };
 
@@ -31,7 +31,7 @@ const meta: Meta<InputTextareaStoryArgs> = {
                     input.placeholder = args.placeholder;
                     input.id = args.id;
                     input.name = args.name;
-                    input.autofocus = args.autofocus;
+                    input.hasAutofocus = args.hasAutofocus;
                     input.isDisabled = args.isDisabled;
                 });
 
@@ -55,7 +55,7 @@ const meta: Meta<InputTextareaStoryArgs> = {
         name: {
             control: 'text',
         },
-        autofocus: {
+        hasAutofocus: {
             control: 'boolean',
         },
         isDisabled: {
@@ -75,7 +75,7 @@ export const Autofocus: Story = {
         placeholder: 'Autofocused textarea',
         id: 'input-textarea-3',
         name: 'inputTextarea',
-        autofocus: true,
+        hasAutofocus: true,
         isDisabled: false,
     },
 };
@@ -86,7 +86,7 @@ export const Empty: Story = {
         placeholder: 'Type something',
         id: 'input-textarea-2',
         name: 'inputTextarea',
-        autofocus: false,
+        hasAutofocus: false,
         isDisabled: false,
     },
 };
@@ -97,7 +97,7 @@ export const Disabled: Story = {
         placeholder: 'Cannot edit',
         id: 'input-textarea-5',
         name: 'inputTextarea',
-        autofocus: false,
+        hasAutofocus: false,
         isDisabled: true,
     },
 };

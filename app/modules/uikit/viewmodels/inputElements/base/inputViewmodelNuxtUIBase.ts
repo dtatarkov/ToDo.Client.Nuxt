@@ -80,14 +80,14 @@ export abstract class InputViewmodelNuxtUIBase<
     this.data.name = value;
   }
 
-  get autofocus(): boolean
+  get hasAutofocus(): boolean
   {
-    return this.data.autofocus;
+    return this.data.hasAutofocus;
   }
 
-  set autofocus(value: boolean)
+  set hasAutofocus(value: boolean)
   {
-    this.data.autofocus = value;
+    this.data.hasAutofocus = value;
   }
 
   get value(): V
@@ -139,7 +139,7 @@ export abstract class InputViewmodelNuxtUIBase<
     const scheme = {
       id: {},
       name: {},
-      autofocus: {},
+      hasAutofocus: {},
       value: { from: 'modelValue' },
     } as DataAdapterFieldsScheme<Data, Props>;
 

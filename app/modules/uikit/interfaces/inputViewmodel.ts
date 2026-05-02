@@ -5,7 +5,7 @@ export abstract class InputViewmodel<V = any> extends Viewmodel<string> implemen
 {
   abstract id: string | undefined;
   abstract name: string | undefined;
-  abstract autofocus: boolean;
+  abstract hasAutofocus: boolean;
   abstract value: V;
   abstract isDisabled: boolean;
 

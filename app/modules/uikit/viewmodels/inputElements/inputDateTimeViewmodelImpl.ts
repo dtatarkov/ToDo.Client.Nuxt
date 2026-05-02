@@ -31,14 +31,14 @@ export class InputDateTimeViewmodelImpl extends InputViewmodelComposedBase<Date 
     };
   }
 
-  get autofocus(): boolean
+  get hasAutofocus(): boolean
   {
-    return this.children.inputDate.autofocus;
+    return this.children.inputDate.hasAutofocus;
   }
 
-  set autofocus(value: boolean)
+  set hasAutofocus(value: boolean)
   {
-    this.children.inputDate.autofocus = value;
+    this.children.inputDate.hasAutofocus = value;
   }
 
   get value(): Date | undefined
