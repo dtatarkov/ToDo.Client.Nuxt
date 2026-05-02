@@ -10,7 +10,7 @@ type ButtonIconViewmodelStoryArgs = {
 };
 
 const meta: Meta<ButtonIconViewmodelStoryArgs> = {
-    title: 'UIKit/Buttons/Icon',
+    title: 'UIKit/ButtonIcon',
 
     render: (args) =>
     {

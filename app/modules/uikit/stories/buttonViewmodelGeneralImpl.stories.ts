@@ -13,7 +13,7 @@ type ButtonGeneralViewmodelStoryArgs = {
 };
 
 const meta: Meta<ButtonGeneralViewmodelStoryArgs> = {
-    title: 'UIKit/Buttons/General',
+    title: 'UIKit/ButtonGeneral',
 
     render: (args) =>
     {
