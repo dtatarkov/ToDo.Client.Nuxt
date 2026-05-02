@@ -81,6 +81,22 @@ export abstract class InputViewmodelComposedBase<V> extends InputViewmodel<V>
       });
   }
 
+  get isDisabled(): boolean
+  {
+    const firstChild = Object.values(this.children)[0];
+    const isDisabled = firstChild?.isDisabled ?? false;
+
+    return isDisabled;
+  }
+
+  set isDisabled(value)
+  {
+    for (const child of Object.values(this.children))
+    {
+      child.isDisabled = value;
+    }
+  }
+
   override disable(): void
   {
     Object

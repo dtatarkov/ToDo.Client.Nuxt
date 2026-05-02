@@ -100,6 +100,16 @@ export abstract class InputViewmodelNuxtUIBase<
     this.data.value = value;
   }
 
+  get isDisabled()
+  {
+    return this.props.disabled;
+  }
+
+  set isDisabled(value)
+  {
+    this.props.disabled = value;
+  }
+
   override disable(): void
   {
     this.props.disabled = true;
