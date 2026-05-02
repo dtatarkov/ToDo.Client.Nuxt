@@ -1,6 +1,6 @@
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
-import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import type { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
 
 export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl

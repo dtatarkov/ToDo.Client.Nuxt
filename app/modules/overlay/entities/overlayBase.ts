@@ -1,7 +1,7 @@
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { Overlay } from "../interfaces/internal/overlay";
-import { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
+import type { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
 
 export class OverlayBase extends Overlay
 {

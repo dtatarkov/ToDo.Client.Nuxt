@@ -1,7 +1,7 @@
 import { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
 import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
-import { FormViewmodel } from "../interfaces/formViewmodel";
-import { FormViewmodelFactory } from '../interfaces/formViewmodelFactory';
+import type { FormViewmodel } from "../interfaces/formViewmodel";
+import type { FormViewmodelFactory } from '../interfaces/formViewmodelFactory';
 import { FormViewmodelBase } from "../viewmodels/formViewmodelBase";
 import { dependency } from "@/modules/shared/decorators/dependency";
 

@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ServicesContainer } from '../../entities/internal/servicesContainer';
-import { Destroyable } from '../../interfaces/destroyable';
 
 // Test interfaces
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 abstract class ServiceA { }
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class ServiceAImpl implements ServiceA { }
 
 describe('ServicesContainer', () =>

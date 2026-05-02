@@ -1,5 +1,5 @@
 import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
-import { Overlay } from './internal/overlay';
+import type { Overlay } from './internal/overlay';
 
 export abstract class OverlayElementViewmodel extends Viewmodel<string>
 {

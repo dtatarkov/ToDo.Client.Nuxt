@@ -1,7 +1,7 @@
 import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
-import { ToDo } from "../interfaces/todo";
+import type { ToDo } from "../interfaces/todo";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { ToDoFactory } from "../interfaces/todoFactory";
 import { dependency } from '@/modules/shared/decorators/dependency';

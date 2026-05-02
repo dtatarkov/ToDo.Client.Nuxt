@@ -1,9 +1,9 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import { ModalViewmodelImpl } from "../viewmodels/modalViewmodelImpl";
 import { ModalConfirmFormViewmodelImpl } from '../viewmodels/modalConfirmFormViewmodelImpl';
-import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
-import { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
-import { ModalViewmodel } from '../interfaces/modalViewmodel';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
+import type { ModalViewmodel } from '../interfaces/modalViewmodel';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';

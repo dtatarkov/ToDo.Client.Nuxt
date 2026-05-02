@@ -58,8 +58,7 @@ export function dependency<This, Args extends any[]>(dependency: Dependency)
  * @param target - The class constructor or instance.
  * @returns Array of constructor dependencies, or empty array if none.
  */
-export function getDependencies(target: Function | object): Constructor<any>[]
+export function getDependencies(target: Constructor<any>): Constructor<any>[]
 {
-    const constructor = typeof target === 'function' ? target : target.constructor;
-    return (constructor as any)[dependenciesSymbol] ?? [];
+    return (target as any)[dependenciesSymbol] ?? [];
 }

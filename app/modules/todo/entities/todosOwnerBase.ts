@@ -1,5 +1,5 @@
 import { ToDosOwner } from "../interfaces/todosOwner";
-import { ToDo } from "../interfaces/todo";
+import type { ToDo } from "../interfaces/todo";
 import { ToDosRepository } from "../interfaces/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { ObservableSource } from '@/modules/shared/entities/observableSource';

@@ -5,5 +5,5 @@ const { overlayElements } = useOverlayElements();
 </script>
 
 <template>
-  <component v-for="element in overlayElements" :key="element.key" :is="element.component" />
+  <component :is="element.component" v-for="element in overlayElements" :key="element.key" />
 </template>

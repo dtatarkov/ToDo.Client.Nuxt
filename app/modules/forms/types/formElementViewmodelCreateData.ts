@@ -1,4 +1,4 @@
-import { FormElementType } from "../enums/formElementType";
+import type { FormElementType } from "../enums/formElementType";
 import type { FormElementViewmodelData } from "./formElementViewmodelData";
 import type { InputTextViewmodelData } from "@/modules/uikit/types/inputViewmodels/inputTextViewmodelData";
 import type { InputViewmodelDateData } from "@/modules/uikit/types/inputViewmodels/InputViewmodelDateData";

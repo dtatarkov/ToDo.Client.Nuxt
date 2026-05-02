@@ -44,6 +44,7 @@ describe('isObject', () =>
 
     it('should return false for class instances', () =>
     {
+        // eslint-disable-next-line @typescript-eslint/no-extraneous-class
         class TestClass { }
         expect(isObject(new TestClass())).toBe(false);
 

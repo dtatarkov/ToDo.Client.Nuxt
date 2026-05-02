@@ -12,7 +12,7 @@
       <div  class="todo-card__description">{{ props.description }}</div>
     </template>    
 
-    <template #footer v-if="$slots.footer">
+    <template v-if="$slots.footer" #footer>
       <slot name="footer" />
     </template>
   </UCard>

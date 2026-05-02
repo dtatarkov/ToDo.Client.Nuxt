@@ -1,10 +1,9 @@
-import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelSetupContext } from "../interfaces/todoCardViewmodel";
+import { ToDoCardViewmodel, type ToDoCardViewmodelData } from "../interfaces/todoCardViewmodel";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { useService } from '@/modules/shared/composables/useService';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
-import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
 import type { Action } from '@/modules/shared/types/action';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';

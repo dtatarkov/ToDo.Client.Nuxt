@@ -1,5 +1,5 @@
 import { ObservableBase } from "./internal/observableBase";
-import { ValueAccessor } from '../interfaces/internal/valueAccessor';
+import type { ValueAccessor } from '../interfaces/internal/valueAccessor';
 import type { ObservableTrackingContext } from '../interfaces/internal/observableTrackingContext';
 import type { ValueReader } from '../interfaces/internal/valueReader';
 import { ObservableTrackingContextBase } from './internal/observableTrackingContextBase';

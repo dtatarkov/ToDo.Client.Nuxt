@@ -1,9 +1,9 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
-import { ToDosOwner } from '../interfaces/todosOwner';
+import type { ToDosOwner } from '../interfaces/todosOwner';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import { Observable } from '@/modules/shared/interfaces/observable';
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import type { Observable } from '@/modules/shared/interfaces/observable';
+import type { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
+import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 

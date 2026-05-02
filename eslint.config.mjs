@@ -16,9 +16,12 @@ export default withNuxt(
         varsIgnorePattern: '^_',
         ignoreRestSiblings: true,
       }],
+
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-this-alias': 'off',
       
       // Also consider unused imports as errors
-      'import/no-unused-modules': 'error',
+      'import/no-unused-modules': ['error', { suppressMissingFileEnumeratorAPIWarning: true, unusedExports: true }],
     },
   },
 )

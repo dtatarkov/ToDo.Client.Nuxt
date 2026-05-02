@@ -1,9 +1,8 @@
 import { ToDosService } from "../interfaces/todosService";
-import { ToDo } from "../interfaces/todo";
+import type { ToDo } from "../interfaces/todo";
 import { ToDosOwner } from "../interfaces/todosOwner";
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { ToDoFactory } from '../interfaces/todoFactory';
 
 @dependency(ToDosOwner)
 export class TodosServiceImpl extends ToDosService

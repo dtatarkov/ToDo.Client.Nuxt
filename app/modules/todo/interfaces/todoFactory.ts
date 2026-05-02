@@ -1,4 +1,4 @@
-import { ToDo, type ToDoData } from "./todo";
+import type { ToDo, ToDoData } from "./todo";
 
 export abstract class ToDoFactory
 {

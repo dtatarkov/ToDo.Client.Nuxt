@@ -5,7 +5,7 @@ import type { ModalViewmodel } from '../interfaces/modalViewmodel';
 import type { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
 import type { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
 import { OverlayService } from '../interfaces/overlayService';
-import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';
 
 @dependency(Overlay)

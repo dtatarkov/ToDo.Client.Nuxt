@@ -1,6 +1,6 @@
 import type { ModalViewmodel } from '../modalViewmodel';
 import type { ModalConfirmViewmodel } from '../modalConfirmViewmodel';
-import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 
 export abstract class ModalFactory
 {

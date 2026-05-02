@@ -1,5 +1,4 @@
 import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
-import { InputViewmodel } from "../interfaces/inputViewmodel";
 import { InputTextViewmodelImpl } from "../viewmodels/inputElements/inputTextViewmodelImpl";
 import { InputTextareaViewmodelImpl } from "../viewmodels/inputElements/inputTextareaViewmodelImpl";
 import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";

@@ -16,7 +16,7 @@ const props = defineProps<{
 
 <template>
   <UModal
-      :defaultOpen="true"
+      :default-open="true"
       :transition="false"
       :title="props.title"
       :description="props.description"
@@ -26,7 +26,7 @@ const props = defineProps<{
     <template #content>
       <slot name="content" />
       
-      <div class="flex gap-2 justify-end p-2" v-if="$slots.controls">
+      <div v-if="$slots.controls" class="flex gap-2 justify-end p-2">
         <slot name="controls" />
       </div>
     </template>

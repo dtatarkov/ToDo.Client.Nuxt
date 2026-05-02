@@ -1,4 +1,4 @@
-import { ToDoStateType } from "../enums/toDoStateType";
+import type { ToDoStateType } from "../enums/toDoStateType";
 
 export type ToDoGetDto = {
   id: string;

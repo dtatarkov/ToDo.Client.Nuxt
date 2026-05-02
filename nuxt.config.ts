@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   },
 
   ui: {
-    // @ts-ignore
+    // @ts-expect-error some typing issue. object configuration with preference key is absolutely valid
     colorMode: process.env.NUXT_ALLOW_COLOR_MODE === 'true' ? {
       preference: 'dark'
     } : false,
@@ -72,6 +72,7 @@ export default defineNuxtConfig({
       {
         if (tsConfig.compilerOptions?.paths[alias])
         {
+          // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
           delete tsConfig.compilerOptions.paths[alias];
         }
       }

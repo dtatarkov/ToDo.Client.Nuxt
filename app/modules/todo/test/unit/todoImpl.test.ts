@@ -1,9 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDoImpl } from '../../entities/todoImpl';
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { ToDosOwner } from '../../interfaces/todosOwner';
+import type { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
+import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import type { ToDosOwner } from '../../interfaces/todosOwner';
 import { StringsServiceImpl } from '@/modules/shared/services/stringsServiceImpl';
 
 // Mock dependencies

@@ -1,5 +1,5 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { ButtonIconViewmodel } from "../../interfaces/buttonIconViewmodel";
+import type { ButtonIconViewmodel } from "../../interfaces/buttonIconViewmodel";
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
 import { UButton } from '#components';

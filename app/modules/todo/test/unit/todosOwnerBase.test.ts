@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
-import { ToDo, type ToDoData } from '../../interfaces/todo';
-import { ToDoFactory } from '../../interfaces/todoFactory';
+import type { ToDo, ToDoData } from '../../interfaces/todo';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { DestroyedException } from '@/modules/shared/exceptions/destroyedException';
 

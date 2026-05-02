@@ -1,5 +1,5 @@
 import type { ToDosOwner } from './todosOwner';
-import { Observable } from '@/modules/shared/interfaces/observable';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 
 export abstract class ToDo
 {

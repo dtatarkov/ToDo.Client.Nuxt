@@ -14,7 +14,7 @@ export class OptionalValueMapper<I, O> extends ValueMapper<I | undefined, O | un
       return undefined;
     }
 
-    let result = this.valueMapper.map(value);
+    const result = this.valueMapper.map(value);
 
     return result;
   }
@@ -26,7 +26,7 @@ export class OptionalValueMapper<I, O> extends ValueMapper<I | undefined, O | un
       return undefined;
     }
 
-    let result = this.valueMapper.mapReverse(value);
+    const result = this.valueMapper.mapReverse(value);
 
     return result;
   }

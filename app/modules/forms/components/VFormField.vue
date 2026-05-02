@@ -7,6 +7,6 @@ defineProps<{ field: FormFieldViewmodel }>();
 
 <template>
   <UFormField class="flex flex-col gap-1" :name="field.name" :label="field.label">
-    <component v-if="field.content" :is="field.content.component" />
+    <component :is="field.content.component" v-if="field.content" />
   </UFormField>
 </template>

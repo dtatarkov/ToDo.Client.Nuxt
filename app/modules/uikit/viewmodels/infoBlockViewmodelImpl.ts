@@ -1,10 +1,10 @@
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import VInfoBlock from "../components/VInfoBlock.vue";
 import { InfoBlockViewmodel } from "../interfaces/infoBlockViewmodel";
-import { InfoRowViewmodel, type InfoRowData } from "../interfaces/infoRowViewmodel";
+import type { InfoRowViewmodel, InfoRowData } from "../interfaces/infoRowViewmodel";
 import { InfoRowViewmodelImpl } from "./infoRowViewmodelImpl";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 {

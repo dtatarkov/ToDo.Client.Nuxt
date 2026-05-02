@@ -5,7 +5,6 @@ import { DestroyedException } from '../../exceptions/destroyedException';
 import { awaitMicrotasks } from '../../utils/awaitMicrotasks';
 import { EffectsContainer } from '../../interfaces/effectsContainer';
 import { EffectsContainerImpl } from '../../entities/effectsContainerImpl';
-import type { Action } from '../../types/action';
 
 describe('ObservableComputed', () =>
 {
@@ -141,7 +140,7 @@ describe('ObservableComputed', () =>
             let emitsCount2 = 0;
 
             const unsub1 = computed.subscribe(() => emitsCount1++);
-            const unsub2 = computed.subscribe(() => emitsCount2++);
+            computed.subscribe(() => emitsCount2++);
 
             source.value = 2;
             await awaitMicrotasks();
