@@ -15,7 +15,7 @@ enum FormBaseState
   disabled = 1,
 }
 
-export class FormViewmodelBase<TEntity extends Record<string, any> = Record<string, any>> extends FormViewmodel
+export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<string, any>> extends FormViewmodel
 {
   private elementsInternal: Ref<FormElementViewmodel[]> = shallowRef([]);
   private state = FormBaseState.initial;
