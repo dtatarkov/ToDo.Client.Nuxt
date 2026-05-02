@@ -5,8 +5,8 @@ import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainer
 
 export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
 {
-    private buttonConfirmInternal: ButtonGeneralViewmodel | undefined;
-    private buttonCancelInternal: ButtonGeneralViewmodel | undefined;
+    private buttonConfirmInternal: ButtonGeneralViewmodel;
+    private buttonCancelInternal: ButtonGeneralViewmodel;
 
     protected effectsContainer = new EffectsContainerImpl();
 
@@ -23,13 +23,13 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
     get buttonConfirm(): ButtonGeneralViewmodel
     {
         this.destroyToken.assertNotDestroyed();
-        return this.buttonConfirmInternal as ButtonGeneralViewmodel;
+        return this.buttonConfirmInternal;
     }
 
     get buttonCancel(): ButtonGeneralViewmodel
     {
         this.destroyToken.assertNotDestroyed();
-        return this.buttonCancelInternal as ButtonGeneralViewmodel;
+        return this.buttonCancelInternal;
     }
 
     protected override handleClose(): void
