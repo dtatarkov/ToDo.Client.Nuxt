@@ -56,4 +56,9 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 
         return row;
     }
+
+    override clear()
+    {
+        this.rowsInternal.value = [];
+    }
 }

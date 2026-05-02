@@ -17,21 +17,24 @@ const meta: Meta<ButtonGeneralViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const button = uikitFactory.createButtonGeneral();
-
-        button.title = args.title;
-        button.color = args.color;
-        button.isDisabled = args.isDisabled;
-        button.isLoading = args.isLoading;
-
-        button.setClickHandler(action('click'));
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const button = uikitFactory.createButtonGeneral();
+
+                button.setClickHandler(action('click'));
+
+                watchEffect(() =>
+                {
+                    button.title = args.title;
+                    button.color = args.color;
+                    button.isDisabled = args.isDisabled;
+                    button.isLoading = args.isLoading;
+                });
+
                 return { button };
             },
 

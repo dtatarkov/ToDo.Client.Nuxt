@@ -13,17 +13,20 @@ const meta: Meta<CardViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const card = uikitFactory.createCard();
-
-        card.title = args.title;
-        card.description = args.description;
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const card = uikitFactory.createCard();
+
+                watchEffect(() =>
+                {
+                    card.title = args.title;
+                    card.description = args.description;
+                });
+
                 return { card };
             },
 

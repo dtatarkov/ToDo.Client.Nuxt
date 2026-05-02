@@ -32,4 +32,9 @@ export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends Toolb
     {
         this.elementsInternal.unshift(element);
     }
+
+    override clear(): void
+    {
+        this.elementsInternal.length = 0;
+    }
 }

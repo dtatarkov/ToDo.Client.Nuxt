@@ -17,7 +17,7 @@ export abstract class UIKitViewmodelsFactory
     abstract createInputDateTime(): InputViewmodel<Date | undefined>;
     abstract createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel;
     abstract createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel;
-    abstract createGrid<T extends Viewmodel = Viewmodel>(source: MaybeObservable<T[]>): GridViewmodel<T>;
+    abstract createGrid<T extends Viewmodel = Viewmodel>(source?: MaybeObservable<T[]>): GridViewmodel<T>;
     abstract createInfoBlock(): InfoBlockViewmodel;
     abstract createCard(): CardViewmodel;
     abstract createToolbar<T extends Viewmodel = Viewmodel>(): ToolbarViewmodel<T>;

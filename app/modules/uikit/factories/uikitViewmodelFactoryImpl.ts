@@ -124,10 +124,14 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         return button;
     }
 
-    override createGrid<T extends Viewmodel = Viewmodel>(source: MaybeObservable<T[]>): GridViewmodel<T>
+    override createGrid<T extends Viewmodel = Viewmodel>(source?: MaybeObservable<T[]>): GridViewmodel<T>
     {
         const grid = new GridViewmodelImpl<T>();
-        grid.setSource(source);
+
+        if (source)
+        {
+            grid.setSource(source);
+        }
 
         return grid;
     }

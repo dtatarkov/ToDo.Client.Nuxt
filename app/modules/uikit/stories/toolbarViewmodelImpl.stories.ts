@@ -14,23 +14,28 @@ const meta: Meta<ToolbarViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const toolbar = uikitFactory.createToolbar();
-
-        for (const buttonData of args.buttons)
-        {
-            const button = uikitFactory.createButtonGeneral({
-                title: buttonData.title,
-            });
-
-            toolbar.addElement(button);
-        }
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const toolbar = uikitFactory.createToolbar();
+
+                watchEffect(() =>
+                {
+                    toolbar.clear();
+
+                    for (const buttonData of args.buttons)
+                    {
+                        const button = uikitFactory.createButtonGeneral({
+                            title: buttonData.title,
+                        });
+
+                        toolbar.addElement(button);
+                    }
+                });
+
                 return { toolbar };
             },
 

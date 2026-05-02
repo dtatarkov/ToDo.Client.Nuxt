@@ -14,24 +14,26 @@ const meta: Meta<GridViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const todoFactory = useService(ToDoViewmodelsFactory);
-
-        const cards = args.cards.map(data =>
-        {
-            const card = todoFactory.createToDoCard();
-            card.setSource(data);
-
-            return card;
-        });
-
-        const grid = uikitFactory.createGrid(cards);
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const todoFactory = useService(ToDoViewmodelsFactory);
+                const grid = uikitFactory.createGrid();
+
+                watchEffect(() =>
+                {
+                    const cards = args.cards.map(data =>
+                    {
+                        const card = todoFactory.createToDoCard();
+                        card.setSource(data);
+                        return card;
+                    });
+                    grid.setSource(cards);
+                });
+
                 return { grid };
             },
 

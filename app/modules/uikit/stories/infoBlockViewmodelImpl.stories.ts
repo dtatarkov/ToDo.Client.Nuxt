@@ -15,21 +15,26 @@ const meta: Meta<InfoBlockViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const uikitFactory = useService(UIKitViewmodelsFactory);
-        const block = uikitFactory.createInfoBlock();
-
-        for (const row of args.rows)
-        {
-            const createdRow = block.createRow();
-            createdRow.label = row.label;
-            createdRow.content = row.content;
-        }
-
         return {
             setup()
             {
+                useAppServices();
+
+                const uikitFactory = useService(UIKitViewmodelsFactory);
+                const block = uikitFactory.createInfoBlock();
+
+                watchEffect(() =>
+                {
+                    block.clear();
+
+                    for (const row of args.rows)
+                    {
+                        const createdRow = block.createRow();
+                        createdRow.label = row.label;
+                        createdRow.content = row.content;
+                    }
+                });
+
                 return { block };
             },
 

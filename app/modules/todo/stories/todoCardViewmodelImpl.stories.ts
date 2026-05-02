@@ -11,23 +11,26 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
 
     render: (args) =>
     {
-        useAppServices();
-
-        const source: ToDoCardViewmodelData = {
-            title: '',
-            description: '',
-            completionDatePlanned: undefined,
-            completionDateActual: undefined,
-            ...args
-        };
-
-        const card = new ToDoCardViewmodelImpl();
-        card.setSource(source);
-        card.setClickHandler(action('click'));
-
         return {
             setup()
             {
+                useAppServices();
+
+                const card = new ToDoCardViewmodelImpl();
+                card.setClickHandler(action('click'));
+
+                watchEffect(() =>
+                {
+                    const source: ToDoCardViewmodelData = {
+                        title: '',
+                        description: '',
+                        completionDatePlanned: undefined,
+                        completionDateActual: undefined,
+                        ...args
+                    };
+                    card.setSource(source);
+                });
+
                 return { card };
             },
 

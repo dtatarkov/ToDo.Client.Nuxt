@@ -7,4 +7,5 @@ export abstract class InfoBlockViewmodel extends Viewmodel<string>
     abstract readonly isEmpty: boolean;
 
     abstract createRow(data?: Partial<InfoRowData>): InfoRowViewmodel;
+    abstract clear(): void;
 }

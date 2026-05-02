@@ -5,4 +5,5 @@ export abstract class ToolbarViewmodel<T extends Viewmodel = Viewmodel> extends 
     abstract get elements(): T[];
 
     abstract addElement(element: T): void;
+    abstract clear(): void;
 }
