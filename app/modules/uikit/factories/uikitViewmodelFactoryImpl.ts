@@ -1,6 +1,6 @@
 import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
 import { InputViewmodel } from "../interfaces/inputViewmodel";
-import { InputViewmodelText } from "../viewmodels/inputElements/inputViewmodelText";
+import { InputViewmodelTextImpl } from "../viewmodels/inputElements/inputViewmodelTextImpl";
 import { InputViewmodelTextarea } from "../viewmodels/inputElements/inputViewmodelTextarea";
 import { InputViewmodelDate } from "../viewmodels/inputElements/inputViewmodelDate";
 import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
@@ -27,6 +27,7 @@ import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
 import type { ToolbarViewmodel } from '../interfaces/toolbarViewmodel';
 import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
+import type { InputTextViewmodel } from '../interfaces/inputTextViewmodel';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -48,9 +49,9 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         super();
     }
 
-    override createInputText(): InputViewmodel<string>
+    override createInputText(): InputTextViewmodel
     {
-        return new InputViewmodelText(
+        return new InputViewmodelTextImpl(
             this.stringsService,
             this.vueComponentPropsFactory,
             this.dataAdapterFactory,

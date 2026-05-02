@@ -7,10 +7,11 @@ import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelH
 import type { CardViewmodel } from './cardViewmodel';
 import type { ToolbarViewmodel } from './toolbarViewmodel';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
+import type { InputTextViewmodel } from './inputTextViewmodel';
 
 export abstract class UIKitViewmodelsFactory
 {
-    abstract createInputText(): InputViewmodel<string>;
+    abstract createInputText(): InputTextViewmodel;
     abstract createTextarea(): InputViewmodel<string>;
     abstract createInputDate(): InputViewmodel<Date | undefined>;
     abstract createInputTime(): InputViewmodel<number | undefined>;
