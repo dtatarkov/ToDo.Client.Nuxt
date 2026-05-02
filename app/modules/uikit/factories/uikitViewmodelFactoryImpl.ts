@@ -1,7 +1,7 @@
 import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
 import { InputViewmodel } from "../interfaces/inputViewmodel";
 import { InputViewmodelTextImpl } from "../viewmodels/inputElements/inputViewmodelTextImpl";
-import { InputViewmodelTextarea } from "../viewmodels/inputElements/inputViewmodelTextarea";
+import { InputTextareaViewmodelImpl } from "../viewmodels/inputElements/inputTextareaViewmodelImpl";
 import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
 import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
 import { InputDateTimeViewmodelImpl } from "../viewmodels/inputElements/inputDateTimeViewmodelImpl";
@@ -61,7 +61,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createTextarea(): InputViewmodel<string>
     {
-        return new InputViewmodelTextarea(
+        return new InputTextareaViewmodelImpl(
             this.stringsService,
             this.vueComponentPropsFactory,
             this.dataAdapterFactory,

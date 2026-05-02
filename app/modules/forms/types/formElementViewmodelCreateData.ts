@@ -4,7 +4,7 @@ import type { InputViewmodelTextData } from "@/modules/uikit/types/inputViewmode
 import type { InputViewmodelDateData } from "@/modules/uikit/types/inputViewmodels/InputViewmodelDateData";
 import type { InputViewmodelTimeData } from "@/modules/uikit/types/inputViewmodels/inputViewmodelTimeData";
 import type { InputDateTimeViewmodelData } from "@/modules/uikit/types/inputViewmodels/inputDateTimeViewmodelData";
-import type { InputViewmodelTextareaData } from "@/modules/uikit/types/inputViewmodels/inputViewmodelTextareaData";
+import type { InputTextareaViewmodelData } from "@/modules/uikit/types/inputViewmodels/inputTextareaViewmodelData";
 
 type ExcludeName<T> = Omit<T, 'name'>;
 
@@ -13,4 +13,4 @@ export type FormElementViewmodelCreateData =
   ExcludeName<{ type: FormElementType.inputDate; } & FormElementViewmodelData & Partial<InputViewmodelDateData>> |
   ExcludeName<{ type: FormElementType.inputTime; } & FormElementViewmodelData & Partial<InputViewmodelTimeData>> |
   ExcludeName<{ type: FormElementType.inputDateTime; } & FormElementViewmodelData & Partial<InputDateTimeViewmodelData>> |
-  ExcludeName<{ type: FormElementType.textarea; } & FormElementViewmodelData & Partial<InputViewmodelTextareaData>>;
+  ExcludeName<{ type: FormElementType.textarea; } & FormElementViewmodelData & Partial<InputTextareaViewmodelData>>;

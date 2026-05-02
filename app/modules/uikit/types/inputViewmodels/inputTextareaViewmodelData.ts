@@ -1,5 +1,5 @@
 import type { InputViewmodelData } from "./inputViewmodelData";
 
-export type InputViewmodelTextareaData = InputViewmodelData<string> & {
+export type InputTextareaViewmodelData = InputViewmodelData<string> & {
   placeholder: string;
 };
