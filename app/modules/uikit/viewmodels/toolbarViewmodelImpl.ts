@@ -12,11 +12,14 @@ export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends Toolb
     readonly component = {
         setup: () =>
         {
-            return () =>
+            return () => this.elementsInternal.length > 0 ?
+
                 h(VToolbar, {}, {
                     default: () => this.elementsInternal.map(element =>
                         h(element.component, { key: element.key }))
-                });
+                }) :
+
+                undefined;
         }
     };
 
@@ -27,6 +30,6 @@ export class ToolbarViewmodelImpl<T extends Viewmodel = Viewmodel> extends Toolb
 
     override addElement(element: T): void
     {
-        this.elementsInternal.push(element);
+        this.elementsInternal.unshift(element);
     }
 }
