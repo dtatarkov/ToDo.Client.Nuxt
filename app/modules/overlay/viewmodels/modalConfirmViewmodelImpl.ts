@@ -32,9 +32,9 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
         return this.buttonCancelInternal;
     }
 
-    protected override handleClose(): void
+    protected override handleDestroy(): void
     {
-        super.handleClose();
+        super.handleDestroy();
         this.effectsContainer.destroy();
     }
 

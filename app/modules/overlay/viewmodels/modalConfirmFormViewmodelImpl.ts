@@ -15,28 +15,25 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
     {
         super(uikitElementsFactory);
 
-        this.effectsContainer.withContainer(() =>
+        form.setDisabledStateChangeHandler(isDisabled =>
         {
-            form.onDisabledStateChange.subscribe(isDisabled =>
-            {
-                this.buttonConfirm.isDisabled = isDisabled;
+            this.buttonConfirm.isDisabled = isDisabled;
 
-                this.buttonCancel.isDisabled = isDisabled;
-                this.isDisabled = isDisabled;
+            this.buttonCancel.isDisabled = isDisabled;
+            this.isDisabled = isDisabled;
 
-                this.toggleLoader(isDisabled);
-            });
+            this.toggleLoader(isDisabled);
+        });
 
-            form.onSubmitted.subscribe(() =>
-            {
-                this.close();
-            });
+        form.setSubmittedHandler(() =>
+        {
+            this.close();
         });
     }
 
-    protected override handleClose(): void
+    protected override handleDestroy(): void
     {
-        super.handleClose();
+        super.handleDestroy();
         this.toggleLoader(false);
     }
 

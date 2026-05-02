@@ -1,12 +1,13 @@
 import VForm from "../components/VForm.vue";
 import { FormViewmodel } from "@/modules/forms/interfaces/formViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { EventBusBase } from "@/modules/shared/entities/eventBusBase";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { FormElementViewmodel } from '../interfaces/formElementViewmodel';
 import type { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
 import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
+import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
+import type { Action } from '@/modules/shared/types/action';
 
 enum FormBaseState
 {
@@ -18,10 +19,10 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 {
   private elementsInternal: Ref<FormElementViewmodel[]> = shallowRef([]);
   private state = FormBaseState.initial;
+  private disabledStateChangeHandler = new HandlerWrapper<[boolean]>();
+  private submittedHandler = new HandlerWrapper();
 
   readonly key = getUniqueId('form');
-  readonly onDisabledStateChange = new EventBusBase<boolean>();
-  readonly onSubmitted = new EventBusBase();
 
   readonly component = {
     setup: () =>
@@ -48,7 +49,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     return this.state === FormBaseState.disabled;
   }
 
-  getData(): Record<keyof TEntity, any>
+  override getData(): Record<keyof TEntity, any>
   {
     const data: Record<string, any> = {};
 
@@ -60,7 +61,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     return data as Record<keyof TEntity, any>;
   }
 
-  setData(data: Record<keyof TEntity, any>)
+  override setData(data: Record<keyof TEntity, any>)
   {
     if (this.state === FormBaseState.disabled)
     {
@@ -76,7 +77,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     }
   }
 
-  setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>)
+  override setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>)
   {
     this.elementsInternal.value = Object.entries(elements).map(([name, createData]) =>
     {
@@ -86,7 +87,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
     });
   }
 
-  async submit(): Promise<void>
+  override async submit(): Promise<void>
   {
     if (this.state === FormBaseState.disabled)
     {
@@ -100,12 +101,28 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
       const data = this.getData();
       await this.formSubmitHandler.submit(data);
 
-      this.onSubmitted.emit();
+      this.submittedHandler.handle();
     }
     finally
     {
       this.enable();
     }
+  }
+
+  override setDisabledStateChangeHandler(handler: Action<[boolean]>): void
+  {
+    this.disabledStateChangeHandler.setHandler(handler);
+  }
+
+  override setSubmittedHandler(handler: Action): void
+  {
+    this.submittedHandler.setHandler(handler);
+  }
+
+  override destroy(): void
+  {
+    this.submittedHandler.destroy();
+    this.disabledStateChangeHandler.destroy();
   }
 
   private disable(): void
@@ -117,7 +134,7 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
     this.state = FormBaseState.disabled;
     this.elementsInternal.value.forEach(element => element.disable());
-    this.onDisabledStateChange.emit(true);
+    this.disabledStateChangeHandler.handle(true);
   }
 
   private enable(): void
@@ -129,6 +146,6 @@ export class FormViewmodelBase<TEntity extends Record<string, any> = Record<stri
 
     this.state = FormBaseState.initial;
     this.elementsInternal.value.forEach(element => element.enable());
-    this.onDisabledStateChange.emit(false);
+    this.disabledStateChangeHandler.handle(false);
   }
 }
