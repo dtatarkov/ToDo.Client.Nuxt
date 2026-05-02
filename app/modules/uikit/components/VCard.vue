@@ -1,6 +1,6 @@
 <template>
   <UCard variant="subtle" :ui="cardUIOptions">
-    <template #header>
+    <template v-if="props.title" #header>
       <div class="font-semibold text-lg grow">{{ props.title }}</div>
 
       <div v-if="$slots.actions">

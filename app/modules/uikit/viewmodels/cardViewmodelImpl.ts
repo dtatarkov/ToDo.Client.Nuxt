@@ -3,6 +3,8 @@ import { CardViewmodel } from "../interfaces/cardViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { reactive, shallowRef } from "vue";
 import type { Viewmodel } from "../interfaces/viewmodel";
+import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { useService } from '@/modules/shared/composables/useService';
 
 export class CardViewmodelImpl extends CardViewmodel
 {
@@ -19,18 +21,29 @@ export class CardViewmodelImpl extends CardViewmodel
     readonly component = {
         setup: () =>
         {
+            const stringsService = useService(StringsService);
+
             return () =>
             {
                 const props = this.props;
                 const actions = this.actionsInternal.value;
                 const footer = this.footerInternal.value;
 
-                return h(VCard, props, {
-                    actions: () => actions.map(action =>
-                        h(action.component, { key: action.key })),
+                const isEmpty = stringsService.isStringEmpty(props.title) &&
+                    stringsService.isStringEmpty(props.description) &&
+                    actions.length === 0 &&
+                    footer == undefined;
 
-                    footer: footer ? () => h(footer.component, { key: footer.key }) : undefined,
-                });
+                return !isEmpty ?
+
+                    h(VCard, props, {
+                        actions: () => actions.map(action =>
+                            h(action.component, { key: action.key })),
+
+                        footer: footer ? () => h(footer.component, { key: footer.key }) : undefined,
+                    }) :
+
+                    undefined;
             };
         }
     };
