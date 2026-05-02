@@ -1,6 +1,6 @@
 import { UInput } from "#components";
 import { InputViewmodelWithPlaceholder } from "./mixins/inputViewmodelWithPlaceholder";
-import type { InputViewmodelTextData } from '../../types/inputViewmodels/inputViewmodelTextData';
+import type { InputTextViewmodelData } from '../../types/inputViewmodels/inputTextViewmodelData';
 import { InputViewmodelNuxtUIBaseString, type InputViewmodelNuxtUIBaseStringProps } from "./base/inputViewmodelNuxtUIBaseString";
 import type { InputTextViewmodel } from '../../interfaces/inputTextViewmodel';
 
@@ -8,7 +8,7 @@ type InputViewmodelTextProps = InputViewmodelNuxtUIBaseStringProps & {
   placeholder: string;
 };
 
-export class InputViewmodelTextImpl extends InputViewmodelWithPlaceholder(InputViewmodelNuxtUIBaseString<InputViewmodelTextProps, InputViewmodelTextData>) implements InputTextViewmodel
+export class InputTextViewmodelImpl extends InputViewmodelWithPlaceholder(InputViewmodelNuxtUIBaseString<InputViewmodelTextProps, InputTextViewmodelData>) implements InputTextViewmodel
 {
   readonly component = {
     setup: () =>
