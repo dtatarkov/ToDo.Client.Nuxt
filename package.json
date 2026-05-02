@@ -12,10 +12,13 @@
     "build-storybook": "storybook build",
     "test": "vitest run",
     "type-check": "nuxt typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "prepare": "husky"
   },
   "dependencies": {
     "@internationalized/date": "3.12.1",
+    "@nuxt/eslint": "1.15.2",
     "@nuxt/ui": "4.5.1",
     "luxon": "3.7.2",
     "nuxt": "4.3.1",
