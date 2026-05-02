@@ -1,4 +1,3 @@
-import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
@@ -35,21 +34,6 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
         });
     }
 
-    protected override createButtonConfirm(): ButtonGeneralViewmodel
-    {
-        const buttonConfirm = super.createButtonConfirm();
-
-        this.effectsContainer.withContainer(() =>
-        {
-            buttonConfirm.click.subscribe(() =>
-            {
-                this.form.submit();
-            });
-        });
-
-        return buttonConfirm;
-    }
-
     protected override handleClose(): void
     {
         super.handleClose();
@@ -73,5 +57,10 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
                 this.loaderTimeout = undefined;
             }
         }
+    }
+
+    protected override handleButtonConfirmClick()
+    {
+        this.form.submit();
     }
 }

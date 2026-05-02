@@ -1,16 +1,15 @@
-import type { Subscribable } from '@/modules/shared/interfaces/subscribable';
+import type { Action } from '@/modules/shared/types/action';
 import { Viewmodel } from './viewmodel';
-import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
 export type ButtonBaseViewmodelData = {
     isDisabled: boolean;
 };
 
-export abstract class ButtonBaseViewmodel extends Viewmodel<string> implements Destroyable
+export type ButtonBaseViewmodelHandlers = {
+    click: Action;
+};
+
+export abstract class ButtonBaseViewmodel extends Viewmodel<string>
 {
     abstract isDisabled: boolean;
-
-    abstract readonly click: Subscribable;
-
-    abstract destroy(): void;
 }

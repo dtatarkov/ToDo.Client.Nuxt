@@ -16,7 +16,7 @@ export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements 
 
         onClick: () =>
         {
-            this.click.emit();
+            this.clickHandler.handle();
         },
     });
 
@@ -31,25 +31,21 @@ export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements 
 
     get icon(): string
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.icon;
     }
 
     set icon(value: string)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.icon = value;
     }
 
     get isDisabled(): boolean
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.disabled;
     }
 
     set isDisabled(value: boolean)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.disabled = value;
     }
 }

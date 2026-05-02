@@ -11,18 +11,11 @@ import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservabl
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { toObservable } from '@/modules/shared/utils/toObservable';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
-import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
+import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
   readonly key = getUniqueId('todo-card');
-
-  private readonly data = new ObservableSource<ToDoCardViewmodelData>({
-    title: '',
-    description: '',
-    completionDateActual: undefined,
-    completionDatePlanned: undefined,
-  });
 
   private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
     title: '',
@@ -32,7 +25,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   }));
 
   private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
-  private clickHandler: Action | undefined;
+  private clickHandler = new HandlerWrapper();
 
   readonly component = {
     setup: () =>
@@ -46,7 +39,10 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
       const completionDateActualRow = infoBlock.createRow({ label: 'Выполнено' });
       const completionDatePlannedRow = infoBlock.createRow({ label: 'Выполнить до' });
 
-      const editButton = uikitFactory.createButtonIcon({ icon: 'i-heroicons-pencil-square' });
+      const editButton = uikitFactory.createButtonIcon({
+        icon: 'i-heroicons-pencil-square',
+        click: () => this.clickHandler.handle(),
+      });
 
       card.actions = [editButton];
       card.footer = infoBlock;
@@ -62,11 +58,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
         card.footer = !infoBlock.isEmpty ? infoBlock : undefined;
       });
 
-      useSubscribable(editButton.click, () =>
-      {
-        this.clickHandler?.();
-      });
-
       return () => h(card.component);
     }
   };
@@ -78,11 +69,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
   override setClickHandler(handler: Action)
   {
-    if (this.clickHandler)
-    {
-      throw new Error('Click handler already set');
-    }
-
-    this.clickHandler = handler;
+    this.clickHandler.setHandler(handler);
   }
 }

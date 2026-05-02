@@ -17,7 +17,7 @@ export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implemen
 
         onClick: () =>
         {
-            this.click.emit();
+            this.clickHandler.handle();
         },
     });
 
@@ -32,49 +32,41 @@ export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implemen
 
     get title(): string
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.label;
     }
 
     set title(value: string)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.label = value;
     }
 
     get color(): ButtonViewmodelColor
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.color;
     }
 
     set color(value: ButtonViewmodelColor)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.color = value;
     }
 
     get isDisabled(): boolean
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.disabled;
     }
 
     set isDisabled(value: boolean)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.disabled = value;
     }
 
     get isLoading(): boolean
     {
-        this.destroyToken.assertNotDestroyed();
         return this.props.loading;
     }
 
     set isLoading(value: boolean)
     {
-        this.destroyToken.assertNotDestroyed();
         this.props.loading = value;
     }
 }

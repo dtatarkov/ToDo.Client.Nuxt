@@ -1,9 +1,9 @@
-import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from './buttonGeneralViewmodel';
+import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from './buttonGeneralViewmodel';
 import type { InputViewmodel } from './inputViewmodel';
 import type { GridViewmodel } from './gridViewmodel';
 import type { Viewmodel } from './viewmodel';
 import type { InfoBlockViewmodel } from './infoBlockViewmodel';
-import type { ButtonIconViewmodel, ButtonIconViewmodelData } from './buttonIconViewmodel';
+import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from './buttonIconViewmodel';
 import type { CardViewmodel } from './cardViewmodel';
 import type { ToolbarViewmodel } from './toolbarViewmodel';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
@@ -15,8 +15,8 @@ export abstract class UIKitViewmodelsFactory
     abstract createInputDate(): InputViewmodel<Date | undefined>;
     abstract createInputTime(): InputViewmodel<number | undefined>;
     abstract createInputDateTime(): InputViewmodel<Date | undefined>;
-    abstract createButtonIcon(data?: Partial<ButtonIconViewmodelData>): ButtonIconViewmodel;
-    abstract createButtonGeneral(data?: Partial<ButtonGeneralViewmodelData>): ButtonGeneralViewmodel;
+    abstract createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel;
+    abstract createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel;
     abstract createGrid<T extends Viewmodel = Viewmodel>(source: MaybeObservable<T[]>): GridViewmodel<T>;
     abstract createInfoBlock(): InfoBlockViewmodel;
     abstract createCard(): CardViewmodel;

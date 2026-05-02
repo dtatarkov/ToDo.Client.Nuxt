@@ -1,21 +1,21 @@
-import { DestroyTokenBase } from '@/modules/shared/entities/destroyTokenBase';
-import { EventBusBase } from '@/modules/shared/entities/eventBusBase';
-import { ButtonBaseViewmodel as ButtonBaseViewmodel } from '../../interfaces/buttonBaseViewmodel';
+import { ButtonBaseViewmodel as ButtonBaseViewmodel, type ButtonBaseViewmodelHandlers } from '../../interfaces/buttonBaseViewmodel';
+import type { Action } from '@/modules/shared/types/action';
+import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 
 export abstract class ButtonViewmodelBaseImpl extends ButtonBaseViewmodel
 {
-    protected destroyToken = new DestroyTokenBase();
+    protected clickHandler = new HandlerWrapper();
 
-    readonly click = new EventBusBase();
-
-    override destroy(): void
+    setClickHandler(handler: Action): void
     {
-        if (this.destroyToken.isDestroyed)
-        {
-            return;
-        }
+        this.clickHandler.setHandler(handler);
+    }
 
-        this.click.destroy();
-        this.destroyToken.destroy();
+    applyHandlers(handlers: Partial<ButtonBaseViewmodelHandlers>): void
+    {
+        if (handlers.click)
+        {
+            this.setClickHandler(handlers.click);
+        }
     }
 }

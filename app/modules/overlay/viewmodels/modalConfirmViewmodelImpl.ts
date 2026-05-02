@@ -35,9 +35,6 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
     protected override handleClose(): void
     {
         super.handleClose();
-
-        this.buttonConfirmInternal?.destroy();
-        this.buttonCancelInternal?.destroy();
         this.effectsContainer.destroy();
     }
 
@@ -45,7 +42,9 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
     {
         const buttonConfirm = this.uikitElementsFactory.createButtonGeneral({
             title: 'Сохранить',
-            color: 'primary'
+            color: 'primary',
+
+            click: () => this.handleButtonConfirmClick()
         });
 
         return buttonConfirm;
@@ -54,18 +53,19 @@ export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
     protected createButtonCancel(): ButtonGeneralViewmodel
     {
         const buttonCancel = this.uikitElementsFactory.createButtonGeneral({
-            title: 'Отменить'
-        });
+            title: 'Отменить',
 
-        this.effectsContainer.withContainer(() =>
-        {
-            buttonCancel.click.subscribe(() =>
-            {
-                this.close();
-            });
+            click: () => this.handleButtonCancelClick()
         });
 
         return buttonCancel;
+    }
+
+    protected handleButtonConfirmClick() { }
+
+    protected handleButtonCancelClick()
+    {
+        this.close();
     }
 }
 

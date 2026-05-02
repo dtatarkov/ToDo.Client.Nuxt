@@ -4,7 +4,6 @@ import { ToDosService } from '../interfaces/todosService';
 import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
-import { useSubscribable } from '@/modules/shared/composables/useSubscribable';
 
 const todosService = useService(ToDosService);
 const todoViewmodelsFactory = useService(ToDoViewmodelsFactory);
@@ -15,13 +14,17 @@ const cards = new ObservableComputed(() => todos.value.map(todo => todoViewmodel
 const grid = uikitFactory.createGrid(cards);
 
 const toolbar = uikitFactory.createToolbar();
-const addToDoButton = uikitFactory.createButtonGeneral({ title: 'Добавить задание' });
+
+const addToDoButton = uikitFactory.createButtonGeneral({ 
+  title: 'Добавить задание',
+  click: handleAddToDoButtonClick 
+});
 
 toolbar.addElement(addToDoButton);
 
-useSubscribable(addToDoButton.click, () => {
+function handleAddToDoButtonClick() {
   todosService.showAddToDoDialog();
-});
+}
 </script>
 
 <template>

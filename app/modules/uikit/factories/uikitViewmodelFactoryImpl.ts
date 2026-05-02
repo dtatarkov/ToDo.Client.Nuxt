@@ -8,7 +8,7 @@ import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmod
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
 import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
 import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
-import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData } from '../interfaces/buttonGeneralViewmodel';
+import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from '../interfaces/buttonGeneralViewmodel';
 import type { GridViewmodel } from '../interfaces/gridViewmodel';
 import type { Viewmodel } from '../interfaces/viewmodel';
 import type { InfoBlockViewmodel } from '../interfaces/infoBlockViewmodel';
@@ -19,7 +19,7 @@ import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import type { ButtonIconViewmodel, ButtonIconViewmodelData } from '../interfaces/buttonIconViewmodel';
+import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from '../interfaces/buttonIconViewmodel';
 import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIconImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { CardViewmodel } from '../interfaces/cardViewmodel';
@@ -98,25 +98,27 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createButtonGeneral(data?: Partial<ButtonGeneralViewmodelData>): ButtonGeneralViewmodel
+    override createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel
     {
         const button = new ButtonViewmodelGeneralImpl();
 
-        if (data != undefined)
+        if (config != undefined)
         {
-            updatePropertiesWithData(button, data);
+            updatePropertiesWithData(button, config);
+            button.applyHandlers(config);
         }
 
         return button;
     }
 
-    override createButtonIcon(data?: Partial<ButtonIconViewmodelData>): ButtonIconViewmodel
+    override createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel
     {
         const button = new ButtonViewmodelIconImpl();
 
-        if (data != undefined)
+        if (config != undefined)
         {
-            updatePropertiesWithData(button, data);
+            updatePropertiesWithData(button, config);
+            button.applyHandlers(config);
         }
 
         return button;
