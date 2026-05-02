@@ -163,7 +163,6 @@ export class ToDoImpl extends ToDo
 
     const modal = this.overlayService.createModalEditForm(form);
     modal.title = 'Редактирование';
-    modal.content = form;
   }
 
   private updateData(modifiedDataPart: Partial<ToDoData>)

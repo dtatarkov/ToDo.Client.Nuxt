@@ -15,6 +15,8 @@ export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
     {
         super(uikitElementsFactory);
 
+        this.content = form;
+
         form.setDisabledStateChangeHandler(isDisabled =>
         {
             this.buttonConfirm.isDisabled = isDisabled;

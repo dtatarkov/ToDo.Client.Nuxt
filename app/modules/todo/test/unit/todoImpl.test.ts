@@ -155,7 +155,7 @@ describe('ToDoImpl', () =>
         it('should create form and modal', () =>
         {
             const mockForm = { setElements: vi.fn(), setData: vi.fn() };
-            const mockModal = { title: '', content: null as any };
+            const mockModal = { title: '' };
             mockFormFactory.create.mockReturnValue(mockForm);
             mockOverlayService.createModalEditForm.mockReturnValue(mockModal);
 
@@ -165,7 +165,6 @@ describe('ToDoImpl', () =>
             expect(mockForm.setElements).toHaveBeenCalledTimes(1);
             expect(mockForm.setData).toHaveBeenCalledWith(todo);
             expect(mockOverlayService.createModalEditForm).toHaveBeenCalledWith(mockForm);
-            expect(mockModal.content).toBe(mockForm);
         });
     });
 });
