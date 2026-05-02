@@ -1,5 +1,5 @@
 import { ToDoViewmodelsFactory } from "../interfaces/todoViewmodelsFactory";
-import { ToDoCardViewmodel, type ToDoCardViewmodelData } from "../interfaces/todoCardViewmodel";
+import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
 import type { ToDo } from "../interfaces/todo";
 import { ToDoCardViewmodelImpl } from "../viewmodels/todoCardViewmodelImpl";
 
@@ -16,7 +16,7 @@ export class ToDoViewmodelsFactoryImpl extends ToDoViewmodelsFactory
 
     if (todo)
     {
-      card.setSource(todo);
+      card.setSource(todo.toObservableData());
 
       card.setClickHandler(() =>
       {
