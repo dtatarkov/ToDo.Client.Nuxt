@@ -4,7 +4,7 @@ import { InputViewmodelTextImpl } from "../viewmodels/inputElements/inputViewmod
 import { InputViewmodelTextarea } from "../viewmodels/inputElements/inputViewmodelTextarea";
 import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
 import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
-import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmodelDateTime";
+import { InputDateTimeViewmodelImpl } from "../viewmodels/inputElements/inputDateTimeViewmodelImpl";
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
 import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
 import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
@@ -90,7 +90,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createInputDateTime(): InputViewmodel<Date | undefined>
     {
-        return new InputViewmodelDateTime(
+        return new InputDateTimeViewmodelImpl(
             this.datesService,
             this.stringsService,
             this.zonedDateTimeMapper,

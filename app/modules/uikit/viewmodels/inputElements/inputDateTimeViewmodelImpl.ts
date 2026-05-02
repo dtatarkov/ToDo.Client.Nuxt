@@ -8,9 +8,9 @@ import type { DatesService } from '@/modules/shared/interfaces/datesService';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
 import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
-import type { InputViewmodelDateTimeData } from '../../types/inputViewmodels/InputViewmodelDateTimeData';
+import type { InputDateTimeViewmodelData } from '../../types/inputViewmodels/inputDateTimeViewmodelData';
 
-export class InputViewmodelDateTime extends InputViewmodelComposedBase<Date | undefined> implements InputViewmodelDateTimeData
+export class InputDateTimeViewmodelImpl extends InputViewmodelComposedBase<Date | undefined> implements InputDateTimeViewmodelData
 {
   protected children: Record<'inputDate' | 'inputTime', InputViewmodel>;
 
