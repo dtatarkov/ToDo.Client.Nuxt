@@ -2,7 +2,7 @@ import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
 import { InputViewmodel } from "../interfaces/inputViewmodel";
 import { InputViewmodelTextImpl } from "../viewmodels/inputElements/inputViewmodelTextImpl";
 import { InputViewmodelTextarea } from "../viewmodels/inputElements/inputViewmodelTextarea";
-import { InputViewmodelDate } from "../viewmodels/inputElements/inputViewmodelDate";
+import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
 import { InputViewmodelTime } from "../viewmodels/inputElements/inputViewmodelTime";
 import { InputViewmodelDateTime } from "../viewmodels/inputElements/inputViewmodelDateTime";
 import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
@@ -28,6 +28,7 @@ import type { ToolbarViewmodel } from '../interfaces/toolbarViewmodel';
 import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
 import type { InputTextViewmodel } from '../interfaces/inputTextViewmodel';
+import type { InputDateViewmodel } from '../interfaces/inputDateViewmodel';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)
@@ -67,9 +68,9 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
         );
     }
 
-    override createInputDate(): InputViewmodel<Date | undefined>
+    override createInputDate(): InputDateViewmodel
     {
-        return new InputViewmodelDate(
+        return new InputDateViewmodelImpl(
             this.zonedDateTimeMapper,
             this.stringsService,
             this.vueComponentPropsFactory,

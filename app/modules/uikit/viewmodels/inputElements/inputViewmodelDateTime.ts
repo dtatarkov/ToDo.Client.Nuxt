@@ -1,4 +1,4 @@
-import { InputViewmodelDate } from "./inputViewmodelDate";
+import { InputDateViewmodelImpl } from "./inputDateViewmodelImpl";
 import { InputViewmodelComposedBase } from "./base/inputViewmodelComposedBase";
 import type { InputViewmodel } from "../../interfaces/inputViewmodel";
 import { InputViewmodelTime } from "./inputViewmodelTime";
@@ -26,7 +26,7 @@ export class InputViewmodelDateTime extends InputViewmodelComposedBase<Date | un
     super(stringsService);
 
     this.children = {
-      inputDate: new InputViewmodelDate(zonedDateTimeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
+      inputDate: new InputDateViewmodelImpl(zonedDateTimeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
       inputTime: new InputViewmodelTime(timeMapper, stringsService, vueComponentPropsFactory, dataAdapterFactory),
     };
   }
