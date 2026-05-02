@@ -3,17 +3,17 @@ import { useAppServices } from '@/composables/useAppServices';
 import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
 import { useService } from '@/modules/shared/composables/useService';
 
-type InputTextStoryArgs = {
+type InputTextareaStoryArgs = {
     value: string;
     placeholder: string;
     id: string;
     name: string;
     autofocus: boolean;
-    disabled: boolean;
+    isDisabled: boolean;
 };
 
-const meta: Meta<InputTextStoryArgs> = {
-    title: 'UIKit/InputText',
+const meta: Meta<InputTextareaStoryArgs> = {
+    title: 'UIKit/InputTextarea',
 
     render: (args) =>
     {
@@ -23,7 +23,7 @@ const meta: Meta<InputTextStoryArgs> = {
                 useAppServices();
 
                 const uikitFactory = useService(UIKitViewmodelsFactory);
-                const input = uikitFactory.createInputText();
+                const input = uikitFactory.createTextarea();
 
                 watchEffect(() =>
                 {
@@ -32,14 +32,7 @@ const meta: Meta<InputTextStoryArgs> = {
                     input.id = args.id;
                     input.name = args.name;
                     input.autofocus = args.autofocus;
-
-                    if (args.disabled)
-                    {
-                        input.disable();
-                    } else
-                    {
-                        input.enable();
-                    }
+                    input.isDisabled = args.isDisabled;
                 });
 
                 return { input };
@@ -65,25 +58,25 @@ const meta: Meta<InputTextStoryArgs> = {
         autofocus: {
             control: 'boolean',
         },
-        disabled: {
+        isDisabled: {
             control: 'boolean',
         },
     },
 };
 
 export default meta;
-type Story = StoryObj<InputTextStoryArgs>;
+type Story = StoryObj<InputTextareaStoryArgs>;
 
 export const Default: Story = {};
 
 export const Autofocus: Story = {
     args: {
         value: '',
-        placeholder: 'Autofocused input',
-        id: 'input-text-5',
-        name: 'inputText',
+        placeholder: 'Autofocused textarea',
+        id: 'input-textarea-3',
+        name: 'inputTextarea',
         autofocus: true,
-        disabled: false,
+        isDisabled: false,
     },
 };
 
@@ -91,20 +84,20 @@ export const Empty: Story = {
     args: {
         value: '',
         placeholder: 'Type something',
-        id: 'input-text-2',
-        name: 'inputText',
+        id: 'input-textarea-2',
+        name: 'inputTextarea',
         autofocus: false,
-        disabled: false,
+        isDisabled: false,
     },
 };
 
 export const Disabled: Story = {
     args: {
-        value: 'Disabled text',
+        value: 'Disabled content',
         placeholder: 'Cannot edit',
-        id: 'input-text-4',
-        name: 'inputText',
+        id: 'input-textarea-5',
+        name: 'inputTextarea',
         autofocus: false,
-        disabled: true,
+        isDisabled: true,
     },
 };
