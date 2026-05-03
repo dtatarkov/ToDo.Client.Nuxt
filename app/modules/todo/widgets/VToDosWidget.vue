@@ -15,8 +15,7 @@ type VToDosWidgetEmits = {
 };
 
 const props = withDefaults(defineProps<VToDosWidgetProps>(), {
-  cards: () => new Array<ToDoCardDataWithIdentity>(),
-  initialize: undefined,
+  cards: () => new Array<ToDoCardDataWithIdentity>()
 });
 
 defineEmits<VToDosWidgetEmits>();
