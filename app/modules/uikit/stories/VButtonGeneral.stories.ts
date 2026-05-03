@@ -12,6 +12,8 @@ const meta: Meta<typeof VButtonGeneral> = {
 
       setup()
       {
+        useAppServices();
+
         return { args };
       },
 
@@ -78,5 +80,11 @@ export const Loading: Story = {
   args: {
     title: 'Loading Button',
     isLoading: true,
+  },
+};
+
+export const EmptyTitle: Story = {
+  args: {
+    title: '',
   },
 };

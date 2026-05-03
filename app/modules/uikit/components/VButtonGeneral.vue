@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { UButton } from '#components';
+import { useService } from '@/modules/shared/composables/useService';
+import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { computed } from 'vue';
 import type { ButtonViewmodelColor } from '../types/buttonViewmodelColor';
 
 type VButtonGeneralProps = {
@@ -9,7 +12,6 @@ type VButtonGeneralProps = {
   isLoading?: boolean;
 };
 
-// Define emits
 type VButtonGeneralEmits = {
   (e: 'click'): void;
 };
@@ -22,16 +24,20 @@ const props = withDefaults(defineProps<VButtonGeneralProps>(), {
 });
 
 defineEmits<VButtonGeneralEmits>();
+
+const stringsService = useService(StringsService);
+const hasTitle = computed(() => !stringsService.isStringEmpty(props.title));
 </script>
 
 <template>
   <UButton
-    :label="props.title"
-    :color="props.color"
+    v-if="hasTitle"
+    :label="title"
+    :color="color"
     variant="outline"
     size="lg"
-    :disabled="props.isDisabled"
-    :loading="props.isLoading"
+    :disabled="isDisabled"
+    :loading="isLoading"
     class="cursor-pointer"
     @click="$emit('click')"
   />
