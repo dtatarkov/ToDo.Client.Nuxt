@@ -32,16 +32,12 @@ import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { ToDoCardData } from '@/modules/todo/types/todoCardData';
 
 const datesService = useService(DatesService);
 const stringsService = useService(StringsService);
 
-const props = withDefaults(defineProps<{
-  title?: string;
-  description?: string;
-  completionDateActual?: Date;
-  completionDatePlanned?: Date;
-}>(), {
+const props = withDefaults(defineProps<ToDoCardData>(), {
   title: '',
   description: '',
   completionDateActual: undefined,
