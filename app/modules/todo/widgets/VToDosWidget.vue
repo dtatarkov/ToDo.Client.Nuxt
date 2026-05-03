@@ -1,35 +1,48 @@
 <script lang="ts" setup>
-import { useService } from '@/modules/shared/composables/useService';
-import { ToDosService } from '../interfaces/todosService';
-import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
-import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
-import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
+import VGrid from '@/modules/uikit/components/VGrid.vue';
+import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
+import VToDoCard from './VToDoCard.vue';
+import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
+import type { Func } from '@/modules/shared/types/func';
 
-const todosService = useService(ToDosService);
-const todoViewmodelsFactory = useService(ToDoViewmodelsFactory);
-const uikitFactory = useService(UIKitViewmodelsFactory);
+type VToDosWidgetProps = {
+  cards?: ToDoCardDataWithIdentity[];
+  initialize?: Func<Promise<void>>;
+};
 
-const todos = await todosService.getAllToDosAsync();
-const cards = new ObservableComputed(() => todos.value.map(todo => todoViewmodelsFactory.createToDoCard(todo)));
-const grid = uikitFactory.createGrid(cards);
+type VToDosWidgetEmits = {
+  (e: 'addToDo'): void;
+  (e: 'editToDo', card: ToDoCardDataWithIdentity): void;
+};
 
-const toolbar = uikitFactory.createToolbar();
-
-const addToDoButton = uikitFactory.createButtonGeneral({ 
-  title: 'Добавить задание',
-  click: handleAddToDoButtonClick 
+const props = withDefaults(defineProps<VToDosWidgetProps>(), {
+  cards: () => new Array<ToDoCardDataWithIdentity>(),
 });
 
-toolbar.addElement(addToDoButton);
+defineEmits<VToDosWidgetEmits>();
 
-function handleAddToDoButtonClick() {
-  todosService.showAddToDoDialog();
+if(props.initialize) 
+{
+  await props.initialize();
 }
 </script>
 
 <template>
   <div class="p-4 flex flex-col gap-4">
-    <component :is="toolbar.component" />
-    <component :is="grid.component" />
+    <VToolbar>
+      <VButtonGeneral
+        title="Добавить задание"
+        @click="$emit('addToDo')"
+      />
+    </VToolbar>
+
+    <VGrid>
+      <VToDoCard
+        v-for="card in props.cards"
+        :key="card.id"
+        v-bind="card"
+        @edit="$emit('editToDo', card)"
+      />
+    </VGrid>
   </div>
 </template>
