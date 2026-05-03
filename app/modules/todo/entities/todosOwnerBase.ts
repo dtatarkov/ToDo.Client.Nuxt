@@ -33,6 +33,12 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     return this.todos;
   }
 
+  override getAllToDos(): Observable<ToDo[]>
+  {
+    this.destroyToken.assertNotDestroyed();
+    return this.todos;
+  }
+
   override initializeToDosAsync(): Promise<void>
   {
     if (this.initializationPromise == undefined)
