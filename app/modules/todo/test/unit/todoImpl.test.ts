@@ -24,6 +24,7 @@ const mockOwner = {
     saveToDoAsync: vi.fn(),
     getAllToDosAsync: vi.fn(),
     updateToDosAsync: vi.fn(),
+    initializeToDosAsync: vi.fn(),
 } satisfies ToDosOwner;
 
 describe('ToDoImpl', () =>

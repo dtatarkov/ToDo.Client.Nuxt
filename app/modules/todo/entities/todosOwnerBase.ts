@@ -33,6 +33,16 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     return this.todos;
   }
 
+  override initializeToDosAsync(): Promise<void>
+  {
+    if (this.initializationPromise == undefined)
+    {
+      this.initializationPromise = this.updateToDosInternalAsync();
+    }
+
+    return this.initializationPromise;
+  }
+
   override async updateToDosAsync(): Promise<void>
   {
     this.destroyToken.assertNotDestroyed();
@@ -109,15 +119,5 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     }
 
     this.todos.value = todos;
-  }
-
-  private initializeToDosAsync(): Promise<void>
-  {
-    if (this.initializationPromise == undefined)
-    {
-      this.initializationPromise = this.updateToDosInternalAsync();
-    }
-
-    return this.initializationPromise;
   }
 }
