@@ -13,6 +13,8 @@ import { VueComponentPropsFactoryImpl } from '../factories/vueComponentPropsFact
 import { DataAdapterFactoryImpl } from '../factories/dataAdapterFactoryImpl';
 import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
 import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
+import { EffectsContainer } from '../interfaces/effectsContainer';
+import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import { useRuntimeConfig } from "#imports";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
@@ -32,4 +34,5 @@ export function useSharedServices(): void
     useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
     useServiceRegistration(VueComponentPropsFactory).to(VueComponentPropsFactoryImpl).asTransient();
     useServiceRegistration(DataAdapterFactory).to(DataAdapterFactoryImpl).asTransient();
+    useServiceRegistration(EffectsContainer).to(EffectsContainerImpl).asTransient();
 }
