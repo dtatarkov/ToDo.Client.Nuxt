@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import VToDosWidget from '../widgets/VToDosWidget.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { fn } from 'storybook/test';
-import { Suspense } from 'vue';
 
 const meta: Meta<typeof VToDosWidget> = {
   title: 'ToDo/VToDosWidget',
@@ -16,7 +15,7 @@ const meta: Meta<typeof VToDosWidget> = {
   render: (args) =>
   {
     return {
-      components: { VToDosWidget, Suspense } as any,
+      components: { VToDosWidget },
 
       setup()
       {
@@ -25,9 +24,7 @@ const meta: Meta<typeof VToDosWidget> = {
         return { args };
       },
 
-      template: `<Suspense>
-          <VToDosWidget v-bind="args" />
-        </Suspense>`
+      template: `<VToDosWidget v-bind="args" />`
     };
   }
 };

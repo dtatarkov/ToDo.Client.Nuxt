@@ -20,18 +20,18 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
   readonly key = getUniqueId('todos-widget');
 
   override component = {
-    setup: () =>
+    setup: async () =>
     {
       const cards = useObservable(this.cards);
 
-      const initialize = () => this.initialize();
       const handleAddToDo = () => this.addToDo();
       const handleEditToDo = (card: ToDoCardDataWithIdentity) => this.editToDo(card.id);
+
+      await this.initialize();
 
       return () => h(VToDosWidget, {
         cards: cards.value,
 
-        initialize,
         onAddToDo: handleAddToDo,
         onEditToDo: handleEditToDo
       });

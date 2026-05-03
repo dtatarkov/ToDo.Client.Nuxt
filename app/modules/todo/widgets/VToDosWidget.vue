@@ -4,11 +4,9 @@ import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VToDoCard from './VToDoCard.vue';
 import VToolbar from '@/modules/uikit/components/VToolbar.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
-import type { Func } from '@/modules/shared/types/func';
 
 type VToDosWidgetProps = {
   cards?: ToDoCardDataWithIdentity[];
-  initialize?: Func<Promise<void>>;
 };
 
 type VToDosWidgetEmits = {
@@ -22,11 +20,6 @@ const props = withDefaults(defineProps<VToDosWidgetProps>(), {
 });
 
 defineEmits<VToDosWidgetEmits>();
-
-if(props.initialize) 
-{
-  await props.initialize();
-}
 </script>
 
 <template>
