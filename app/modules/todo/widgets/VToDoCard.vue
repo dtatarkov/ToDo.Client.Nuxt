@@ -1,5 +1,15 @@
 <template>
-  <VCard :title="props.title" :description="props.description">
+  <VCard 
+    v-if="hasContent"
+    :title="props.title" 
+    :description="props.description"
+  >
+    <template #actions>
+      <VButtonIcon
+        icon="i-heroicons-pencil-square"
+        @click="$emit('edit')"
+      />
+    </template>
     <template v-if="hasFooter" #footer>
       <VInfoBlock>
         <VInfoRow v-if="completionDateActualFormatted" label="Выполнено">
@@ -20,6 +30,7 @@ import VCard from '@/modules/uikit/components/VCard.vue';
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
+import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 const datesService = useService(DatesService);
@@ -33,12 +44,35 @@ const props = withDefaults(defineProps<{
 }>(), {
   title: '',
   description: '',
+  completionDateActual: undefined,
+  completionDatePlanned: undefined,
 });
 
-const completionDateActualFormatted = computed(() => datesService.formatDateOptional(props.completionDateActual));
-const completionDatePlannedFormatted = computed(() => datesService.formatDateOptional(props.completionDatePlanned));
+// Define emits
+type VToDoCardEmits = {
+  (e: 'edit'): void;
+};
 
-const hasFooter = computed(() => 
-  !stringsService.isStringEmpty( completionDateActualFormatted.value) && 
-  !stringsService.isStringEmpty(completionDatePlannedFormatted.value));
+defineEmits<VToDoCardEmits>();
+
+// Extract dates formatting into local computed variables using formatDateOptional
+const completionDateActualFormatted = computed(() => {
+  return datesService.formatDateOptional(props.completionDateActual);
+});
+
+const completionDatePlannedFormatted = computed(() => {
+  return datesService.formatDateOptional(props.completionDatePlanned);
+});
+
+const hasFooter = computed(() => {
+  return !stringsService.isStringEmpty(completionDateActualFormatted.value) || 
+         !stringsService.isStringEmpty(completionDatePlannedFormatted.value);
+});
+
+// Check if at least one content field has value
+const hasContent = computed(() => {
+  return !stringsService.isStringEmpty(props.title) || 
+         !stringsService.isStringEmpty(props.description) || 
+         hasFooter.value;
+});
 </script>

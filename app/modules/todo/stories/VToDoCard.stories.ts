@@ -1,9 +1,14 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import VToDoCard from '../widgets/VToDoCard.vue';
+import { fn } from 'storybook/test';
 
 const meta = {
   title: 'ToDo/VToDoCard',
   component: VToDoCard,
+
+  args: {
+    onEdit: fn(),
+  },
 
   render: args =>
   {
@@ -75,3 +80,5 @@ export const OnlyDescription: Story = {
     description: 'Description only',
   },
 };
+
+export const EmptyCard: Story = {};
