@@ -6,17 +6,18 @@ import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { GetToDosUseCase } from '../interfaces/getToDosUseCase';
-import type { ToDo } from '../interfaces/todo';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
+import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDosUseCase)
 @dependency(ShowAddToDoDialogUseCase)
 @dependency(ShowEditToDoDialogUseCase)
+@dependency(ToDoCardDataMapper)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -46,14 +47,15 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     private readonly initializeUseCase: InitializeToDosUseCase,
     private readonly getToDosUseCase: GetToDosUseCase,
     private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase,
-    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase
+    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
+    private readonly todoCardDataMapper: ToDoCardDataMapper
   )
   {
     super();
 
     const todos = this.getToDosUseCase.execute();
 
-    this.cards = new ObservableComputed(() => todos.value.map(todo => this.mapToCardData(todo)));
+    this.cards = new ObservableComputed(() => todos.value.map(todo => this.todoCardDataMapper.mapToCardData(todo)));
   }
 
   override async initialize(): Promise<void>
@@ -69,16 +71,5 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
   override editToDo(id: string): void
   {
     this.showEditToDoDialogUseCase.executeAsync(id);
-  }
-
-  private mapToCardData(todo: ToDo): ToDoCardDataWithIdentity
-  {
-    return {
-      id: todo.id,
-      title: todo.title,
-      description: todo.description,
-      completionDateActual: todo.completionDateActual,
-      completionDatePlanned: todo.completionDatePlanned
-    };
   }
 }
