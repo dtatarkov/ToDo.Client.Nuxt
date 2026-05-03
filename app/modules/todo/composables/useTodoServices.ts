@@ -17,6 +17,8 @@ import { InitializeToDosUseCase } from "../interfaces/initializeToDosUseCase";
 import { InitializeToDosUseCaseImpl } from "../usecases/initializeToDosUseCaseImpl";
 import { GetToDosUseCase } from "../interfaces/getToDosUseCase";
 import { GetToDosUseCaseImpl } from "../usecases/getToDosUseCaseImpl";
+import { ShowAddToDoDialogUseCase } from "../interfaces/showAddToDoDialogUseCase";
+import { ShowAddToDoDialogUseCaseImpl } from "../usecases/showAddToDoDialogUseCaseImpl";
 
 export function useTodoServices(): void
 {
@@ -29,4 +31,5 @@ export function useTodoServices(): void
     useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
     useServiceRegistration(InitializeToDosUseCase).to(InitializeToDosUseCaseImpl).asTransient();
     useServiceRegistration(GetToDosUseCase).to(GetToDosUseCaseImpl).asTransient();
+    useServiceRegistration(ShowAddToDoDialogUseCase).to(ShowAddToDoDialogUseCaseImpl).asTransient();
 }

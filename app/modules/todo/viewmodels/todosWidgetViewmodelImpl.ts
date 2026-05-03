@@ -6,15 +6,15 @@ import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { GetToDosUseCase } from '../interfaces/getToDosUseCase';
-import { EffectsContainer } from '@/modules/shared/interfaces/effectsContainer';
 import type { ToDo } from '../interfaces/todo';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { useObservable } from '@/modules/shared/composables/useObservable';
+import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDosUseCase)
-@dependency(EffectsContainer)
+@dependency(ShowAddToDoDialogUseCase)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -42,7 +42,8 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   constructor(
     private readonly initializeUseCase: InitializeToDosUseCase,
-    private readonly getToDosUseCase: GetToDosUseCase
+    private readonly getToDosUseCase: GetToDosUseCase,
+    private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase
   )
   {
     super();
@@ -59,8 +60,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   override addToDo(): void
   {
-    // Implementation for adding a new todo
-    console.log('Adding new todo');
+    this.showAddToDoDialogUseCase.execute();
   }
 
   override editToDo(id: string): void
