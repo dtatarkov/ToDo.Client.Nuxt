@@ -1,7 +1,5 @@
 import { ToDosWidgetViewmodel } from "../interfaces/todosWidgetViewmodel";
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { h } from 'vue';
-import VToDosWidget from '@/modules/todo/widgets/VToDosWidget.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
@@ -12,6 +10,7 @@ import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
+import { defineAsyncComponent } from 'vue';
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDosUseCase)
@@ -20,6 +19,8 @@ import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
 @dependency(ToDoCardDataMapper)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
+  private view = defineAsyncComponent(() => import('@/modules/todo/widgets/VToDosWidget.vue'));
+
   readonly key = getUniqueId('todos-widget');
 
   override component = {
@@ -32,7 +33,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
       await this.initialize();
 
-      return () => h(VToDosWidget, {
+      return () => h(this.view, {
         cards: cards.value,
 
         onAddToDo: handleAddToDo,
