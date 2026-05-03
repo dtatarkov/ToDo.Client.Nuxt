@@ -3,7 +3,10 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { h } from 'vue';
 import VToDosWidget from '@/modules/todo/widgets/VToDosWidget.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
+import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
+import { dependency } from '@/modules/shared/decorators/dependency';
 
+@dependency(InitializeToDosUseCase)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -27,10 +30,16 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   cards: ToDoCardDataWithIdentity[] = [];
 
+  constructor(
+    private initializeUseCase: InitializeToDosUseCase
+  )
+  {
+    super();
+  }
+
   async initialize(): Promise<void>
   {
-    // Implementation for initialization logic
-    console.log('ToDosWidgetViewmodelImpl initialized');
+    await this.initializeUseCase.execute();
   }
 
   addToDo(): void

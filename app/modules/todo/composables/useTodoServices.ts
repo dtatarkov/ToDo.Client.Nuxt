@@ -13,6 +13,8 @@ import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
 import { ToDoFactory } from '../interfaces/todoFactory';
 import { ToDosWidgetViewmodel } from "../interfaces/todosWidgetViewmodel";
 import { ToDosWidgetViewmodelImpl } from "../viewmodels/todosWidgetViewmodelImpl";
+import { InitializeToDosUseCase } from "../interfaces/initializeToDosUseCase";
+import { InitializeToDosUseCaseImpl } from "../usecases/initializeToDosUseCaseImpl";
 
 export function useTodoServices(): void
 {
@@ -23,4 +25,5 @@ export function useTodoServices(): void
     useServiceRegistration(ToDoViewmodelsFactory).to(ToDoViewmodelsFactoryImpl).asTransient();
     useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
     useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
+    useServiceRegistration(InitializeToDosUseCase).to(InitializeToDosUseCaseImpl).asTransient();
 }
