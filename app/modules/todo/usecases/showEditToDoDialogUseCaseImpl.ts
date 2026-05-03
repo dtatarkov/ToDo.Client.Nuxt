@@ -13,7 +13,7 @@ export class ShowEditToDoDialogUseCaseImpl extends ShowEditToDoDialogUseCase
     super();
   }
 
-  async execute(id: string): Promise<void>
+  async executeAsync(id: string): Promise<void>
   {
     const todo = await this.todosOwner.getToDoByIdAsync(id);
 

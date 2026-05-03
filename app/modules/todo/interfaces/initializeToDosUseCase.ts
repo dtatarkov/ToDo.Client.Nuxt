@@ -1,4 +1,4 @@
 export abstract class InitializeToDosUseCase
 {
-  abstract execute(): Promise<void>;
+  abstract executeAsync(): Promise<void>;
 }

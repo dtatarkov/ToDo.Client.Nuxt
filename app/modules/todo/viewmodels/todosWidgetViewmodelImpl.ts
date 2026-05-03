@@ -58,7 +58,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   override async initialize(): Promise<void>
   {
-    await this.initializeUseCase.execute();
+    await this.initializeUseCase.executeAsync();
   }
 
   override addToDo(): void
@@ -68,7 +68,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   override editToDo(id: string): void
   {
-    this.showEditToDoDialogUseCase.execute(id);
+    this.showEditToDoDialogUseCase.executeAsync(id);
   }
 
   private mapToCardData(todo: ToDo): ToDoCardDataWithIdentity

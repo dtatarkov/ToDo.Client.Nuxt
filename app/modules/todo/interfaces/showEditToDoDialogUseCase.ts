@@ -1,4 +1,4 @@
 export abstract class ShowEditToDoDialogUseCase
 {
-  abstract execute(id: string): Promise<void>;
+  abstract executeAsync(id: string): Promise<void>;
 }

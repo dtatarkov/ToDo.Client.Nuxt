@@ -12,7 +12,7 @@ export class InitializeToDosUseCaseImpl extends InitializeToDosUseCase
     super();
   }
 
-  async execute(): Promise<void>
+  async executeAsync(): Promise<void>
   {
     await this.todosOwner.initializeToDosAsync();
   }
