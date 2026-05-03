@@ -11,6 +11,8 @@ import { ToDoViewmodelsFactoryImpl } from "../factories/todoViewmodelsFactoryImp
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
 import { ToDoFactory } from '../interfaces/todoFactory';
+import { ToDosWidgetViewmodel } from "../interfaces/todosWidgetViewmodel";
+import { ToDosWidgetViewmodelImpl } from "../viewmodels/todosWidgetViewmodelImpl";
 
 export function useTodoServices(): void
 {
@@ -20,4 +22,5 @@ export function useTodoServices(): void
     useServiceRegistration(ToDosService).to(TodosServiceImpl).asTransient();
     useServiceRegistration(ToDoViewmodelsFactory).to(ToDoViewmodelsFactoryImpl).asTransient();
     useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
+    useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
 }

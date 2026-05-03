@@ -1,7 +1,10 @@
 <template>
-  <VToDosWidget />
+  <component :is="todosWidget.component" />  
 </template>
 
 <script setup lang="ts">
-import VToDosWidget from '@/modules/todo/widgets/VToDosWidget.vue';
+import { useService } from '@/modules/shared/composables/useService';
+import { ToDosWidgetViewmodel } from '@/modules/todo/interfaces/todosWidgetViewmodel';
+
+const todosWidget = useService(ToDosWidgetViewmodel);
 </script>

@@ -2,6 +2,7 @@
 import VGrid from '@/modules/uikit/components/VGrid.vue';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VToDoCard from './VToDoCard.vue';
+import VToolbar from '@/modules/uikit/components/VToolbar.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import type { Func } from '@/modules/shared/types/func';
 
