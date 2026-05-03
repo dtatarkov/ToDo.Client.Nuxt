@@ -11,10 +11,12 @@ import { ObservableComputed } from '@/modules/shared/entities/observableComputed
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
+import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDosUseCase)
 @dependency(ShowAddToDoDialogUseCase)
+@dependency(ShowEditToDoDialogUseCase)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -43,7 +45,8 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
   constructor(
     private readonly initializeUseCase: InitializeToDosUseCase,
     private readonly getToDosUseCase: GetToDosUseCase,
-    private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase
+    private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase,
+    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase
   )
   {
     super();
@@ -65,8 +68,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   override editToDo(id: string): void
   {
-    // Implementation for editing a todo with the given id
-    console.log(`Editing todo with id: ${id}`);
+    this.showEditToDoDialogUseCase.execute(id);
   }
 
   private mapToCardData(todo: ToDo): ToDoCardDataWithIdentity

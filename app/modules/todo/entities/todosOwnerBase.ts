@@ -39,6 +39,14 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     return this.todos;
   }
 
+  override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
+  {
+    this.destroyToken.assertNotDestroyed();
+    await this.initializeToDosAsync();
+
+    return this.todos.value.find(todo => todo.id === id);
+  }
+
   override initializeToDosAsync(): Promise<void>
   {
     if (this.initializationPromise == undefined)
