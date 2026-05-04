@@ -1,12 +1,11 @@
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import type { GetToDosUseCase } from '@/modules/todo/interfaces/getToDosUseCase';
 import type { InitializeToDosUseCase } from '@/modules/todo/interfaces/initializeToDosUseCase';
 import type { ShowAddToDoDialogUseCase } from '@/modules/todo/interfaces/showAddToDoDialogUseCase';
 import type { ShowEditToDoDialogUseCase } from '@/modules/todo/interfaces/showEditToDoDialogUseCase';
-import type { ToDoCardDataMapper } from '@/modules/todo/interfaces/todoCardDataMapper';
 import { ToDosWidgetViewmodelImpl } from '@/modules/todo/viewmodels/todosWidgetViewmodelImpl';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ToDoCardDataWithIdentity } from '../../types/todoCardData';
+import type { GetToDoCardsUseCase } from '../../interfaces/getToDoCardsUseCase';
 
 describe('ToDosWidgetViewmodelImpl', () =>
 {
@@ -14,9 +13,9 @@ describe('ToDosWidgetViewmodelImpl', () =>
     executeAsync: vi.fn()
   } satisfies InitializeToDosUseCase;
 
-  const mockGetToDosUseCase = {
+  const mockGetToDoCardsUseCase = {
     execute: vi.fn()
-  } satisfies GetToDosUseCase;
+  } satisfies GetToDoCardsUseCase;
 
   const mockShowAddToDoDialogUseCase = {
     execute: vi.fn()
@@ -26,24 +25,12 @@ describe('ToDosWidgetViewmodelImpl', () =>
     executeAsync: vi.fn()
   } satisfies ShowEditToDoDialogUseCase;
 
-  const mockToDoCardDataMapper = {
-    mapToCardData: vi.fn()
-  } satisfies ToDoCardDataMapper;
-
   const viewModel = new ToDosWidgetViewmodelImpl(
     mockInitializeToDosUseCase,
-    mockGetToDosUseCase,
+    mockGetToDoCardsUseCase,
     mockShowAddToDoDialogUseCase,
     mockShowEditToDoDialogUseCase,
-    mockToDoCardDataMapper
   );
-
-  // Create test instances
-  const mockToDo = {
-    id: '1',
-    title: 'Test ToDo',
-    description: 'Test Description',
-  };
 
   const mockCardData = {
     id: '1',
@@ -61,21 +48,18 @@ describe('ToDosWidgetViewmodelImpl', () =>
   {
     it('should create cards from todos', () =>
     {
-      mockGetToDosUseCase.execute.mockReturnValue(new ObservableSource([mockToDo]));
-      mockToDoCardDataMapper.mapToCardData.mockReturnValue(mockCardData);
+      mockGetToDoCardsUseCase.execute.mockReturnValue(new ObservableSource([mockCardData]));
 
       const testViewmodel = new ToDosWidgetViewmodelImpl(
         mockInitializeToDosUseCase,
-        mockGetToDosUseCase,
+        mockGetToDoCardsUseCase,
         mockShowAddToDoDialogUseCase,
         mockShowEditToDoDialogUseCase,
-        mockToDoCardDataMapper
       );
 
-      expect(mockGetToDosUseCase.execute).toHaveBeenCalled();
+      expect(mockGetToDoCardsUseCase.execute).toHaveBeenCalled();
       expect(testViewmodel.cards.value.length).toBe(1);
       expect(testViewmodel.cards.value[0]).toBe(mockCardData);
-      expect(mockToDoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo);
     });
   });
 

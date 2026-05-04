@@ -3,20 +3,17 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { GetToDosUseCase } from '../interfaces/getToDosUseCase';
-import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
-import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
+import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import VTodosWidget from '@/modules/todo/components/VToDosWidget.vue';
 
 @dependency(InitializeToDosUseCase)
-@dependency(GetToDosUseCase)
+@dependency(GetToDoCardsUseCase)
 @dependency(ShowAddToDoDialogUseCase)
 @dependency(ShowEditToDoDialogUseCase)
-@dependency(ToDoCardDataMapper)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -44,17 +41,14 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
   constructor(
     private readonly initializeUseCase: InitializeToDosUseCase,
-    private readonly getToDosUseCase: GetToDosUseCase,
+    private readonly getToDoCardsUseCase: GetToDoCardsUseCase,
     private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase,
     private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
-    private readonly todoCardDataMapper: ToDoCardDataMapper
   )
   {
     super();
 
-    const todos = this.getToDosUseCase.execute();
-
-    this.cards = new ObservableComputed(() => todos.value.map(todo => this.todoCardDataMapper.mapToCardData(todo)));
+    this.cards = this.getToDoCardsUseCase.execute();
   }
 
   override async initialize(): Promise<void>
