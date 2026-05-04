@@ -11,7 +11,7 @@
     "storybook": "set NUXT_ALLOW_COLOR_MODE=false && storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
     "test": "vitest run",
-    "type-check": "nuxt typecheck",
+    "typecheck": "nuxt typecheck",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepare": "husky"
