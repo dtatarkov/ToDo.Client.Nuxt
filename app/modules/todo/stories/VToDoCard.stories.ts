@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
-import VToDoCard from '../widgets/VToDoCard.vue';
+import VToDoCard from '../components/VToDoCard.vue';
 import { fn } from 'storybook/test';
 
 const meta = {

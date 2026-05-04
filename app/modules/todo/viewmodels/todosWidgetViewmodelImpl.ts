@@ -10,7 +10,7 @@ import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
-import VTodosWidget from '@/modules/todo/widgets/VToDosWidget.vue';
+import VTodosWidget from '@/modules/todo/components/VToDosWidget.vue';
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDosUseCase)

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
-import VToDosWidget from '../widgets/VToDosWidget.vue';
+import VToDosWidget from '../components/VToDosWidget.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { fn } from 'storybook/test';
 
