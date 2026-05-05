@@ -2,7 +2,7 @@ import { ButtonBaseViewmodel as ButtonBaseViewmodel, type ButtonBaseViewmodelHan
 import type { Action } from '@/modules/shared/types/action';
 import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 
-export abstract class ButtonViewmodelBaseImpl extends ButtonBaseViewmodel
+export abstract class ButtonBaseViewmodelImpl extends ButtonBaseViewmodel
 {
     protected clickHandler = new HandlerWrapper();
 

@@ -1,12 +1,12 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ButtonGeneralViewmodel } from "../../interfaces/buttonGeneralViewmodel";
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
-import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
+import { ButtonBaseViewmodelImpl } from './buttonBaseViewmodelImpl';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 
-export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implements ButtonGeneralViewmodel
+export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl implements ButtonGeneralViewmodel
 {
     protected readonly data = new ObservableSource({
         title: '',

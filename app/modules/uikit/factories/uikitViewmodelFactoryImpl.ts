@@ -4,7 +4,7 @@ import { InputTextareaViewmodelImpl } from "../viewmodels/inputElements/inputTex
 import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
 import { InputTimeViewmodelImpl } from "../viewmodels/inputElements/inputTimeViewmodelImpl";
 import { InputDateTimeViewmodelImpl } from "../viewmodels/inputElements/inputDateTimeViewmodelImpl";
-import { ButtonViewmodelGeneralImpl } from "../viewmodels/buttons/buttonViewmodelGeneralImpl";
+import { ButtonGeneralViewmodelImpl } from "../viewmodels/buttons/buttonGeneralViewmodelImpl";
 import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
 import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
 import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from '../interfaces/buttonGeneralViewmodel';
@@ -19,7 +19,7 @@ import { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueCompone
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from '../interfaces/buttonIconViewmodel';
-import { ButtonViewmodelIconImpl } from '../viewmodels/buttons/buttonViewmodelIconImpl';
+import { ButtonIconViewmodelImpl } from '../viewmodels/buttons/buttonIconViewmodelImpl';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { CardViewmodel } from '../interfaces/cardViewmodel';
 import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
@@ -104,7 +104,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel
     {
-        const button = new ButtonViewmodelGeneralImpl();
+        const button = new ButtonGeneralViewmodelImpl();
 
         if (config != undefined)
         {
@@ -117,7 +117,7 @@ export class UIKitViewmodelFactoryImpl extends UIKitViewmodelsFactory
 
     override createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel
     {
-        const button = new ButtonViewmodelIconImpl();
+        const button = new ButtonIconViewmodelImpl();
 
         if (config != undefined)
         {
