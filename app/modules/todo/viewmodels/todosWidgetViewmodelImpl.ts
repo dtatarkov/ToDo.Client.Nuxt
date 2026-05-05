@@ -3,7 +3,6 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
-import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import VTodosWidget from '@/modules/todo/components/VToDosWidget.vue';
 import type { ToolbarViewmodel } from '@/modules/uikit/interfaces/toolbarViewmodel';
@@ -16,7 +15,6 @@ import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDoCardsUseCase)
 @dependency(ShowAddToDoDialogUseCase)
-@dependency(ShowEditToDoDialogUseCase)
 @dependency(UIKitViewmodelsFactory)
 @dependency(ToDoViewmodelsFactory)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
@@ -42,7 +40,6 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     private readonly initializeToDosUseCase: InitializeToDosUseCase,
     private readonly getToDoCardsUseCase: GetToDoCardsUseCase,
     private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase,
-    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
     private readonly uikitViewmodelsFactory: UIKitViewmodelsFactory,
     private readonly todoViewmodelsFactory: ToDoViewmodelsFactory,
   )
@@ -75,7 +72,6 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     {
       const card = this.todoViewmodelsFactory.createToDoCard();
       card.setSource(cardData);
-      card.setClickHandler(({ id }) => this.showEditToDoDialogUseCase.executeAsync(id));
 
       return card;
     }));

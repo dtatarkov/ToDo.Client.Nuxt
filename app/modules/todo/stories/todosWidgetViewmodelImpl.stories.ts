@@ -2,14 +2,12 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import { fn } from 'storybook/test';
 import type { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import type { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
-import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { useService } from '@/modules/shared/composables/useService';
 import { ToDosWidgetViewmodelImpl } from '../viewmodels/todosWidgetViewmodelImpl';
 import type { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
 import { Suspense } from 'vue';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import { action } from 'storybook/actions';
 import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
 import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 
@@ -22,15 +20,8 @@ const meta: Meta<StoryArgs> = {
 
   render: (args) =>
   {
-    const initializedAction = action('initialized');
-    const addToDoAction = action('addToDo');
-    const editToDoAction = action('editToDo');
-
     const initializeToDosUseCase = {
-      executeAsync: fn().mockImplementation(async () =>
-      {
-        initializedAction();
-      }),
+      executeAsync: fn(),
     } satisfies InitializeToDosUseCase;
 
     const getToDoCardsUseCase = {
@@ -40,12 +31,8 @@ const meta: Meta<StoryArgs> = {
     getToDoCardsUseCase.execute.mockReturnValue(new ObservableSource(args.cards));
 
     const showAddToDoDialogUseCase = {
-      execute: fn(() => addToDoAction())
+      execute: fn()
     } satisfies ShowAddToDoDialogUseCase;
-
-    const showEditToDoDialogUseCase = {
-      executeAsync: fn(async (id) => editToDoAction(id))
-    } satisfies ShowEditToDoDialogUseCase;
 
     return {
       components: { Suspense } as any,
@@ -61,7 +48,6 @@ const meta: Meta<StoryArgs> = {
           initializeToDosUseCase,
           getToDoCardsUseCase,
           showAddToDoDialogUseCase,
-          showEditToDoDialogUseCase,
           uikitViewmodelsFactory,
           todoViewmodelsFactory
         );

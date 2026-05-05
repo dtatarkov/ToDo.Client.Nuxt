@@ -1,4 +1,3 @@
-import type { Action } from '@/modules/shared/types/action';
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
 import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
@@ -17,5 +16,4 @@ export type ToDoCardViewmodelSetupContext = {
 export abstract class ToDoCardViewmodel extends Viewmodel<string>
 {
   abstract setSource(source: ToDoCardViewmodelData): void;
-  abstract setClickHandler(handler: Action<[ToDoCardViewmodelData]>): void;
 }

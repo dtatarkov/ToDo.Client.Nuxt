@@ -1,20 +1,29 @@
 import { ToDoCardViewmodel, type ToDoCardViewmodelData } from "../interfaces/todoCardViewmodel";
-import { DatesService } from '@/modules/shared/interfaces/datesService';
+import type { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { useService } from '@/modules/shared/composables/useService';
-import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
-import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
-import type { Action } from '@/modules/shared/types/action';
+import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { toObservable } from '@/modules/shared/utils/toObservable';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
+import type { CardViewmodel } from '@/modules/uikit/interfaces/cardViewmodel';
+import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
+import type { InfoBlockViewmodel } from '@/modules/uikit/interfaces/infoBlockViewmodel';
+import type { InfoRowViewmodel } from '@/modules/uikit/interfaces/infoRowViewmodel';
+import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
+import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
-  readonly key = getUniqueId('todo-card');
+  private readonly card: CardViewmodel;
+  private readonly editButton: ButtonIconViewmodel;
+  private readonly infoBlock: InfoBlockViewmodel;
+  private readonly completionDateActualRow: InfoRowViewmodel;
+  private readonly completionDatePlannedRow: InfoRowViewmodel;
+  private readonly effectsContainer = new EffectsContainerImpl();
 
   private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
     id: '',
@@ -27,48 +36,78 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
   private clickHandler = new HandlerWrapper<[ToDoCardViewmodelData]>();
 
+  readonly key = getUniqueId('todo-card');
+
   readonly component = {
     setup: () =>
     {
-      const datesService = useService(DatesService);
-      const uikitFactory = useService(UIKitViewmodelsFactory);
-
-      const card = uikitFactory.createCard();
-
-      const infoBlock = uikitFactory.createInfoBlock();
-      const completionDateActualRow = infoBlock.createRow({ label: 'Выполнено' });
-      const completionDatePlannedRow = infoBlock.createRow({ label: 'Выполнить до' });
-
-      const editButton = uikitFactory.createButtonIcon({
-        icon: 'i-heroicons-pencil-square',
-        click: () => this.clickHandler.handle(this.source.value),
-      });
-
-      card.actions = [editButton];
-      card.footer = infoBlock;
-
-      useObservableSubscription(this.source, source =>
-      {
-        card.title = source.title;
-        card.description = source.description;
-
-        completionDateActualRow.content = datesService.formatDateOptional(source.completionDateActual);
-        completionDatePlannedRow.content = datesService.formatDateOptional(source.completionDatePlanned);
-
-        card.footer = !infoBlock.isEmpty ? infoBlock : undefined;
-      });
-
-      return () => h(card.component);
+      return () => h(this.card.component);
     }
   };
+
+  constructor(
+    private readonly uikitFactory: UIKitViewmodelsFactory,
+    private readonly datesService: DatesService,
+    private readonly stringsService: StringsService,
+    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
+  )
+  {
+    super();
+
+    this.card = this.uikitFactory.createCard();
+    this.editButton = this.createEditButton();
+    this.infoBlock = this.uikitFactory.createInfoBlock();
+    this.completionDateActualRow = this.infoBlock.createRow({ label: 'Выполнено' });
+    this.completionDatePlannedRow = this.infoBlock.createRow({ label: 'Выполнить до' });
+
+    this.effectsContainer.withContainer(() =>
+    {
+      this.source.subscribe(() =>
+      {
+        this.updateCard();
+      });
+
+      this.updateCard();
+    });
+  }
 
   override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
   {
     this.sourceWrapper.value = toObservable(source);
   }
 
-  override setClickHandler(handler: Action<[ToDoCardViewmodelData]>)
+  private updateCard()
   {
-    this.clickHandler.setHandler(handler);
+    this.card.title = this.source.value.title;
+    this.card.description = this.source.value.description;
+
+    this.completionDateActualRow.content = this.datesService.formatDateOptional(this.source.value.completionDateActual);
+    this.completionDatePlannedRow.content = this.datesService.formatDateOptional(this.source.value.completionDatePlanned);
+
+    if (!this.isNew())
+    {
+      this.card.actions = [this.editButton];
+    }
+
+    this.card.footer = !this.infoBlock.isEmpty ? this.infoBlock : undefined;
+  }
+
+  private createEditButton(): ButtonIconViewmodel
+  {
+    const editButton = this.uikitFactory.createButtonIcon({
+      icon: 'i-heroicons-pencil-square',
+
+      click: () =>
+      {
+        this.showEditToDoDialogUseCase.executeAsync(this.source.value.id);
+      },
+    });
+
+    return editButton;
+  }
+
+  private isNew()
+  {
+    return this.stringsService.isStringEmpty(this.source.value.id);
   }
 }
