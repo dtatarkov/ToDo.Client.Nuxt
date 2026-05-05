@@ -2,23 +2,17 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ButtonGeneralViewmodel } from "../../interfaces/buttonGeneralViewmodel";
 import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
-import { UButton } from '#components';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
+import { useObservable } from '@/modules/shared/composables/useObservable';
 
 export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implements ButtonGeneralViewmodel
 {
-    protected readonly props = reactive({
-        label: '',
+    protected readonly data = new ObservableSource({
+        title: '',
         color: <ButtonViewmodelColor>'neutral',
-        variant: 'outline',
-        size: 'lg',
-        disabled: false,
-        loading: false,
-        class: 'cursor-pointer',
-
-        onClick: () =>
-        {
-            this.clickHandler.handle();
-        },
+        isDisabled: false,
+        isLoading: false,
     });
 
     readonly key = getUniqueId('button-element-general');
@@ -26,47 +20,58 @@ export class ButtonViewmodelGeneralImpl extends ButtonViewmodelBaseImpl implemen
     readonly component = {
         setup: () =>
         {
-            return () => h(<any>UButton, this.props);
+            const data = useObservable(this.data);
+
+            const onClick = () =>
+            {
+                this.clickHandler.handle();
+            };
+
+            return () => h(VButtonGeneral, {
+                ...data.value,
+
+                onClick
+            });
         }
     };
 
     get title(): string
     {
-        return this.props.label;
+        return this.data.value.title;
     }
 
     set title(value: string)
     {
-        this.props.label = value;
+        this.data.mutate({ title: value });
     }
 
     get color(): ButtonViewmodelColor
     {
-        return this.props.color;
+        return this.data.value.color;
     }
 
     set color(value: ButtonViewmodelColor)
     {
-        this.props.color = value;
+        this.data.mutate({ color: value });
     }
 
     get isDisabled(): boolean
     {
-        return this.props.disabled;
+        return this.data.value.isDisabled;
     }
 
     set isDisabled(value: boolean)
     {
-        this.props.disabled = value;
+        this.data.mutate({ isDisabled: value });
     }
 
     get isLoading(): boolean
     {
-        return this.props.loading;
+        return this.data.value.isLoading;
     }
 
     set isLoading(value: boolean)
     {
-        this.props.loading = value;
+        this.data.mutate({ isLoading: value });
     }
 }

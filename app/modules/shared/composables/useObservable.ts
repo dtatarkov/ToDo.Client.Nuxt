@@ -1,17 +1,32 @@
 import type { Observable } from '../interfaces/observable';
+import type { Action } from '../types/action';
 import { useEffectsContainer } from './useEffectsContainer';
 
 export function useObservable<T>(observable: Observable<T>)
 {
-  useEffectsContainer(() =>
+  const result = customRef((track: Action, trigger: Action) =>
   {
-    observable.subscribe((newValue: T) =>
+    useEffectsContainer(() =>
     {
-      data.value = newValue;
+      observable.subscribe(() =>
+      {
+        trigger();
+      });
     });
+
+    return {
+      get()
+      {
+        track();
+        return observable.value;
+      },
+
+      set()
+      {
+        throw new Error('Observable is read-only');
+      }
+    };
   });
 
-  const data = shallowRef(observable.value);
-
-  return data;
+  return result;
 }
