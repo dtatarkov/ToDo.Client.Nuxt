@@ -7,14 +7,13 @@ import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservabl
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import { toObservable } from '@/modules/shared/utils/toObservable';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
-import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 import type { CardViewmodel } from '@/modules/uikit/interfaces/cardViewmodel';
-import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
 import type { InfoBlockViewmodel } from '@/modules/uikit/interfaces/infoBlockViewmodel';
 import type { InfoRowViewmodel } from '@/modules/uikit/interfaces/infoRowViewmodel';
 import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
+import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
@@ -23,7 +22,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   private readonly infoBlock: InfoBlockViewmodel;
   private readonly completionDateActualRow: InfoRowViewmodel;
   private readonly completionDatePlannedRow: InfoRowViewmodel;
-  private readonly effectsContainer = new EffectsContainerImpl();
 
   private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
     id: '',
@@ -34,13 +32,19 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   }));
 
   private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
-  private clickHandler = new HandlerWrapper<[ToDoCardViewmodelData]>();
 
   readonly key = getUniqueId('todo-card');
 
   readonly component = {
     setup: () =>
     {
+      useObservableSubscription(this.source, () =>
+      {
+        this.updateCard();
+      });
+
+      this.updateCard();
+
       return () => h(this.card.component);
     }
   };
@@ -59,16 +63,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     this.infoBlock = this.uikitFactory.createInfoBlock();
     this.completionDateActualRow = this.infoBlock.createRow({ label: 'Выполнено' });
     this.completionDatePlannedRow = this.infoBlock.createRow({ label: 'Выполнить до' });
-
-    this.effectsContainer.withContainer(() =>
-    {
-      this.source.subscribe(() =>
-      {
-        this.updateCard();
-      });
-
-      this.updateCard();
-    });
   }
 
   override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
