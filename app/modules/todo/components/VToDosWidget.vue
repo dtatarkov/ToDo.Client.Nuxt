@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import VGrid from '@/modules/uikit/components/VGrid.vue';
-import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VToDoCard from './VToDoCard.vue';
-import VToolbar from '@/modules/uikit/components/VToolbar.vue';
 import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 
 type VToDosWidgetProps = {
@@ -10,7 +8,6 @@ type VToDosWidgetProps = {
 };
 
 type VToDosWidgetEmits = {
-  (e: 'addToDo'): void;
   (e: 'editToDo', card: ToDoCardDataWithIdentity): void;
 };
 
@@ -23,12 +20,7 @@ defineEmits<VToDosWidgetEmits>();
 
 <template>
   <div class="p-4 flex flex-col gap-4">
-    <VToolbar>
-      <VButtonGeneral
-        title="Добавить задание"
-        @click="$emit('addToDo')"
-      />
-    </VToolbar>
+    <slot name="toolbar" />
 
     <VGrid>
       <VToDoCard

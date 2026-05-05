@@ -6,6 +6,9 @@ import { ToDosWidgetViewmodelImpl } from '@/modules/todo/viewmodels/todosWidgetV
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ToDoCardDataWithIdentity } from '../../types/todoCardData';
 import type { GetToDoCardsUseCase } from '../../interfaces/getToDoCardsUseCase';
+import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
+import type { ToolbarViewmodel } from '@/modules/uikit/interfaces/toolbarViewmodel';
+import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 
 describe('ToDosWidgetViewmodelImpl', () =>
 {
@@ -25,11 +28,23 @@ describe('ToDosWidgetViewmodelImpl', () =>
     executeAsync: vi.fn()
   } satisfies ShowEditToDoDialogUseCase;
 
+  const mockToolbarViewmodel = {
+    addElement: vi.fn()
+  } as unknown as ToolbarViewmodel;
+
+  const mockButtonGeneralViewmodel = {} as unknown as ButtonGeneralViewmodel;
+
+  const mockUIKitViewmodelsFactory = {
+    createToolbar: vi.fn().mockReturnValue(mockToolbarViewmodel),
+    createButtonGeneral: vi.fn().mockReturnValue(mockButtonGeneralViewmodel)
+  } as unknown as UIKitViewmodelsFactory;
+
   const viewModel = new ToDosWidgetViewmodelImpl(
     mockInitializeToDosUseCase,
     mockGetToDoCardsUseCase,
     mockShowAddToDoDialogUseCase,
     mockShowEditToDoDialogUseCase,
+    mockUIKitViewmodelsFactory
   );
 
   const mockCardData = {
@@ -55,11 +70,28 @@ describe('ToDosWidgetViewmodelImpl', () =>
         mockGetToDoCardsUseCase,
         mockShowAddToDoDialogUseCase,
         mockShowEditToDoDialogUseCase,
+        mockUIKitViewmodelsFactory
       );
 
       expect(mockGetToDoCardsUseCase.execute).toHaveBeenCalled();
       expect(testViewmodel.cards.value.length).toBe(1);
       expect(testViewmodel.cards.value[0]).toBe(mockCardData);
+    });
+
+    it('should create toolbar with add button', () =>
+    {
+      const testViewmodel = new ToDosWidgetViewmodelImpl(
+        mockInitializeToDosUseCase,
+        mockGetToDoCardsUseCase,
+        mockShowAddToDoDialogUseCase,
+        mockShowEditToDoDialogUseCase,
+        mockUIKitViewmodelsFactory
+      );
+
+      expect(testViewmodel.toolbar).toBeDefined();
+      expect(mockUIKitViewmodelsFactory.createToolbar).toHaveBeenCalled();
+      expect(mockUIKitViewmodelsFactory.createButtonGeneral).toHaveBeenCalled();
+      expect(mockToolbarViewmodel.addElement).toHaveBeenCalledWith(mockButtonGeneralViewmodel);
     });
   });
 

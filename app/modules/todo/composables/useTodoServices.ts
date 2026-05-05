@@ -23,6 +23,8 @@ import { ShowAddToDoDialogUseCase } from "../interfaces/showAddToDoDialogUseCase
 import { ShowEditToDoDialogUseCase } from "../interfaces/showEditToDoDialogUseCase";
 import { ShowAddToDoDialogUseCaseImpl } from "../usecases/showAddToDoDialogUseCaseImpl";
 import { ShowEditToDoDialogUseCaseImpl } from "../usecases/showEditToDoDialogUseCaseImpl";
+import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
+import { GetToDoCardsUseCaseImpl } from "../usecases/getToDoCardsUseCaseImpl";
 
 export function useTodoServices(): void
 {
@@ -38,4 +40,5 @@ export function useTodoServices(): void
     useServiceRegistration(GetToDosUseCase).to(GetToDosUseCaseImpl).asTransient();
     useServiceRegistration(ShowAddToDoDialogUseCase).to(ShowAddToDoDialogUseCaseImpl).asTransient();
     useServiceRegistration(ShowEditToDoDialogUseCase).to(ShowEditToDoDialogUseCaseImpl).asTransient();
+    useServiceRegistration(GetToDoCardsUseCase).to(GetToDoCardsUseCaseImpl).asTransient();
 }
