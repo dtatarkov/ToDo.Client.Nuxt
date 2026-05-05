@@ -1,23 +1,15 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ButtonIconViewmodel } from "../../interfaces/buttonIconViewmodel";
-import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
 import { ButtonViewmodelBaseImpl } from './buttonViewmodelBaseImpl';
-import { UButton } from '#components';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
+import { useObservable } from '@/modules/shared/composables/useObservable';
 
 export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements ButtonIconViewmodel
 {
-    protected readonly props = reactive({
-        color: <ButtonViewmodelColor>'secondary',
-        variant: 'link',
-        size: 'sm',
-        disabled: false,
-        class: 'cursor-pointer hover:text-primary',
-        icon: '',
-
-        onClick: () =>
-        {
-            this.clickHandler.handle();
-        },
+    protected readonly data = new ObservableSource({
+        isDisabled: false,
+        icon: ''
     });
 
     readonly key = getUniqueId('button-element-icon');
@@ -25,28 +17,39 @@ export class ButtonViewmodelIconImpl extends ButtonViewmodelBaseImpl implements 
     readonly component = {
         setup: () =>
         {
-            return () => h(<any>UButton, this.props);
+            const data = useObservable(this.data);
+
+            const onClick = () =>
+            {
+                this.clickHandler.handle();
+            };
+
+            return () => h(VButtonIcon, {
+                ...data.value,
+
+                onClick
+            });
         }
     };
 
     get icon(): string
     {
-        return this.props.icon;
+        return this.data.value.icon;
     }
 
     set icon(value: string)
     {
-        this.props.icon = value;
+        this.data.mutate({ icon: value });
     }
 
     get isDisabled(): boolean
     {
-        return this.props.disabled;
+        return this.data.value.isDisabled;
     }
 
     set isDisabled(value: boolean)
     {
-        this.props.disabled = value;
+        this.data.mutate({ isDisabled: value });
     }
 }
 
