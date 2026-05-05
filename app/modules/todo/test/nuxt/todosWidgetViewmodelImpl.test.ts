@@ -4,11 +4,14 @@ import type { ShowAddToDoDialogUseCase } from '@/modules/todo/interfaces/showAdd
 import type { ShowEditToDoDialogUseCase } from '@/modules/todo/interfaces/showEditToDoDialogUseCase';
 import { ToDosWidgetViewmodelImpl } from '@/modules/todo/viewmodels/todosWidgetViewmodelImpl';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { ToDoCardDataWithIdentity } from '../../types/todoCardData';
 import type { GetToDoCardsUseCase } from '../../interfaces/getToDoCardsUseCase';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import type { ToolbarViewmodel } from '@/modules/uikit/interfaces/toolbarViewmodel';
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
+import type { ToDoViewmodelsFactory } from '../../interfaces/todoViewmodelsFactory';
+import type { ToDoCardViewmodel, ToDoCardViewmodelData } from '../../interfaces/todoCardViewmodel';
+import type { GridViewmodel } from '@/modules/uikit/interfaces/gridViewmodel';
+import type { Observable } from '@/modules/shared/interfaces/observable';
 
 describe('ToDosWidgetViewmodelImpl', () =>
 {
@@ -28,6 +31,18 @@ describe('ToDosWidgetViewmodelImpl', () =>
     executeAsync: vi.fn()
   } satisfies ShowEditToDoDialogUseCase;
 
+  const mockGridViewmodel = {
+    key: '',
+
+    component: {
+      setup: vi.fn(),
+    },
+
+    elements: [],
+
+    setSource: vi.fn(),
+  } satisfies GridViewmodel;
+
   const mockToolbarViewmodel = {
     addElement: vi.fn()
   } as unknown as ToolbarViewmodel;
@@ -35,23 +50,40 @@ describe('ToDosWidgetViewmodelImpl', () =>
   const mockButtonGeneralViewmodel = {} as unknown as ButtonGeneralViewmodel;
 
   const mockUIKitViewmodelsFactory = {
+    createGrid: vi.fn().mockReturnValue(mockGridViewmodel),
     createToolbar: vi.fn().mockReturnValue(mockToolbarViewmodel),
-    createButtonGeneral: vi.fn().mockReturnValue(mockButtonGeneralViewmodel)
+    createButtonGeneral: vi.fn().mockReturnValue(mockButtonGeneralViewmodel),
   } as unknown as UIKitViewmodelsFactory;
+
+  const mockToDoCardViewmodel = {
+    key: '',
+
+    component: {
+      setup: vi.fn(),
+    },
+
+    setSource: vi.fn(),
+    setClickHandler: vi.fn,
+  } satisfies ToDoCardViewmodel;
+
+  const mockToDoViewmodelsFactory = {
+    createToDoCard: vi.fn().mockReturnValue(mockToDoCardViewmodel)
+  } satisfies ToDoViewmodelsFactory;
 
   const viewModel = new ToDosWidgetViewmodelImpl(
     mockInitializeToDosUseCase,
     mockGetToDoCardsUseCase,
     mockShowAddToDoDialogUseCase,
     mockShowEditToDoDialogUseCase,
-    mockUIKitViewmodelsFactory
+    mockUIKitViewmodelsFactory,
+    mockToDoViewmodelsFactory
   );
 
   const mockCardData = {
     id: '1',
     title: 'Test ToDo',
     description: 'Test Description'
-  } satisfies ToDoCardDataWithIdentity;
+  } satisfies ToDoCardViewmodelData;
 
   beforeEach(() =>
   {
@@ -61,21 +93,29 @@ describe('ToDosWidgetViewmodelImpl', () =>
 
   describe('constructor', () =>
   {
-    it('should create cards from todos', () =>
+    it('should create todo cards grid', () =>
     {
       mockGetToDoCardsUseCase.execute.mockReturnValue(new ObservableSource([mockCardData]));
+
+      mockGridViewmodel.setSource.mockImplementation((cards: Observable<ToDoCardViewmodel[]>) =>
+      {
+        expect(cards.value).toEqual([mockToDoCardViewmodel]);
+      });
 
       const testViewmodel = new ToDosWidgetViewmodelImpl(
         mockInitializeToDosUseCase,
         mockGetToDoCardsUseCase,
         mockShowAddToDoDialogUseCase,
         mockShowEditToDoDialogUseCase,
-        mockUIKitViewmodelsFactory
+        mockUIKitViewmodelsFactory,
+        mockToDoViewmodelsFactory
       );
 
       expect(mockGetToDoCardsUseCase.execute).toHaveBeenCalled();
-      expect(testViewmodel.cards.value.length).toBe(1);
-      expect(testViewmodel.cards.value[0]).toBe(mockCardData);
+      expect(mockUIKitViewmodelsFactory.createGrid).toHaveBeenCalled();
+      expect(testViewmodel.grid).toBe(mockGridViewmodel);
+      expect(mockToDoViewmodelsFactory.createToDoCard).toBeCalled();
+      expect(mockToDoCardViewmodel.setSource).toBeCalledWith(mockCardData);
     });
 
     it('should create toolbar with add button', () =>
@@ -85,7 +125,8 @@ describe('ToDosWidgetViewmodelImpl', () =>
         mockGetToDoCardsUseCase,
         mockShowAddToDoDialogUseCase,
         mockShowEditToDoDialogUseCase,
-        mockUIKitViewmodelsFactory
+        mockUIKitViewmodelsFactory,
+        mockToDoViewmodelsFactory
       );
 
       expect(testViewmodel.toolbar).toBeDefined();

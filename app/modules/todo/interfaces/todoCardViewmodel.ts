@@ -3,6 +3,7 @@ import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconV
 import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
 export type ToDoCardViewmodelData = {
+  id: string;
   title: string;
   description: string;
   completionDateActual?: Date;
@@ -16,5 +17,5 @@ export type ToDoCardViewmodelSetupContext = {
 export abstract class ToDoCardViewmodel extends Viewmodel<string>
 {
   abstract setSource(source: ToDoCardViewmodelData): void;
-  abstract setClickHandler(handler: Action): void;
+  abstract setClickHandler(handler: Action<[ToDoCardViewmodelData]>): void;
 }

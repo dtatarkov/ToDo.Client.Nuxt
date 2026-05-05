@@ -49,16 +49,19 @@ export const Default: Story = {
     args: {
         cards: [
             {
+                id: '1',
                 title: 'Complete project documentation',
                 description: 'Write comprehensive documentation for the new API endpoints',
                 completionDatePlanned: new Date('2026-05-10'),
             },
             {
+                id: '2',
                 title: 'Review pull requests',
                 description: 'Check and merge pending PRs from the team',
                 completionDateActual: new Date('2026-05-01'),
             },
             {
+                id: '3',
                 title: 'Plan sprint',
                 description: 'Prepare tasks and estimates for the next sprint',
                 completionDatePlanned: new Date('2026-05-15'),
@@ -71,6 +74,7 @@ export const SingleCard: Story = {
     args: {
         cards: [
             {
+                id: '1',
                 title: 'Single task',
                 description: 'This is a single todo card in a grid',
                 completionDatePlanned: new Date('2026-06-01'),
@@ -82,14 +86,14 @@ export const SingleCard: Story = {
 export const ManyCards: Story = {
     args: {
         cards: [
-            { title: 'Task 1', description: 'Description 1', completionDatePlanned: new Date('2026-05-02') },
-            { title: 'Task 2', description: 'Description 2', completionDateActual: new Date('2026-05-01') },
-            { title: 'Task 3', description: 'Description 3', completionDatePlanned: new Date('2026-05-03') },
-            { title: 'Task 4', description: 'Description 4', completionDatePlanned: new Date('2026-05-04') },
-            { title: 'Task 5', description: 'Description 5', completionDateActual: new Date('2026-05-01') },
-            { title: 'Task 6', description: 'Description 6', completionDatePlanned: new Date('2026-05-05') },
-            { title: 'Task 7', description: 'Description 7' },
-            { title: 'Task 8', description: 'Description 8', completionDatePlanned: new Date('2026-05-06') },
+            { id: '1', title: 'Task 1', description: 'Description 1', completionDatePlanned: new Date('2026-05-02') },
+            { id: '2', title: 'Task 2', description: 'Description 2', completionDateActual: new Date('2026-05-01') },
+            { id: '3', title: 'Task 3', description: 'Description 3', completionDatePlanned: new Date('2026-05-03') },
+            { id: '4', title: 'Task 4', description: 'Description 4', completionDatePlanned: new Date('2026-05-04') },
+            { id: '5', title: 'Task 5', description: 'Description 5', completionDateActual: new Date('2026-05-01') },
+            { id: '6', title: 'Task 6', description: 'Description 6', completionDatePlanned: new Date('2026-05-05') },
+            { id: '7', title: 'Task 7', description: 'Description 7' },
+            { id: '8', title: 'Task 8', description: 'Description 8', completionDatePlanned: new Date('2026-05-06') },
         ]
     }
 };
@@ -104,11 +108,13 @@ export const CardsWithLongContent: Story = {
     args: {
         cards: [
             {
+                id: '1',
                 title: 'Card with very long title that might wrap or truncate depending on styling',
                 description: 'This is a very long description that could potentially span multiple lines and test the grid layout. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                 completionDatePlanned: new Date('2026-12-31'),
             },
             {
+                id: '2',
                 title: 'Short',
                 description: 'Short description',
                 completionDateActual: new Date('2026-05-01'),
@@ -121,21 +127,25 @@ export const MixedCardStates: Story = {
     args: {
         cards: [
             {
+                id: '1',
                 title: 'Planned task',
                 description: 'This task has a planned completion date',
                 completionDatePlanned: new Date('2026-05-20'),
             },
             {
+                id: '2',
                 title: 'Completed task',
                 description: 'This task has been completed',
                 completionDateActual: new Date('2026-05-01'),
             },
             {
+                id: '3',
                 title: 'Overdue task',
                 description: 'This task was planned for a past date',
                 completionDatePlanned: new Date('2026-04-15'),
             },
             {
+                id: '4',
                 title: 'Task without dates',
                 description: 'This task has no dates set',
             },

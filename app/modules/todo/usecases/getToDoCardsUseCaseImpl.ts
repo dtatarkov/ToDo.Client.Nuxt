@@ -1,10 +1,10 @@
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import { GetToDosUseCase } from "../interfaces/getToDosUseCase";
-import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
+import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
+import { ToDoCardDataMapper } from '../interfaces/todoCardDataMapper';
 
 @dependency(GetToDosUseCase)
 @dependency(ToDoCardDataMapper)
@@ -18,7 +18,7 @@ export class GetToDoCardsUseCaseImpl extends GetToDoCardsUseCase
     super();
   }
 
-  override execute(): Observable<ToDoCardDataWithIdentity[]>
+  override execute(): Observable<ToDoCardViewmodelData[]>
   {
     const todos = this.getToDosUseCase.execute();
 

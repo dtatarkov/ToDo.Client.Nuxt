@@ -1,10 +1,7 @@
 import { ToDosWidgetViewmodel } from "../interfaces/todosWidgetViewmodel";
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import type { Observable } from '@/modules/shared/interfaces/observable';
-import { useObservable } from '@/modules/shared/composables/useObservable';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
@@ -12,12 +9,16 @@ import VTodosWidget from '@/modules/todo/components/VToDosWidget.vue';
 import type { ToolbarViewmodel } from '@/modules/uikit/interfaces/toolbarViewmodel';
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
+import type { GridViewmodel } from '@/modules/uikit/interfaces/gridViewmodel';
+import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
+import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 
 @dependency(InitializeToDosUseCase)
 @dependency(GetToDoCardsUseCase)
 @dependency(ShowAddToDoDialogUseCase)
 @dependency(ShowEditToDoDialogUseCase)
 @dependency(UIKitViewmodelsFactory)
+@dependency(ToDoViewmodelsFactory)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
   readonly key = getUniqueId('todos-widget');
@@ -25,23 +26,18 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
   override component = {
     setup: async () =>
     {
-      const cards = useObservable(this.cards);
-
-      const handleEditToDo = (card: ToDoCardDataWithIdentity) => this.editToDo(card.id);
-
       await this.initialize();
 
       return () => h(VTodosWidget, {
-        cards: cards.value,
-
-        onEditToDo: handleEditToDo
+        grid: this.grid
       }, {
-        toolbar: () => h(this.toolbar.component)
+        toolbar: () => h(this.toolbar.component),
+        grid: () => h(this.grid.component)
       });
     }
   };
 
-  readonly cards: Observable<ToDoCardDataWithIdentity[]>;
+  readonly grid: GridViewmodel;
   readonly toolbar: ToolbarViewmodel;
 
   constructor(
@@ -49,12 +45,13 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     private readonly getToDoCardsUseCase: GetToDoCardsUseCase,
     private readonly showAddToDoDialogUseCase: ShowAddToDoDialogUseCase,
     private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
-    private readonly uikitViewmodelsFactory: UIKitViewmodelsFactory
+    private readonly uikitViewmodelsFactory: UIKitViewmodelsFactory,
+    private readonly todoViewmodelsFactory: ToDoViewmodelsFactory,
   )
   {
     super();
 
-    this.cards = this.getToDoCardsUseCase.execute();
+    this.grid = this.createGrid();
     this.toolbar = this.createToolbar();
   }
 
@@ -85,5 +82,24 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     toolbar.addElement(addButton);
 
     return toolbar;
+  }
+
+  private createGrid(): GridViewmodel
+  {
+    const cardsData = this.getToDoCardsUseCase.execute();
+
+    const cards = new ObservableComputed(() => cardsData.value.map(cardData =>
+    {
+      const card = this.todoViewmodelsFactory.createToDoCard();
+      card.setSource(cardData);
+      card.setClickHandler(({ id }) => this.editToDo(id));
+
+      return card;
+    }));
+
+    const grid = this.uikitViewmodelsFactory.createGrid();
+    grid.setSource(cards);
+
+    return grid;
   }
 }

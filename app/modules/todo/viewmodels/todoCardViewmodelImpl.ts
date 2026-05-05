@@ -17,6 +17,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   readonly key = getUniqueId('todo-card');
 
   private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
+    id: '',
     title: '',
     description: '',
     completionDateActual: undefined,
@@ -24,7 +25,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   }));
 
   private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
-  private clickHandler = new HandlerWrapper();
+  private clickHandler = new HandlerWrapper<[ToDoCardViewmodelData]>();
 
   readonly component = {
     setup: () =>
@@ -40,7 +41,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
       const editButton = uikitFactory.createButtonIcon({
         icon: 'i-heroicons-pencil-square',
-        click: () => this.clickHandler.handle(),
+        click: () => this.clickHandler.handle(this.source.value),
       });
 
       card.actions = [editButton];
@@ -66,7 +67,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     this.sourceWrapper.value = toObservable(source);
   }
 
-  override setClickHandler(handler: Action)
+  override setClickHandler(handler: Action<[ToDoCardViewmodelData]>)
   {
     this.clickHandler.setHandler(handler);
   }

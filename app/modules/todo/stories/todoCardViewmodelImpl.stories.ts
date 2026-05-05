@@ -22,12 +22,14 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
                 watchEffect(() =>
                 {
                     const source: ToDoCardViewmodelData = {
+                        id: '',
                         title: '',
                         description: '',
                         completionDatePlanned: undefined,
                         completionDateActual: undefined,
                         ...args
                     };
+
                     card.setSource(source);
                 });
 

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
-import type { ToDoCardDataWithIdentity } from '../types/todoCardData';
 import { fn } from 'storybook/test';
 import type { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import type { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
@@ -11,9 +10,11 @@ import type { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
 import { Suspense } from 'vue';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import { action } from 'storybook/actions';
+import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
+import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 
 type StoryArgs = {
-  cards: ToDoCardDataWithIdentity[];
+  cards: ToDoCardViewmodelData[];
 };
 
 const meta: Meta<StoryArgs> = {
@@ -54,13 +55,15 @@ const meta: Meta<StoryArgs> = {
         useAppServices();
 
         const uikitViewmodelsFactory = useService(UIKitViewmodelsFactory);
+        const todoViewmodelsFactory = useService(ToDoViewmodelsFactory);
 
         const widget = new ToDosWidgetViewmodelImpl(
           initializeToDosUseCase,
           getToDoCardsUseCase,
           showAddToDoDialogUseCase,
           showEditToDoDialogUseCase,
-          uikitViewmodelsFactory
+          uikitViewmodelsFactory,
+          todoViewmodelsFactory
         );
 
         return { widget };
@@ -77,7 +80,7 @@ const meta: Meta<StoryArgs> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const mockCards: ToDoCardDataWithIdentity[] = [
+const mockCards: ToDoCardViewmodelData[] = [
   {
     id: '1',
     title: 'Задача 1',
