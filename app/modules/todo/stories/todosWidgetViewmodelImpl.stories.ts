@@ -44,7 +44,7 @@ const meta: Meta<StoryArgs> = {
     } satisfies ShowAddToDoDialogUseCase;
 
     const showEditToDoDialogUseCase = {
-      executeAsync: fn(async () => editToDoAction())
+      executeAsync: fn(async (id) => editToDoAction(id))
     } satisfies ShowEditToDoDialogUseCase;
 
     return {

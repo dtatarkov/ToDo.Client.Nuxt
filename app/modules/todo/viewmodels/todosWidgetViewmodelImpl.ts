@@ -21,24 +21,22 @@ import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
 @dependency(ToDoViewmodelsFactory)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 {
+  private readonly grid: GridViewmodel;
+  private readonly toolbar: ToolbarViewmodel;
+
   readonly key = getUniqueId('todos-widget');
 
   override component = {
     setup: async () =>
     {
-      await this.initialize();
+      await this.initializeToDosUseCase.executeAsync();
 
-      return () => h(VTodosWidget, {
-        grid: this.grid
-      }, {
+      return () => h(VTodosWidget, {}, {
         toolbar: () => h(this.toolbar.component),
         grid: () => h(this.grid.component)
       });
     }
   };
-
-  readonly grid: GridViewmodel;
-  readonly toolbar: ToolbarViewmodel;
 
   constructor(
     private readonly initializeToDosUseCase: InitializeToDosUseCase,
@@ -55,28 +53,13 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     this.toolbar = this.createToolbar();
   }
 
-  override async initialize(): Promise<void>
-  {
-    await this.initializeToDosUseCase.executeAsync();
-  }
-
-  override addToDo(): void
-  {
-    this.showAddToDoDialogUseCase.execute();
-  }
-
-  override editToDo(id: string): void
-  {
-    this.showEditToDoDialogUseCase.executeAsync(id);
-  }
-
   private createToolbar(): ToolbarViewmodel
   {
     const toolbar = this.uikitViewmodelsFactory.createToolbar<ButtonGeneralViewmodel>();
 
     const addButton = this.uikitViewmodelsFactory.createButtonGeneral({
       title: 'Добавить задание',
-      click: () => this.addToDo()
+      click: () => this.showAddToDoDialogUseCase.execute()
     });
 
     toolbar.addElement(addButton);
@@ -92,7 +75,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     {
       const card = this.todoViewmodelsFactory.createToDoCard();
       card.setSource(cardData);
-      card.setClickHandler(({ id }) => this.editToDo(id));
+      card.setClickHandler(({ id }) => this.showEditToDoDialogUseCase.executeAsync(id));
 
       return card;
     }));
