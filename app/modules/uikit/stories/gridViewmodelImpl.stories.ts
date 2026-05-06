@@ -27,8 +27,7 @@ const meta: Meta<GridViewmodelStoryArgs> = {
                 {
                     const cards = args.cards.map(data =>
                     {
-                        const card = todoFactory.createToDoCard();
-                        card.setSource(data);
+                        const card = todoFactory.createToDoCard(data);
                         return card;
                     });
                     grid.setSource(cards);

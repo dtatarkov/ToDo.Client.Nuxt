@@ -68,16 +68,11 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
   {
     const cardsData = this.getToDoCardsUseCase.execute();
 
-    const cards = new ObservableComputed(() => cardsData.value.map(cardData =>
-    {
-      const card = this.todoViewmodelsFactory.createToDoCard();
-      card.setSource(cardData);
+    const cards = new ObservableComputed(() =>
+      cardsData.value.map(cardData =>
+        this.todoViewmodelsFactory.createToDoCard(cardData)));
 
-      return card;
-    }));
-
-    const grid = this.uikitViewmodelsFactory.createGrid();
-    grid.setSource(cards);
+    const grid = this.uikitViewmodelsFactory.createGrid(cards);
 
     return grid;
   }

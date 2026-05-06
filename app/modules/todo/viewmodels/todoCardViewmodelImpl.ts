@@ -1,31 +1,17 @@
-import { ToDoCardViewmodel, type ToDoCardViewmodelData } from "../interfaces/todoCardViewmodel";
+import { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
 import type { DatesService } from '@/modules/shared/interfaces/datesService';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
-import type { Observable } from '@/modules/shared/interfaces/observable';
-import { toObservable } from '@/modules/shared/utils/toObservable';
-import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import type { CardViewmodel } from '@/modules/uikit/interfaces/cardViewmodel';
 import type { InfoBlockViewmodel } from '@/modules/uikit/interfaces/infoBlockViewmodel';
 import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
+import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
   private readonly card: CardViewmodel;
-
-  private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
-    id: '',
-    title: '',
-    description: '',
-    completionDateActual: undefined,
-    completionDatePlanned: undefined,
-  }));
-
-  private source: Observable<ToDoCardViewmodelData> = new ObservableComputed(() => this.sourceWrapper.value.value);
 
   readonly key = getUniqueId('todo-card');
 
@@ -35,6 +21,12 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
       return () => h(this.card.component);
     }
   };
+
+  readonly id = new ReactiveFieldVue('');
+  readonly title = new ReactiveFieldVue('');
+  readonly description = new ReactiveFieldVue('');
+  readonly completionDateActual = new ReactiveFieldVue<Date | undefined>(undefined);
+  readonly completionDatePlanned = new ReactiveFieldVue<Date | undefined>(undefined);
 
   constructor(
     private readonly uikitFactory: UIKitViewmodelsFactory,
@@ -48,16 +40,11 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     this.card = this.createCard();
   }
 
-  override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
-  {
-    this.sourceWrapper.value = toObservable(source);
-  }
-
   private createCard(): CardViewmodel
   {
     const card = this.uikitFactory.createCard();
-    card.title.value = () => this.source.value.title;
-    card.description.value = () => this.source.value.description;
+    card.title.value = () => this.title.value;
+    card.description.value = () => this.description.value;
 
 
     const editButton = this.createEditButton();
@@ -75,12 +62,12 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
     infoBlock.createRow({
       label: 'Выполнено',
-      content: () => this.datesService.formatDateOptional(this.source.value.completionDateActual)
+      content: () => this.datesService.formatDateOptional(this.completionDateActual.value)
     });
 
     infoBlock.createRow({
       label: 'Выполнить до',
-      content: () => this.datesService.formatDateOptional(this.source.value.completionDatePlanned)
+      content: () => this.datesService.formatDateOptional(this.completionDatePlanned.value)
     });
 
     return infoBlock;
@@ -93,7 +80,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
       click: () =>
       {
-        this.showEditToDoDialogUseCase.executeAsync(this.source.value.id);
+        this.showEditToDoDialogUseCase.executeAsync(this.id.value);
       },
     });
 
@@ -102,6 +89,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
   private isNew()
   {
-    return this.stringsService.isStringEmpty(this.source.value.id);
+    return this.stringsService.isStringEmpty(this.id.value);
   }
 }

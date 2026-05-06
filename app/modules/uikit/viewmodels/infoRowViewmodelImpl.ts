@@ -3,6 +3,7 @@ import VInfoRow from "../components/VInfoRow.vue";
 import { InfoRowViewmodel, type InfoRowData } from "../interfaces/infoRowViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
+import { updateReactiveFields } from '@/modules/shared/utils/updateReactiveFields';
 
 export class InfoRowViewmodelImpl extends InfoRowViewmodel
 {
@@ -43,12 +44,6 @@ export class InfoRowViewmodelImpl extends InfoRowViewmodel
 
     override setData(data: Partial<InfoRowData>)
     {
-        for (const [key, value] of Object.entries(data))
-        {
-            if ((this as any)[key] instanceof ReactiveFieldVue)
-            {
-                (this as any)[key].value = value;
-            }
-        }
+        updateReactiveFields(this as InfoRowViewmodel, data);
     }
 }

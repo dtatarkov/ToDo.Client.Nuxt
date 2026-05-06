@@ -5,7 +5,7 @@ import type { ToDo } from '../../interfaces/todo';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
 // Mock ToDo
-const createMockToDo = (id: string = '1'): ToDo =>
+const createMockToDo = (id: string = '1') =>
 {
     return {
         id,
@@ -15,12 +15,20 @@ const createMockToDo = (id: string = '1'): ToDo =>
         completionDateActual: undefined,
         owner: undefined,
         isNew: id === '',
-        getData: vi.fn(),
+
+        getData: () => ({
+            id,
+            title: 'Test ToDo',
+            description: 'Test Description',
+            completionDatePlanned: undefined,
+            completionDateActual: undefined,
+        }),
+
         clone: vi.fn(),
         saveAsync: vi.fn(),
         showEditDialog: vi.fn(),
         toObservableData: vi.fn()
-    };
+    } satisfies ToDo;
 };
 
 describe('GetToDosUseCaseImpl', () =>
@@ -54,6 +62,7 @@ describe('GetToDosUseCaseImpl', () =>
 
             expect(result).toBeDefined();
             expect(result.value).toHaveLength(1);
+            console.log('value', result.value);
             expect(result.value[0]?.id).toBe('123');
         });
     });

@@ -1,7 +1,7 @@
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ToDo } from "./todo";
+import type { ToDoData } from "./todo";
 
 export abstract class GetToDosUseCase
 {
-  abstract execute(): Observable<ToDo[]>;
+  abstract execute(): Observable<ToDoData[]>;
 }

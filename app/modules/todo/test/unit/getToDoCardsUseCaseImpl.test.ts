@@ -1,6 +1,6 @@
 import { GetToDoCardsUseCaseImpl } from '@/modules/todo/usecases/getToDoCardsUseCaseImpl';
 import type { GetToDosUseCase } from '@/modules/todo/interfaces/getToDosUseCase';
-import type { ToDo } from '@/modules/todo/interfaces/todo';
+import type { ToDoData } from '@/modules/todo/interfaces/todo';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ToDoCardViewmodelData } from '../../interfaces/todoCardViewmodel';
@@ -18,7 +18,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
   const getToDoCardsUseCase = new GetToDoCardsUseCaseImpl(getToDosUseCaseMock, todoCardDataMapper);
 
-  function createMockTodo(id: string)
+  function createMockTodoData(id: string)
   {
     return {
       id,
@@ -26,14 +26,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
       description: 'Test Description',
       completionDatePlanned: undefined,
       completionDateActual: undefined,
-      owner: undefined,
-      isNew: false,
-      getData: vi.fn(),
-      toObservableData: vi.fn(),
-      clone: vi.fn(),
-      saveAsync: vi.fn(),
-      showEditDialog: vi.fn(),
-    } satisfies ToDo;
+    } satisfies ToDoData;
   }
 
   function createMockCardViewmodelData(id: string)
@@ -55,7 +48,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
   it('should return card viewmodels when execute is called', () =>
   {
-    const mockToDo = createMockTodo('1');
+    const mockToDo = createMockTodoData('1');
     const mockCardData = createMockCardViewmodelData('1');
 
     getToDosUseCaseMock.execute.mockReturnValue(new ObservableSource([mockToDo]));
@@ -81,10 +74,10 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
   it('should handle multiple todos', () =>
   {
-    const mockToDo1 = createMockTodo('1');
+    const mockToDo1 = createMockTodoData('1');
     const mockCard1 = createMockCardViewmodelData('1');
 
-    const mockToDo2 = createMockTodo('2');
+    const mockToDo2 = createMockTodoData('2');
     const mockCard2 = createMockCardViewmodelData('2');
 
     getToDosUseCaseMock.execute.mockReturnValue(new ObservableSource([mockToDo1, mockToDo2]));

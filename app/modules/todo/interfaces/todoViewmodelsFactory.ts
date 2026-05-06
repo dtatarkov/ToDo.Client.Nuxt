@@ -1,7 +1,6 @@
-import type { ToDoCardViewmodel } from "./todoCardViewmodel";
-import type { ToDo } from "./todo";
+import type { ToDoCardViewmodel, ToDoCardViewmodelData } from "./todoCardViewmodel";
 
 export abstract class ToDoViewmodelsFactory
 {
-  abstract createToDoCard(todo?: ToDo): ToDoCardViewmodel;
+  abstract createToDoCard(todo?: ToDoCardViewmodelData): ToDoCardViewmodel;
 }

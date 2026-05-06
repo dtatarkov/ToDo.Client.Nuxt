@@ -1,12 +1,12 @@
 import { ToDoViewmodelsFactory } from "../interfaces/todoViewmodelsFactory";
-import type { ToDoCardViewmodel } from "../interfaces/todoCardViewmodel";
-import type { ToDo } from "../interfaces/todo";
+import type { ToDoCardViewmodel, ToDoCardViewmodelData } from "../interfaces/todoCardViewmodel";
 import { ToDoCardViewmodelImpl } from "../viewmodels/todoCardViewmodelImpl";
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { dependency } from '@/modules/shared/decorators/dependency';
+import { updateReactiveFields } from '@/modules/shared/utils/updateReactiveFields';
 
 @dependency(UIKitViewmodelsFactory)
 @dependency(DatesService)
@@ -24,13 +24,13 @@ export class ToDoViewmodelsFactoryImpl extends ToDoViewmodelsFactory
     super();
   }
 
-  createToDoCard(todo?: ToDo): ToDoCardViewmodel
+  createToDoCard(todoData?: ToDoCardViewmodelData): ToDoCardViewmodel
   {
     const card = new ToDoCardViewmodelImpl(this.uikitFactory, this.datesService, this.stringsService, this.showEditToDoDialogUseCase);
 
-    if (todo)
+    if (todoData)
     {
-      card.setSource(todo.toObservableData());
+      updateReactiveFields(card, todoData);
     }
 
     return card;

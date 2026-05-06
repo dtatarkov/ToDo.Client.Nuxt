@@ -8,6 +8,7 @@ import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { action } from 'storybook/actions';
 import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
+import { updateReactiveFields } from '@/modules/shared/utils/updateReactiveFields';
 
 type ToDoCardViewmodelStoryArgs = Partial<ToDoCardViewmodelData>;
 
@@ -38,7 +39,7 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
 
                 watchEffect(() =>
                 {
-                    const source: ToDoCardViewmodelData = {
+                    const data: ToDoCardViewmodelData = {
                         id: '',
                         title: '',
                         description: '',
@@ -47,7 +48,7 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
                         ...args
                     };
 
-                    card.setSource(source);
+                    updateReactiveFields(card, data);
                 });
 
                 return { card };
