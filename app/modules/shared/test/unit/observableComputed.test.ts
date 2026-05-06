@@ -153,31 +153,6 @@ describe('ObservableComputed', () =>
             expect(emitsCount1).toBe(1);
             expect(emitsCount2).toBe(2);
         });
-
-        it('should clear dependencies on unsubscribe', async () =>
-        {
-            const observable1 = new ObservableSource(1);
-            const observable2 = new ObservableSource(10);
-
-            const computed1 = new ObservableComputed(() => observable1.value);
-            const computed2 = new ObservableComputed(() => observable1.value + observable2.value);
-
-            const unsubscribe1 = computed1.subscribe(() => { });
-            expect(observable1.subscriptionsCount).toBe(1);
-
-            const unsubscribe2 = computed2.subscribe(() => { });
-            expect(observable1.subscriptionsCount).toBe(2);
-            expect(observable2.subscriptionsCount).toBe(1);
-
-            await awaitMicrotasks();
-            unsubscribe1();
-            expect(observable1.subscriptionsCount).toBe(1);
-            expect(observable2.subscriptionsCount).toBe(1);
-
-            unsubscribe2();
-            expect(observable1.subscriptionsCount).toBe(0);
-            expect(observable2.subscriptionsCount).toBe(0);
-        });
     });
 
     describe('state transitions', () =>

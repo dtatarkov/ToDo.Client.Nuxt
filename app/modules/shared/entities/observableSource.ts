@@ -1,77 +1,46 @@
 import type { ObservableWritable } from '../interfaces/observableWritable';
-import type { Action } from '../types/action';
 import { isObject } from '../utils/isObject';
-import { DestroyTokenImpl } from './destroyTokenImpl';
-import { ObservableBase } from './internal/observableBase';
+import { shallowRef } from 'vue';
+import { ObservableVue } from './internal/observableVue';
 
-export class ObservableSource<T> extends ObservableBase<T> implements ObservableWritable<T>
+export class ObservableSource<T> extends ObservableVue<T> implements ObservableWritable<T>
 {
-    private destroyToken = new DestroyTokenImpl();
+    protected readonly ref: Ref<T>;
 
-    constructor(protected valueInternal: T)
+    get value(): T
+    {
+        this.destroyToken.assertNotDestroyed();
+
+        return this.ref.value;
+    }
+
+    set value(value: T)
+    {
+        this.destroyToken.assertNotDestroyed();
+        this.ref.value = value;
+    }
+
+    constructor(valueInternal: T)
     {
         super();
-    }
 
-    override get value(): T
-    {
-        this.destroyToken.assertNotDestroyed();
-
-        if (this.context)
-        {
-            this.context.register(this);
-        }
-
-        return this.valueInternal;
-    }
-
-    override set value(value: T)
-    {
-        this.destroyToken.assertNotDestroyed();
-
-        if (this.valueInternal !== value)
-        {
-            this.valueInternal = value;
-            this.eventbus.emit(value);
-        }
+        this.ref = shallowRef(valueInternal);
     }
 
     mutate(mutationData: T extends Record<string, any> ? Partial<T> : never): void
     {
-        if (isObject(this.valueInternal) && isObject(mutationData))
+        if (isObject(this.ref.value) && isObject(mutationData))
         {
-            let hasChanges = false;
-
-            for (const [key, value] of Object.entries(mutationData))
-            {
-                if (this.valueInternal[key] !== value)
-                {
-                    (this.valueInternal as any)[key] = value;
-                    hasChanges = true;
-                }
-            }
+            const hasChanges = Object.entries(mutationData).some(([key, value]) => (this.ref.value as any)[key] !== value);
 
             if (hasChanges)
             {
-                this.eventbus.emit(this.valueInternal);
+                this.ref.value = { ...this.ref.value, ...mutationData };
             }
         }
         else
         {
             throw new Error('Non object mutation is forbidden');
         }
-    }
-
-    override subscribe(handler: Action<[T]>): Action
-    {
-        this.destroyToken.assertNotDestroyed();
-
-        return this.eventbus.subscribe(handler);
-    }
-
-    override destroy(): void
-    {
-        this.eventbus.destroy();
-        this.destroyToken.destroy();
     }
 }
