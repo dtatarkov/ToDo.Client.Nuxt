@@ -1,20 +1,18 @@
 import VCard from "../components/VCard.vue";
 import { CardViewmodel } from "../interfaces/cardViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { reactive, shallowRef } from "vue";
 import type { Viewmodel } from "../interfaces/viewmodel";
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { useService } from '@/modules/shared/composables/useService';
+import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
 
 export class CardViewmodelImpl extends CardViewmodel
 {
-    private readonly props = reactive({
-        title: '',
-        description: '',
-    });
+    readonly title = new ReactiveFieldVue('');
+    readonly description = new ReactiveFieldVue('');
+    readonly actions = new ReactiveFieldVue(new Array<Viewmodel>());
+    readonly footer = new ReactiveFieldVue<Viewmodel | undefined>(undefined);
 
-    private readonly actionsInternal = shallowRef<Viewmodel[]>([]);
-    private readonly footerInternal = shallowRef<Viewmodel | undefined>(undefined);
 
     readonly key = getUniqueId('card');
 
@@ -23,68 +21,34 @@ export class CardViewmodelImpl extends CardViewmodel
         {
             const stringsService = useService(StringsService);
 
+            const isEmpty = computed(() => stringsService.isStringEmpty(this.title.value) &&
+                stringsService.isStringEmpty(this.description.value) &&
+                this.actions.value.length === 0 &&
+                this.footer.value == undefined);
+
             return () =>
             {
-                const props = this.props;
-                const actions = this.actionsInternal.value;
-                const footer = this.footerInternal.value;
+                return !isEmpty.value ?
 
-                const isEmpty = stringsService.isStringEmpty(props.title) &&
-                    stringsService.isStringEmpty(props.description) &&
-                    actions.length === 0 &&
-                    footer == undefined;
+                    h(VCard, {
+                        title: this.title.value,
+                        description: this.description.value,
+                    }, {
+                        actions: this.actions.value.length > 0 ?
 
-                return !isEmpty ?
+                            () => this.actions.value.map(action => h(action.component, { key: action.key })) :
 
-                    h(VCard, props, {
-                        actions: () => actions.map(action =>
-                            h(action.component, { key: action.key })),
+                            undefined,
 
-                        footer: footer ? () => h(footer.component, { key: footer.key }) : undefined,
+                        footer: this.footer.value ?
+
+                            () => this.footer.value ? h(this.footer.value.component, { key: this.footer.value.key }) : undefined :
+
+                            undefined
                     }) :
 
                     undefined;
             };
         }
     };
-
-    get title(): string
-    {
-        return this.props.title;
-    }
-
-    set title(value: string)
-    {
-        this.props.title = value;
-    }
-
-    get description(): string
-    {
-        return this.props.description;
-    }
-
-    set description(value: string)
-    {
-        this.props.description = value;
-    }
-
-    get actions(): Viewmodel[]
-    {
-        return this.actionsInternal.value;
-    }
-
-    set actions(value: Viewmodel[])
-    {
-        this.actionsInternal.value = value;
-    }
-
-    get footer(): Viewmodel | undefined
-    {
-        return this.footerInternal.value;
-    }
-
-    set footer(value: Viewmodel | undefined)
-    {
-        this.footerInternal.value = value;
-    }
 }

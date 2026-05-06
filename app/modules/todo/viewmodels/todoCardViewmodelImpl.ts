@@ -72,18 +72,14 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 
   private updateCard()
   {
-    this.card.title = this.source.value.title;
-    this.card.description = this.source.value.description;
+    this.card.title.value = () => this.source.value.title;
+    this.card.description.value = () => this.source.value.description;
 
     this.completionDateActualRow.content = this.datesService.formatDateOptional(this.source.value.completionDateActual);
     this.completionDatePlannedRow.content = this.datesService.formatDateOptional(this.source.value.completionDatePlanned);
 
-    if (!this.isNew())
-    {
-      this.card.actions = [this.editButton];
-    }
-
-    this.card.footer = !this.infoBlock.isEmpty ? this.infoBlock : undefined;
+    this.card.actions.value = () => !this.isNew() ? [this.editButton] : [];
+    this.card.footer.value = () => !this.infoBlock.isEmpty ? this.infoBlock : undefined;
   }
 
   private createEditButton(): ButtonIconViewmodel

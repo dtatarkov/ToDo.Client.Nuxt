@@ -21,11 +21,8 @@ const meta: Meta<CardViewmodelStoryArgs> = {
                 const uikitFactory = useService(UIKitViewmodelsFactory);
                 const card = uikitFactory.createCard();
 
-                watchEffect(() =>
-                {
-                    card.title = args.title;
-                    card.description = args.description;
-                });
+                card.title.value = () => args.title;
+                card.description.value = () => args.description;
 
                 return { card };
             },
