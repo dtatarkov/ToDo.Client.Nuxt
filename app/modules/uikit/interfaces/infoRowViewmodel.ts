@@ -1,14 +1,18 @@
+import type { ReactiveField } from '@/modules/shared/interfaces/reactiveField';
 import { Viewmodel } from './viewmodel';
+import type { ValueOrGetter } from '@/modules/shared/types/valueOrGetter';
 
 
 export type InfoRowData = {
-    label: string;
-    content: string;
+    label: ValueOrGetter<string>;
+    content: ValueOrGetter<string>;
 };
 
-export abstract class InfoRowViewmodel extends Viewmodel<string> implements InfoRowData
+export abstract class InfoRowViewmodel extends Viewmodel<string>
 {
-    abstract label: string;
-    abstract content: string;
+    abstract readonly label: ReactiveField<string>;
+    abstract readonly content: ReactiveField<string>;
     abstract readonly isEmpty: boolean;
+
+    abstract setData(data: Partial<InfoRowData>): void;
 }

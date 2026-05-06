@@ -30,8 +30,8 @@ const meta: Meta<InfoBlockViewmodelStoryArgs> = {
                     for (const row of args.rows)
                     {
                         const createdRow = block.createRow();
-                        createdRow.label = row.label;
-                        createdRow.content = row.content;
+                        createdRow.label.value = row.label;
+                        createdRow.content.value = row.content;
                     }
                 });
 

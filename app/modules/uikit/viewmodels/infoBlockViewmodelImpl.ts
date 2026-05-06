@@ -1,4 +1,3 @@
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import VInfoBlock from "../components/VInfoBlock.vue";
 import { InfoBlockViewmodel } from "../interfaces/infoBlockViewmodel";
 import type { InfoRowViewmodel, InfoRowData } from "../interfaces/infoRowViewmodel";
@@ -49,7 +48,7 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 
         if (data != undefined)
         {
-            updatePropertiesWithData(row, data);
+            row.setData(data);
         }
 
         this.rowsInternal.value = [...this.rowsInternal.value, row];

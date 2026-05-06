@@ -1,25 +1,38 @@
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import VInfoRow from "../components/VInfoRow.vue";
-import { InfoRowViewmodel } from "../interfaces/infoRowViewmodel";
+import { InfoRowViewmodel, type InfoRowData } from "../interfaces/infoRowViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
+import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
 
 export class InfoRowViewmodelImpl extends InfoRowViewmodel
 {
-    private readonly props = reactive({
-        label: '',
-        content: '',
-    });
-
     readonly key = getUniqueId('info-row-element');
 
     readonly component = {
         setup: () =>
         {
-            return () => h(VInfoRow, { label: this.props.label }, {
-                default: () => this.props.content
-            });
+            return () =>
+            {
+                return h(VInfoRow, {
+                    label: this.label.value
+                }, {
+                    default: !this.isEmpty ?
+
+                        () => this.content.value :
+
+                        undefined
+                });
+            };
         }
     };
+
+    readonly label = new ReactiveFieldVue('');
+    readonly content = new ReactiveFieldVue('');
+
+    get isEmpty(): boolean
+    {
+        return this.stringsService.isStringEmpty(this.content.value);
+    }
 
     constructor(
         private stringsService: StringsService
@@ -28,28 +41,14 @@ export class InfoRowViewmodelImpl extends InfoRowViewmodel
         super();
     }
 
-    get label(): string
+    override setData(data: Partial<InfoRowData>)
     {
-        return this.props.label;
-    }
-
-    set label(value: string)
-    {
-        this.props.label = value;
-    }
-
-    get content(): string
-    {
-        return this.props.content;
-    }
-
-    set content(value: string)
-    {
-        this.props.content = value;
-    }
-
-    get isEmpty(): boolean
-    {
-        return this.stringsService.isStringEmpty(this.props.content);
+        for (const [key, value] of Object.entries(data))
+        {
+            if ((this as any)[key] instanceof ReactiveFieldVue)
+            {
+                (this as any)[key].value = value;
+            }
+        }
     }
 }

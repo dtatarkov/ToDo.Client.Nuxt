@@ -9,19 +9,13 @@ import { toObservable } from '@/modules/shared/utils/toObservable';
 import { ObservableComputed } from '@/modules/shared/entities/observableComputed';
 import type { CardViewmodel } from '@/modules/uikit/interfaces/cardViewmodel';
 import type { InfoBlockViewmodel } from '@/modules/uikit/interfaces/infoBlockViewmodel';
-import type { InfoRowViewmodel } from '@/modules/uikit/interfaces/infoRowViewmodel';
 import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
-import { useObservableSubscription } from '@/modules/shared/composables/useObservableSubscription';
 
 export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
 {
   private readonly card: CardViewmodel;
-  private readonly editButton: ButtonIconViewmodel;
-  private readonly infoBlock: InfoBlockViewmodel;
-  private readonly completionDateActualRow: InfoRowViewmodel;
-  private readonly completionDatePlannedRow: InfoRowViewmodel;
 
   private sourceWrapper = new ObservableSource<Observable<ToDoCardViewmodelData>>(new ObservableSource({
     id: '',
@@ -38,13 +32,6 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   readonly component = {
     setup: () =>
     {
-      useObservableSubscription(this.source, () =>
-      {
-        this.updateCard();
-      });
-
-      this.updateCard();
-
       return () => h(this.card.component);
     }
   };
@@ -58,11 +45,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
   {
     super();
 
-    this.card = this.uikitFactory.createCard();
-    this.editButton = this.createEditButton();
-    this.infoBlock = this.uikitFactory.createInfoBlock();
-    this.completionDateActualRow = this.infoBlock.createRow({ label: 'Выполнено' });
-    this.completionDatePlannedRow = this.infoBlock.createRow({ label: 'Выполнить до' });
+    this.card = this.createCard();
   }
 
   override setSource(source: MaybeObservable<ToDoCardViewmodelData>)
@@ -70,16 +53,37 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     this.sourceWrapper.value = toObservable(source);
   }
 
-  private updateCard()
+  private createCard(): CardViewmodel
   {
-    this.card.title.value = () => this.source.value.title;
-    this.card.description.value = () => this.source.value.description;
+    const card = this.uikitFactory.createCard();
+    card.title.value = () => this.source.value.title;
+    card.description.value = () => this.source.value.description;
 
-    this.completionDateActualRow.content = this.datesService.formatDateOptional(this.source.value.completionDateActual);
-    this.completionDatePlannedRow.content = this.datesService.formatDateOptional(this.source.value.completionDatePlanned);
 
-    this.card.actions.value = () => !this.isNew() ? [this.editButton] : [];
-    this.card.footer.value = () => !this.infoBlock.isEmpty ? this.infoBlock : undefined;
+    const editButton = this.createEditButton();
+    card.actions.value = () => !this.isNew() ? [editButton] : [];
+
+    const infoBlock = this.createInfoBlock();
+    card.footer.value = () => !infoBlock.isEmpty ? infoBlock : undefined;
+
+    return card;
+  }
+
+  private createInfoBlock(): InfoBlockViewmodel
+  {
+    const infoBlock = this.uikitFactory.createInfoBlock();
+
+    infoBlock.createRow({
+      label: 'Выполнено',
+      content: () => this.datesService.formatDateOptional(this.source.value.completionDateActual)
+    });
+
+    infoBlock.createRow({
+      label: 'Выполнить до',
+      content: () => this.datesService.formatDateOptional(this.source.value.completionDatePlanned)
+    });
+
+    return infoBlock;
   }
 
   private createEditButton(): ButtonIconViewmodel
