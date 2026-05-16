@@ -1,19 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { InitializeToDosUseCaseImpl } from '../../usecases/initializeToDosUseCaseImpl';
-import type { ToDosOwner } from '../../interfaces/todosOwner';
+import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
 describe('InitializeToDosUseCaseImpl', () =>
 {
-    const todosOwner = {
-        getAllToDos: vi.fn(),
-        getToDoByIdAsync: vi.fn(),
-        updateToDosAsync: vi.fn(),
-        initializeToDosAsync: vi.fn(),
-        saveToDoAsync: vi.fn(),
-        createToDo: vi.fn()
-    } satisfies ToDosOwner;
-
-    const useCase = new InitializeToDosUseCaseImpl(todosOwner);
+    const useCase = new InitializeToDosUseCaseImpl(todosOwnerMock);
 
     beforeEach(() =>
     {
@@ -25,7 +16,7 @@ describe('InitializeToDosUseCaseImpl', () =>
         it('should call todosOwner.initializeToDosAsync', async () =>
         {
             await useCase.executeAsync();
-            expect(todosOwner.initializeToDosAsync).toHaveBeenCalledTimes(1);
+            expect(todosOwnerMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
         });
     });
 });

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { ShowEditToDoDialogUseCaseImpl } from '../../usecases/showEditToDoDialogUseCaseImpl';
-import type { ToDosOwner } from '../../interfaces/todosOwner';
 import type { ToDo } from '../../interfaces/todo';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
+import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
 // Mock ToDo
 const createMockToDo = (id: string = '1'): ToDo =>
@@ -25,16 +25,7 @@ const createMockToDo = (id: string = '1'): ToDo =>
 
 describe('ShowEditToDoDialogUseCaseImpl', () =>
 {
-    const todosOwner = {
-        getAllToDos: vi.fn(),
-        getToDoByIdAsync: vi.fn(),
-        updateToDosAsync: vi.fn(),
-        initializeToDosAsync: vi.fn(),
-        saveToDoAsync: vi.fn(),
-        createToDo: vi.fn()
-    } satisfies ToDosOwner;
-
-    const useCase = new ShowEditToDoDialogUseCaseImpl(todosOwner);
+    const useCase = new ShowEditToDoDialogUseCaseImpl(todosOwnerMock);
 
     afterEach(() =>
     {
@@ -47,7 +38,7 @@ describe('ShowEditToDoDialogUseCaseImpl', () =>
         {
             const todo = createMockToDo('123');
 
-            todosOwner.getToDoByIdAsync.mockResolvedValue(todo);
+            todosOwnerMock.getToDoByIdAsync.mockResolvedValue(todo);
             await useCase.executeAsync('123');
 
             expect(todo.showEditDialog).toHaveBeenCalledTimes(1);
@@ -55,7 +46,7 @@ describe('ShowEditToDoDialogUseCaseImpl', () =>
 
         it('should throw ToDoNotFoundException for non-existent todo', () =>
         {
-            todosOwner.getToDoByIdAsync.mockResolvedValue(undefined);
+            todosOwnerMock.getToDoByIdAsync.mockResolvedValue(undefined);
 
             expect(useCase.executeAsync('999')).rejects.toThrow(ToDoNotFoundException);
         });

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ShowAddToDoDialogUseCaseImpl } from '../../usecases/showAddToDoDialogUseCaseImpl';
-import type { ToDosOwner } from '../../interfaces/todosOwner';
 import type { ToDo } from '../../interfaces/todo';
+import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
 // Mock ToDo
 const createMockToDo = (): ToDo =>
@@ -24,16 +24,7 @@ const createMockToDo = (): ToDo =>
 
 describe('ShowAddToDoDialogUseCaseImpl', () =>
 {
-    const todosOwner = {
-        getAllToDos: vi.fn(),
-        getToDoByIdAsync: vi.fn(),
-        updateToDosAsync: vi.fn(),
-        initializeToDosAsync: vi.fn(),
-        saveToDoAsync: vi.fn(),
-        createToDo: vi.fn()
-    } satisfies ToDosOwner;
-
-    const useCase = new ShowAddToDoDialogUseCaseImpl(todosOwner);
+    const useCase = new ShowAddToDoDialogUseCaseImpl(todosOwnerMock);
 
     beforeEach(() =>
     {
@@ -45,11 +36,11 @@ describe('ShowAddToDoDialogUseCaseImpl', () =>
         it('should create a new todo and show edit dialog', () =>
         {
             const todo = createMockToDo();
-            todosOwner.createToDo.mockReturnValue(todo);
+            todosOwnerMock.createToDo.mockReturnValue(todo);
 
             useCase.execute();
 
-            expect(todosOwner.createToDo).toHaveBeenCalledTimes(1);
+            expect(todosOwnerMock.createToDo).toHaveBeenCalledTimes(1);
             expect(todo.showEditDialog).toHaveBeenCalledTimes(1);
         });
     });

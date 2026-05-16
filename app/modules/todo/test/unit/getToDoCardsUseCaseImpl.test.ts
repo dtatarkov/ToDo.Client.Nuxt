@@ -4,24 +4,15 @@ import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ToDoCardViewmodelData } from '../../interfaces/todoCardViewmodel';
 import type { ToDoCardDataMapper } from '../../interfaces/todoCardDataMapper';
-import type { ToDosOwner } from '../../interfaces/todosOwner';
+import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
 describe('GetToDoCardsUseCaseImpl', () =>
 {
-  const todosOwner = {
-    getAllToDos: vi.fn(),
-    getToDoByIdAsync: vi.fn(),
-    updateToDosAsync: vi.fn(),
-    initializeToDosAsync: vi.fn(),
-    saveToDoAsync: vi.fn(),
-    createToDo: vi.fn()
-  } satisfies ToDosOwner;
-
   const todoCardDataMapper = {
     mapToCardData: vi.fn(),
   } satisfies ToDoCardDataMapper;
 
-  const getToDoCardsUseCase = new GetToDoCardsUseCaseImpl(todosOwner, todoCardDataMapper);
+  const getToDoCardsUseCase = new GetToDoCardsUseCaseImpl(todosOwnerMock, todoCardDataMapper);
 
   function createMockTodoData(id: string)
   {
@@ -56,24 +47,24 @@ describe('GetToDoCardsUseCaseImpl', () =>
     const mockToDo = createMockTodoData('1');
     const mockCardData = createMockCardViewmodelData('1');
 
-    todosOwner.getAllToDos.mockReturnValue(new ObservableSource([mockToDo]));
+    todosOwnerMock.getAllToDos.mockReturnValue(new ObservableSource([mockToDo]));
     todoCardDataMapper.mapToCardData.mockReturnValue(mockCardData);
 
     const result = getToDoCardsUseCase.execute();
 
     expect(result.value).toEqual([mockCardData]);
-    expect(todosOwner.getAllToDos).toHaveBeenCalled();
+    expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo);
   });
 
   it('should handle empty todos list', () =>
   {
-    todosOwner.getAllToDos.mockReturnValue(new ObservableSource([]));
+    todosOwnerMock.getAllToDos.mockReturnValue(new ObservableSource([]));
 
     const result = getToDoCardsUseCase.execute();
 
     expect(result.value).toEqual([]);
-    expect(todosOwner.getAllToDos).toHaveBeenCalled();
+    expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).not.toHaveBeenCalled();
   });
 
@@ -85,7 +76,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
     const mockToDo2 = createMockTodoData('2');
     const mockCard2 = createMockCardViewmodelData('2');
 
-    todosOwner.getAllToDos.mockReturnValue(new ObservableSource([mockToDo1, mockToDo2]));
+    todosOwnerMock.getAllToDos.mockReturnValue(new ObservableSource([mockToDo1, mockToDo2]));
 
     todoCardDataMapper.mapToCardData
       .mockReturnValueOnce(mockCard1)
@@ -94,7 +85,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
     const result = getToDoCardsUseCase.execute();
 
     expect(result.value).toEqual([mockCard1, mockCard2]);
-    expect(todosOwner.getAllToDos).toHaveBeenCalled();
+    expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledTimes(2);
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo1);
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo2);

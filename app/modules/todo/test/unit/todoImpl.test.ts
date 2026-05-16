@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDoImpl } from '../../entities/todoImpl';
 import type { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
-import type { ToDosOwner } from '../../interfaces/todosOwner';
 import { StringsServiceImpl } from '@/modules/shared/services/stringsServiceImpl';
+import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
 // Mock dependencies
 const mockFormFactory = {
@@ -18,15 +18,6 @@ const mockOverlayService = {
 } satisfies OverlayService;
 
 const stringsService = new StringsServiceImpl();
-
-const mockOwner = {
-    createToDo: vi.fn(),
-    saveToDoAsync: vi.fn(),
-    getAllToDos: vi.fn(),
-    getToDoByIdAsync: vi.fn(),
-    updateToDosAsync: vi.fn(),
-    initializeToDosAsync: vi.fn(),
-} satisfies ToDosOwner;
 
 describe('ToDoImpl', () =>
 {
@@ -113,7 +104,7 @@ describe('ToDoImpl', () =>
             todo.title = 'Original';
             todo.description = 'Desc';
             todo.completionDatePlanned = new Date('2025-01-01');
-            todo.owner = mockOwner;
+            todo.owner = todosOwnerMock;
 
             const clone = todo.clone();
 
@@ -122,7 +113,7 @@ describe('ToDoImpl', () =>
             expect(clone.title).toBe('Original');
             expect(clone.description).toBe('Desc');
             expect(clone.completionDatePlanned).toEqual(new Date('2025-01-01'));
-            expect(clone.owner).toBe(mockOwner);
+            expect(clone.owner).toBe(todosOwnerMock);
         });
 
         it('should not share internal data references', () =>
@@ -138,11 +129,11 @@ describe('ToDoImpl', () =>
     {
         it('should call owner.saveToDoAsync with itself', async () =>
         {
-            todo.owner = mockOwner;
+            todo.owner = todosOwnerMock;
 
             await todo.saveAsync();
-            expect(mockOwner.saveToDoAsync).toHaveBeenCalledTimes(1);
-            expect(mockOwner.saveToDoAsync).toHaveBeenCalledWith(todo);
+            expect(todosOwnerMock.saveToDoAsync).toHaveBeenCalledTimes(1);
+            expect(todosOwnerMock.saveToDoAsync).toHaveBeenCalledWith(todo);
         });
 
         it('should throw if owner is undefined', async () =>
