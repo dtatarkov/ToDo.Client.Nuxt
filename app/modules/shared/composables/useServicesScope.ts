@@ -8,7 +8,7 @@ import { useServicesContainer } from './useServicesContainer';
  * Symbol key used to store service scopes map in Nuxt app context.
  * The map associates each Vue component instance with its own service scope.
  */
-export const serviceScopesKey = 'ServiceScopes';
+export const serviceScopesKey = '$ServiceScopes';
 
 /**
  * Provides a service scope tied to the current Vue component instance.
@@ -45,7 +45,7 @@ export function useServicesScope(): ServicesScope
 
     // Look up the existing map of component instances to service scopes.
     // The map is stored under a dynamically computed key (prefixed with '$').
-    let scopes = nuxtApp[`$${serviceScopesKey}`] as Map<ComponentInternalInstance, ServicesScope> | undefined;
+    let scopes = nuxtApp[serviceScopesKey] as Map<ComponentInternalInstance, ServicesScope> | undefined;
 
     // If no map exists yet, create one and attach it to the Nuxt app context.
     if (scopes == undefined)

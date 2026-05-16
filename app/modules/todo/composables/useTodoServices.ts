@@ -27,7 +27,7 @@ export function useTodoServices(): void
     useServiceRegistration(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
     useServiceRegistration(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
     useServiceRegistration(ToDoCardDataMapper).to(ToDoCardDataMapperImpl).asTransient();
-    useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asScoped();
+    useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asSingleton();
     useServiceRegistration(ToDoViewmodelsFactory).to(ToDoViewmodelsFactoryImpl).asTransient();
     useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
     useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();

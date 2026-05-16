@@ -1,9 +1,8 @@
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { ToDo } from "../interfaces/todo";
 
 export abstract class ToDosOwner
 {
-  abstract getAllToDos(): Observable<ToDo[]>;
+  abstract getAllToDos(): ToDo[];
   abstract getToDoByIdAsync(id: string): Promise<ToDo | undefined>;
   abstract updateToDosAsync(): Promise<void>;
   abstract initializeToDosAsync(): Promise<void>;

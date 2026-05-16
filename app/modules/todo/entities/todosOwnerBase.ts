@@ -2,20 +2,16 @@ import { ToDosOwner } from "../interfaces/todosOwner";
 import type { ToDo } from "../interfaces/todo";
 import { ToDosRepository } from "../interfaces/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import { ToDoFactory } from '../interfaces/todoFactory';
+import { shallowRef } from 'vue';
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)
-export class ToDosOwnerBase extends ToDosOwner implements Destroyable
+export class ToDosOwnerBase extends ToDosOwner
 {
   private initializationPromise: Promise<void> | undefined;
-  private todos = new ObservableSource(new Array<ToDo>());
-  private destroyToken = new DestroyTokenImpl();
+  private todos = shallowRef(new Array<ToDo>());
 
   constructor(
     private todosRepository: ToDosRepository,
@@ -25,15 +21,13 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     super();
   }
 
-  override getAllToDos(): Observable<ToDo[]>
+  override getAllToDos(): ToDo[]
   {
-    this.destroyToken.assertNotDestroyed();
-    return this.todos;
+    return this.todos.value;
   }
 
   override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
   {
-    this.destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
 
     return this.todos.value.find(todo => todo.id === id);
@@ -51,8 +45,6 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override async updateToDosAsync(): Promise<void>
   {
-    this.destroyToken.assertNotDestroyed();
-
     if (!this.initializationPromise)
     {
       await this.initializeToDosAsync();
@@ -65,7 +57,6 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override async saveToDoAsync(todo: ToDo): Promise<void>
   {
-    this.destroyToken.assertNotDestroyed();
     await this.initializeToDosAsync();
 
     this.assertNewOrExistingToDo(todo);
@@ -80,23 +71,10 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
 
   override createToDo()
   {
-    this.destroyToken.assertNotDestroyed();
-
     const todo = this.todoFactory.create();
     todo.owner = this;
 
     return todo;
-  }
-
-  destroy()
-  {
-    if (this.destroyToken.isDestroyed)
-    {
-      return;
-    }
-
-    this.todos.destroy();
-    this.destroyToken.destroy();
   }
 
   private assertNewOrExistingToDo(todo: ToDo): void

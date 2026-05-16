@@ -18,14 +18,13 @@ import VToDoCard from './VToDoCard.vue';
 import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { useService } from '@/modules/shared/composables/useService';
 import { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
-import { useObservable } from '@/modules/shared/composables/useObservable';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 
 const initializeToDosUseCase = useService(InitializeToDosUseCase);
 const getToDoCardsUseCase = useService(GetToDoCardsUseCase);
 const showAddToDoDialogUseCase = useService(ShowAddToDoDialogUseCase);
 
-const cardsData = useObservable(getToDoCardsUseCase.execute());
+const cardsData = computed(() => getToDoCardsUseCase.execute());
 
 function handleAddToDoButtonClick() {
   showAddToDoDialogUseCase.execute();
