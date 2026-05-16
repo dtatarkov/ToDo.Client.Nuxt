@@ -1,7 +1,7 @@
 import type { ToDoData } from "../interfaces/todo";
-import type { ToDoCardViewmodelData } from './todoCardViewmodel';
+import type { ToDoCardData } from '../types/todoCardData';
 
 export abstract class ToDoCardDataMapper
 {
-  abstract mapToCardData(todo: ToDoData): ToDoCardViewmodelData;
+  abstract mapToCardData(todo: ToDoData): ToDoCardData;
 }

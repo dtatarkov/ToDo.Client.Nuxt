@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between items-center gap-2 text-sm items-start">
-    <span class="min-w-[100px]">{{ label }}</span>
+    <span class="min-w-[100px]">{{ props.label }}</span>
     
     <span>
       <slot />
@@ -9,10 +9,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  label: {
-    type: String,
-    required: true
-  }
-});
+type Props = {
+  label: string;
+}
+
+const props = defineProps<Props>();
 </script>

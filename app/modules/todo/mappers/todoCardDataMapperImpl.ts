@@ -1,10 +1,10 @@
 import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
 import type { ToDoData } from "../interfaces/todo";
-import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
+import type { ToDoCardData } from '../types/todoCardData';
 
 export class ToDoCardDataMapperImpl extends ToDoCardDataMapper
 {
-  mapToCardData(todo: ToDoData): ToDoCardViewmodelData
+  mapToCardData(todo: ToDoData): ToDoCardData
   {
     const data = {
       id: todo.id,
