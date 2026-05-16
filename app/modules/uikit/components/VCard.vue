@@ -1,5 +1,5 @@
 <template>
-  <UCard variant="subtle" :ui="cardUIOptions">
+  <UCard v-if="hasContent" variant="subtle" :ui="cardUIOptions">
     <template v-if="props.title" #header>
       <div class="font-semibold text-lg grow">{{ props.title }}</div>
 
@@ -19,6 +19,10 @@
 </template>
 
 <script setup lang="ts">
+import { useService } from '@/modules/shared/composables/useService';
+import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
+
 const props = withDefaults(defineProps<{
   title?: string,
   description?: string,
@@ -32,4 +36,19 @@ const cardUIOptions = {
   header: 'flex gap-4 items-start text-primary',
   body: 'grow'
 }
+
+const stringsService = useService(StringsService);
+
+const slots = useSlots();
+
+const hasTitle = computed(() => !stringsService.isStringEmpty(props.title));
+const hasDescription = computed(() => !stringsService.isStringEmpty(props.description));
+const hasActions = computed(() => !isEmptySlot(slots.actions));
+const hasFooter = computed(() => !isEmptySlot(slots.footer));
+
+const hasContent = computed(() => 
+  hasTitle.value ||
+  hasDescription.value ||
+  hasActions.value ||
+  hasFooter.value);
 </script>

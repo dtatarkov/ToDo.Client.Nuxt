@@ -1,39 +1,30 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VCard from '../components/VCard.vue';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
-type CardViewmodelStoryArgs = {
-    title: string;
-    description: string;
-};
-
-const meta: Meta<CardViewmodelStoryArgs> = {
+const meta: Meta<typeof VCard> = {
     title: 'UIKit/Card',
+    component: VCard,
 
     render: (args) =>
     {
         return {
+            components: { VCard },
+
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const card = uikitFactory.createCard();
-
-                card.title.value = () => args.title;
-                card.description.value = () => args.description;
-
-                return { card };
+                return { args };
             },
 
-            template: `<component :is="card.component" />`,
+            template: `<VCard v-bind="args" />`
         };
-    },
+    }
 };
 
 export default meta;
-type Story = StoryObj<CardViewmodelStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
