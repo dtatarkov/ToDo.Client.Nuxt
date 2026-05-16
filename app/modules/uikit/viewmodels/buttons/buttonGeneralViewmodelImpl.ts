@@ -1,6 +1,6 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ButtonGeneralViewmodel } from "../../interfaces/buttonGeneralViewmodel";
-import type { ButtonViewmodelColor } from '../../types/buttonViewmodelColor';
+import type { ButtonColor } from '../../types/buttonColor';
 import { ButtonBaseViewmodelImpl } from './buttonBaseViewmodelImpl';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
@@ -10,7 +10,7 @@ export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl implemen
 {
     protected readonly data = new ObservableSource({
         title: '',
-        color: <ButtonViewmodelColor>'neutral',
+        color: <ButtonColor>'neutral',
         isDisabled: false,
         isLoading: false,
     });
@@ -45,12 +45,12 @@ export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl implemen
         this.data.mutate({ title: value });
     }
 
-    get color(): ButtonViewmodelColor
+    get color(): ButtonColor
     {
         return this.data.value.color;
     }
 
-    set color(value: ButtonViewmodelColor)
+    set color(value: ButtonColor)
     {
         this.data.mutate({ color: value });
     }

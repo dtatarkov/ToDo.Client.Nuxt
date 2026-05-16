@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import type { ButtonViewmodelColor } from '../types/buttonViewmodelColor';
+import type { ButtonColor } from '../types/buttonColor';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import { fn } from 'storybook/test';
 
@@ -14,7 +14,7 @@ const meta: Meta<typeof VButtonGeneral> = {
     argTypes: {
         color: {
             control: 'select',
-            options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] as ButtonViewmodelColor[],
+            options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] as ButtonColor[],
         },
 
         isDisabled: {
@@ -24,6 +24,22 @@ const meta: Meta<typeof VButtonGeneral> = {
         isLoading: {
             control: 'boolean',
         },
+    },
+
+    render: (args) =>
+    {
+        return {
+            components: { VButtonGeneral },
+
+            setup()
+            {
+                useAppServices();
+
+                return { args };
+            },
+
+            template: `<VButtonGeneral v-bind="args" />`,
+        };
     },
 };
 

@@ -3,11 +3,11 @@ import { UButton } from '#components';
 import { useService } from '@/modules/shared/composables/useService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { computed } from 'vue';
-import type { ButtonViewmodelColor } from '../types/buttonViewmodelColor';
+import type { ButtonColor } from '../types/buttonColor';
 
 type VButtonGeneralProps = {
   title?: string;
-  color?: ButtonViewmodelColor;
+  color?: ButtonColor;
   isDisabled?: boolean;
   isLoading?: boolean;
 };
