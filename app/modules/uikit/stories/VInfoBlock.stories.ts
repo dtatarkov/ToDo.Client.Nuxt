@@ -1,50 +1,40 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VInfoBlock from '../components/VInfoBlock.vue';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import VInfoRow from '../components/VInfoRow.vue';
 
-type InfoBlockViewmodelStoryArgs = {
+type InfoBlockStoryArgs = {
     rows: Array<{
         label: string;
         content: string;
     }>;
 };
 
-const meta: Meta<InfoBlockViewmodelStoryArgs> = {
+const meta: Meta<InfoBlockStoryArgs> = {
     title: 'UIKit/InfoBlock',
+    component: VInfoBlock,
 
     render: (args) =>
     {
         return {
+            components: { VInfoBlock, VInfoRow },
+
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const block = uikitFactory.createInfoBlock();
-
-                watchEffect(() =>
-                {
-                    block.clear();
-
-                    for (const row of args.rows)
-                    {
-                        const createdRow = block.createRow();
-                        createdRow.label.value = row.label;
-                        createdRow.content.value = row.content;
-                    }
-                });
-
-                return { block };
+                return args;
             },
 
-            template: `<component :is="block.component" />`,
+            template: `<VInfoBlock>
+                <VInfoRow v-for="row of rows" v-bind="row" />
+            </VInfoBlock>`,
         };
     }
 };
 
 export default meta;
-type Story = StoryObj<InfoBlockViewmodelStoryArgs>;
+type Story = StoryObj<InfoBlockStoryArgs>;
 
 export const Default: Story = {
     args: {
