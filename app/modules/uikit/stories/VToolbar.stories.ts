@@ -1,7 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VToolbar from '../components/VToolbar.vue';
+import VButtonGeneral from '../components/VButtonGeneral.vue';
 
 type ToolbarViewmodelStoryArgs = {
     buttons: Array<{
@@ -11,41 +10,22 @@ type ToolbarViewmodelStoryArgs = {
 
 const meta: Meta<ToolbarViewmodelStoryArgs> = {
     title: 'UIKit/Toolbar',
+    component: VToolbar,
 
-    render: (args) =>
+    render: () =>
     {
         return {
-            setup()
-            {
-                useAppServices();
+            components: { VToolbar, VButtonGeneral },
 
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const toolbar = uikitFactory.createToolbar();
-
-                watchEffect(() =>
-                {
-                    toolbar.clear();
-
-                    for (const buttonData of args.buttons)
-                    {
-                        const button = uikitFactory.createButtonGeneral({
-                            title: buttonData.title,
-                        });
-
-                        toolbar.addElement(button);
-                    }
-                });
-
-                return { toolbar };
-            },
-
-            template: `<component :is="toolbar.component" />`,
+            template: `<VToolbar>
+                <VButtonGeneral v-for="button of buttons" :v-bind="button" />
+            </VToolbar>`,
         };
     }
 };
 
 export default meta;
-type Story = StoryObj<ToolbarViewmodelStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {

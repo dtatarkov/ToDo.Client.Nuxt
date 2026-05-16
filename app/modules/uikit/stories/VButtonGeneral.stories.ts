@@ -1,45 +1,14 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
 import type { ButtonViewmodelColor } from '../types/buttonViewmodelColor';
-import { action } from 'storybook/actions';
+import VButtonGeneral from '../components/VButtonGeneral.vue';
+import { fn } from 'storybook/test';
 
-type ButtonGeneralViewmodelStoryArgs = {
-    title: string;
-    color: ButtonViewmodelColor;
-    isDisabled: boolean;
-    isLoading: boolean;
-};
-
-const meta: Meta<ButtonGeneralViewmodelStoryArgs> = {
+const meta: Meta<typeof VButtonGeneral> = {
     title: 'UIKit/ButtonGeneral',
+    component: VButtonGeneral,
 
-    render: (args) =>
-    {
-        return {
-            setup()
-            {
-                useAppServices();
-
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const button = uikitFactory.createButtonGeneral();
-
-                button.setClickHandler(action('click'));
-
-                watchEffect(() =>
-                {
-                    button.title = args.title;
-                    button.color = args.color;
-                    button.isDisabled = args.isDisabled;
-                    button.isLoading = args.isLoading;
-                });
-
-                return { button };
-            },
-
-            template: `<component :is="button.component" />`,
-        };
+    args: {
+        onClick: fn(),
     },
 
     argTypes: {
@@ -59,7 +28,7 @@ const meta: Meta<ButtonGeneralViewmodelStoryArgs> = {
 };
 
 export default meta;
-type Story = StoryObj<ButtonGeneralViewmodelStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
