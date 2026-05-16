@@ -32,6 +32,22 @@ const meta: Meta<typeof VButtonIcon> = {
             control: 'boolean',
         },
     },
+
+    render: (args) =>
+    {
+        return {
+            components: { VButtonIcon },
+
+            setup()
+            {
+                useAppServices();
+
+                return { args };
+            },
+
+            template: `<VButtonIcon v-bind="args" />`,
+        };
+    },
 };
 
 export default meta;
