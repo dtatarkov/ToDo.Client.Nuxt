@@ -2,6 +2,7 @@ import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import type { ButtonColor } from '../types/buttonColor';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import { fn } from 'storybook/test';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
 const meta: Meta<typeof VButtonGeneral> = {
     title: 'UIKit/ButtonGeneral',
@@ -33,7 +34,7 @@ const meta: Meta<typeof VButtonGeneral> = {
 
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
                 return { args };
             },

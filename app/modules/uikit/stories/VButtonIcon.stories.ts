@@ -1,6 +1,7 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VButtonIcon from '../components/VButtonIcon.vue';
 import { fn } from 'storybook/test';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
 const meta: Meta<typeof VButtonIcon> = {
     title: 'UIKit/ButtonIcon',
@@ -40,7 +41,7 @@ const meta: Meta<typeof VButtonIcon> = {
 
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
                 return { args };
             },

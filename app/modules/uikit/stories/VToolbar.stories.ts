@@ -1,6 +1,7 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VToolbar from '../components/VToolbar.vue';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
 type ToolbarViewmodelStoryArgs = {
     buttons: Array<{
@@ -19,7 +20,7 @@ const meta: Meta<ToolbarViewmodelStoryArgs> = {
 
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
                 return args;
             },
