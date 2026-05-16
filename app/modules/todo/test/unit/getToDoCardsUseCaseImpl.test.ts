@@ -10,7 +10,6 @@ describe('GetToDoCardsUseCaseImpl', () =>
 {
   const todosOwner = {
     getAllToDos: vi.fn(),
-    getAllToDosAsync: vi.fn(),
     getToDoByIdAsync: vi.fn(),
     updateToDosAsync: vi.fn(),
     initializeToDosAsync: vi.fn(),

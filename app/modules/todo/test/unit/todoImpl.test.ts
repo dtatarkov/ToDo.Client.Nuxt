@@ -22,7 +22,6 @@ const stringsService = new StringsServiceImpl();
 const mockOwner = {
     createToDo: vi.fn(),
     saveToDoAsync: vi.fn(),
-    getAllToDosAsync: vi.fn(),
     getAllToDos: vi.fn(),
     getToDoByIdAsync: vi.fn(),
     updateToDosAsync: vi.fn(),

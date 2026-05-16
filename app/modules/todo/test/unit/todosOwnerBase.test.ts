@@ -53,15 +53,16 @@ describe('ToDosOwnerBase', () =>
         mockTodoFactory.create.mockReset();
     });
 
-    describe('getAllToDosAsync', () =>
+    describe('getAllToDos', () =>
     {
         it('should return observable with todos', async () =>
         {
             const mockTodos = [createMockToDo({ id: '1' }), createMockToDo({ id: '2' })];
-            mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
+            mockRepository.getAllToDosAsync.mockReturnValue(mockTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
-            const observable = await owner.getAllToDosAsync();
+            await owner.initializeToDosAsync();
+            const observable = owner.getAllToDos();
 
             expect(observable).toBeDefined();
             expect(observable.value).toEqual(mockTodos);
@@ -73,20 +74,7 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
-            await expect(owner.getAllToDosAsync()).rejects.toThrow(DestroyedException);
-        });
-
-        it('should initialize only once', async () =>
-        {
-            const mockTodos = [createMockToDo({ id: '1' })];
-            mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
-
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
-            await owner.getAllToDosAsync();
-            await owner.getAllToDosAsync();
-            await owner.getAllToDosAsync();
-
-            expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(1);
+            expect(() => owner.getAllToDos()).toThrow(DestroyedException);
         });
     });
 
@@ -102,10 +90,10 @@ describe('ToDosOwnerBase', () =>
                 .mockResolvedValueOnce(updatedTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
-            await owner.getAllToDosAsync();
+            await owner.initializeToDosAsync();
             await owner.updateToDosAsync();
 
-            const observable = await owner.getAllToDosAsync();
+            const observable = owner.getAllToDos();
             expect(observable.value).toEqual(updatedTodos);
             expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(2);
         });
@@ -118,7 +106,7 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             await owner.updateToDosAsync();
 
-            const observable = await owner.getAllToDosAsync();
+            const observable = owner.getAllToDos();
             expect(observable.value).toEqual(mockTodos);
             expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(1);
         });
@@ -158,7 +146,7 @@ describe('ToDosOwnerBase', () =>
 
             expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(newTodo);
             // Verify that the todo is added to the internal list
-            const todosObservable = await owner.getAllToDosAsync();
+            const todosObservable = owner.getAllToDos();
             expect(todosObservable.value).toContain(newTodo);
         });
 
@@ -215,7 +203,7 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
             owner.destroy();
 
-            await expect(owner.getAllToDosAsync()).rejects.toThrow(DestroyedException);
+            expect(() => owner.getAllToDos()).toThrow(DestroyedException);
             await expect(owner.saveToDoAsync(createMockToDo({ id: '1' }))).rejects.toThrow(DestroyedException);
             await expect(owner.updateToDosAsync()).rejects.toThrow(DestroyedException);
         });
@@ -239,7 +227,7 @@ describe('ToDosOwnerBase', () =>
             mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
 
             const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
-            await owner.getAllToDosAsync();
+            await owner.initializeToDosAsync();
 
             expect(todo1.owner).toBe(owner);
             expect(todo2.owner).toBe(owner);

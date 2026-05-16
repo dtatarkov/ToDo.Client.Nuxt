@@ -5,9 +5,7 @@ import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
 import { ToDoCardDataMapperImpl } from "../mappers/todoCardDataMapperImpl";
 import { ToDosOwner } from "../interfaces/todosOwner";
 import { ToDosOwnerBase } from "../entities/todosOwnerBase";
-import { ToDosService } from "../interfaces/todosService";
 import { ToDosRepositoryImpl } from "../repositories/todosRepositoryImpl";
-import { TodosServiceImpl } from "../services/todosServiceImpl";
 import { ToDoViewmodelsFactory } from "../interfaces/todoViewmodelsFactory";
 import { ToDoViewmodelsFactoryImpl } from "../factories/todoViewmodelsFactoryImpl";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
@@ -30,7 +28,6 @@ export function useTodoServices(): void
     useServiceRegistration(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
     useServiceRegistration(ToDoCardDataMapper).to(ToDoCardDataMapperImpl).asTransient();
     useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asScoped();
-    useServiceRegistration(ToDosService).to(TodosServiceImpl).asTransient();
     useServiceRegistration(ToDoViewmodelsFactory).to(ToDoViewmodelsFactoryImpl).asTransient();
     useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
     useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();

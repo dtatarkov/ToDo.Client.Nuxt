@@ -25,14 +25,6 @@ export class ToDosOwnerBase extends ToDosOwner implements Destroyable
     super();
   }
 
-  override async getAllToDosAsync(): Promise<Observable<ToDo[]>>
-  {
-    this.destroyToken.assertNotDestroyed();
-    await this.initializeToDosAsync();
-
-    return this.todos;
-  }
-
   override getAllToDos(): Observable<ToDo[]>
   {
     this.destroyToken.assertNotDestroyed();
