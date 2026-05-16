@@ -12,13 +12,20 @@ const meta: Meta<ToolbarViewmodelStoryArgs> = {
     title: 'UIKit/Toolbar',
     component: VToolbar,
 
-    render: () =>
+    render: (args) =>
     {
         return {
             components: { VToolbar, VButtonGeneral },
 
+            setup()
+            {
+                useAppServices();
+
+                return args;
+            },
+
             template: `<VToolbar>
-                <VButtonGeneral v-for="button of buttons" :v-bind="button" />
+                <VButtonGeneral v-for="button of buttons" v-bind="button" />
             </VToolbar>`,
         };
     }
