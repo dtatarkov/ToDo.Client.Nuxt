@@ -5,8 +5,8 @@
     :name="props.name" 
     :autofocus="props.hasAutofocus" 
     :disabled="props.isDisabled" 
-    :hideTimeZone="true"    
-    :hourCycle="24"
+    :hide-time-zone="true"    
+    :hour-cycle="24"
     granularity="minute"
   />
 </template>

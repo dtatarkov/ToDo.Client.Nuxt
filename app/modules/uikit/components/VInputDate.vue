@@ -5,7 +5,7 @@
     :name="props.name" 
     :autofocus="props.hasAutofocus" 
     :disabled="props.isDisabled" 
-    :hideTimeZone="true"    
+    :hide-time-zone="true"    
     granularity="day"
   />
 </template>
