@@ -1,46 +1,9 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VInputTextarea from '../components/VInputTextarea.vue';
 
-type InputTextareaStoryArgs = {
-    value: string;
-    placeholder: string;
-    id: string;
-    name: string;
-    hasAutofocus: boolean;
-    isDisabled: boolean;
-};
-
-const meta: Meta<InputTextareaStoryArgs> = {
+const meta: Meta<typeof VInputTextarea> = {
     title: 'UIKit/InputTextarea',
-
-    render: (args) =>
-    {
-        return {
-            setup()
-            {
-                useAppServices();
-
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const input = uikitFactory.createTextarea();
-
-                watchEffect(() =>
-                {
-                    input.value = args.value;
-                    input.placeholder = args.placeholder;
-                    input.id = args.id;
-                    input.name = args.name;
-                    input.hasAutofocus = args.hasAutofocus;
-                    input.isDisabled = args.isDisabled;
-                });
-
-                return { input };
-            },
-
-            template: `<component :is="input.component" />`,
-        };
-    },
+    component: VInputTextarea,
 
     argTypes: {
         value: {
@@ -65,7 +28,7 @@ const meta: Meta<InputTextareaStoryArgs> = {
 };
 
 export default meta;
-type Story = StoryObj<InputTextareaStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 

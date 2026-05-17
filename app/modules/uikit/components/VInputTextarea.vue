@@ -1,5 +1,5 @@
 <template>
-  <UInput 
+  <UTextarea 
     :id="props.id" 
     v-model="valueModel" 
     :name="props.name" 

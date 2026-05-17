@@ -1,5 +1,4 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 import { fn } from 'storybook/test';
 import VInputText from '../components/VInputText.vue';
 
@@ -31,23 +30,6 @@ const meta: Meta<typeof VInputText> = {
             control: 'boolean',
         },
     },
-
-    render: (args) =>
-    {
-        return {
-            components: { VInputText },
-
-            setup()
-            {
-                useSharedServices();
-                return { args };
-            },
-
-            template: `<VInputText v-bind="args" />`,
-        };
-    },
-
-
 };
 
 export default meta;
