@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { UFormField } from "#components";
-import type { FormFieldViewmodel } from "../interfaces/formFieldViewmodel";
 
-defineProps<{ field: FormFieldViewmodel }>();
+type Props = {
+ name?: string;
+ label?: string;
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
-  <UFormField class="flex flex-col gap-1" :name="field.name" :label="field.label">
-    <component :is="field.content.component" v-if="field.content" />
+  <UFormField class="flex flex-col gap-1" :name="props.name" :label="props.label">
+    <slot />
   </UFormField>
 </template>

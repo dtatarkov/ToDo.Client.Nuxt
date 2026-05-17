@@ -7,6 +7,7 @@
     :disabled="props.isDisabled" 
     :hide-time-zone="true"    
     granularity="day"
+    v-bind="$attrs"
   />
 </template>
 

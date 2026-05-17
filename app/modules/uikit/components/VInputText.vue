@@ -1,11 +1,12 @@
 <template>
   <UInput 
     :id="props.id" 
-    v-model="valueModel" 
+    v-model="valueModel"     
     :name="props.name" 
     :autofocus="props.hasAutofocus" 
     :placeholder="props.placeholder"
-    :disabled="props.isDisabled" 
+    :disabled="props.isDisabled"
+    v-bind="$attrs"    
   />
 </template>
 

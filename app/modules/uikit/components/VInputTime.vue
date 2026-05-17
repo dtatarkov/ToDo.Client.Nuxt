@@ -8,6 +8,7 @@
     :hide-time-zone="true"    
     :hour-cycle="24"
     granularity="minute"
+    v-bind="$attrs"
   />
 </template>
 

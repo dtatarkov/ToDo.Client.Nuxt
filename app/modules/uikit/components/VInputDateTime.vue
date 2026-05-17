@@ -1,10 +1,11 @@
 <template>
-    <div class="flex gap-1">
+    <div class="flex gap-1" v-bind="$attrs">
         <VInputDate 
             v-bind="props" 
             :id="inputDateId" 
             v-model:value="date" 
             :name="inputDateName" 
+            class="w-full"
         />
 
         <VInputTime 
@@ -12,7 +13,8 @@
             :id="inputTimeId" 
             v-model:value="time" 
             :name="inputTimeName"
-            :has-autofocus="false" 
+            :has-autofocus="false"
+            class="w-full"
         />
     </div>
 </template>

@@ -6,6 +6,7 @@
     :autofocus="props.hasAutofocus" 
     :placeholder="props.placeholder"
     :disabled="props.isDisabled" 
+    v-bind="$attrs"
   />
 </template>
 
