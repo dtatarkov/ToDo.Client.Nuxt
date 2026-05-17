@@ -1,7 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VInputDate from '../components/VInputDate.vue';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
 type InputDateStoryArgs = {
     value: Date | undefined;
@@ -11,32 +10,23 @@ type InputDateStoryArgs = {
     isDisabled: boolean;
 };
 
-const meta: Meta<InputDateStoryArgs> = {
+const meta: Meta<typeof VInputDate> = {
     title: 'UIKit/InputDate',
+    component: VInputDate,
 
     render: (args) =>
     {
         return {
+            components: { VInputDate },
+
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const input = uikitFactory.createInputDate();
-
-                watchEffect(() =>
-                {
-                    input.value = args.value;
-                    input.id = args.id;
-                    input.name = args.name;
-                    input.hasAutofocus = args.hasAutofocus;
-                    input.isDisabled = args.isDisabled;
-                });
-
-                return { input };
+                return { args };
             },
 
-            template: `<component :is="input.component" />`,
+            template: `<VInputDate v-bind="args" />`,
         };
     },
 
