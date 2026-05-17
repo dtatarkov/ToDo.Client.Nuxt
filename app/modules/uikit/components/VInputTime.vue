@@ -1,0 +1,42 @@
+<template>
+  <UInputTime
+    :id="props.id" 
+    v-model="time" 
+    :name="props.name" 
+    :autofocus="props.hasAutofocus" 
+    :disabled="props.isDisabled" 
+    :hideTimeZone="true"    
+    :hourCycle="24"
+    granularity="minute"
+  />
+</template>
+
+<script setup lang="ts">
+import { useService } from '@/modules/shared/composables/useService';
+import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
+import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
+
+type Props = {
+  id?: string;
+  name?: string;
+  hasAutofocus?: boolean;
+  isDisabled?: boolean;
+  value?: number;
+}
+
+const timeMapper = useService(TimeMapper);
+const optionalTimeMapper = new OptionalValueMapper(timeMapper);
+
+const props = defineProps<Props>();
+const valueModel = defineModel<number>('value');
+
+const time = computed({
+  get() {
+    return optionalTimeMapper.map(valueModel.value);
+  },
+
+  set(value) {
+    valueModel.value = optionalTimeMapper.mapReverse(value);
+  }
+});
+</script>
