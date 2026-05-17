@@ -1,1 +1,14 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run precommit scripts (typecheck, lint:fix, test)
 pnpm precommit
+
+# Check if any files were modified by the precommit scripts
+if ! git diff --quiet; then
+  echo ""
+  echo "Code was auto-formatted by lint:fix. Please review the changes and commit again."
+  echo "Files that were changed:"
+  git diff --name-only
+  exit 1
+fi
