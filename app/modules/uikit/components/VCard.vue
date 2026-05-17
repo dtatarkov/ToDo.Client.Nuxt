@@ -22,15 +22,13 @@
 import { useService } from '@/modules/shared/composables/useService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
+import type { CardData } from '../types/cardData';
 
 defineOptions({
   inheritAttrs: false
 });
 
-const props = withDefaults(defineProps<{
-  title?: string,
-  description?: string,
-}>(), {
+const props = withDefaults(defineProps<CardData>(), {
   title                : '',
   description          : '',
 });
