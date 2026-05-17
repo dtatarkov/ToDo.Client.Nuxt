@@ -16,6 +16,10 @@ type VButtonGeneralEmits = {
   (e: 'click'): void;
 };
 
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = withDefaults(defineProps<VButtonGeneralProps>(), {
   title: '',
   color: 'neutral',

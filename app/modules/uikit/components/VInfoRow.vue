@@ -13,5 +13,9 @@ type Props = {
   label: string;
 }
 
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = defineProps<Props>();
 </script>

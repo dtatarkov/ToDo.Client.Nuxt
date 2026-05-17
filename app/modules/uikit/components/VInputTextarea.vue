@@ -19,6 +19,10 @@ type Props = {
   value?: string;
 }
 
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = defineProps<Props>();
 const valueModel = defineModel<string>('value', { default: '' });
 </script>

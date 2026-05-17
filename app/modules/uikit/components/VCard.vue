@@ -23,6 +23,10 @@ import { useService } from '@/modules/shared/composables/useService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
 
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = withDefaults(defineProps<{
   title?: string,
   description?: string,

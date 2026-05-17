@@ -16,10 +16,6 @@ import { useService } from '@/modules/shared/composables/useService';
 import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
 
-defineOptions({
-  inheritAttrs: false
-});
-
 type Props = {
   id?: string;
   name?: string;
@@ -27,6 +23,10 @@ type Props = {
   isDisabled?: boolean;
   value?: number;
 }
+
+defineOptions({
+  inheritAttrs: false
+});
 
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);

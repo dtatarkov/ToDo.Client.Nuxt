@@ -13,6 +13,10 @@ type VButtonIconEmits = {
   (e: 'click'): void;
 };
 
+defineOptions({
+  inheritAttrs: false
+});
+
 const props = withDefaults(defineProps<VButtonIconProps>(), {
   icon: 'i-heroicons-question-mark-circle',
   isDisabled: false,
