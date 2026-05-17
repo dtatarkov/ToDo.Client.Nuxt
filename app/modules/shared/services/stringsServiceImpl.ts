@@ -14,7 +14,9 @@ export class StringsServiceImpl extends StringsService
     return trimmedStr.length === 0;
   }
 
-  postfixNotEmpty(str: string, postfix: string, separator = '-'): string
+  postfixNotEmpty(str: string | undefined, postfix: string, separator?: string): string | undefined;
+  postfixNotEmpty(str: string, postfix: string, separator?: string): string;
+  postfixNotEmpty(str: string | undefined, postfix: string, separator = '-'): string | undefined
   {
     if (this.isStringEmpty(str))
     {

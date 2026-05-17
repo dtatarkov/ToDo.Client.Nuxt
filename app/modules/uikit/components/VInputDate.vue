@@ -15,6 +15,10 @@ import { useService } from '@/modules/shared/composables/useService';
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
 
+defineOptions({
+  inheritAttrs: false
+});
+
 type Props = {
   id?: string;
   name?: string;

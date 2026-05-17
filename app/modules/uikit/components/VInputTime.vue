@@ -16,6 +16,10 @@ import { useService } from '@/modules/shared/composables/useService';
 import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
 
+defineOptions({
+  inheritAttrs: false
+});
+
 type Props = {
   id?: string;
   name?: string;

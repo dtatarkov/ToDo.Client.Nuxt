@@ -1,42 +1,24 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import VInputDateTime from '../components/VInputDateTime.vue';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
-type InputDateTimeStoryArgs = {
-    value: Date | undefined;
-    id: string;
-    name: string;
-    hasAutofocus: boolean;
-    isDisabled: boolean;
-};
-
-const meta: Meta<InputDateTimeStoryArgs> = {
+const meta: Meta<typeof VInputDateTime> = {
     title: 'UIKit/InputDateTime',
+    component: VInputDateTime,
 
     render: (args) =>
     {
         return {
+            components: { VInputDateTime },
+
             setup()
             {
-                useAppServices();
+                useSharedServices();
 
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const input = uikitFactory.createInputDateTime();
-
-                watchEffect(() =>
-                {
-                    input.value = args.value;
-                    input.id = args.id;
-                    input.name = args.name;
-                    input.hasAutofocus = args.hasAutofocus;
-                    input.isDisabled = args.isDisabled;
-                });
-
-                return { input };
+                return { args };
             },
 
-            template: `<component :is="input.component" />`,
+            template: `<VInputDateTime v-bind="args" />`,
         };
     },
 
@@ -60,7 +42,7 @@ const meta: Meta<InputDateTimeStoryArgs> = {
 };
 
 export default meta;
-type Story = StoryObj<InputDateTimeStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
