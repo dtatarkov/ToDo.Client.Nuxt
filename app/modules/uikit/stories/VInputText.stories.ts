@@ -1,45 +1,14 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useAppServices } from '@/composables/useAppServices';
-import { UIKitViewmodelsFactory } from '../interfaces/uikitViewmodelsFactory';
-import { useService } from '@/modules/shared/composables/useService';
+import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { fn } from 'storybook/test';
+import VInputText from '../components/VInputText.vue';
 
-type InputTextStoryArgs = {
-    value: string;
-    placeholder: string;
-    id: string;
-    name: string;
-    hasAutofocus: boolean;
-    isDisabled: boolean;
-};
-
-const meta: Meta<InputTextStoryArgs> = {
+const meta: Meta<typeof VInputText> = {
     title: 'UIKit/InputText',
+    component: VInputText,
 
-    render: (args) =>
-    {
-        return {
-            setup()
-            {
-                useAppServices();
-
-                const uikitFactory = useService(UIKitViewmodelsFactory);
-                const input = uikitFactory.createInputText();
-
-                watchEffect(() =>
-                {
-                    input.value = args.value;
-                    input.placeholder = args.placeholder;
-                    input.id = args.id;
-                    input.name = args.name;
-                    input.hasAutofocus = args.hasAutofocus;
-                    input.isDisabled = args.isDisabled;
-                });
-
-                return { input };
-            },
-
-            template: `<component :is="input.component" />`,
-        };
+    args: {
+        'onUpdate:value': fn(),
     },
 
     argTypes: {
@@ -62,10 +31,27 @@ const meta: Meta<InputTextStoryArgs> = {
             control: 'boolean',
         },
     },
+
+    render: (args) =>
+    {
+        return {
+            components: { VInputText },
+
+            setup()
+            {
+                useSharedServices();
+                return { args };
+            },
+
+            template: `<VInputText v-bind="args" />`,
+        };
+    },
+
+
 };
 
 export default meta;
-type Story = StoryObj<InputTextStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
