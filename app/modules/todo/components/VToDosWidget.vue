@@ -5,7 +5,7 @@
     </VToolbar>
 
     <VGrid>
-      <VToDoCard v-for="cardData in cardsData" v-bind="cardData" :key="cardData.id" />
+      <VToDoCard v-for="cardData in cardsData" v-bind="cardData" :key="cardData.id" @edit="handleEditToDoRequest(cardData.id)" />
     </VGrid>
   </div>
 </template>
@@ -19,15 +19,21 @@ import { useService } from '@/modules/shared/composables/useService';
 import { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
 import { CreateToDoUseCase } from '../usecases/createToDoUseCase';
+import { EditToDoUseCase } from '../usecases/editToDoUseCase';
 
 const initializeToDosUseCase = useService(InitializeToDosUseCase);
 const getToDoCardsUseCase = useService(GetToDoCardsUseCase);
 const showAddToDoDialogUseCase = useService(CreateToDoUseCase);
+const showEditToDoDialogUseCase = useService(EditToDoUseCase);
 
 const cardsData = computed(() => getToDoCardsUseCase.execute());
 
 function handleAddToDoButtonClick() {
   showAddToDoDialogUseCase.execute();
+}
+
+function handleEditToDoRequest(id: string) {
+    showEditToDoDialogUseCase.executeAsync(id);
 }
 
 await initializeToDosUseCase.executeAsync();
