@@ -1,0 +1,236 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+' Main Factory Classes
+abstract class FormViewmodelFactory {
+  +{abstract} create<TEntity>(submitHandler: FormSubmitHandler): FormViewmodel<TEntity>
+}
+
+abstract class FormElementViewmodelFactory {
+  +{abstract} createElement(name: string, data: FormElementViewmodelCreateData): FormElementViewmodel
+}
+
+' Factory Implementations
+class FormViewmodelFactoryImpl {
+  -formElementFactory: FormElementViewmodelFactory
+  +create<TEntity>(submitHandler: FormSubmitHandler): FormViewmodel<TEntity>
+}
+
+class FormElementViewmodelFactoryImpl {
+  -uiKitElementsFactory: UIKitViewmodelsFactory
+  +createElement(name: string, data: FormElementViewmodelCreateData): FormElementViewmodel
+  -createInputElement(type: FormElementType): InputViewmodel
+}
+
+' UIKit Factory Implementation
+class UIKitViewmodelFactoryImpl {
+  -stringsService: StringsService
+  -vueComponentPropsFactory: VueComponentPropsFactory
+  -dataAdapterFactory: DataAdapterFactory
+  -zonedDateTimeMapper: ZonedDateTimeMapper
+  -timeMapper: TimeMapper
+  -datesService: DatesService
+  +createInputText(): InputTextViewmodel
+  +createTextarea(): InputTextareaViewmodel
+  +createInputDate(): InputDateViewmodel
+  +createInputTime(): InputTimeViewmodel
+  +createInputDateTime(): InputDateTimeViewmodel
+  +createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel
+  +createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel
+  +createGrid<T>(source?: MaybeObservable<T[]>): GridViewmodel<T>
+  +createInfoBlock(): InfoBlockViewmodel
+  +createCard(): CardViewmodel
+  +createToolbar<T>(): ToolbarViewmodel<T>
+}
+
+' Base Input Implementation
+abstract class InputViewmodelNuxtUIBase<V, Props, Data> {
+  -propsLazy: LazyEntityBase<Props>
+  -dataLazy: LazyEntityBase<Data>
+  +key: string
+  +id: string | undefined
+  +name: string | undefined
+  +hasAutofocus: boolean
+  +value: V
+  +isDisabled: boolean
+  +disable(): void
+  +enable(): void
+  -getPropsScheme(): VueComponentPropsScheme<Props>
+  -getDataScheme(): DataAdapterFieldsScheme<Data, Props>
+}
+
+abstract class InputViewmodelComposedBase<V> {
+  -children: Record<string, InputViewmodel>
+  -dataSetters: Record<string, Action<[any]>>
+  +key: string
+  +id: string
+  +name: string
+  +isDisabled: boolean
+  +disable(): void
+  +enable(): void
+}
+
+' Input Mixins
+abstract class InputViewmodelWithPlaceholder<T> {
+  +placeholder: string
+}
+
+' Input Implementations
+class InputTextViewmodelImpl {
+  +component: { setup: () => any }
+}
+
+class InputTextareaViewmodelImpl {
+  +component: { setup: () => any }
+}
+
+class InputDateViewmodelImpl {
+  -optionalZonedDateTimeMapper: ValueMapper<Date | undefined, ZonedDateTime | undefined>
+  +component: { setup: () => any }
+  +hideTimeZone: boolean
+  +granularity: 'day'
+}
+
+class InputTimeViewmodelImpl {
+  -optionalTimeMapper: ValueMapper<number | undefined, Time | undefined>
+  +component: { setup: () => any }
+  +hideTimeZone: boolean
+  +granularity: 'minute'
+  +hourCycle: 24
+}
+
+class InputDateTimeViewmodelImpl {
+  +value: Date | undefined
+  +hasAutofocus: boolean
+}
+
+' Interfaces and Types
+interface FormSubmitHandler {
+  +submit(data: Record<string, any>): Promise<void>
+}
+
+interface FormViewmodel<TEntity> {
+  +elements: FormElementViewmodel[]
+  +isDisabled: boolean
+  +getData(): Record<keyof TEntity, any>
+  +setData(data: Record<keyof TEntity, any>): void
+  +setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>): void
+  +submit(): Promise<void>
+  +setDisabledStateChangeHandler(handler: Action<[boolean]>): void
+  +setSubmittedHandler(handler: Action): void
+  +destroy(): void
+}
+
+interface FormElementViewmodel {
+  +name: string
+  +value: any
+  +isDisabled: boolean
+  +disable(): void
+  +enable(): void
+}
+
+' UIKit Interfaces
+interface UIKitViewmodelsFactory {
+  +createInputText(): InputTextViewmodel
+  +createTextarea(): InputTextareaViewmodel
+  +createInputDate(): InputDateViewmodel
+  +createInputTime(): InputTimeViewmodel
+  +createInputDateTime(): InputDateTimeViewmodel
+  +createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonIconViewmodel
+  +createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel
+  +createGrid<T extends Viewmodel>(source?: MaybeObservable<T[]>): GridViewmodel<T>
+  +createInfoBlock(): InfoBlockViewmodel
+  +createCard(): CardViewmodel
+  +createToolbar<T extends Viewmodel>(): ToolbarViewmodel<T>
+}
+
+interface InputViewmodel<V> {
+  +key: string
+  +id: string | undefined
+  +name: string | undefined
+  +hasAutofocus: boolean
+  +value: V
+  +isDisabled: boolean
+  +component: { setup: () => any }
+  +disable(): void
+  +enable(): void
+}
+
+' Viewmodel Implementation
+class FormViewmodelImpl<TEntity> {
+  -elementsInternal: Ref<FormElementViewmodel[]>
+  -state: FormBaseState
+  -disabledStateChangeHandler: HandlerWrapper<[boolean]>
+  -submittedHandler: HandlerWrapper
+  +key: string
+  +component: { setup: () => any }
+  +elements: FormElementViewmodel[]
+  +isDisabled: boolean
+  +getData(): Record<keyof TEntity, any>
+  +setData(data: Record<keyof TEntity, any>): void
+  +setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>): void
+  +submit(): Promise<void>
+  +setDisabledStateChangeHandler(handler: Action<[boolean]>): void
+  +setSubmittedHandler(handler: Action): void
+  +destroy(): void
+  -disable(): void
+  -enable(): void
+}
+
+class FormElementBase {
+  -inputElement: InputViewmodel
+  -data: FormElementViewmodelData
+  +name: string
+  +value: any
+  +isDisabled: boolean
+  +setData(data: FormElementViewmodelData): void
+  +disable(): void
+  +enable(): void
+}
+
+' Enums
+enum FormElementType {
+  inputText
+  textarea
+  inputDate
+  inputTime
+  inputDateTime
+}
+
+' Relationships
+FormViewmodelFactoryImpl --|> FormViewmodelFactory
+FormElementViewmodelFactoryImpl --|> FormElementViewmodelFactory
+FormViewmodelImpl --|> FormViewmodel
+FormElementBase --|> FormElementViewmodel
+UIKitViewmodelFactoryImpl --|> UIKitViewmodelsFactory
+InputTextViewmodelImpl --|> InputViewmodelWithPlaceholder<InputViewmodelNuxtUIBase<InputViewmodelTextProps, InputTextViewmodelData>>
+InputTextViewmodelImpl --|> InputViewmodelNuxtUIBase<InputViewmodelTextProps, InputTextViewmodelData>
+InputTextareaViewmodelImpl --|> InputViewmodelWithPlaceholder<InputViewmodelNuxtUIBase<InputViewmodelTextareaProps, InputTextareaViewmodelData>>
+InputTextareaViewmodelImpl --|> InputViewmodelNuxtUIBase<InputViewmodelTextareaProps, InputTextareaViewmodelData>
+InputDateViewmodelImpl --|> InputViewmodelNuxtUIBase<Date | undefined, InputElementDateProps, InputDateViewmodel>
+InputTimeViewmodelImpl --|> InputViewmodelNuxtUIBase<number | undefined, InputElementTimeProps, InputTimeViewmodelData>
+InputDateTimeViewmodelImpl --|> InputViewmodelComposedBase<Date | undefined>
+InputViewmodelNuxtUIBase <|-- InputViewmodelNuxtUIBaseString
+InputViewmodelNuxtUIBaseString <|-- InputTextViewmodelImpl
+InputViewmodelNuxtUIBaseString <|-- InputTextareaViewmodelImpl
+FormViewmodelFactoryImpl *-- FormElementViewmodelFactory : "uses"
+FormViewmodelImpl *-- FormElementViewmodelFactory : "uses"
+FormElementViewmodelFactoryImpl *-- UIKitViewmodelsFactory : "uses"
+FormElementViewmodelFactoryImpl --> FormElementType : "uses switch"
+FormViewmodelImpl --> FormDisabledException : "throws"
+FormViewmodelImpl --> HandlerWrapper : "uses"
+FormViewmodelImpl --> getUniqueId : "uses"
+FormViewmodelImpl --> VForm : "renders via"
+UIKitViewmodelFactoryImpl --> InputTextViewmodelImpl : "creates"
+UIKitViewmodelFactoryImpl --> InputTextareaViewmodelImpl : "creates"
+UIKitViewmodelFactoryImpl --> InputDateViewmodelImpl : "creates"
+UIKitViewmodelFactoryImpl --> InputTimeViewmodelImpl : "creates"
+UIKitViewmodelFactoryImpl --> InputDateTimeViewmodelImpl : "creates"
+InputDateTimeViewmodelImpl --> InputDateViewmodelImpl : "composes"
+InputDateTimeViewmodelImpl --> InputTimeViewmodelImpl : "composes"
+InputViewmodelNuxtUIBase --> VueComponentPropsFactory : "uses"
+InputViewmodelNuxtUIBase --> DataAdapterFactory : "uses"
+InputViewmodelNuxtUIBase --> LazyEntityBase : "uses"
+InputViewmodelComposedBase --> StringsService : "uses"
+@enduml

@@ -1,0 +1,85 @@
+@startuml
+' EditToDoUseCase Class Diagram
+' This diagram shows the correct class structure for editing a to-do item based on the actual implementation
+
+' Classes
+interface ToDo {
+  +id: string
+  +title: string
+  +description: string
+  +completionDatePlanned: Date | undefined
+  +completionDateActual: Date | undefined
+  +owner: ToDosOwner | undefined
+  +isNew: boolean
+  +getData(): ToDoData
+  +toObservableData(): Observable<ToDoData>
+  +clone(): ToDo
+  +saveAsync(): Promise<void>
+}
+
+class ToDoImpl {
+  -ownerInternal: ToDosOwner | undefined
+  -dataInternal: ObservableSource<ToDoData>
+  +constructor(formFactory: FormViewmodelFactory, overlayService: OverlayService, stringsService: StringsService)
+  +id: string
+  +title: string
+  +description: string
+  +completionDatePlanned: Date | undefined
+  +completionDateActual: Date | undefined
+  +owner: ToDosOwner | undefined
+  +isNew: boolean
+  +getData(): ToDoData
+  +toObservableData(): Observable<ToDoData>
+  +clone(): ToDo
+  +saveAsync(): Promise<void>
+}
+
+class EditToDoUseCaseImpl {
+  -todosOwner: ToDosOwner
+  +executeAsync(id: string): Promise<void>
+}
+
+interface ToDosOwner {
+  +getToDoByIdAsync(id: string): Promise<ToDo>
+  +saveToDoAsync(todo: ToDo): Promise<void>
+}
+
+class ToDoData {
+  id: string
+  title: string
+  description: string
+  completionDatePlanned: Date | undefined
+  completionDateActual: Date | undefined
+}
+
+' Relationships
+ToDoImpl --|> ToDo
+EditToDoUseCaseImpl ..> ToDosOwner : uses
+EditToDoUseCaseImpl ..> ToDo : retrieves and modifies
+ToDosOwner ..> ToDo : contains
+
+' Notes
+note right of EditToDoUseCaseImpl
+  Implementation of the EditToDoUseCase
+  Uses ToDosOwner to retrieve the ToDo by id
+  Calls showEditDialog() on the retrieved ToDo
+end note
+
+note right of ToDoImpl
+  Concrete implementation of the ToDo interface
+  Uses ObservableSource to manage data changes
+  Contains business logic for editing and saving
+  Shows edit dialog with form elements
+end note
+
+note bottom of ToDosOwner
+  Interface for accessing to-do items
+  Provides methods to get and save to-dos
+end note
+
+legend right
+  Edit To-Do Use Case Class Diagram
+  Shows the accurate class structure based on implementation
+end legend
+
+@enduml

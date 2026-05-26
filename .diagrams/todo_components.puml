@@ -1,0 +1,107 @@
+@startuml
+' Generated from actual project interfaces and components
+' Based on TypeScript interfaces and Vue components in the ToDo.Client.Nuxt project
+
+package "ToDo Application" {
+    package "Domain" {
+        ' Use Cases
+        interface GetToDoCardsUseCase {
+            +execute(): ToDoCardData[]
+        }
+
+        interface CreateToDoUseCase {
+            +execute(): void
+        }
+
+        interface InitializeToDosUseCase {
+            +executeAsync(): Promise<void>
+        }
+
+        interface EditToDoUseCase {
+            +executeAsync(id: string): Promise<void>
+        }
+        
+        interface SubscribeToToDoChangesUseCase {
+            +execute(): Action
+        }
+
+        ' Data Type
+        class ToDoCardData {
+            +id: string
+            +title: string
+            +description: string
+            +completionDateActual: Date | undefined
+            +completionDatePlanned: Date | undefined
+        }
+
+        ' Relationships
+        GetToDoCardsUseCase --> ToDoCardData : returns
+    }
+
+    package "UI" {
+        ' Vue Components
+        class VToDosWidget <<Vue>> {
+            +cardsData: ToDoCardData[]
+        }
+        
+        class VToDoCard <<Vue>> {
+            +props: ToDoCardData
+        }
+
+        ' Relationships
+        VToDosWidget --> GetToDoCardsUseCase : uses
+        VToDosWidget --> CreateToDoUseCase : uses
+        VToDosWidget --> InitializeToDosUseCase : uses
+        VToDosWidget --> ToDoCardData : displays
+        VToDosWidget --> SubscribeToToDoChangesUseCase : uses
+        VToDoCard --> ToDoCardData : binds
+        VToDoCard --> EditToDoUseCase : uses
+    }
+}
+
+note right of GetToDoCardsUseCase
+    Use case that retrieves todo cards data
+    Used by VToDosWidget component
+end note
+
+note right of CreateToDoUseCase
+    Use case that creates a new todo
+    Triggered by VToDosWidget button click
+end note
+
+note right of InitializeToDosUseCase
+    Use case that initializes todos on startup
+    Called when VToDosWidget is mounted
+end note
+
+note right of EditToDoUseCase
+    Use case that edits an existing todo
+    Triggered by VToDoCard edit button
+end note
+
+note right of SubscribeToToDoChangesUseCase
+    Use case that subscribes to todo changes
+    Returns an Action that can be used to unsubscribe
+    Used by VToDosWidget to receive real-time updates
+end note
+
+note right of VToDosWidget
+    Vue component that displays a list of todos
+    Located in /app/modules/todo/components/VToDosWidget.vue
+    Shows multiple todo cards
+    Receives cardsData as computed property from GetToDoCardsUseCase
+end note
+
+note right of VToDoCard
+    Vue component that displays an individual todo
+    Located in /app/modules/todo/components/VToDoCard.vue
+    Receives todo data through props
+    Props: id, title, description, completionDateActual, completionDatePlanned
+end note
+
+note right of ToDoCardData
+    Data transfer object for todo card display
+    Contains essential todo information for presentation
+    Used by GetToDoCardsUseCase and VToDoCard component
+end note
+@enduml
