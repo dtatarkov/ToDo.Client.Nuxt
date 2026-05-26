@@ -6,7 +6,7 @@ import type { ModalConfirmViewmodel } from '../entities/modalConfirmViewmodel';
 import type { ModalViewmodel } from '../entities/modalViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
-import { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
+import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 
 @dependency(ButtonsFactory)
 @dependency(AppPublicRuntimeConfig)

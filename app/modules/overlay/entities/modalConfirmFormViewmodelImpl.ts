@@ -1,7 +1,7 @@
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import type { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
-import type { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
+import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 
 export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
 {

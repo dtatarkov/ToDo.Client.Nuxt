@@ -22,7 +22,7 @@ import { EditToDoUseCaseImpl } from "../usecases/editToDoUseCaseImpl";
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import { GetToDoCardsUseCaseImpl } from "../usecases/getToDoCardsUseCaseImpl";
 import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
-import { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
+import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 
 export function useTodoServices(): void
 {

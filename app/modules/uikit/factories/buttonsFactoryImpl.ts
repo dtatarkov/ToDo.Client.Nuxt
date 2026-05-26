@@ -1,4 +1,4 @@
-import { ButtonsFactory } from '../interfaces/buttonsFactory';
+import { ButtonsFactory } from './buttonsFactory';
 import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from '../interfaces/buttonGeneralViewmodel';
 import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from '../interfaces/buttonIconViewmodel';
 import { ButtonGeneralViewmodelImpl } from '../viewmodels/buttons/buttonGeneralViewmodelImpl';

@@ -1,7 +1,7 @@
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import { ModalViewmodelImpl } from './modalViewmodelImpl';
 import { EffectsContainerImpl } from '@/modules/shared/entities/effectsContainerImpl';
-import type { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
+import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 
 export class ModalConfirmViewmodelImpl extends ModalViewmodelImpl
 {
