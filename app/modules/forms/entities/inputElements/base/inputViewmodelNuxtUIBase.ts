@@ -6,7 +6,7 @@ import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapter
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { InputViewmodelData } from '@/modules/uikit/types/inputViewmodels/inputViewmodelData';
-import { InputViewmodel } from "../../../interfaces/inputViewmodel";
+import { InputViewmodel } from "../inputViewmodel";
 
 export type InputViewmodelNuxtUIBaseProps<V> = {
   id: string | undefined;

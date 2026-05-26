@@ -1,8 +1,8 @@
 import { UInput } from "#components";
 import { InputViewmodelWithPlaceholder } from "./mixins/inputViewmodelWithPlaceholder";
-import type { InputTextViewmodelData } from '../../types/inputViewmodels/inputTextViewmodelData';
+import type { InputTextViewmodelData } from '../../../uikit/types/inputViewmodels/inputTextViewmodelData';
 import { InputViewmodelNuxtUIBaseString, type InputViewmodelNuxtUIBaseStringProps } from "./base/inputViewmodelNuxtUIBaseString";
-import type { InputTextViewmodel } from '../../interfaces/inputTextViewmodel';
+import type { InputTextViewmodel } from './inputTextViewmodel';
 
 type InputViewmodelTextProps = InputViewmodelNuxtUIBaseStringProps & {
   placeholder: string;

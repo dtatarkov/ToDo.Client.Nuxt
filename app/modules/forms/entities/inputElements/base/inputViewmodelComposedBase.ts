@@ -1,5 +1,5 @@
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { InputViewmodel } from "../../../interfaces/inputViewmodel";
+import { InputViewmodel } from "../inputViewmodel";
 import type { Action } from '@/modules/shared/types/action';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 

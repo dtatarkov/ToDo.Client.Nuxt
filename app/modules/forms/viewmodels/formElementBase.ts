@@ -2,7 +2,7 @@ import { FormFieldBase } from "./formFieldBase";
 import { FormElementViewmodel } from "../interfaces/formElementViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
-import type { InputViewmodel } from '@/modules/uikit/interfaces/inputViewmodel';
+import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
 import type { FormElementViewmodelCreateDataWithName } from '../types/formElementViewmodelCreateDataWithName';
 
 export class FormElementBase<V = any> extends FormElementViewmodel

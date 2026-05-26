@@ -1,5 +1,5 @@
-import { Viewmodel } from "./viewmodel";
-import type { InputViewmodelData } from "../types/inputViewmodels/inputViewmodelData";
+import { Viewmodel } from "../../../uikit/interfaces/viewmodel";
+import type { InputViewmodelData } from "../../../uikit/types/inputViewmodels/inputViewmodelData";
 
 export abstract class InputViewmodel<V = any> extends Viewmodel<string> implements InputViewmodelData<V>
 {

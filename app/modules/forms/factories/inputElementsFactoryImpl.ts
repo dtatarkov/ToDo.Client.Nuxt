@@ -1,9 +1,9 @@
 import { InputElementsFactory } from "./inputElementsFactory";
-import { InputTextViewmodelImpl } from "@/modules/uikit/viewmodels/inputElements/inputTextViewmodelImpl";
-import { InputTextareaViewmodelImpl } from "@/modules/uikit/viewmodels/inputElements/inputTextareaViewmodelImpl";
-import { InputDateViewmodelImpl } from "@/modules/uikit/viewmodels/inputElements/inputDateViewmodelImpl";
-import { InputTimeViewmodelImpl } from "@/modules/uikit/viewmodels/inputElements/inputTimeViewmodelImpl";
-import { InputDateTimeViewmodelImpl } from "@/modules/uikit/viewmodels/inputElements/inputDateTimeViewmodelImpl";
+import { InputTextViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTextViewmodelImpl";
+import { InputTextareaViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTextareaViewmodelImpl";
+import { InputDateViewmodelImpl } from "@/modules/forms/entities/inputElements/inputDateViewmodelImpl";
+import { InputTimeViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTimeViewmodelImpl";
+import { InputDateTimeViewmodelImpl } from "@/modules/forms/entities/inputElements/inputDateTimeViewmodelImpl";
 import { StringsService } from "@/modules/shared/interfaces/stringsService";
 import { VueComponentPropsFactory } from "@/modules/shared/interfaces/vueComponentPropsFactory";
 import { DataAdapterFactory } from "@/modules/shared/interfaces/dataAdapterFactory";
@@ -11,11 +11,11 @@ import { ZonedDateTimeMapper } from "@/modules/shared/interfaces/zonedDateTimeMa
 import { TimeMapper } from "@/modules/shared/interfaces/timeMapper";
 import { DatesService } from "@/modules/shared/interfaces/datesService";
 import { dependency } from "@/modules/shared/decorators/dependency";
-import type { InputTextViewmodel } from "@/modules/uikit/interfaces/inputTextViewmodel";
-import type { InputTextareaViewmodel } from "@/modules/uikit/interfaces/inputTextareaViewmodel";
-import type { InputDateViewmodel } from "@/modules/uikit/interfaces/inputDateViewmodel";
-import type { InputTimeViewmodel } from "@/modules/uikit/interfaces/inputTimeViewmodel";
-import type { InputDateTimeViewmodel } from "@/modules/uikit/interfaces/inputDateTimeViewmodel";
+import type { InputTextViewmodel } from "@/modules/forms/entities/inputElements/inputTextViewmodel";
+import type { InputTextareaViewmodel } from "@/modules/forms/entities/inputElements/inputTextareaViewmodel";
+import type { InputDateViewmodel } from "@/modules/forms/entities/inputElements/inputDateViewmodel";
+import type { InputTimeViewmodel } from "@/modules/forms/entities/inputElements/inputTimeViewmodel";
+import type { InputDateTimeViewmodel } from "@/modules/forms/entities/inputElements/inputDateTimeViewmodel";
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)

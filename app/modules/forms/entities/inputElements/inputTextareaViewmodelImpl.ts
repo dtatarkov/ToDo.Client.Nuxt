@@ -1,8 +1,8 @@
 import { UTextarea } from "#components";
 import { InputViewmodelWithPlaceholder } from "./mixins/inputViewmodelWithPlaceholder";
-import type { InputTextareaViewmodelData } from '../../types/inputViewmodels/inputTextareaViewmodelData';
+import type { InputTextareaViewmodelData } from '../../../uikit/types/inputViewmodels/inputTextareaViewmodelData';
 import { InputViewmodelNuxtUIBaseString, type InputViewmodelNuxtUIBaseStringProps } from "./base/inputViewmodelNuxtUIBaseString";
-import type { InputTextareaViewmodel } from '../../interfaces/inputTextareaViewmodel';
+import type { InputTextareaViewmodel } from './inputTextareaViewmodel';
 
 type InputViewmodelTextareaProps = InputViewmodelNuxtUIBaseStringProps & {
   placeholder: string;

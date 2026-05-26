@@ -1,8 +1,8 @@
-import type { InputTextViewmodel } from '@/modules/uikit/interfaces/inputTextViewmodel';
-import type { InputTextareaViewmodel } from '@/modules/uikit/interfaces/inputTextareaViewmodel';
-import type { InputDateViewmodel } from '@/modules/uikit/interfaces/inputDateViewmodel';
-import type { InputTimeViewmodel } from '@/modules/uikit/interfaces/inputTimeViewmodel';
-import type { InputDateTimeViewmodel } from '@/modules/uikit/interfaces/inputDateTimeViewmodel';
+import type { InputTextViewmodel } from '@/modules/forms/entities/inputElements/inputTextViewmodel';
+import type { InputTextareaViewmodel } from '@/modules/forms/entities/inputElements/inputTextareaViewmodel';
+import type { InputDateViewmodel } from '@/modules/forms/entities/inputElements/inputDateViewmodel';
+import type { InputTimeViewmodel } from '@/modules/forms/entities/inputElements/inputTimeViewmodel';
+import type { InputDateTimeViewmodel } from '@/modules/forms/entities/inputElements/inputDateTimeViewmodel';
 
 export abstract class InputElementsFactory
 {

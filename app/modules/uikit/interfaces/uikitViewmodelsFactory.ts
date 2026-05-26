@@ -6,11 +6,11 @@ import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelH
 import type { CardViewmodel } from './cardViewmodel';
 import type { ToolbarViewmodel } from './toolbarViewmodel';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
-import type { InputTextViewmodel } from './inputTextViewmodel';
-import type { InputTextareaViewmodel } from './inputTextareaViewmodel';
-import type { InputDateViewmodel } from './inputDateViewmodel';
-import type { InputDateTimeViewmodel } from './inputDateTimeViewmodel';
-import type { InputTimeViewmodel } from './inputTimeViewmodel';
+import type { InputTextViewmodel } from '../../forms/entities/inputElements/inputTextViewmodel';
+import type { InputTextareaViewmodel } from '../../forms/entities/inputElements/inputTextareaViewmodel';
+import type { InputDateViewmodel } from '../../forms/entities/inputElements/inputDateViewmodel';
+import type { InputDateTimeViewmodel } from '../../forms/entities/inputElements/inputDateTimeViewmodel';
+import type { InputTimeViewmodel } from '../../forms/entities/inputElements/inputTimeViewmodel';
 
 export abstract class UIKitViewmodelsFactory
 {

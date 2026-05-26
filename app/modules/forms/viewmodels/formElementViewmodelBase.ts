@@ -1,7 +1,7 @@
 import { FormFieldBase } from "./formFieldBase";
 import type { FormElementViewmodelCreateDataWithName } from "../types/formElementViewmodelCreateDataWithName";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import type { InputViewmodel } from "@/modules/uikit/interfaces/inputViewmodel";
+import type { InputViewmodel } from "@/modules/forms/entities/inputElements/inputViewmodel";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
 import { FormElementViewmodel } from '../interfaces/formElementViewmodel';
 

@@ -1,6 +1,6 @@
 import { InputDateViewmodelImpl } from "./inputDateViewmodelImpl";
 import { InputViewmodelComposedBase } from "./base/inputViewmodelComposedBase";
-import type { InputViewmodel } from "../../interfaces/inputViewmodel";
+import type { InputViewmodel } from "./inputViewmodel";
 import { InputTimeViewmodelImpl } from "./inputTimeViewmodelImpl";
 import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
@@ -8,7 +8,7 @@ import type { DatesService } from '@/modules/shared/interfaces/datesService';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { VueComponentPropsFactory } from '@/modules/shared/interfaces/vueComponentPropsFactory';
 import type { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
-import type { InputDateTimeViewmodel } from '../../interfaces/inputDateTimeViewmodel';
+import type { InputDateTimeViewmodel } from './inputDateTimeViewmodel';
 
 export class InputDateTimeViewmodelImpl extends InputViewmodelComposedBase<Date | undefined> implements InputDateTimeViewmodel
 {

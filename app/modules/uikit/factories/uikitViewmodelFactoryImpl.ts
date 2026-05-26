@@ -1,9 +1,9 @@
 import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
-import { InputTextViewmodelImpl } from "../viewmodels/inputElements/inputTextViewmodelImpl";
-import { InputTextareaViewmodelImpl } from "../viewmodels/inputElements/inputTextareaViewmodelImpl";
-import { InputDateViewmodelImpl } from "../viewmodels/inputElements/inputDateViewmodelImpl";
-import { InputTimeViewmodelImpl } from "../viewmodels/inputElements/inputTimeViewmodelImpl";
-import { InputDateTimeViewmodelImpl } from "../viewmodels/inputElements/inputDateTimeViewmodelImpl";
+import { InputTextViewmodelImpl } from "../../forms/entities/inputElements/inputTextViewmodelImpl";
+import { InputTextareaViewmodelImpl } from "../../forms/entities/inputElements/inputTextareaViewmodelImpl";
+import { InputDateViewmodelImpl } from "../../forms/entities/inputElements/inputDateViewmodelImpl";
+import { InputTimeViewmodelImpl } from "../../forms/entities/inputElements/inputTimeViewmodelImpl";
+import { InputDateTimeViewmodelImpl } from "../../forms/entities/inputElements/inputDateTimeViewmodelImpl";
 import { ButtonGeneralViewmodelImpl } from "../viewmodels/buttons/buttonGeneralViewmodelImpl";
 import { GridViewmodelImpl } from "../viewmodels/gridViewmodelImpl";
 import { InfoBlockViewmodelImpl } from "../viewmodels/infoBlockViewmodelImpl";
@@ -26,11 +26,11 @@ import { CardViewmodelImpl } from '../viewmodels/cardViewmodelImpl';
 import type { ToolbarViewmodel } from '../interfaces/toolbarViewmodel';
 import { ToolbarViewmodelImpl } from '../viewmodels/toolbarViewmodelImpl';
 import type { MaybeObservable } from '@/modules/shared/interfaces/maybeObservable';
-import type { InputTextViewmodel } from '../interfaces/inputTextViewmodel';
-import type { InputDateViewmodel } from '../interfaces/inputDateViewmodel';
-import type { InputTextareaViewmodel } from '../interfaces/inputTextareaViewmodel';
-import type { InputTimeViewmodel } from '../interfaces/inputTimeViewmodel';
-import type { InputDateTimeViewmodel } from '../interfaces/inputDateTimeViewmodel';
+import type { InputTextViewmodel } from '../../forms/entities/inputElements/inputTextViewmodel';
+import type { InputDateViewmodel } from '../../forms/entities/inputElements/inputDateViewmodel';
+import type { InputTextareaViewmodel } from '../../forms/entities/inputElements/inputTextareaViewmodel';
+import type { InputTimeViewmodel } from '../../forms/entities/inputElements/inputTimeViewmodel';
+import type { InputDateTimeViewmodel } from '../../forms/entities/inputElements/inputDateTimeViewmodel';
 
 @dependency(StringsService)
 @dependency(VueComponentPropsFactory)

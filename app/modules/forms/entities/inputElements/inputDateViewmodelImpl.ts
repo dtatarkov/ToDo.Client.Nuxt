@@ -10,7 +10,7 @@ import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMappe
 import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
-import type { InputDateViewmodel } from '../../interfaces/inputDateViewmodel';
+import type { InputDateViewmodel } from './inputDateViewmodel';
 
 export type InputElementDateProps = InputViewmodelNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'day'; };
 

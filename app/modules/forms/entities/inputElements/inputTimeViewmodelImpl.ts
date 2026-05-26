@@ -10,8 +10,8 @@ import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMappe
 import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapterFieldsScheme';
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
-import type { InputTimeViewmodel } from '../../interfaces/inputTimeViewmodel';
-import type { InputTimeViewmodelData } from '../../types/inputViewmodels/inputTimeViewmodelData';
+import type { InputTimeViewmodel } from './inputTimeViewmodel';
+import type { InputTimeViewmodelData } from '../../../uikit/types/inputViewmodels/inputTimeViewmodelData';
 
 export type InputElementTimeProps = InputViewmodelNuxtUIBaseProps<ZonedDateTime | undefined> & { hideTimeZone: boolean, granularity: 'minute'; };
 
