@@ -5,13 +5,13 @@ import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { useService } from '@/modules/shared/composables/useService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
+import { EditToDoUseCase } from '../usecases/editToDoUseCase';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import type { ToDoCardData } from '../types/todoCardData';
 
 const props = defineProps<ToDoCardData>();
 
-const showEditToDoDialogUseCase = useService(ShowEditToDoDialogUseCase);
+const showEditToDoDialogUseCase = useService(EditToDoUseCase);
 const datesService = useService(DatesService);
 const stringsService = useService(StringsService);
 

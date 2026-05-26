@@ -4,7 +4,7 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import type { CardViewmodel } from '@/modules/uikit/interfaces/cardViewmodel';
 import type { InfoBlockViewmodel } from '@/modules/uikit/interfaces/infoBlockViewmodel';
-import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
+import type { EditToDoUseCase } from '../usecases/editToDoUseCase';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { ButtonIconViewmodel } from '@/modules/uikit/interfaces/buttonIconViewmodel';
 import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
@@ -32,7 +32,7 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     private readonly uikitFactory: UIKitViewmodelsFactory,
     private readonly datesService: DatesService,
     private readonly stringsService: StringsService,
-    private readonly showEditToDoDialogUseCase: ShowEditToDoDialogUseCase,
+    private readonly showEditToDoDialogUseCase: EditToDoUseCase,
   )
   {
     super();

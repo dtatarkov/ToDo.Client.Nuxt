@@ -16,9 +16,9 @@ import { ToDosWidgetViewmodelImpl } from "../viewmodels/todosWidgetViewmodelImpl
 import { InitializeToDosUseCase } from "../interfaces/initializeToDosUseCase";
 import { InitializeToDosUseCaseImpl } from "../usecases/initializeToDosUseCaseImpl";
 import { CreateToDoUseCase } from "../usecases/createToDoUseCase";
-import { ShowEditToDoDialogUseCase } from "../interfaces/showEditToDoDialogUseCase";
+import { EditToDoUseCase } from "../usecases/editToDoUseCase";
 import { CreateToDoUseCaseImpl } from "../usecases/createToDoUseCaseImpl";
-import { ShowEditToDoDialogUseCaseImpl } from "../usecases/showEditToDoDialogUseCaseImpl";
+import { EditToDoUseCaseImpl } from "../usecases/editToDoUseCaseImpl";
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import { GetToDoCardsUseCaseImpl } from "../usecases/getToDoCardsUseCaseImpl";
 
@@ -33,6 +33,6 @@ export function useTodoServices(): void
     useServiceRegistration(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
     useServiceRegistration(InitializeToDosUseCase).to(InitializeToDosUseCaseImpl).asTransient();
     useServiceRegistration(CreateToDoUseCase).to(CreateToDoUseCaseImpl).asTransient();
-    useServiceRegistration(ShowEditToDoDialogUseCase).to(ShowEditToDoDialogUseCaseImpl).asTransient();
+    useServiceRegistration(EditToDoUseCase).to(EditToDoUseCaseImpl).asTransient();
     useServiceRegistration(GetToDoCardsUseCase).to(GetToDoCardsUseCaseImpl).asTransient();
 }

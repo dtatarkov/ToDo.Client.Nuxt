@@ -6,7 +6,7 @@ import { ToDoCardViewmodelImpl } from '../viewmodels/todoCardViewmodelImpl';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { action } from 'storybook/actions';
-import type { ShowEditToDoDialogUseCase } from '../interfaces/showEditToDoDialogUseCase';
+import type { EditToDoUseCase } from '../usecases/editToDoUseCase';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { updateReactiveFields } from '@/modules/shared/utils/updateReactiveFields';
 
@@ -33,7 +33,7 @@ const meta: Meta<ToDoCardViewmodelStoryArgs> = {
                     {
                         editAction(id);
                     }
-                } satisfies ShowEditToDoDialogUseCase;
+                } satisfies EditToDoUseCase;
 
                 const card = new ToDoCardViewmodelImpl(uikitViewmodelsFactory, datesService, stringsService, showEditToDoDialogUseCaseMock);
 
