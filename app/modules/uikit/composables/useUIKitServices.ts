@@ -1,8 +1,8 @@
-import { UIKitViewmodelsFactory } from "../interfaces/uikitViewmodelsFactory";
-import { UIKitViewmodelFactoryImpl } from "../factories/uikitViewmodelFactoryImpl";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { ButtonsFactory } from '../factories/buttonsFactory';
+import { ButtonsFactoryImpl } from '../factories/buttonsFactoryImpl';
 
 export function useUIKitServices(): void
 {
-    useServiceRegistration(UIKitViewmodelsFactory).to(UIKitViewmodelFactoryImpl).asTransient();
+    useServiceRegistration(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
 }
