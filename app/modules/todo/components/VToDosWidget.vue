@@ -15,14 +15,14 @@ import VToolbar from '@/modules/uikit/components/VToolbar.vue';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VGrid from '@/modules/uikit/components/VGrid.vue';
 import VToDoCard from './VToDoCard.vue';
-import { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { useService } from '@/modules/shared/composables/useService';
 import { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
 import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
+import { CreateToDoUseCase } from '../usecases/createToDoUseCase';
 
 const initializeToDosUseCase = useService(InitializeToDosUseCase);
 const getToDoCardsUseCase = useService(GetToDoCardsUseCase);
-const showAddToDoDialogUseCase = useService(ShowAddToDoDialogUseCase);
+const showAddToDoDialogUseCase = useService(CreateToDoUseCase);
 
 const cardsData = computed(() => getToDoCardsUseCase.execute());
 

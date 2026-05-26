@@ -1,20 +1,14 @@
 import { ToDoFactory } from "../interfaces/todoFactory";
 import { ToDoImpl } from "../entities/todoImpl";
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDo, ToDoData } from '../interfaces/todo';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
 
-@dependency(FormViewmodelFactory)
-@dependency(OverlayService)
 @dependency(StringsService)
 export class ToDoFactoryImpl extends ToDoFactory
 {
     constructor(
-        private formFactory: FormViewmodelFactory,
-        private overlayService: OverlayService,
         private stringService: StringsService,
     )
     {
@@ -23,7 +17,7 @@ export class ToDoFactoryImpl extends ToDoFactory
 
     create(data?: Partial<ToDoData>): ToDo
     {
-        const todo = new ToDoImpl(this.formFactory, this.overlayService, this.stringService);
+        const todo = new ToDoImpl(this.stringService);
 
         if (data)
         {

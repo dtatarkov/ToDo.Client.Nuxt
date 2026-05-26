@@ -2,9 +2,6 @@ import { ToDo, type ToDoData } from "../interfaces/todo";
 import type { ToDosOwner } from '../interfaces/todosOwner';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
-import { FormElementType } from '@/modules/forms/enums/formElementType';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class ToDoImpl extends ToDo
@@ -20,8 +17,6 @@ export class ToDoImpl extends ToDo
   }));
 
   constructor(
-    private formFactory: FormViewmodelFactory,
-    private overlayService: OverlayService,
     private stringsService: StringsService,
   )
   {
@@ -105,7 +100,7 @@ export class ToDoImpl extends ToDo
 
   clone(): ToDo
   {
-    const todo = new ToDoImpl(this.formFactory, this.overlayService, this.stringsService);
+    const todo = new ToDoImpl(this.stringsService);
 
     todo.id = this.id;
     todo.title = this.title;
@@ -125,44 +120,6 @@ export class ToDoImpl extends ToDo
     }
 
     await this.ownerInternal?.saveToDoAsync(this);
-  }
-
-  showEditDialog(): void
-  {
-    const form = this.formFactory.create<ToDo>({
-      submit: async formData =>
-      {
-        this.title = formData.title;
-        this.description = formData.description;
-        this.completionDatePlanned = formData.completionDatePlanned;
-
-        await this.saveAsync();
-      }
-    });
-
-    form.setElements({
-      title: {
-        type: FormElementType.inputText,
-        label: 'Название задачи',
-        placeholder: 'Введите название задачи',
-      },
-
-      description: {
-        type: FormElementType.textarea,
-        label: 'Описание задачи',
-        placeholder: 'Введите описание задачи'
-      },
-
-      completionDatePlanned: {
-        type: FormElementType.inputDateTime,
-        label: 'Плановая дата выполнения',
-      }
-    });
-
-    form.setData(this);
-
-    const modal = this.overlayService.createEditFormModal(form);
-    modal.title = 'Редактирование';
   }
 
   private updateData(modifiedDataPart: Partial<ToDoData>)

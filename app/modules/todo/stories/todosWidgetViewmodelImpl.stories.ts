@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import { fn } from 'storybook/test';
 import type { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
-import type { ShowAddToDoDialogUseCase } from '../interfaces/showAddToDoDialogUseCase';
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { useService } from '@/modules/shared/composables/useService';
 import { ToDosWidgetViewmodelImpl } from '../viewmodels/todosWidgetViewmodelImpl';
@@ -10,6 +9,7 @@ import { Suspense } from 'vue';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
 import { ToDoViewmodelsFactory } from '../interfaces/todoViewmodelsFactory';
+import type { CreateToDoUseCase } from '../usecases/createToDoUseCase';
 
 type StoryArgs = {
   cards: ToDoCardViewmodelData[];
@@ -32,7 +32,7 @@ const meta: Meta<StoryArgs> = {
 
     const showAddToDoDialogUseCase = {
       execute: fn()
-    } satisfies ShowAddToDoDialogUseCase;
+    } satisfies CreateToDoUseCase;
 
     return {
       components: { Suspense } as any,

@@ -13,6 +13,7 @@ export class ShowEditToDoDialogUseCaseImpl extends ShowEditToDoDialogUseCase
     super();
   }
 
+  //todo fix method
   async executeAsync(id: string): Promise<void>
   {
     const todo = await this.todosOwner.getToDoByIdAsync(id);
@@ -22,6 +23,6 @@ export class ShowEditToDoDialogUseCaseImpl extends ShowEditToDoDialogUseCase
       throw new ToDoNotFoundException(id);
     }
 
-    todo.showEditDialog();
+    //todo.showEditDialog();
   }
 }

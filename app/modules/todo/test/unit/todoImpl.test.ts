@@ -1,21 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDoImpl } from '../../entities/todoImpl';
-import type { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import type { OverlayService } from '@/modules/overlay/interfaces/overlayService';
 import { StringsServiceImpl } from '@/modules/shared/services/stringsServiceImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
-
-// Mock dependencies
-const mockFormFactory = {
-    create: vi.fn(),
-} satisfies FormViewmodelFactory;
-
-const mockOverlayService = {
-    createModalBase: vi.fn(),
-    createModalAddForm: vi.fn(),
-    createEditFormModal: vi.fn(),
-    getElements: vi.fn(),
-} satisfies OverlayService;
 
 const stringsService = new StringsServiceImpl();
 
@@ -27,7 +13,7 @@ describe('ToDoImpl', () =>
     {
         vi.resetAllMocks();
 
-        todo = new ToDoImpl(mockFormFactory, mockOverlayService, stringsService);
+        todo = new ToDoImpl(stringsService);
     });
 
     describe('properties', () =>
@@ -140,24 +126,6 @@ describe('ToDoImpl', () =>
         {
             todo.owner = undefined;
             await expect(todo.saveAsync()).rejects.toThrow();
-        });
-    });
-
-    describe('showEditDialog', () =>
-    {
-        it('should create form and modal', () =>
-        {
-            const mockForm = { setElements: vi.fn(), setData: vi.fn() };
-            const mockModal = { title: '' };
-            mockFormFactory.create.mockReturnValue(mockForm);
-            mockOverlayService.createEditFormModal.mockReturnValue(mockModal);
-
-            todo.showEditDialog();
-
-            expect(mockFormFactory.create).toHaveBeenCalledTimes(1);
-            expect(mockForm.setElements).toHaveBeenCalledTimes(1);
-            expect(mockForm.setData).toHaveBeenCalledWith(todo);
-            expect(mockOverlayService.createEditFormModal).toHaveBeenCalledWith(mockForm);
         });
     });
 });

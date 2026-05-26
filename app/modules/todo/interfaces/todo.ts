@@ -16,7 +16,6 @@ export abstract class ToDo
   abstract toObservableData(): Observable<ToDoData>;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
-  abstract showEditDialog(): void;
 }
 
 export type ToDoData = {

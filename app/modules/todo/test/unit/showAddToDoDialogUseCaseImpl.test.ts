@@ -1,39 +1,34 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ShowAddToDoDialogUseCaseImpl } from '../../usecases/showAddToDoDialogUseCaseImpl';
-import type { ToDo } from '../../interfaces/todo';
+import { CreateToDoUseCaseImpl } from '../../usecases/createToDoUseCaseImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
+import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
+import { overlayServiceMock } from '@/modules/overlay/mocks/overlayServiceMock';
+import { createMockToDo } from '../../mocks/todoMock';
+import { formMock } from '../../mocks/formMock';
+import { modalMock } from '../../mocks/modalMock';
+import { FormElementType } from '@/modules/forms/enums/formElementType';
 
-// Mock ToDo
-const createMockToDo = (): ToDo =>
+// Reset mocks before each test
+describe('CreateToDoUseCaseImpl', () =>
 {
-    return {
-        id: '1',
-        title: 'Test ToDo',
-        description: 'Test Description',
-        completionDatePlanned: undefined,
-        completionDateActual: undefined,
-        owner: undefined,
-        isNew: true,
-        getData: vi.fn(),
-        clone: vi.fn(),
-        saveAsync: vi.fn(),
-        showEditDialog: vi.fn(),
-        toObservableData: vi.fn()
-    };
-};
-
-describe('ShowAddToDoDialogUseCaseImpl', () =>
-{
-    const useCase = new ShowAddToDoDialogUseCaseImpl(todosOwnerMock);
+    const useCase = new CreateToDoUseCaseImpl(
+        todosOwnerMock,
+        formFactoryMock,
+        overlayServiceMock
+    );
 
     beforeEach(() =>
     {
         vi.resetAllMocks();
+
+        // Setup mocks
+        formFactoryMock.create.mockReturnValue(formMock);
+        overlayServiceMock.createEditFormModal.mockReturnValue(modalMock);
     });
 
     describe('execute', () =>
     {
-        it('should create a new todo and show edit dialog', () =>
+        it('should create a new todo', () =>
         {
             const todo = createMockToDo();
             todosOwnerMock.createToDo.mockReturnValue(todo);
@@ -41,7 +36,43 @@ describe('ShowAddToDoDialogUseCaseImpl', () =>
             useCase.execute();
 
             expect(todosOwnerMock.createToDo).toHaveBeenCalledTimes(1);
-            expect(todo.showEditDialog).toHaveBeenCalledTimes(1);
+        });
+
+        it('should create a form with the correct elements', () =>
+        {
+            const todo = createMockToDo();
+            todosOwnerMock.createToDo.mockReturnValue(todo);
+
+            useCase.execute();
+
+            expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
+            expect(formMock.setElements).toHaveBeenCalledTimes(1);
+
+            //@ts-expect-error data will be there
+            const setElementsArgs = formMock.setElements.mock.calls[0][0];
+
+            expect(setElementsArgs).toHaveProperty('title');
+            expect(setElementsArgs.title.type).toBe(FormElementType.inputText);
+            expect(setElementsArgs.title.label).toBe('Название задачи');
+
+            expect(setElementsArgs).toHaveProperty('description');
+            expect(setElementsArgs.description.type).toBe(FormElementType.textarea);
+            expect(setElementsArgs.description.label).toBe('Описание задачи');
+
+            expect(setElementsArgs).toHaveProperty('completionDatePlanned');
+            expect(setElementsArgs.completionDatePlanned.type).toBe(FormElementType.inputDateTime);
+            expect(setElementsArgs.completionDatePlanned.label).toBe('Плановая дата выполнения');
+        });
+
+        it('should set form data from todo', () =>
+        {
+            const todo = createMockToDo();
+            todosOwnerMock.createToDo.mockReturnValue(todo);
+
+            useCase.execute();
+
+            expect(formMock.setData).toHaveBeenCalledTimes(1);
+            expect(formMock.setData).toHaveBeenCalledWith(todo.getData());
         });
     });
 });

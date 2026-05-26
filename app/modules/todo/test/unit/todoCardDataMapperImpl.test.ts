@@ -26,7 +26,6 @@ describe('ToDoCardDataMapperImpl', () =>
       toObservableData: vi.fn(),
       clone: vi.fn(),
       saveAsync: vi.fn(),
-      showEditDialog: vi.fn()
     };
   }
 
