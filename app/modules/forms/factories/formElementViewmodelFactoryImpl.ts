@@ -6,12 +6,13 @@ import { dependency } from "@/modules/shared/decorators/dependency";
 import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { InputViewmodel } from '@/modules/uikit/interfaces/inputViewmodel';
+import type { InputElementsFactory } from './inputElementsFactory';
 
 @dependency(UIKitViewmodelsFactory)
 export class FormElementViewmodelFactoryImpl extends FormElementViewmodelFactory
 {
   constructor(
-    protected uiKitElementsFactory: UIKitViewmodelsFactory,
+    protected inputElementsFactory: InputElementsFactory,
   )
   {
     super();
@@ -32,15 +33,15 @@ export class FormElementViewmodelFactoryImpl extends FormElementViewmodelFactory
     switch (type)
     {
       case FormElementType.inputText:
-        return this.uiKitElementsFactory.createInputText();
+        return this.inputElementsFactory.createInputText();
       case FormElementType.textarea:
-        return this.uiKitElementsFactory.createTextarea();
+        return this.inputElementsFactory.createTextarea();
       case FormElementType.inputDate:
-        return this.uiKitElementsFactory.createInputDate();
+        return this.inputElementsFactory.createInputDate();
       case FormElementType.inputTime:
-        return this.uiKitElementsFactory.createInputTime();
+        return this.inputElementsFactory.createInputTime();
       case FormElementType.inputDateTime:
-        return this.uiKitElementsFactory.createInputDateTime();
+        return this.inputElementsFactory.createInputDateTime();
     }
   }
 }
