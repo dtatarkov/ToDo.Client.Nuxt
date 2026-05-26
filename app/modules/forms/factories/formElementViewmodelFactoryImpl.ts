@@ -3,12 +3,11 @@ import { FormElementBase } from "../viewmodels/formElementBase";
 import type { FormElementViewmodel } from "../interfaces/formElementViewmodel";
 import { FormElementType } from "../enums/formElementType";
 import { dependency } from "@/modules/shared/decorators/dependency";
-import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
-import type { InputElementsFactory } from './inputElementsFactory';
+import { InputElementsFactory } from './inputElementsFactory';
 
-@dependency(UIKitViewmodelsFactory)
+@dependency(InputElementsFactory)
 export class FormElementViewmodelFactoryImpl extends FormElementViewmodelFactory
 {
   constructor(
