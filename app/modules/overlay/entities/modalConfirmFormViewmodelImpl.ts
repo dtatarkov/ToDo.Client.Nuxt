@@ -1,19 +1,19 @@
 import { ModalConfirmViewmodelImpl } from './modalConfirmViewmodelImpl';
-import type { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import type { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
+import type { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
 
 export class ModalConfirmFormViewmodelImpl extends ModalConfirmViewmodelImpl
 {
     private loaderTimeout: NodeJS.Timeout | undefined;
 
     constructor(
-        uikitElementsFactory: UIKitViewmodelsFactory,
+        buttonsFactory: ButtonsFactory,
         private config: AppPublicRuntimeConfig,
         protected form: FormViewmodel,
     )
     {
-        super(uikitElementsFactory);
+        super(buttonsFactory);
 
         this.content = form;
 

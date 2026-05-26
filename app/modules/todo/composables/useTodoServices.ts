@@ -21,6 +21,8 @@ import { CreateToDoUseCaseImpl } from "../usecases/createToDoUseCaseImpl";
 import { EditToDoUseCaseImpl } from "../usecases/editToDoUseCaseImpl";
 import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
 import { GetToDoCardsUseCaseImpl } from "../usecases/getToDoCardsUseCaseImpl";
+import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
+import { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
 
 export function useTodoServices(): void
 {
@@ -35,4 +37,5 @@ export function useTodoServices(): void
     useServiceRegistration(CreateToDoUseCase).to(CreateToDoUseCaseImpl).asTransient();
     useServiceRegistration(EditToDoUseCase).to(EditToDoUseCaseImpl).asTransient();
     useServiceRegistration(GetToDoCardsUseCase).to(GetToDoCardsUseCaseImpl).asTransient();
+    useServiceRegistration(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
 }

@@ -4,16 +4,16 @@ import { ModalConfirmFormViewmodelImpl } from '../entities/modalConfirmFormViewm
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import type { ModalConfirmViewmodel } from '../entities/modalConfirmViewmodel';
 import type { ModalViewmodel } from '../entities/modalViewmodel';
-import { UIKitViewmodelsFactory } from '@/modules/uikit/interfaces/uikitViewmodelsFactory';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
+import { ButtonsFactory } from '@/modules/uikit/interfaces/buttonsFactory';
 
-@dependency(UIKitViewmodelsFactory)
+@dependency(ButtonsFactory)
 @dependency(AppPublicRuntimeConfig)
 export class ModalFactoryImpl extends ModalFactory
 {
     constructor(
-        protected uikitElementsFactory: UIKitViewmodelsFactory,
+        protected buttonsFactory: ButtonsFactory,
         private config: AppPublicRuntimeConfig,
     )
     {
@@ -42,7 +42,7 @@ export class ModalFactoryImpl extends ModalFactory
 
     private createModalConfirmForm(form: FormViewmodel)
     {
-        const modal = new ModalConfirmFormViewmodelImpl(this.uikitElementsFactory, this.config, form);
+        const modal = new ModalConfirmFormViewmodelImpl(this.buttonsFactory, this.config, form);
 
         return modal;
     }
