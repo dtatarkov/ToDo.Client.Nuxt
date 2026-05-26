@@ -1,9 +1,9 @@
 import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ModalViewmodel } from '../interfaces/modalViewmodel';
-import type { ModalConfirmViewmodel } from '../interfaces/modalConfirmViewmodel';
-import type { OverlayElementViewmodel } from '../interfaces/overlayElementViewmodel';
+import type { ModalViewmodel } from '../entities/modalViewmodel';
+import type { ModalConfirmViewmodel } from '../entities/modalConfirmViewmodel';
+import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
 import { OverlayService } from '../interfaces/overlayService';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';

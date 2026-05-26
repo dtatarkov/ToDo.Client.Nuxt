@@ -1,7 +1,7 @@
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ModalViewmodel } from './modalViewmodel';
-import type { ModalConfirmViewmodel } from './modalConfirmViewmodel';
-import type { OverlayElementViewmodel } from './overlayElementViewmodel';
+import type { ModalViewmodel } from '../entities/modalViewmodel';
+import type { ModalConfirmViewmodel } from '../entities/modalConfirmViewmodel';
+import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 
 export abstract class OverlayService

@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ModalViewmodel } from '@/modules/overlay/interfaces/modalViewmodel';
+import type { ModalViewmodel } from '@/modules/overlay/entities/modalViewmodel';
 
 export const modalMock = {
     key: '',

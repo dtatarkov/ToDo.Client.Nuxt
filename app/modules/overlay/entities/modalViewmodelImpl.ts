@@ -1,4 +1,4 @@
-import { ModalViewmodel } from "../interfaces/modalViewmodel";
+import { ModalViewmodel } from "./modalViewmodel";
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';

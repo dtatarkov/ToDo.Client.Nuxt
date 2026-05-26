@@ -1,5 +1,5 @@
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { OverlayElementViewmodel } from '../overlayElementViewmodel';
+import type { OverlayElementViewmodel } from '../../entities/overlayElementViewmodel';
 
 export abstract class Overlay
 {
