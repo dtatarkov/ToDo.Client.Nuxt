@@ -15,23 +15,16 @@
 import { useService } from '@/modules/shared/composables/useService';
 import { ZonedDateTimeMapper } from '@/modules/shared/interfaces/zonedDateTimeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
+import type { InputDateData } from '@/modules/uikit/types/inputDateData';
 
 defineOptions({
   inheritAttrs: false
 });
 
-type Props = {
-  id?: string;
-  name?: string;
-  hasAutofocus?: boolean;
-  isDisabled?: boolean;
-  value?: Date;
-}
-
 const dateMapper = useService(ZonedDateTimeMapper);
 const optionalDateMapper = new OptionalValueMapper(dateMapper);
 
-const props = defineProps<Props>();
+const props = defineProps<InputDateData>();
 const valueModel = defineModel<Date>('value');
 
 const date = computed({

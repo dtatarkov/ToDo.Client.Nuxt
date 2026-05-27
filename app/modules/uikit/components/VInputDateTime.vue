@@ -25,23 +25,16 @@ import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { useService } from '@/modules/shared/composables/useService';
 import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
 
 defineOptions({
   inheritAttrs: false
 });
 
-type Props = {
-  id?: string;
-  name?: string;
-  hasAutofocus?: boolean;
-  isDisabled?: boolean;
-  value?: Date;
-}
-
 const datesService = useService(DatesService);
 const stringsService = useService(StringsService);
 
-const props = defineProps<Props>();
+const props = defineProps<InputDateTimeData>();
 const valueModel = defineModel<Date>('value');
 
 const date = shallowRef<Date>();

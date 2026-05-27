@@ -16,14 +16,7 @@
 import { useService } from '@/modules/shared/composables/useService';
 import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
-
-type Props = {
-  id?: string;
-  name?: string;
-  hasAutofocus?: boolean;
-  isDisabled?: boolean;
-  value?: number;
-}
+import type { InputTimeData } from '@/modules/uikit/types/inputTimeData';
 
 defineOptions({
   inheritAttrs: false
@@ -32,7 +25,7 @@ defineOptions({
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);
 
-const props = defineProps<Props>();
+const props = defineProps<InputTimeData>();
 const valueModel = defineModel<number>('value');
 
 const time = computed({

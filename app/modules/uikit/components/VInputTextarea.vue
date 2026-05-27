@@ -11,19 +11,12 @@
 </template>
 
 <script setup lang="ts">
-type Props = {
-  id?: string;
-  name?: string;
-  hasAutofocus?: boolean;
-  isDisabled?: boolean;
-  placeholder?: string;
-  value?: string;
-}
+import type { InputTextareaData } from '@/modules/uikit/types/inputTextareaData';
 
 defineOptions({
   inheritAttrs: false
 });
 
-const props = defineProps<Props>();
+const props = defineProps<InputTextareaData>();
 const valueModel = defineModel<string>('value', { default: '' });
 </script>
