@@ -1,14 +1,14 @@
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { InputViewmodel } from "../inputViewmodel";
+import { InputElement } from "../inputElement";
 import type { Action } from '@/modules/shared/types/action';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
-export abstract class InputViewmodelComposedBase<V> extends InputViewmodel<V>
+export abstract class InputViewmodelComposedBase<V> extends InputElement<V>
 {
   private idInternal = ref('');
   private nameInternal = ref('');
 
-  protected abstract children: Record<string, InputViewmodel>;
+  protected abstract children: Record<string, InputElement>;
   protected dataSetters: Record<string, Action<[any]>> = {};
 
   readonly key = getUniqueId('input-element-composed');

@@ -1,6 +1,6 @@
 import { InputDateViewmodelImpl } from "./inputDateViewmodelImpl";
 import { InputViewmodelComposedBase } from "./base/inputViewmodelComposedBase";
-import type { InputViewmodel } from "./inputViewmodel";
+import type { InputElement } from "./inputElement";
 import { InputTimeViewmodelImpl } from "./inputTimeViewmodelImpl";
 import type { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
 import type { DataAdapterFactory } from '@/modules/shared/interfaces/dataAdapterFactory';
@@ -12,7 +12,7 @@ import type { InputDateTimeViewmodel } from './inputDateTimeViewmodel';
 
 export class InputDateTimeViewmodelImpl extends InputViewmodelComposedBase<Date | undefined> implements InputDateTimeViewmodel
 {
-  protected children: Record<'inputDate' | 'inputTime', InputViewmodel>;
+  protected children: Record<'inputDate' | 'inputTime', InputElement>;
 
   constructor(
     protected datesService: DatesService,

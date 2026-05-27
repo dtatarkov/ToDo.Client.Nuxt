@@ -6,7 +6,7 @@ import type { DataAdapterFieldsScheme } from '@/modules/shared/types/dataAdapter
 import type { VueComponentPropsScheme } from '@/modules/shared/types/vueComponentPropsScheme';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { InputViewmodelData } from '@/modules/uikit/types/inputViewmodels/inputViewmodelData';
-import { InputViewmodel } from "../inputViewmodel";
+import { InputElement } from "../inputElement";
 
 export type InputViewmodelNuxtUIBaseProps<V> = {
   id: string | undefined;
@@ -21,7 +21,7 @@ export abstract class InputViewmodelNuxtUIBase<
   V,
   Props extends InputViewmodelNuxtUIBaseProps<any>,
   Data extends InputViewmodelData<V>
-> extends InputViewmodel<V>
+> extends InputElement<V>
 {
   private readonly propsLazy: LazyEntityBase<Props>;
   private readonly dataLazy: LazyEntityBase<Data>;

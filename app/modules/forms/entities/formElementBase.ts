@@ -2,7 +2,7 @@ import { FormFieldBase } from "./formFieldBase";
 import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
-import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
+import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import type { FormElementCreateDataWithName } from '../types/formElementCreateDataWithName';
 
 export class FormElementBase<V = any> extends FormElement
@@ -11,7 +11,7 @@ export class FormElementBase<V = any> extends FormElement
 
   protected formField = new FormFieldBase();
 
-  constructor(protected inputElement: InputViewmodel<V>)
+  constructor(protected inputElement: InputElement<V>)
   {
     super();
 

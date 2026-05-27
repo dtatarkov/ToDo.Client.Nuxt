@@ -1,7 +1,7 @@
 import type { InputTextareaViewmodelData } from '../../../uikit/types/inputViewmodels/inputTextareaViewmodelData';
-import { InputViewmodel } from './inputViewmodel';
+import { InputElement } from './inputElement';
 
-export abstract class InputTextareaViewmodel extends InputViewmodel<string> implements InputTextareaViewmodelData
+export abstract class InputTextareaViewmodel extends InputElement<string> implements InputTextareaViewmodelData
 {
     abstract placeholder: string;
 }

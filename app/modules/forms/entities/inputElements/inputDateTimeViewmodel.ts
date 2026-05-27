@@ -1,6 +1,6 @@
 import type { InputDateTimeViewmodelData } from '../../../uikit/types/inputViewmodels/inputDateTimeViewmodelData';
-import { InputViewmodel } from './inputViewmodel';
+import { InputElement } from './inputElement';
 
-export abstract class InputDateTimeViewmodel extends InputViewmodel<Date | undefined> implements InputDateTimeViewmodelData
+export abstract class InputDateTimeViewmodel extends InputElement<Date | undefined> implements InputDateTimeViewmodelData
 {
 }

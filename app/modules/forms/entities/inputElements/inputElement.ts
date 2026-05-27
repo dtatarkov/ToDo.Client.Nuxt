@@ -1,7 +1,7 @@
 import { Viewmodel } from "../../../uikit/interfaces/viewmodel";
 import type { InputViewmodelData } from "../../../uikit/types/inputViewmodels/inputViewmodelData";
 
-export abstract class InputViewmodel<V = any> extends Viewmodel<string> implements InputViewmodelData<V>
+export abstract class InputElement<V = any> extends Viewmodel<string> implements InputViewmodelData<V>
 {
   abstract id: string | undefined;
   abstract name: string | undefined;
