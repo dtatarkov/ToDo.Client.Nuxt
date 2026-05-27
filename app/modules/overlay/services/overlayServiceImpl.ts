@@ -1,7 +1,7 @@
 import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import type { ModalViewmodel } from '../entities/modalViewmodel';
+import type { Modal } from '../entities/modal';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
 import { OverlayService } from '../interfaces/overlayService';
@@ -20,7 +20,7 @@ export class OverlayServiceImpl extends OverlayService
     super();
   }
 
-  createModalBase(): ModalViewmodel
+  createModalBase(): Modal
   {
     const modal = this.modalFactory.createModalBase();
     this.overlay.addElement(modal);

@@ -1,6 +1,6 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
-import { ModalViewmodelImpl } from "../entities/modalViewmodelImpl";
-import type { ModalViewmodel } from '../entities/modalViewmodel';
+import { ModalBase } from "../entities/modalBase";
+import type { Modal } from '../entities/modal';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ModalConfirm } from '../entities/modalConfirm';
@@ -18,9 +18,9 @@ export class ModalFactoryImpl extends ModalFactory
         super();
     }
 
-    createModalBase(): ModalViewmodel
+    createModalBase(): Modal
     {
-        return new ModalViewmodelImpl();
+        return new ModalBase();
     }
 
     override createModalConfirm(): ModalConfirm

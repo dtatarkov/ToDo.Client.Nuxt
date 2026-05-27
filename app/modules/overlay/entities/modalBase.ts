@@ -1,4 +1,4 @@
-import { ModalViewmodel } from "./modalViewmodel";
+import { Modal } from "./modal";
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
@@ -6,7 +6,7 @@ import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from '../interfaces/internal/overlay';
 
-export class ModalViewmodelImpl<Content extends Viewmodel> extends ModalViewmodel<Content>
+export class ModalBase<Content extends Viewmodel> extends Modal<Content>
 {
   private overlay: Overlay | undefined;
 
