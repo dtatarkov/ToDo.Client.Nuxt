@@ -1,17 +1,17 @@
-import type { OverlayElementViewmodel } from './overlayElementViewmodel';
+import type { OverlayElement } from './overlayElement';
 import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
 import { shallowReactive } from 'vue';
 
 export class Overlay
 {
-  private elements = shallowReactive(new Array<OverlayElementViewmodel>());
+  private elements = shallowReactive(new Array<OverlayElement>());
 
-  getElements(): OverlayElementViewmodel[]
+  getElements(): OverlayElement[]
   {
     return this.elements;
   }
 
-  addElement(element: OverlayElementViewmodel): void
+  addElement(element: OverlayElement): void
   {
     this.assertElementIsNotAdded(element);
 
@@ -20,14 +20,14 @@ export class Overlay
     this.elements.push(element);
   }
 
-  removeElement(element: OverlayElementViewmodel): void
+  removeElement(element: OverlayElement): void
   {
     this.assertElementIsAdded(element);
 
     removeFromArray(this.elements, element);
   }
 
-  private assertElementIsAdded(element: OverlayElementViewmodel)
+  private assertElementIsAdded(element: OverlayElement)
   {
     if (!this.elements.includes(element))
     {
@@ -38,7 +38,7 @@ export class Overlay
     }
   }
 
-  private assertElementIsNotAdded(element: OverlayElementViewmodel)
+  private assertElementIsNotAdded(element: OverlayElement)
   {
     if (this.elements.includes(element))
     {

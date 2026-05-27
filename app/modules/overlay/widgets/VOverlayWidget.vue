@@ -7,5 +7,5 @@ const overlayElements = getOverlayElementsUseCase.execute();
 </script>
 
 <template>
-  <component :is="element.component" v-for="element in overlayElements" :key="element.key" />
+  <component :is="element.vnode" v-for="element in overlayElements" :key="element.key" />
 </template>

@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 
 export const modalConfirmMock = {
     key: '',
+    vnode: {} as VNode,
     title: '',
     description: '',
     content: undefined,
@@ -11,10 +12,6 @@ export const modalConfirmMock = {
 
     buttonConfirm: buttonGeneralViewmodelMock,
     buttonCancel: buttonGeneralViewmodelMock,
-
-    component: {
-        setup: vi.fn(),
-    },
 
     close: vi.fn(),
     setOverlay: vi.fn(),

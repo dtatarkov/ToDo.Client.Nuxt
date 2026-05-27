@@ -12,7 +12,7 @@ export class ModalBase<Content extends Viewmodel> extends Modal<Content>
 
   protected destroyToken = new DestroyTokenImpl();
 
-  protected data = reactive({
+  protected data = shallowReactive({
     title: '',
     description: '',
     isDisabled: false,
@@ -26,19 +26,17 @@ export class ModalBase<Content extends Viewmodel> extends Modal<Content>
 
   readonly key = getUniqueId('modal');
 
-  readonly component = {
-    setup: () =>
-    {
-      return () => h(VModal, {
-        title: this.data.title,
-        description: this.data.description,
-        isDismissible: !this.data.isDisabled
-      }, {
-        content: () => this.children.content ? h(this.children.content.component, { key: this.children.content.key }) : undefined,
-        controls: () => this.controls.map(control => h(control.component, { key: control.key }))
-      });
-    }
-  };
+  get vnode()
+  {
+    return h(VModal, {
+      title: this.data.title,
+      description: this.data.description,
+      isDismissible: !this.data.isDisabled
+    }, {
+      content: () => this.children.content ? h(this.children.content.component, { key: this.children.content.key }) : undefined,
+      controls: () => this.controls.map(control => h(control.component, { key: control.key }))
+    });
+  }
 
   get title()
   {

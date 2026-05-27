@@ -1,27 +1,14 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Overlay } from '../../entities/overlay';
-
-const createMockOverlayElement = (id: string) =>
-{
-    return {
-        key: `${id}`,
-
-        component: {
-            setup: vi.fn(),
-        },
-
-        onClose: {
-            subscribe: vi.fn(),
-            destroy: vi.fn(),
-        },
-
-        close: vi.fn(),
-        setOverlay: vi.fn(),
-    };
-};
+import { modalMock } from '../../mocks/modalMock';
 
 describe('Overlay', () =>
 {
+    beforeEach(() =>
+    {
+        vi.resetAllMocks();
+    });
+
     describe('getElements', () =>
     {
         it('should return observable with empty array initially', () =>
@@ -32,45 +19,42 @@ describe('Overlay', () =>
             expect(observable).toEqual([]);
         });
     });
+
     describe('addElement', () =>
     {
         it('should add element to elements list', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
-            overlay.addElement(element);
+            overlay.addElement(modalMock);
             const elements = overlay.getElements();
-            expect(elements).toContain(element);
+            expect(elements).toContain(modalMock);
             expect(elements.length).toBe(1);
         });
 
         it('should set element overlay', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
 
-            overlay.addElement(element);
-            expect(element.setOverlay).toHaveBeenCalledWith(overlay);
-            expect(overlay.getElements()).toContain(element);
+            overlay.addElement(modalMock);
+            expect(modalMock.setOverlay).toHaveBeenCalledWith(overlay);
+            expect(overlay.getElements()).toContain(modalMock);
         });
 
         it('should not add duplicate element', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
-            overlay.addElement(element);
+            overlay.addElement(modalMock);
 
-            expect(() => overlay.addElement(element)).toThrow();
+            expect(() => overlay.addElement(modalMock)).toThrow();
         });
 
         it('should call setOverlay on element with overlay instance', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
-            overlay.addElement(element);
+            overlay.addElement(modalMock);
 
-            expect(element.setOverlay).toHaveBeenCalledTimes(1);
-            expect(element.setOverlay).toHaveBeenCalledWith(overlay);
+            expect(modalMock.setOverlay).toHaveBeenCalledTimes(1);
+            expect(modalMock.setOverlay).toHaveBeenCalledWith(overlay);
         });
     });
 
@@ -79,23 +63,19 @@ describe('Overlay', () =>
         it('should remove existing element', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
 
-            overlay.addElement(element);
-            expect(overlay.getElements()).toContain(element);
+            overlay.addElement(modalMock);
+            expect(overlay.getElements()).toContain(modalMock);
 
-            overlay.removeElement(element);
-            expect(overlay.getElements()).not.toContain(element);
+            overlay.removeElement(modalMock);
+            expect(overlay.getElements()).not.toContain(modalMock);
             expect(overlay.getElements().length).toBe(0);
         });
 
         it('should throw error if element not present', () =>
         {
             const overlay = new Overlay();
-            const element = createMockOverlayElement('1');
-            const otherElement = createMockOverlayElement('2');
-            overlay.addElement(element);
-            expect(() => overlay.removeElement(otherElement)).toThrow();
+            expect(() => overlay.removeElement(modalMock)).toThrow();
         });
 
     });

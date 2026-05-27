@@ -1,7 +1,7 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { Reactive } from 'vue';
 import { Overlay } from '../entities/overlay';
-import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
+import type { OverlayElement } from '../entities/overlayElement';
 import type { GetOverlayElementsUseCase } from './getOverlayElementsUseCase';
 
 
@@ -14,7 +14,7 @@ export class GetOverlayElementsUseCaseImpl implements GetOverlayElementsUseCase
     {
     }
 
-    execute(): Reactive<OverlayElementViewmodel[]>
+    execute(): Reactive<OverlayElement[]>
     {
         return this.overlay.getElements();
     }

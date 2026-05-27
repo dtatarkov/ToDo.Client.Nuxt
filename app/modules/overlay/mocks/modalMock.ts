@@ -3,14 +3,11 @@ import type { Modal } from '@/modules/overlay/entities/modal';
 
 export const modalMock = {
     key: '',
+    vnode: {} as VNode,
     title: '',
     description: '',
     content: undefined,
     isDisabled: false,
-
-    component: {
-        setup: vi.fn(),
-    },
 
     close: vi.fn(),
     setOverlay: vi.fn(),
