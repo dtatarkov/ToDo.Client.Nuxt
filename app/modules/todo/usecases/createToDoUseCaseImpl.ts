@@ -2,7 +2,7 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { CreateToDoUseCase } from './createToDoUseCase';
 import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import { OverlayService } from '@/modules/overlay/services/overlayService';
 import type { ToDoData } from '../interfaces/todo';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 

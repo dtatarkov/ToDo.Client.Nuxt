@@ -3,7 +3,7 @@ import { EditToDoUseCase } from "./editToDoUseCase";
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { ToDoNotFoundException } from '../exceptions/toDoNotFoundException';
 import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/interfaces/overlayService';
+import { OverlayService } from '@/modules/overlay/services/overlayService';
 import type { ToDoData } from '../interfaces/todo';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 

@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { OverlayService } from '../interfaces/overlayService';
+import type { OverlayService } from '../services/overlayService';
 
 export const overlayServiceMock = {
     createModalBase: vi.fn(),

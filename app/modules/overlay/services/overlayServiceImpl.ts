@@ -3,7 +3,7 @@ import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from '../entities/modal';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
-import { OverlayService } from '../interfaces/overlayService';
+import { OverlayService } from './overlayService';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { Overlay } from '../entities/overlay';

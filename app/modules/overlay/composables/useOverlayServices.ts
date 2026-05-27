@@ -1,6 +1,6 @@
 import { Overlay } from '../entities/overlay';
 import { ModalFactory } from '../factories/modalFactory';
-import { OverlayService } from "../interfaces/overlayService";
+import { OverlayService } from "../services/overlayService";
 import { OverlayServiceImpl } from "../services/overlayServiceImpl";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
