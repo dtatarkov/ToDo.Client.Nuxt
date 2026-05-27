@@ -1,11 +1,11 @@
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
-import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
+import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
 
-export class ModalConfirmBase<Content extends Viewmodel = Viewmodel> extends ModalBase<Content> implements ModalConfirm<Content>
+export class ModalConfirmBase<Content extends UIElement = UIElement> extends ModalBase<Content> implements ModalConfirm<Content>
 {
     private buttonConfirmInternal: ButtonGeneralViewmodel;
     private buttonCancelInternal: ButtonGeneralViewmodel;

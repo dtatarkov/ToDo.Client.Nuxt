@@ -25,19 +25,17 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   readonly key = getUniqueId('form');
 
-  readonly component = {
-    setup: () =>
-    {
-      return () => h(VForm, { form: this });
-    }
-  };
-
   constructor(
     private formElementFactory: FormElementFactory,
     private formSubmitHandler: FormSubmitHandler,
   )
   {
     super();
+  }
+
+  get vnode()
+  {
+    return h(VForm, { form: this });
   }
 
   get elements(): FormElement[]
@@ -130,6 +128,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   override destroy(): void
   {
     this.submittedHandler.destroy();
+    this.submittingStateChangeHandler.destroy();
     this.disabledStateChangeHandler.destroy();
   }
 

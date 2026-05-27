@@ -5,8 +5,9 @@ import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from './overlay';
+import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
-export class ModalBase<Content extends Viewmodel> extends Modal<Content>
+export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
   private overlay: Overlay | undefined;
 
@@ -33,7 +34,7 @@ export class ModalBase<Content extends Viewmodel> extends Modal<Content>
       description: this.data.description,
       isDismissible: !this.data.isDisabled
     }, {
-      content: () => this.children.content ? h(this.children.content.component, { key: this.children.content.key }) : undefined,
+      content: () => this.children.content ? this.children.content.vnode : undefined,
       controls: () => this.controls.map(control => h(control.component, { key: control.key }))
     });
   }

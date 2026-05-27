@@ -1,9 +1,10 @@
-import { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
+import type { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
 import type { FormElementCreateData } from "../types/formElementCreateData";
 import type { Action } from '@/modules/shared/types/action';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
+import { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
-export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends Viewmodel implements Destroyable
+export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Destroyable
 {
   abstract readonly elements: Viewmodel[];
   abstract readonly isDisabled: boolean;

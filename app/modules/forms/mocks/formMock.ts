@@ -3,11 +3,9 @@ import type { Form } from '@/modules/forms/entities/form';
 
 export const formMock = {
     key: '',
+    vnode: {} as VNode,
     elements: [],
     isDisabled: false,
-    component: {
-        setup: vi.fn()
-    },
 
     setElements: vi.fn(),
     setData: vi.fn(),
