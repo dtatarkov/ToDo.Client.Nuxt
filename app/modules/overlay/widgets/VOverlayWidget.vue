@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { OverlayService } from '../services/overlayService';
 import { useService } from '@/modules/shared/composables/useService';
+import { GetOverlayElementsUseCase } from '../usecases/getOverlayElementsUseCase';
 
-const overlayService = useService(OverlayService);
-const overlayElements = overlayService.getElements();
+const getOverlayElementsUseCase = useService(GetOverlayElementsUseCase);
+const overlayElements = getOverlayElementsUseCase.execute();
 </script>
 
 <template>

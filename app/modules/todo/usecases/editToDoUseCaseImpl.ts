@@ -3,19 +3,19 @@ import { EditToDoUseCase } from "./editToDoUseCase";
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { ToDoNotFoundException } from '../exceptions/toDoNotFoundException';
 import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
-import { OverlayService } from '@/modules/overlay/services/overlayService';
 import type { ToDoData } from '../interfaces/todo';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
+import { AddFormModalUseCase } from '@/modules/overlay/usecases/addFormModalUseCase';
 
 @dependency(ToDosOwner)
 @dependency(FormViewmodelFactory)
-@dependency(OverlayService)
+@dependency(AddFormModalUseCase)
 export class EditToDoUseCaseImpl extends EditToDoUseCase
 {
   constructor(
     private todosOwner: ToDosOwner,
     private formFactory: FormViewmodelFactory,
-    private overlayService: OverlayService,
+    private addFormModalUseCase: AddFormModalUseCase,
   )
   {
     super();
@@ -62,6 +62,6 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
 
     form.setData(todo.getData());
 
-    this.overlayService.addModalConfirmForm(form);
+    this.addFormModalUseCase.execute(form);
   }
 }

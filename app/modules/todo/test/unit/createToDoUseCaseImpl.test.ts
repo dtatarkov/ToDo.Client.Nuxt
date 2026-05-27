@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CreateToDoUseCaseImpl } from '../../usecases/createToDoUseCaseImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
-import { overlayServiceMock } from '@/modules/overlay/mocks/overlayServiceMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { modalConfirmMock } from '../../../overlay/mocks/modalConfirmMock';
+import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
 
 // Reset mocks before each test
 describe('CreateToDoUseCaseImpl', () =>
@@ -14,7 +14,7 @@ describe('CreateToDoUseCaseImpl', () =>
     const useCase = new CreateToDoUseCaseImpl(
         todosOwnerMock,
         formFactoryMock,
-        overlayServiceMock
+        addFormModalUseCaseMock
     );
 
     beforeEach(() =>
@@ -25,7 +25,7 @@ describe('CreateToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayServiceMock.addModalConfirmForm.mockReturnValue(modalConfirmMock);
+        addFormModalUseCaseMock.execute.mockReturnValue(modalConfirmMock);
         todosOwnerMock.createToDo.mockReturnValue(todo);
     });
 

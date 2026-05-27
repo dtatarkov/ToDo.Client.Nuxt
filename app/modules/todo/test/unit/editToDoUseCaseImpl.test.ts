@@ -3,18 +3,18 @@ import { EditToDoUseCaseImpl } from '../../usecases/editToDoUseCaseImpl';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
-import { overlayServiceMock } from '@/modules/overlay/mocks/overlayServiceMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
 import { modalMock } from '../../../overlay/mocks/modalMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
+import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
 
 describe('EditToDoUseCaseImpl', () =>
 {
     const useCase = new EditToDoUseCaseImpl(
         todosOwnerMock,
         formFactoryMock,
-        overlayServiceMock
+        addFormModalUseCaseMock
     );
 
     beforeEach(() =>
@@ -23,7 +23,7 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayServiceMock.addModalConfirmForm.mockReturnValue(modalMock);
+        addFormModalUseCaseMock.execute.mockReturnValue(modalMock);
     });
 
     describe('executeAsync', () =>
@@ -38,8 +38,8 @@ describe('EditToDoUseCaseImpl', () =>
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledTimes(1);
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledWith('123');
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(overlayServiceMock.addModalConfirmForm).toHaveBeenCalledTimes(1);
-            expect(overlayServiceMock.addModalConfirmForm).toHaveBeenCalledWith(formMock);
+            expect(addFormModalUseCaseMock.execute).toHaveBeenCalledTimes(1);
+            expect(addFormModalUseCaseMock.execute).toHaveBeenCalledWith(formMock);
         });
 
         it('should throw ToDoNotFoundException for non-existent todo', async () =>
