@@ -1,5 +1,4 @@
 import { ModalFactory } from "../factories/modalFactory";
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from '../entities/modal';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
@@ -7,6 +6,7 @@ import { OverlayService } from './overlayService';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
 import { Overlay } from '../entities/overlay';
+import type { Reactive } from 'vue';
 
 @dependency(Overlay)
 @dependency(ModalFactory)
@@ -20,7 +20,7 @@ export class OverlayServiceImpl extends OverlayService
     super();
   }
 
-  createModalBase(): Modal
+  override createModalBase(): Modal
   {
     const modal = this.modalFactory.createModalBase();
     this.overlay.addElement(modal);
@@ -36,7 +36,7 @@ export class OverlayServiceImpl extends OverlayService
     return modal;
   }
 
-  getElements(): Observable<OverlayElementViewmodel[]>
+  override getElements(): Reactive<OverlayElementViewmodel[]>
   {
     return this.overlay.getElements();
   }

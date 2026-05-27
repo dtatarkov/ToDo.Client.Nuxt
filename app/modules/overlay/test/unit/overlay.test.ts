@@ -29,7 +29,7 @@ describe('Overlay', () =>
             const overlay = new Overlay();
             const observable = overlay.getElements();
             expect(observable).toBeDefined();
-            expect(observable.value).toEqual([]);
+            expect(observable).toEqual([]);
         });
     });
     describe('addElement', () =>
@@ -39,7 +39,7 @@ describe('Overlay', () =>
             const overlay = new Overlay();
             const element = createMockOverlayElement('1');
             overlay.addElement(element);
-            const elements = overlay.getElements().value;
+            const elements = overlay.getElements();
             expect(elements).toContain(element);
             expect(elements.length).toBe(1);
         });
@@ -51,7 +51,7 @@ describe('Overlay', () =>
 
             overlay.addElement(element);
             expect(element.setOverlay).toHaveBeenCalledWith(overlay);
-            expect(overlay.getElements().value).toContain(element);
+            expect(overlay.getElements()).toContain(element);
         });
 
         it('should not add duplicate element', () =>
@@ -82,11 +82,11 @@ describe('Overlay', () =>
             const element = createMockOverlayElement('1');
 
             overlay.addElement(element);
-            expect(overlay.getElements().value).toContain(element);
+            expect(overlay.getElements()).toContain(element);
 
             overlay.removeElement(element);
-            expect(overlay.getElements().value).not.toContain(element);
-            expect(overlay.getElements().value.length).toBe(0);
+            expect(overlay.getElements()).not.toContain(element);
+            expect(overlay.getElements().length).toBe(0);
         });
 
         it('should throw error if element not present', () =>

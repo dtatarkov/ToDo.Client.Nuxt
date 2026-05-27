@@ -1,43 +1,51 @@
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { OverlayElementViewmodel } from './overlayElementViewmodel';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { shallowReactive } from 'vue';
 
 export class Overlay
 {
-  private elements = new ObservableSource(new Array<OverlayElementViewmodel>());
+  private elements = shallowReactive(new Array<OverlayElementViewmodel>());
 
-  getElements(): Observable<OverlayElementViewmodel[]>
+  getElements(): OverlayElementViewmodel[]
   {
     return this.elements;
   }
 
   addElement(element: OverlayElementViewmodel): void
   {
-    const currentElementsSet = new Set(this.elements.value);
-
-    if (currentElementsSet.has(element))
-    {
-      throw new Error('OverlayElement already added');
-    }
+    this.assertElementIsNotAdded(element);
 
     element.setOverlay(this);
 
-    const newElementsSet = new Set([...currentElementsSet, element]);
-    this.elements.value = [...newElementsSet];
+    this.elements.push(element);
   }
 
   removeElement(element: OverlayElementViewmodel): void
   {
-    if (!this.elements.value.includes(element))
+    this.assertElementIsAdded(element);
+
+    removeFromArray(this.elements, element);
+  }
+
+  private assertElementIsAdded(element: OverlayElementViewmodel)
+  {
+    if (!this.elements.includes(element))
     {
-      throw new Error('OverlayElement does not exist in Overlay');
+      const message = 'OverlayElement does not exist in Overlay';
+
+      console.error(message, element);
+      throw new Error(message);
     }
+  }
 
-    const currentElements = this.elements.value;
-    const newElementsSet = new Set(currentElements);
+  private assertElementIsNotAdded(element: OverlayElementViewmodel)
+  {
+    if (this.elements.includes(element))
+    {
+      const message = 'OverlayElement already added';
 
-    newElementsSet.delete(element);
-
-    this.elements.value = [...newElementsSet];
+      console.error(message, element);
+      throw new Error(message);
+    }
   }
 }
