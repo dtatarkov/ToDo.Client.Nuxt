@@ -1,19 +1,19 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDosOwner } from '../interfaces/todosOwner';
 import { CreateToDoUseCase } from './createToDoUseCase';
-import { FormViewmodelFactory } from '@/modules/forms/interfaces/formViewmodelFactory';
 import type { ToDoData } from '../interfaces/todo';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { AddFormModalUseCase } from '@/modules/overlay/usecases/addFormModalUseCase';
+import { FormFactory } from '@/modules/forms/factories/formFactory';
 
 @dependency(ToDosOwner)
-@dependency(FormViewmodelFactory)
+@dependency(FormFactory)
 @dependency(AddFormModalUseCase)
 export class CreateToDoUseCaseImpl extends CreateToDoUseCase
 {
   constructor(
     private todosOwner: ToDosOwner,
-    private formFactory: FormViewmodelFactory,
+    private formFactory: FormFactory,
     private addFormModalUseCase: AddFormModalUseCase,
   )
   {

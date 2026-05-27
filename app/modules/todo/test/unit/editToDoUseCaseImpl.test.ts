@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { EditToDoUseCaseImpl } from '../../usecases/editToDoUseCaseImpl';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
-import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
+import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
 import { modalMock } from '../../../overlay/mocks/modalMock';

@@ -1,11 +1,11 @@
 import VForm from "../components/VForm.vue";
 import { Form } from "@/modules/forms/entities/form.js";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { FormDisabledException } from "../exceptions/formDisabledException.js";
-import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData.js';
+import { FormDisabledException } from "../exceptions/formDisabledException";
+import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { FormElement } from './formElement.js';
-import type { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory.js';
-import type { FormSubmitHandler } from '../interfaces/formSubmitHandler.js';
+import type { FormElementFactory } from '../factories/formElementFactory';
+import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
 import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 import type { Action } from '@/modules/shared/types/action';
 
@@ -33,7 +33,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   };
 
   constructor(
-    private formElementFactory: FormElementViewmodelFactory,
+    private formElementFactory: FormElementFactory,
     private formSubmitHandler: FormSubmitHandler,
   )
   {

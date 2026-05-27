@@ -1,10 +1,10 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import { useAppServices } from '@/composables/useAppServices';
-import { FormViewmodelFactory } from '../interfaces/formViewmodelFactory';
 import { useService } from '@/modules/shared/composables/useService';
 import { FormElementType } from '../enums/formElementType';
 import { action } from 'storybook/actions';
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
+import { FormFactory } from '../factories/formFactory';
 
 type FormViewmodelStoryArgs = {
     elements?: Record<string, FormElementViewmodelCreateData>;
@@ -20,7 +20,7 @@ const meta: Meta<FormViewmodelStoryArgs> = {
             {
                 useAppServices();
 
-                const formFactory = useService(FormViewmodelFactory);
+                const formFactory = useService(FormFactory);
 
                 const form = formFactory.create({
                     submit: async (formData) =>

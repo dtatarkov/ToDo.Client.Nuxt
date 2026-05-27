@@ -1,14 +1,14 @@
-import { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
+import { FormElementFactory } from './formElementFactory';
 import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
 import type { Form } from "../entities/form";
-import type { FormViewmodelFactory } from '../interfaces/formViewmodelFactory';
 import { dependency } from "@/modules/shared/decorators/dependency";
 import { FormBase } from '../entities/formBase';
+import type { FormFactory } from './formFactory';
 
-@dependency(FormElementViewmodelFactory)
-export class FormViewmodelFactoryImpl implements FormViewmodelFactory
+@dependency(FormElementFactory)
+export class FormFactoryImpl implements FormFactory
 {
-  constructor(protected formElementFactory: FormElementViewmodelFactory)
+  constructor(protected formElementFactory: FormElementFactory)
   {
   }
 

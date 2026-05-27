@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CreateToDoUseCaseImpl } from '../../usecases/createToDoUseCaseImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
-import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
+import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
