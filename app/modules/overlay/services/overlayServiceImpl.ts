@@ -1,4 +1,3 @@
-import { Overlay } from "../interfaces/internal/overlay";
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from '../entities/modal';
@@ -7,6 +6,7 @@ import type { OverlayElementViewmodel } from '../entities/overlayElementViewmode
 import { OverlayService } from '../interfaces/overlayService';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import { Overlay } from '../entities/overlay';
 
 @dependency(Overlay)
 @dependency(ModalFactory)

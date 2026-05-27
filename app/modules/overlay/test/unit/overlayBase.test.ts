@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { OverlayBase } from '../../entities/overlayBase';
+import { Overlay } from '../../entities/overlay';
 
 const createMockOverlayElement = (id: string) =>
 {
@@ -20,13 +20,13 @@ const createMockOverlayElement = (id: string) =>
     };
 };
 
-describe('OverlayBase', () =>
+describe('Overlay', () =>
 {
     describe('getElements', () =>
     {
         it('should return observable with empty array initially', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const observable = overlay.getElements();
             expect(observable).toBeDefined();
             expect(observable.value).toEqual([]);
@@ -36,7 +36,7 @@ describe('OverlayBase', () =>
     {
         it('should add element to elements list', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
             overlay.addElement(element);
             const elements = overlay.getElements().value;
@@ -46,7 +46,7 @@ describe('OverlayBase', () =>
 
         it('should set element overlay', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
 
             overlay.addElement(element);
@@ -56,7 +56,7 @@ describe('OverlayBase', () =>
 
         it('should not add duplicate element', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
             overlay.addElement(element);
 
@@ -65,7 +65,7 @@ describe('OverlayBase', () =>
 
         it('should call setOverlay on element with overlay instance', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
             overlay.addElement(element);
 
@@ -78,7 +78,7 @@ describe('OverlayBase', () =>
     {
         it('should remove existing element', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
 
             overlay.addElement(element);
@@ -91,7 +91,7 @@ describe('OverlayBase', () =>
 
         it('should throw error if element not present', () =>
         {
-            const overlay = new OverlayBase();
+            const overlay = new Overlay();
             const element = createMockOverlayElement('1');
             const otherElement = createMockOverlayElement('2');
             overlay.addElement(element);

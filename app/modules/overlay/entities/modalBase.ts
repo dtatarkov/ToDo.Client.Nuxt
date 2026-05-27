@@ -4,7 +4,7 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
-import type { Overlay } from '../interfaces/internal/overlay';
+import type { Overlay } from './overlay';
 
 export class ModalBase<Content extends Viewmodel> extends Modal<Content>
 {

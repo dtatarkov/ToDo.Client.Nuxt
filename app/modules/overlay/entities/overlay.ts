@@ -1,18 +1,17 @@
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import type { Observable } from '@/modules/shared/interfaces/observable';
-import { Overlay } from "../interfaces/internal/overlay";
 import type { OverlayElementViewmodel } from './overlayElementViewmodel';
+import { ObservableSource } from '@/modules/shared/entities/observableSource';
 
-export class OverlayBase extends Overlay
+export class Overlay
 {
   private elements = new ObservableSource(new Array<OverlayElementViewmodel>());
 
-  override getElements(): Observable<OverlayElementViewmodel[]>
+  getElements(): Observable<OverlayElementViewmodel[]>
   {
     return this.elements;
   }
 
-  override addElement(element: OverlayElementViewmodel): void
+  addElement(element: OverlayElementViewmodel): void
   {
     const currentElementsSet = new Set(this.elements.value);
 
@@ -27,7 +26,7 @@ export class OverlayBase extends Overlay
     this.elements.value = [...newElementsSet];
   }
 
-  override removeElement(element: OverlayElementViewmodel): void
+  removeElement(element: OverlayElementViewmodel): void
   {
     if (!this.elements.value.includes(element))
     {
