@@ -1,9 +1,9 @@
 import { EffectsContainerMissingException } from '../exceptions/effectsContainerMissingException';
 import { EffectsContainer } from '../interfaces/effectsContainer';
-import { EventBus } from "../interfaces/eventBus";
 import type { Action } from '../types/action';
 import { once } from '../utils/once';
-export class EventBusBase<T = void> extends EventBus<T>
+
+export class EventBus<T = void>
 {
   private subscriptionsInternal = new Set<Action<[T]>>();
 
@@ -12,7 +12,7 @@ export class EventBusBase<T = void> extends EventBus<T>
     return this.subscriptionsInternal.size;
   }
 
-  override subscribe(handler: Action<[T]>): Action
+  subscribe(handler: Action<[T]>): Action
   {
     const effectsContainer = EffectsContainer.current;
 
@@ -33,12 +33,12 @@ export class EventBusBase<T = void> extends EventBus<T>
     return unsubscribe;
   }
 
-  override emit(data: T): void
+  emit(data: T): void
   {
     this.subscriptionsInternal.forEach(handler => handler(data));
   }
 
-  override destroy(): void
+  destroy(): void
   {
     this.subscriptionsInternal.clear();
   }
