@@ -1,6 +1,6 @@
-import type { FormElementViewmodelCreateData } from './formElementViewmodelCreateData';
+import type { FormElementCreateData } from './formElementCreateData';
 
 export type FormData<TEntity extends Record<string, any> = Record<string, any>> = {
-    elements?: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>;
+    elements?: Partial<Record<keyof TEntity, FormElementCreateData>>;
     isDisabled?: boolean;
 };

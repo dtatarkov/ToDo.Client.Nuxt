@@ -3,7 +3,7 @@ import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
 import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
-import type { FormElementViewmodelCreateDataWithName } from '../types/formElementViewmodelCreateDataWithName';
+import type { FormElementCreateDataWithName } from '../types/formElementCreateDataWithName';
 
 export class FormElementBase<V = any> extends FormElement
 {
@@ -38,7 +38,7 @@ export class FormElementBase<V = any> extends FormElement
     this.inputElement.value = value;
   }
 
-  setData(data: FormElementViewmodelCreateDataWithName): void
+  setData(data: FormElementCreateDataWithName): void
   {
     updatePropertiesWithData(this.formField, data);
     updatePropertiesWithData(this.inputElement, data);

@@ -3,11 +3,11 @@ import { useAppServices } from '@/composables/useAppServices';
 import { useService } from '@/modules/shared/composables/useService';
 import { FormElementType } from '../enums/formElementType';
 import { action } from 'storybook/actions';
-import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
+import type { FormElementCreateData } from '../types/formElementCreateData';
 import { FormFactory } from '../factories/formFactory';
 
 type FormViewmodelStoryArgs = {
-    elements?: Record<string, FormElementViewmodelCreateData>;
+    elements?: Record<string, FormElementCreateData>;
 };
 
 const meta: Meta<FormViewmodelStoryArgs> = {

@@ -2,7 +2,7 @@ import VForm from "../components/VForm.vue";
 import { Form } from "@/modules/forms/entities/form.js";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
-import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
+import type { FormElementCreateData } from '../types/formElementCreateData.js';
 import type { FormElement } from './formElement.js';
 import type { FormElementFactory } from '../factories/formElementFactory';
 import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
@@ -78,11 +78,11 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
   }
 
-  override setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>)
+  override setElements(elements: Partial<Record<keyof TEntity, FormElementCreateData>>)
   {
     this.elementsInternal.value = Object.entries(elements).map(([name, createData]) =>
     {
-      const element = this.formElementFactory.createElement(name, createData as FormElementViewmodelCreateData);
+      const element = this.formElementFactory.createElement(name, createData as FormElementCreateData);
 
       return element;
     });

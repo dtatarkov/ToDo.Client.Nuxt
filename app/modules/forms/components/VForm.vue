@@ -2,7 +2,7 @@
 import VInputText from '@/modules/uikit/components/VInputText.vue';
 import { FormElementType } from '../enums/formElementType';
 import type { FormData } from '../types/formData';
-import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
+import type { FormElementCreateData } from '../types/formElementCreateData';
 import VFormField from './VFormField.vue';
 import VInputTextarea from '@/modules/uikit/components/VInputTextarea.vue';
 import VInputTime from '@/modules/uikit/components/VInputTime.vue';
@@ -16,7 +16,7 @@ type Emits = {
 const props = defineProps<FormData>();
 const emits = defineEmits<Emits>();
 
-function getInputComponent(element: FormElementViewmodelCreateData)
+function getInputComponent(element: FormElementCreateData)
 {
   switch (element.type)
   {
