@@ -1,8 +1,8 @@
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { Form } from '@/modules/forms/entities/form';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ModalConfirmBase } from './modalConfirmBase';
 
-export class ModalConfirmForm extends ModalConfirmBase<FormViewmodel>
+export class ModalConfirmForm extends ModalConfirmBase<Form>
 {
     constructor(
         buttonsFactory: ButtonsFactory
@@ -13,7 +13,7 @@ export class ModalConfirmForm extends ModalConfirmBase<FormViewmodel>
         this.title = 'Редактирование';
     }
 
-    override set content(form: FormViewmodel | undefined)
+    override set content(form: Form | undefined)
     {
         super.content = form;
 

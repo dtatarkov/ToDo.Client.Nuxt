@@ -1,11 +1,11 @@
 import { FormFieldBase } from "./formFieldBase";
-import type { FormElementViewmodelCreateDataWithName } from "../types/formElementViewmodelCreateDataWithName";
+import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import type { InputViewmodel } from "@/modules/forms/entities/inputElements/inputViewmodel";
 import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
-import { FormElementViewmodel } from '../interfaces/formElementViewmodel';
+import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
+import type { FormElementViewmodelCreateDataWithName } from '../types/formElementViewmodelCreateDataWithName';
 
-export class FormElementViewmodelBase<V = any> extends FormElementViewmodel
+export class FormElementBase<V = any> extends FormElement
 {
   readonly key = getUniqueId('form-element');
 

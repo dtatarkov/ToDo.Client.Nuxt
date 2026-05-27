@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { Form } from '@/modules/forms/entities/form';
 
 export const formMock = {
     key: '',
@@ -17,4 +17,4 @@ export const formMock = {
     setSubmittingStateChangeHandler: vi.fn(),
     setSubmittedHandler: vi.fn(),
     destroy: vi.fn(),
-} satisfies FormViewmodel;
+} satisfies Form;

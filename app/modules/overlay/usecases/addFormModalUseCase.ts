@@ -1,7 +1,7 @@
 import type { ModalConfirm } from '../entities/modalConfirm';
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { Form } from '@/modules/forms/entities/form';
 
 export abstract class AddFormModalUseCase
 {
-    abstract execute(form: FormViewmodel): ModalConfirm<FormViewmodel>;
+    abstract execute(form: Form): ModalConfirm<Form>;
 }

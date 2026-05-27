@@ -1,5 +1,5 @@
 import type { Modal } from '../entities/modal';
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { Form } from '@/modules/forms/entities/form';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
@@ -28,7 +28,7 @@ export class ModalFactory
         return result;
     }
 
-    createModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>
+    createModalConfirmForm(form: Form): ModalConfirm<Form>
     {
         const result = new ModalConfirmForm(this.buttonsFactory);
         result.content = form;

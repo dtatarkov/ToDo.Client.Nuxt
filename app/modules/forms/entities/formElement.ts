@@ -1,6 +1,6 @@
 import { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 
-export abstract class FormElementViewmodel<V = any> extends Viewmodel<string>
+export abstract class FormElement<V = any> extends Viewmodel<string>
 {
   abstract name: string;
   abstract value: V;

@@ -1,9 +1,9 @@
 import VFormField from "../components/VFormField.vue";
-import { FormFieldViewmodel } from "../interfaces/formFieldViewmodel";
+import { FormField } from "./formField.js";
 import type { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 
-export class FormFieldBase extends FormFieldViewmodel
+export class FormFieldBase extends FormField
 {
   private data = reactive({
     label: '',

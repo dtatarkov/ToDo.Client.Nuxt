@@ -1,11 +1,11 @@
 import VForm from "../components/VForm.vue";
-import { FormViewmodel } from "@/modules/forms/interfaces/formViewmodel";
+import { Form } from "@/modules/forms/entities/form.js";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { FormDisabledException } from "../exceptions/formDisabledException";
-import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
-import type { FormElementViewmodel } from '../interfaces/formElementViewmodel';
-import type { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory';
-import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
+import { FormDisabledException } from "../exceptions/formDisabledException.js";
+import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData.js';
+import type { FormElement } from './formElement.js';
+import type { FormElementViewmodelFactory } from '../interfaces/formElementViewmodelFactory.js';
+import type { FormSubmitHandler } from '../interfaces/formSubmitHandler.js';
 import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 import type { Action } from '@/modules/shared/types/action';
 
@@ -15,9 +15,9 @@ enum FormBaseState
   disabled = 1,
 }
 
-export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<string, any>> extends FormViewmodel
+export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
 {
-  private elementsInternal: Ref<FormElementViewmodel[]> = shallowRef([]);
+  private elementsInternal: Ref<FormElement[]> = shallowRef([]);
   private state = FormBaseState.initial;
   private disabledStateChangeHandler = new HandlerWrapper<[boolean]>();
   private submittingStateChangeHandler = new HandlerWrapper<[boolean]>();
@@ -40,7 +40,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<stri
     super();
   }
 
-  get elements(): FormElementViewmodel[]
+  get elements(): FormElement[]
   {
     return this.elementsInternal.value;
   }

@@ -3,7 +3,7 @@ import type { FormElementViewmodelCreateData } from "../types/formElementViewmod
 import type { Action } from '@/modules/shared/types/action';
 import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 
-export abstract class FormViewmodel<TEntity extends Record<string, any> = Record<string, any>> extends Viewmodel implements Destroyable
+export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends Viewmodel implements Destroyable
 {
   abstract readonly elements: Viewmodel[];
   abstract readonly isDisabled: boolean;

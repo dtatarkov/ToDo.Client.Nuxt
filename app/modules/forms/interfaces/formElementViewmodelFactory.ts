@@ -1,7 +1,7 @@
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
-import type { FormElementViewmodel } from "./formElementViewmodel";
+import type { FormElement } from "../entities/formElement";
 
 export abstract class FormElementViewmodelFactory
 {
-  abstract createElement(name: string, data: FormElementViewmodelCreateData): FormElementViewmodel;
+  abstract createElement(name: string, data: FormElementViewmodelCreateData): FormElement;
 }

@@ -1,11 +1,11 @@
 import { FormElementViewmodelFactory } from "../interfaces/formElementViewmodelFactory";
-import { FormElementBase } from "../viewmodels/formElementBase";
-import type { FormElementViewmodel } from "../interfaces/formElementViewmodel";
+import type { FormElement } from "../entities/formElement";
 import { FormElementType } from "../enums/formElementType";
 import { dependency } from "@/modules/shared/decorators/dependency";
 import type { FormElementViewmodelCreateData } from '../types/formElementViewmodelCreateData';
 import type { InputViewmodel } from '@/modules/forms/entities/inputElements/inputViewmodel';
 import { InputElementsFactory } from './inputElementsFactory';
+import { FormElementBase } from '../entities/formElementBase';
 
 @dependency(InputElementsFactory)
 export class FormElementViewmodelFactoryImpl extends FormElementViewmodelFactory
@@ -17,7 +17,7 @@ export class FormElementViewmodelFactoryImpl extends FormElementViewmodelFactory
     super();
   }
 
-  createElement(name: string, data: FormElementViewmodelCreateData): FormElementViewmodel
+  createElement(name: string, data: FormElementViewmodelCreateData): FormElement
   {
     const inputElement = this.createInputElement(data.type);
     const formElement = new FormElementBase(inputElement);
