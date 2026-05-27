@@ -1,21 +1,19 @@
-import { ModalFactory } from "../interfaces/internal/modalFactory";
-import { ModalBase } from "../entities/modalBase";
 import type { Modal } from '../entities/modal';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { ModalConfirm } from '../entities/modalConfirm';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import type { ModalConfirm } from '../entities/modalConfirm';
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
-import { ModalConfirmForm } from '../entities/modalConfirmForm';
+import { ModalBase } from '../entities/modalBase';
 import { ModalConfirmBase } from '../entities/modalConfirmBase';
+import { ModalConfirmForm } from '../entities/modalConfirmForm';
 
 @dependency(ButtonsFactory)
-export class ModalFactoryImpl extends ModalFactory
+export class ModalFactory
 {
     constructor(
         protected buttonsFactory: ButtonsFactory,
     )
     {
-        super();
     }
 
     createModalBase(): Modal
@@ -23,14 +21,14 @@ export class ModalFactoryImpl extends ModalFactory
         return new ModalBase();
     }
 
-    override createModalConfirm(): ModalConfirm
+    createModalConfirm(): ModalConfirm
     {
         const result = new ModalConfirmBase(this.buttonsFactory);
 
         return result;
     }
 
-    override createModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>
+    createModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>
     {
         const result = new ModalConfirmForm(this.buttonsFactory);
         result.content = form;

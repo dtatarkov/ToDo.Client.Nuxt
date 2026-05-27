@@ -1,4 +1,4 @@
-import { ModalFactory } from "../interfaces/internal/modalFactory";
+import { ModalFactory } from "../factories/modalFactory";
 import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { Modal } from '../entities/modal';
 import type { ModalConfirm } from '../entities/modalConfirm';

@@ -5,7 +5,7 @@ import { useService } from '@/modules/shared/composables/useService';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { action } from 'storybook/actions';
 import { watchEffect } from 'vue';
-import { ModalFactory } from '../interfaces/internal/modalFactory';
+import { ModalFactory } from '../factories/modalFactory';
 
 type ModalConfirmFormViewmodelStoryArgs = {
     title: string;
