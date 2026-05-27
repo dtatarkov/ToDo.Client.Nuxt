@@ -1,5 +1,4 @@
 import { ModalFactory } from "../factories/modalFactory";
-import type { Modal } from '../entities/modal';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import type { OverlayElementViewmodel } from '../entities/overlayElementViewmodel';
 import { OverlayService } from './overlayService';
@@ -18,14 +17,6 @@ export class OverlayServiceImpl extends OverlayService
   )
   {
     super();
-  }
-
-  override createModalBase(): Modal
-  {
-    const modal = this.modalFactory.createModalBase();
-    this.overlay.addElement(modal);
-
-    return modal;
   }
 
   override addModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>
