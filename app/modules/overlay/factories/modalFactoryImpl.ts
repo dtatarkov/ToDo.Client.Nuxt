@@ -1,20 +1,18 @@
 import { ModalFactory } from "../interfaces/internal/modalFactory";
 import { ModalViewmodelImpl } from "../entities/modalViewmodelImpl";
-import { ModalConfirmFormViewmodelImpl } from '../entities/modalConfirmFormViewmodelImpl';
-import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
-import type { ModalConfirmViewmodel } from '../entities/modalConfirmViewmodel';
 import type { ModalViewmodel } from '../entities/modalViewmodel';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
+import type { ModalConfirm } from '../entities/modalConfirm';
+import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import { ModalConfirmForm } from '../entities/modalConfirmForm';
+import { ModalConfirmBase } from '../entities/modalConfirmBase';
 
 @dependency(ButtonsFactory)
-@dependency(AppPublicRuntimeConfig)
 export class ModalFactoryImpl extends ModalFactory
 {
     constructor(
         protected buttonsFactory: ButtonsFactory,
-        private config: AppPublicRuntimeConfig,
     )
     {
         super();
@@ -25,25 +23,18 @@ export class ModalFactoryImpl extends ModalFactory
         return new ModalViewmodelImpl();
     }
 
-    createModalAddForm(form: FormViewmodel): ModalConfirmViewmodel
+    override createModalConfirm(): ModalConfirm
     {
-        const modal = this.createModalConfirmForm(form);
-        modal.buttonConfirm.title = 'Добавить';
+        const result = new ModalConfirmBase(this.buttonsFactory);
 
-        return modal;
+        return result;
     }
 
-    createEditFormModal(form: FormViewmodel): ModalConfirmViewmodel
+    override createModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>
     {
-        const modal = this.createModalConfirmForm(form);
+        const result = new ModalConfirmForm(this.buttonsFactory);
+        result.content = form;
 
-        return modal;
-    }
-
-    private createModalConfirmForm(form: FormViewmodel)
-    {
-        const modal = new ModalConfirmFormViewmodelImpl(this.buttonsFactory, this.config, form);
-
-        return modal;
+        return result;
     }
 }

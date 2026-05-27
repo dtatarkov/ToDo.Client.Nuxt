@@ -20,6 +20,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<stri
   private elementsInternal: Ref<FormElementViewmodel[]> = shallowRef([]);
   private state = FormBaseState.initial;
   private disabledStateChangeHandler = new HandlerWrapper<[boolean]>();
+  private submittingStateChangeHandler = new HandlerWrapper<[boolean]>();
   private submittedHandler = new HandlerWrapper();
 
   readonly key = getUniqueId('form');
@@ -95,6 +96,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<stri
     }
 
     this.disable();
+    this.submittingStateChangeHandler.handle(true);
 
     try
     {
@@ -106,12 +108,18 @@ export class FormViewmodelImpl<TEntity extends Record<string, any> = Record<stri
     finally
     {
       this.enable();
+      this.submittingStateChangeHandler.handle(false);
     }
   }
 
   override setDisabledStateChangeHandler(handler: Action<[boolean]>): void
   {
     this.disabledStateChangeHandler.setHandler(handler);
+  }
+
+  override setSubmittingStateChangeHandler(handler: Action<[boolean]>): void
+  {
+    this.submittingStateChangeHandler.setHandler(handler);
   }
 
   override setSubmittedHandler(handler: Action): void

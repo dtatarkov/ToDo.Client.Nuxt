@@ -14,6 +14,7 @@ export const formMock = {
     submit: vi.fn(),
     getData: vi.fn(),
     setDisabledStateChangeHandler: vi.fn(),
+    setSubmittingStateChangeHandler: vi.fn(),
     setSubmittedHandler: vi.fn(),
     destroy: vi.fn(),
 } satisfies FormViewmodel;

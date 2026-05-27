@@ -1,10 +1,10 @@
 import type { ModalViewmodel } from '../../entities/modalViewmodel';
-import type { ModalConfirmViewmodel } from '../../entities/modalConfirmViewmodel';
 import type { FormViewmodel } from '@/modules/forms/interfaces/formViewmodel';
+import type { ModalConfirm } from '../../entities/modalConfirm';
 
 export abstract class ModalFactory
 {
     abstract createModalBase(): ModalViewmodel;
-    abstract createModalAddForm(form: FormViewmodel): ModalConfirmViewmodel;
-    abstract createEditFormModal(form: FormViewmodel): ModalConfirmViewmodel;
+    abstract createModalConfirm(): ModalConfirm;
+    abstract createModalConfirmForm(form: FormViewmodel): ModalConfirm<FormViewmodel>;
 }

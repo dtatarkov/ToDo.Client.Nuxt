@@ -56,7 +56,7 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
 
     form.setData(todo.getData());
 
-    const modal = this.overlayService.createEditFormModal(form);
-    modal.title = 'Редактирование';
+    const modal = this.overlayService.addModalConfirmForm(form);
+    modal.setAddButton();
   }
 }

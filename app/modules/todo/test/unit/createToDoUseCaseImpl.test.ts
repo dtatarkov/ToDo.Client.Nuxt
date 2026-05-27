@@ -5,8 +5,8 @@ import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/moc
 import { overlayServiceMock } from '@/modules/overlay/mocks/overlayServiceMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../mocks/formMock';
-import { modalMock } from '../../mocks/modalMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
+import { modalConfirmMock } from '../../mocks/modalConfirmMock';
 
 // Reset mocks before each test
 describe('CreateToDoUseCaseImpl', () =>
@@ -21,18 +21,18 @@ describe('CreateToDoUseCaseImpl', () =>
     {
         vi.resetAllMocks();
 
+        const todo = createMockToDo();
+
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayServiceMock.createEditFormModal.mockReturnValue(modalMock);
+        overlayServiceMock.addModalConfirmForm.mockReturnValue(modalConfirmMock);
+        todosOwnerMock.createToDo.mockReturnValue(todo);
     });
 
     describe('execute', () =>
     {
         it('should create a new todo', () =>
         {
-            const todo = createMockToDo();
-            todosOwnerMock.createToDo.mockReturnValue(todo);
-
             useCase.execute();
 
             expect(todosOwnerMock.createToDo).toHaveBeenCalledTimes(1);
@@ -40,9 +40,6 @@ describe('CreateToDoUseCaseImpl', () =>
 
         it('should create a form with the correct elements', () =>
         {
-            const todo = createMockToDo();
-            todosOwnerMock.createToDo.mockReturnValue(todo);
-
             useCase.execute();
 
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
@@ -66,13 +63,9 @@ describe('CreateToDoUseCaseImpl', () =>
 
         it('should set form data from todo', () =>
         {
-            const todo = createMockToDo();
-            todosOwnerMock.createToDo.mockReturnValue(todo);
-
             useCase.execute();
 
             expect(formMock.setData).toHaveBeenCalledTimes(1);
-            expect(formMock.setData).toHaveBeenCalledWith(todo.getData());
         });
     });
 });

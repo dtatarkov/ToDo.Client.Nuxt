@@ -13,6 +13,7 @@ export abstract class FormViewmodel<TEntity extends Record<string, any> = Record
   abstract setElements(elements: Partial<Record<keyof TEntity, FormElementViewmodelCreateData>>): void;
   abstract submit(): Promise<void>;
   abstract setDisabledStateChangeHandler(handler: Action<[boolean]>): void;
+  abstract setSubmittingStateChangeHandler(handler: Action<[boolean]>): void;
   abstract setSubmittedHandler(handler: Action): void;
   abstract destroy(): void;
 }

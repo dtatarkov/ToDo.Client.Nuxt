@@ -6,7 +6,6 @@ export const modalMock = {
     title: '',
     description: '',
     content: undefined,
-    controls: [],
     isDisabled: false,
 
     component: {

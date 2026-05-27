@@ -23,7 +23,7 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayServiceMock.createEditFormModal.mockReturnValue(modalMock);
+        overlayServiceMock.addModalConfirmForm.mockReturnValue(modalMock);
     });
 
     describe('executeAsync', () =>
@@ -38,9 +38,8 @@ describe('EditToDoUseCaseImpl', () =>
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledTimes(1);
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledWith('123');
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(overlayServiceMock.createEditFormModal).toHaveBeenCalledTimes(1);
-            expect(overlayServiceMock.createEditFormModal).toHaveBeenCalledWith(formMock);
-            expect(modalMock.title).toBe('Редактирование');
+            expect(overlayServiceMock.addModalConfirmForm).toHaveBeenCalledTimes(1);
+            expect(overlayServiceMock.addModalConfirmForm).toHaveBeenCalledWith(formMock);
         });
 
         it('should throw ToDoNotFoundException for non-existent todo', async () =>

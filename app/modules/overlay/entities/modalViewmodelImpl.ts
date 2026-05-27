@@ -6,7 +6,7 @@ import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from '../interfaces/internal/overlay';
 
-export class ModalViewmodelImpl extends ModalViewmodel
+export class ModalViewmodelImpl<Content extends Viewmodel> extends ModalViewmodel<Content>
 {
   private overlay: Overlay | undefined;
 
@@ -18,8 +18,10 @@ export class ModalViewmodelImpl extends ModalViewmodel
     isDisabled: false,
   });
 
+  protected controls = shallowReactive(new Array<Viewmodel>());
+
   protected children = shallowReactive({
-    content: <Viewmodel | undefined>undefined
+    content: <Content | undefined>undefined
   });
 
   readonly key = getUniqueId('modal');
@@ -37,8 +39,6 @@ export class ModalViewmodelImpl extends ModalViewmodel
       });
     }
   };
-
-  readonly controls = shallowReactive(new Array<Viewmodel>());
 
   get title()
   {
