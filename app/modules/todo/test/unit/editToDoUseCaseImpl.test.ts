@@ -5,8 +5,8 @@ import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formViewmodelFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formViewmodelFactoryMock';
 import { overlayServiceMock } from '@/modules/overlay/mocks/overlayServiceMock';
 import { createMockToDo } from '../../mocks/todoMock';
-import { formMock } from '../../mocks/formMock';
-import { modalMock } from '../../mocks/modalMock';
+import { formMock } from '../../../forms/mocks/formMock';
+import { modalMock } from '../../../overlay/mocks/modalMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 
 describe('EditToDoUseCaseImpl', () =>
