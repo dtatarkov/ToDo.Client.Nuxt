@@ -1,9 +1,7 @@
-import { mergeDeep } from '@/modules/shared/utils/mergeDeep';
-import type { InputViewmodelNuxtUIBase, InputViewmodelNuxtUIBaseProps } from "../base/inputViewmodelNuxtUIBase";
 import type { AbstractConstructor } from '@/modules/shared/types/abstractConstructor';
-import type { InputViewmodelData } from '../../../../uikit/types/inputViewmodels/inputViewmodelData';
+import type { InputElementBase } from '../inputElementBase';
 
-export function InputViewmodelWithPlaceholder<TBase extends AbstractConstructor<InputViewmodelNuxtUIBase<any, InputViewmodelNuxtUIBaseProps<any> & { placeholder: string; }, InputViewmodelData<any> & { placeholder: string; }>>>(Base: TBase)
+export function InputViewmodelWithPlaceholder<TBase extends AbstractConstructor<InputElementBase<any>>>(Base: TBase)
 {
   abstract class WithPlaceholder extends Base
   {
@@ -18,28 +16,12 @@ export function InputViewmodelWithPlaceholder<TBase extends AbstractConstructor<
 
     get placeholder(): string
     {
-      return this.data.placeholder;
+      return this.readField('placeholder');
     }
 
     set placeholder(value: string)
     {
-      this.data.placeholder = value;
-    }
-
-    protected override getPropsScheme()
-    {
-      return mergeDeep(super.getPropsScheme(), {
-        placeholder: {
-          value: ''
-        }
-      });
-    }
-
-    protected override getDataScheme()
-    {
-      return mergeDeep(super.getDataScheme(), {
-        placeholder: {}
-      });
+      this.writeField('placeholder', value);
     }
   }
 

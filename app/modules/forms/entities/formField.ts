@@ -1,8 +1,8 @@
-import { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
+import { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
-export abstract class FormField extends Viewmodel<string>
+export abstract class FormField extends UIElement
 {
   abstract name: string;
   abstract label: string;
-  abstract content: Viewmodel | undefined;
+  abstract content: UIElement | undefined;
 }

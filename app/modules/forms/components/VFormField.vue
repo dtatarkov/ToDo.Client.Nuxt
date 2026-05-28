@@ -7,10 +7,14 @@ type Props = {
 }
 
 const props = defineProps<Props>();
+
+const uiModifiers = {
+  container: 'grid grid-cols-1'
+}
 </script>
 
 <template>
-  <UFormField class="flex flex-col gap-1" :name="props.name" :label="props.label">
+  <UFormField class="flex flex-col gap-1" :name="props.name" :label="props.label" :ui="uiModifiers">
     <slot />
   </UFormField>
 </template>

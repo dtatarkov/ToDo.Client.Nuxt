@@ -18,14 +18,14 @@ export class FormElementBase<V = any> extends FormElement
     this.formField.content = inputElement;
   }
 
+  get vnode()
+  {
+    return this.formField.vnode;
+  }
+
   get name()
   {
     return this.formField.name;
-  }
-
-  override get component()
-  {
-    return this.formField.component;
   }
 
   get value(): V

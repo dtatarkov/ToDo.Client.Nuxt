@@ -1,89 +1,39 @@
 import { InputElementsFactory } from "./inputElementsFactory";
-import { InputTextViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTextViewmodelImpl";
-import { InputTextareaViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTextareaViewmodelImpl";
-import { InputDateViewmodelImpl } from "@/modules/forms/entities/inputElements/inputDateViewmodelImpl";
-import { InputTimeViewmodelImpl } from "@/modules/forms/entities/inputElements/inputTimeViewmodelImpl";
-import { InputDateTimeViewmodelImpl } from "@/modules/forms/entities/inputElements/inputDateTimeViewmodelImpl";
-import { StringsService } from "@/modules/shared/interfaces/stringsService";
-import { VueComponentPropsFactory } from "@/modules/shared/interfaces/vueComponentPropsFactory";
-import { DataAdapterFactory } from "@/modules/shared/interfaces/dataAdapterFactory";
-import { ZonedDateTimeMapper } from "@/modules/shared/interfaces/zonedDateTimeMapper";
-import { TimeMapper } from "@/modules/shared/interfaces/timeMapper";
-import { DatesService } from "@/modules/shared/interfaces/datesService";
-import { dependency } from "@/modules/shared/decorators/dependency";
-import type { InputTextViewmodel } from "@/modules/forms/entities/inputElements/inputTextViewmodel";
-import type { InputTextareaViewmodel } from "@/modules/forms/entities/inputElements/inputTextareaViewmodel";
-import type { InputDateViewmodel } from "@/modules/forms/entities/inputElements/inputDateViewmodel";
-import type { InputTimeViewmodel } from "@/modules/forms/entities/inputElements/inputTimeViewmodel";
-import type { InputDateTimeViewmodel } from "@/modules/forms/entities/inputElements/inputDateTimeViewmodel";
+import { InputElementTextBase } from "@/modules/forms/entities/inputElements/InputElementTextBase";
+import { InputElementTextareaBase } from "@/modules/forms/entities/inputElements/inputElementTextareaBase";
+import { InputElementDateBase } from "@/modules/forms/entities/inputElements/inputElementDateBase";
+import { InputElementTimeBase } from "@/modules/forms/entities/inputElements/inputElementTimeBase";
+import { InputElementDateTimeBase } from "@/modules/forms/entities/inputElements/inputElementDateTimeBase";
+import type { InputElementText } from "@/modules/forms/entities/inputElements/inputElementText";
+import type { InputElementTextarea } from "@/modules/forms/entities/inputElements/inputElementTextarea";
+import type { InputElementDate } from "@/modules/forms/entities/inputElements/InputElementDate";
+import type { InputElementTime } from "@/modules/forms/entities/inputElements/inputElementTime";
+import type { InputElementDateTime } from "@/modules/forms/entities/inputElements/inputElementDateTime";
 
-@dependency(StringsService)
-@dependency(VueComponentPropsFactory)
-@dependency(DataAdapterFactory)
-@dependency(ZonedDateTimeMapper)
-@dependency(TimeMapper)
-@dependency(DatesService)
 export class InputElementsFactoryImpl extends InputElementsFactory
 {
-    constructor(
-        private stringsService: StringsService,
-        private vueComponentPropsFactory: VueComponentPropsFactory,
-        private dataAdapterFactory: DataAdapterFactory,
-        private zonedDateTimeMapper: ZonedDateTimeMapper,
-        private timeMapper: TimeMapper,
-        private datesService: DatesService,
-    )
+    override createInputText(): InputElementText
     {
-        super();
+        return new InputElementTextBase();
     }
 
-    override createInputText(): InputTextViewmodel
+    override createTextarea(): InputElementTextarea
     {
-        return new InputTextViewmodelImpl(
-            this.stringsService,
-            this.vueComponentPropsFactory,
-            this.dataAdapterFactory,
-        );
+        return new InputElementTextareaBase();
     }
 
-    override createTextarea(): InputTextareaViewmodel
+    override createInputDate(): InputElementDate
     {
-        return new InputTextareaViewmodelImpl(
-            this.stringsService,
-            this.vueComponentPropsFactory,
-            this.dataAdapterFactory,
-        );
+        return new InputElementDateBase();
     }
 
-    override createInputDate(): InputDateViewmodel
+    override createInputTime(): InputElementTime
     {
-        return new InputDateViewmodelImpl(
-            this.zonedDateTimeMapper,
-            this.stringsService,
-            this.vueComponentPropsFactory,
-            this.dataAdapterFactory,
-        );
+        return new InputElementTimeBase();
     }
 
-    override createInputTime(): InputTimeViewmodel
+    override createInputDateTime(): InputElementDateTime
     {
-        return new InputTimeViewmodelImpl(
-            this.timeMapper,
-            this.stringsService,
-            this.vueComponentPropsFactory,
-            this.dataAdapterFactory,
-        );
-    }
-
-    override createInputDateTime(): InputDateTimeViewmodel
-    {
-        return new InputDateTimeViewmodelImpl(
-            this.datesService,
-            this.stringsService,
-            this.zonedDateTimeMapper,
-            this.timeMapper,
-            this.vueComponentPropsFactory,
-            this.dataAdapterFactory,
-        );
+        return new InputElementDateTimeBase();
     }
 }

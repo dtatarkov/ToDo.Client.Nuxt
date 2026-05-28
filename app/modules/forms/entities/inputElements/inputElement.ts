@@ -1,7 +1,15 @@
-import { Viewmodel } from "../../../uikit/interfaces/viewmodel";
-import type { InputViewmodelData } from "../../../uikit/types/inputViewmodels/inputViewmodelData";
+import { UIElement } from '@/modules/uikit/interfaces/uiElement';
 
-export abstract class InputElement<V = any> extends Viewmodel<string> implements InputViewmodelData<V>
+export interface InputElementData<V>
+{
+  id: string | undefined;
+  name: string | undefined;
+  value: V;
+  hasAutofocus: boolean;
+  isDisabled: boolean;
+};
+
+export abstract class InputElement<V = unknown> extends UIElement implements InputElementData<V>
 {
   abstract id: string | undefined;
   abstract name: string | undefined;

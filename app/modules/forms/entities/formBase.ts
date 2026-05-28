@@ -35,7 +35,15 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   get vnode()
   {
-    return h(VForm, { form: this });
+    const props = {
+      isDisabled: this.isDisabled
+    };
+
+    const children = {
+      default: () => this.elements.map(element => element.vnode)
+    };
+
+    return h(VForm, props, children);
   }
 
   get elements(): FormElement[]

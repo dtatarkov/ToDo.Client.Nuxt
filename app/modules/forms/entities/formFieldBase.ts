@@ -1,7 +1,7 @@
 import VFormField from "../components/VFormField.vue";
 import { FormField } from "./formField.js";
-import type { Viewmodel } from "@/modules/uikit/interfaces/viewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
+import type { UIElement } from '@/modules/uikit/interfaces/uiElement.js';
 
 export class FormFieldBase extends FormField
 {
@@ -11,17 +11,17 @@ export class FormFieldBase extends FormField
   });
 
   private children = {
-    content: <Viewmodel | undefined>undefined
+    content: <UIElement | undefined>undefined
   };
 
   readonly key = getUniqueId('form-field');
 
-  readonly component = {
-    setup: () =>
-    {
-      return () => h(VFormField, { field: this });
-    }
-  };
+  get vnode()
+  {
+    return h(VFormField, this.data, {
+      default: () => this.content?.vnode
+    });
+  }
 
   get label(): string
   {
