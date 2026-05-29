@@ -3,15 +3,27 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {
-    protected data: Record<string, any> = {
+    protected abstract component: any;
+
+    protected props: Record<string, any> = {
         id: undefined,
         name: undefined,
         value: this.getDefaultValue(),
         hasAutofocus: false,
         isDisabled: false,
+
+        'onUpdate:value': (value: V) =>
+        {
+            this.value = value;
+        }
     };
 
     key = getUniqueId('input-base');
+
+    get vnode()
+    {
+        return h(this.component, this.props);
+    }
 
     get id(): string | undefined
     {
@@ -77,11 +89,11 @@ export abstract class InputElementBase<V> extends InputElement<V>
 
     protected readField<T>(name: string): T
     {
-        return this.data[name];
+        return this.props[name];
     }
 
     protected writeField<T>(name: string, value: T)
     {
-        this.data[name] = value;
+        this.props[name] = value;
     }
 }

@@ -4,10 +4,7 @@ import VInputTime from '@/modules/uikit/components/VInputTime.vue';
 
 export class InputElementTimeBase extends InputElementBase<number | undefined> implements InputElementTime 
 {
-  get vnode()
-  {
-    return h(VInputTime, this.data);
-  }
+  protected component = VInputTime;
 
   protected override getDefaultValue(): number | undefined
   {

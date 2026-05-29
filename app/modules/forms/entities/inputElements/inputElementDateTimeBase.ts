@@ -4,10 +4,7 @@ import VInputDateTime from '@/modules/uikit/components/VInputDateTime.vue';
 
 export class InputElementDateTimeBase extends InputElementBase<Date | undefined> implements InputElementDateTime
 {
-  get vnode()
-  {
-    return h(VInputDateTime, this.data);
-  }
+  protected component = VInputDateTime;
 
   protected override getDefaultValue(): Date | undefined
   {

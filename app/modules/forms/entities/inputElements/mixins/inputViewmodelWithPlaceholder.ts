@@ -9,7 +9,7 @@ export function InputViewmodelWithPlaceholder<TBase extends AbstractConstructor<
     {
       super(...args);
 
-      Object.assign(this.data, {
+      Object.assign(this.props, {
         placeholder: ''
       });
     }

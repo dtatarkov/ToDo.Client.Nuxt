@@ -5,8 +5,5 @@ import VInputTextarea from '@/modules/uikit/components/VInputTextarea.vue';
 
 export class InputElementTextareaBase extends InputViewmodelWithPlaceholder(InputElementStringBase) implements InputElementTextarea
 {
-  get vnode()
-  {
-    return h(VInputTextarea, this.data);
-  }
+  protected component = VInputTextarea;
 }
