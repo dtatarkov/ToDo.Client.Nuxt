@@ -1,5 +1,4 @@
 import type { Slot } from 'vue';
-import { isArray } from './isArray';
 
 export function isEmptySlot<S extends Slot<any>>(slot?: S): boolean
 {
@@ -9,7 +8,7 @@ export function isEmptySlot<S extends Slot<any>>(slot?: S): boolean
   }
 
   const slotContent = slot();
-  const result = !slotContent.some(x => isArray(x.children) && x.children.length > 0);
+  const result = slotContent.length == 0;
 
   return result;
 }
