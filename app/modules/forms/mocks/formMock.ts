@@ -9,6 +9,7 @@ export const formMock = {
     action: uiElementActionMock,
     isDisabled: false,
 
+    setSubmitHandler: vi.fn(),
     setElements: vi.fn(),
     setData: vi.fn(),
     submitAsync: vi.fn(),

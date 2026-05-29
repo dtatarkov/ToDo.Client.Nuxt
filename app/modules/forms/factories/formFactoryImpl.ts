@@ -1,9 +1,8 @@
 import { FormElementFactory } from './formElementFactory';
-import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
 import type { Form } from "../entities/form";
 import { dependency } from "@/modules/shared/decorators/dependency";
-import { FormBase } from '../entities/formBase';
 import type { FormFactory } from './formFactory';
+import { FormBase } from '../entities/formBase';
 
 @dependency(FormElementFactory)
 export class FormFactoryImpl implements FormFactory
@@ -12,8 +11,8 @@ export class FormFactoryImpl implements FormFactory
   {
   }
 
-  create<TEntity extends Record<string, any> = Record<string, any>>(submitHandler: FormSubmitHandler): Form<TEntity>
+  create<TEntity extends Record<string, any> = Record<string, any>>(): Form<TEntity>
   {
-    return new FormBase(this.formElementFactory, submitHandler);
+    return new FormBase(this.formElementFactory);
   }
 }

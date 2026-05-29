@@ -24,15 +24,15 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
   {
     const todo = this.todosOwner.createToDo();
 
-    const form = this.formFactory.create<ToDoData>({
-      submit: async formData =>
-      {
-        todo.title = formData.title;
-        todo.description = formData.description;
-        todo.completionDatePlanned = formData.completionDatePlanned;
+    const form = this.formFactory.create<ToDoData>();
 
-        await todo.saveAsync();
-      }
+    form.setSubmitHandler(async formData =>
+    {
+      todo.title = formData.title;
+      todo.description = formData.description;
+      todo.completionDatePlanned = formData.completionDatePlanned;
+
+      await todo.saveAsync();
     });
 
     form.setElements({

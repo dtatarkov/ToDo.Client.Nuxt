@@ -5,7 +5,7 @@ import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementCreateData } from '../types/formElementCreateData.js';
 import type { FormElement } from './formElement.js';
 import type { FormElementFactory } from '../factories/formElementFactory';
-import type { FormSubmitHandler } from '../interfaces/formSubmitHandler';
+import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import { UIElementActionBase } from '@/modules/uikit/entities/uiElementActionBase';
 
 enum FormBaseState
@@ -16,8 +16,9 @@ enum FormBaseState
 
 export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
 {
-  private elementsInternal: Ref<FormElement[]> = shallowRef([]);
+  private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
+  private submitHandler?: FormSubmitHandler<TEntity>;
 
   private get state()
   {
@@ -34,7 +35,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   constructor(
     private formElementFactory: FormElementFactory,
-    private formSubmitHandler: FormSubmitHandler,
   )
   {
     super();
@@ -55,7 +55,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   get elements(): FormElement[]
   {
-    return this.elementsInternal.value;
+    return this.elementsRef.value;
   }
 
   get isDisabled(): boolean
@@ -67,7 +67,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     const data: Record<string, any> = {};
 
-    for (const element of this.elementsInternal.value)
+    for (const element of this.elementsRef.value)
     {
       data[element.name] = element.value;
     }
@@ -79,7 +79,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     this.assertNotDisabled();
 
-    for (const element of this.elementsInternal.value)
+    for (const element of this.elementsRef.value)
     {
       if (element.name in data)
       {
@@ -92,12 +92,22 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     this.assertNotDisabled();
 
-    this.elementsInternal.value = Object.entries(elements).map(([name, createData]) =>
+    this.elementsRef.value = Object.entries(elements).map(([name, createData]) =>
     {
       const element = this.formElementFactory.createElement(name, createData as FormElementCreateData);
 
       return element;
     });
+  }
+
+  override setSubmitHandler(handler: FormSubmitHandler<TEntity>): void
+  {
+    if (this.submitHandler)
+    {
+      throw new Error('Submit handler is already set');
+    }
+
+    this.submitHandler = handler;
   }
 
   override async submitAsync(): Promise<void>
@@ -112,13 +122,18 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   private async submitAsyncInternal(): Promise<void>
   {
+    if (!this.submitHandler)
+    {
+      return;
+    }
+
     this.assertNotDisabled();
     this.disable();
 
     try
     {
       const data = this.getData();
-      await this.formSubmitHandler.submit(data);
+      await this.submitHandler(data);
     }
     finally
     {
@@ -131,7 +146,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     this.assertNotDisabled();
 
     this.state = FormBaseState.disabled;
-    this.elementsInternal.value.forEach(element => element.disable());
+    this.elementsRef.value.forEach(element => element.disable());
   }
 
   private enable(): void
@@ -142,7 +157,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
 
     this.state = FormBaseState.initial;
-    this.elementsInternal.value.forEach(element => element.enable());
+    this.elementsRef.value.forEach(element => element.enable());
   }
 
   private assertNotDisabled(): void
