@@ -65,23 +65,6 @@ describe('ToDoImpl', () =>
         });
     });
 
-    describe('toObservableData', () =>
-    {
-        it('should return observable', () =>
-        {
-            const observable = todo.toObservableData();
-            expect(observable).toBeDefined();
-            expect(observable.value).toEqual(todo.getData());
-        });
-
-        it('observable should reflect updates', () =>
-        {
-            const observable = todo.toObservableData();
-            todo.title = 'Updated';
-            expect(observable.value.title).toBe('Updated');
-        });
-    });
-
     describe('clone', () =>
     {
         it('should create a new instance with same data', () =>

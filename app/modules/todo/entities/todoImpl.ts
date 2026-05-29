@@ -1,14 +1,13 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
 import type { ToDosOwner } from '../interfaces/todosOwner';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
-import type { Observable } from '@/modules/shared/interfaces/observable';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { shallowReactive } from 'vue';
 
 export class ToDoImpl extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
 
-  private dataInternal = new ObservableSource<ToDoData>(Object.freeze({
+  private dataInternal = shallowReactive(Object.seal(<ToDoData>{
     id: '',
     title: '',
     description: '',
@@ -35,52 +34,52 @@ export class ToDoImpl extends ToDo
 
   get id(): string
   {
-    return this.dataInternal.value.id;
+    return this.dataInternal.id;
   }
 
   get title(): string
   {
-    return this.dataInternal.value.title;
+    return this.dataInternal.title;
   }
 
   get description(): string
   {
-    return this.dataInternal.value.description;
+    return this.dataInternal.description;
   }
 
   get completionDatePlanned(): Date | undefined
   {
-    return this.dataInternal.value.completionDatePlanned;
+    return this.dataInternal.completionDatePlanned;
   }
 
   get completionDateActual(): Date | undefined
   {
-    return this.dataInternal.value.completionDateActual;
+    return this.dataInternal.completionDateActual;
   }
 
   set id(value: string)
   {
-    this.updateData({ id: value });
+    this.dataInternal.id = value;
   }
 
   set title(value: string)
   {
-    this.updateData({ title: value });
+    this.dataInternal.title = value;
   }
 
   set description(value: string)
   {
-    this.updateData({ description: value });
+    this.dataInternal.description = value;
   }
 
   set completionDatePlanned(value: Date | undefined)
   {
-    this.updateData({ completionDatePlanned: value });
+    this.dataInternal.completionDatePlanned = value;
   }
 
   set completionDateActual(value: Date | undefined)
   {
-    this.updateData({ completionDateActual: value });
+    this.dataInternal.completionDateActual = value;
   }
 
   get isNew()
@@ -88,17 +87,12 @@ export class ToDoImpl extends ToDo
     return this.stringsService.isStringEmpty(this.id);
   }
 
-  getData(): ToDoData
-  {
-    return this.dataInternal.value;
-  }
-
-  toObservableData(): Observable<ToDoData>
+  override getData(): ToDoData
   {
     return this.dataInternal;
   }
 
-  clone(): ToDo
+  override clone(): ToDo
   {
     const todo = new ToDoImpl(this.stringsService);
 
@@ -112,7 +106,7 @@ export class ToDoImpl extends ToDo
     return todo;
   }
 
-  async saveAsync(): Promise<void> 
+  override async saveAsync(): Promise<void> 
   {
     if (!this.owner)
     {
@@ -120,13 +114,5 @@ export class ToDoImpl extends ToDo
     }
 
     await this.ownerInternal?.saveToDoAsync(this);
-  }
-
-  private updateData(modifiedDataPart: Partial<ToDoData>)
-  {
-    const newData = { ...this.dataInternal.value, ...modifiedDataPart };
-    Object.freeze(newData);
-
-    this.dataInternal.value = newData;
   }
 }

@@ -23,7 +23,6 @@ describe('ToDoCardDataMapperImpl', () =>
       owner: undefined,
       isNew: false,
       getData: vi.fn(),
-      toObservableData: vi.fn(),
       clone: vi.fn(),
       saveAsync: vi.fn(),
     };

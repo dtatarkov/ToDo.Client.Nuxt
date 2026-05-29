@@ -1,5 +1,4 @@
 import type { ToDosOwner } from './todosOwner';
-import type { Observable } from '@/modules/shared/interfaces/observable';
 
 export abstract class ToDo
 {
@@ -13,7 +12,6 @@ export abstract class ToDo
   abstract get isNew(): boolean;
 
   abstract getData(): ToDoData;
-  abstract toObservableData(): Observable<ToDoData>;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
 }

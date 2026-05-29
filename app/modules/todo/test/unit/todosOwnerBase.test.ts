@@ -29,7 +29,6 @@ const createMockToDo = (
         getData: vi.fn(),
         clone: vi.fn(),
         saveAsync: vi.fn(),
-        toObservableData: vi.fn(),
     };
 };
 
