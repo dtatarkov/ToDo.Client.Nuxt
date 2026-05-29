@@ -17,8 +17,17 @@ enum FormBaseState
 export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
 {
   private elementsInternal: Ref<FormElement[]> = shallowRef([]);
-  private state = FormBaseState.initial;
+  private stateRef = shallowRef(FormBaseState.initial);
 
+  private get state()
+  {
+    return this.stateRef.value;
+  }
+
+  private set state(value)
+  {
+    this.stateRef.value = value;
+  }
 
   readonly key = getUniqueId('form');
   readonly action = new UIElementActionBase(() => this.submitAsyncInternal());

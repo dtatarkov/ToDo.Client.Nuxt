@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import type { FormData } from '../types/formData';
+type Props = {
+  isDisabled?: boolean;
+}
 
 type Emits = {
   (e: 'submit'): void;
 }
 
-const props = defineProps<FormData>();
+const props = defineProps<Props>();
 const emits = defineEmits<Emits>();
 </script>
 
