@@ -51,7 +51,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
     const result = getToDoCardsUseCase.execute();
 
-    expect(result).toEqual([mockCardData]);
+    expect(result.value).toEqual([mockCardData]);
     expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo);
   });
@@ -62,7 +62,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
     const result = getToDoCardsUseCase.execute();
 
-    expect(result).toEqual([]);
+    expect(result.value).toEqual([]);
     expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).not.toHaveBeenCalled();
   });
@@ -83,7 +83,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
 
     const result = getToDoCardsUseCase.execute();
 
-    expect(result).toEqual([mockCard1, mockCard2]);
+    expect(result.value).toEqual([mockCard1, mockCard2]);
     expect(todosOwnerMock.getAllToDos).toHaveBeenCalled();
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledTimes(2);
     expect(todoCardDataMapper.mapToCardData).toHaveBeenCalledWith(mockToDo1);

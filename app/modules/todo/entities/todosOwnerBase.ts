@@ -4,14 +4,14 @@ import { ToDosRepository } from "../interfaces/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDoFactory } from '../interfaces/todoFactory';
-import { shallowRef } from 'vue';
+import { shallowReactive, type Reactive } from 'vue';
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)
 export class ToDosOwnerBase extends ToDosOwner
 {
   private initializationPromise: Promise<void> | undefined;
-  private todos = shallowRef(new Array<ToDo>());
+  private todos = shallowReactive(new Array<ToDo>());
 
   constructor(
     private todosRepository: ToDosRepository,
@@ -21,16 +21,16 @@ export class ToDosOwnerBase extends ToDosOwner
     super();
   }
 
-  override getAllToDos(): ToDo[]
+  override getAllToDos(): Reactive<ToDo[]>
   {
-    return this.todos.value;
+    return this.todos;
   }
 
   override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
   {
     await this.initializeToDosAsync();
 
-    return this.todos.value.find(todo => todo.id === id);
+    return this.todos.find(todo => todo.id === id);
   }
 
   override initializeToDosAsync(): Promise<void>
@@ -81,7 +81,7 @@ export class ToDosOwnerBase extends ToDosOwner
   {
     if (!todo.isNew)
     {
-      if (!this.todos.value.some(t => t.id === todo.id))
+      if (!this.todos.some(t => t.id === todo.id))
       {
         throw new ToDoNotFoundException(todo.id);
       }
@@ -90,7 +90,7 @@ export class ToDosOwnerBase extends ToDosOwner
 
   private addToDo(todo: ToDo)
   {
-    this.todos.value = [...this.todos.value, todo];
+    this.todos.push(todo);
   }
 
   private async updateToDosInternalAsync(): Promise<void>
@@ -102,6 +102,6 @@ export class ToDosOwnerBase extends ToDosOwner
       todo.owner = this;
     }
 
-    this.todos.value = todos;
+    this.todos.splice(0, this.todos.length, ...todos);
   }
 }

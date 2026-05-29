@@ -1,19 +1,19 @@
 import { ToDo, type ToDoData } from "../interfaces/todo";
 import type { ToDosOwner } from '../interfaces/todosOwner';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { shallowReactive } from 'vue';
+import { shallowReactive, type Reactive } from 'vue';
 
 export class ToDoImpl extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
 
-  private dataInternal = shallowReactive(Object.seal(<ToDoData>{
+  private dataInternal = shallowReactive(<ToDoData>{
     id: '',
     title: '',
     description: '',
     completionDatePlanned: undefined,
     completionDateActual: undefined
-  }));
+  });
 
   constructor(
     private stringsService: StringsService,
@@ -87,7 +87,7 @@ export class ToDoImpl extends ToDo
     return this.stringsService.isStringEmpty(this.id);
   }
 
-  override getData(): ToDoData
+  override getData(): Reactive<ToDoData>
   {
     return this.dataInternal;
   }

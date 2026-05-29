@@ -3,6 +3,7 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDoCardDataMapper } from '../interfaces/todoCardDataMapper';
 import type { ToDoCardData } from '../types/todoCardData';
 import { ToDosOwner } from '../interfaces/todosOwner';
+import { type Ref, computed } from 'vue';
 
 @dependency(ToDosOwner)
 @dependency(ToDoCardDataMapper)
@@ -16,10 +17,10 @@ export class GetToDoCardsUseCaseImpl extends GetToDoCardsUseCase
     super();
   }
 
-  override execute(): ToDoCardData[]
+  override execute(): Ref<ToDoCardData[]>
   {
     const todos = this.todosOwner.getAllToDos();
-    const cards = todos.map(todo => this.todoCardDataMapper.mapToCardData(todo));
+    const cards = computed(() => todos.map(todo => this.todoCardDataMapper.mapToCardData(todo)));
 
     return cards;
   }

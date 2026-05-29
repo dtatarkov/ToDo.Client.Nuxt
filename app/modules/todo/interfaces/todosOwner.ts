@@ -1,8 +1,9 @@
+import type { Reactive } from 'vue';
 import type { ToDo } from "../interfaces/todo";
 
 export abstract class ToDosOwner
 {
-  abstract getAllToDos(): ToDo[];
+  abstract getAllToDos(): Reactive<ToDo[]>;
   abstract getToDoByIdAsync(id: string): Promise<ToDo | undefined>;
   abstract updateToDosAsync(): Promise<void>;
   abstract initializeToDosAsync(): Promise<void>;

@@ -1,3 +1,4 @@
+import type { Reactive } from 'vue';
 import type { ToDosOwner } from './todosOwner';
 
 export abstract class ToDo
@@ -11,7 +12,7 @@ export abstract class ToDo
 
   abstract get isNew(): boolean;
 
-  abstract getData(): ToDoData;
+  abstract getData(): Reactive<ToDoData>;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
 }

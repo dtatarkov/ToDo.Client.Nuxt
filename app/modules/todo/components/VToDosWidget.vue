@@ -26,7 +26,7 @@ const getToDoCardsUseCase = useService(GetToDoCardsUseCase);
 const showAddToDoDialogUseCase = useService(CreateToDoUseCase);
 const showEditToDoDialogUseCase = useService(EditToDoUseCase);
 
-const cardsData = computed(() => getToDoCardsUseCase.execute());
+const cardsData = getToDoCardsUseCase.execute();
 
 function handleAddToDoButtonClick() {
   showAddToDoDialogUseCase.execute();
