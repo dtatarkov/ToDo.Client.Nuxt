@@ -5,9 +5,9 @@ import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { createMockToDo } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
-import { modalMock } from '../../../overlay/mocks/modalMock';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
+import { modalConfirmMock } from '@/modules/overlay/mocks/modalConfirmMock';
 
 describe('EditToDoUseCaseImpl', () =>
 {
@@ -23,7 +23,7 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        addFormModalUseCaseMock.execute.mockReturnValue(modalMock);
+        addFormModalUseCaseMock.execute.mockReturnValue(modalConfirmMock);
     });
 
     describe('executeAsync', () =>

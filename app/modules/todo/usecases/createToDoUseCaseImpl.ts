@@ -57,6 +57,6 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
     form.setData(todo.getData());
 
     const modal = this.addFormModalUseCase.execute(form);
-    modal.setAddButton();
+    modal.toAddMode();
   }
 }

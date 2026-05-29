@@ -1,18 +1,17 @@
 import { vi } from 'vitest';
 import type { Form } from '@/modules/forms/entities/form';
+import { uiElementActionMock } from '@/modules/uikit/mocks/uiElementActionMock';
 
 export const formMock = {
     key: '',
     vnode: {} as VNode,
     elements: [],
+    action: uiElementActionMock,
     isDisabled: false,
 
     setElements: vi.fn(),
     setData: vi.fn(),
-    submit: vi.fn(),
+    submitAsync: vi.fn(),
     getData: vi.fn(),
-    setDisabledStateChangeHandler: vi.fn(),
-    setSubmittingStateChangeHandler: vi.fn(),
-    setSubmittedHandler: vi.fn(),
     destroy: vi.fn(),
 } satisfies Form;

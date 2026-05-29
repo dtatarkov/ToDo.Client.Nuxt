@@ -2,10 +2,11 @@ import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
 import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { ActionUIElement } from '@/modules/uikit/entities/actionUIElement';
+import { UIElementActionState } from '@/modules/uikit/entities/uiElementAction';
 
 
-export class ModalConfirmBase<Content extends UIElement = UIElement> extends ModalBase<Content> implements ModalConfirm<Content>
+export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase<Content> implements ModalConfirm<Content>
 {
     private buttonConfirmInternal: ButtonGeneralViewmodel;
     private buttonCancelInternal: ButtonGeneralViewmodel;
@@ -21,7 +22,7 @@ export class ModalConfirmBase<Content extends UIElement = UIElement> extends Mod
 
         this.controls.push(this.buttonCancelInternal, this.buttonConfirmInternal);
 
-        this.setEditButton();
+        this.toEditMode();
     }
 
     get buttonConfirm(): ButtonGeneralViewmodel
@@ -36,6 +37,11 @@ export class ModalConfirmBase<Content extends UIElement = UIElement> extends Mod
         return this.buttonCancelInternal;
     }
 
+    override get isDisabled()
+    {
+        return super.isDisabled;
+    }
+
     override set isDisabled(value: boolean)
     {
         super.isDisabled = value;
@@ -44,12 +50,36 @@ export class ModalConfirmBase<Content extends UIElement = UIElement> extends Mod
         this.buttonCancelInternal.isDisabled = value;
     }
 
-    setAddButton()
+    override get content(): Content | undefined
+    {
+        return super.content;
+    }
+
+    override set content(content: Content | undefined)
+    {
+        super.content = content;
+
+        if (content)
+        {
+            content.action.setActionStateChangeHandler(state =>
+            {
+                this.isDisabled = state == UIElementActionState.processing;
+                this.buttonConfirm.isLoading = state == UIElementActionState.processing;
+
+                if (state == UIElementActionState.finishedProcessing)
+                {
+                    this.close();
+                }
+            });
+        }
+    }
+
+    toAddMode()
     {
         this.buttonConfirmInternal.title = 'Добавить';
     }
 
-    setEditButton()
+    toEditMode()
     {
         this.buttonConfirmInternal.title = 'Сохранить';
     }
@@ -76,6 +106,10 @@ export class ModalConfirmBase<Content extends UIElement = UIElement> extends Mod
 
     protected handleConfirmButtonClick()
     {
+        if (this.content)
+        {
+            this.content.action.executeAsync();
+        }
     }
 
     protected handleCancelButtonClick()

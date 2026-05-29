@@ -19,7 +19,7 @@ export class AddFormModalUseCaseImpl implements AddFormModalUseCase
 
     execute(form: Form): ModalConfirm<Form>
     {
-        const modal = this.modalFactory.createModalConfirmForm(form);
+        const modal = this.modalFactory.createModalConfirm(form);
         this.overlay.addElement(modal);
 
         return modal;

@@ -7,6 +7,6 @@ export abstract class ModalConfirm<Content extends UIElement = UIElement> extend
     abstract get buttonConfirm(): ButtonGeneralViewmodel;
     abstract get buttonCancel(): ButtonGeneralViewmodel;
 
-    abstract setAddButton(): void;
-    abstract setEditButton(): void;
+    abstract toAddMode(): void;
+    abstract toEditMode(): void;
 }

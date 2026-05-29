@@ -1,11 +1,10 @@
 import type { Modal } from '../entities/modal';
-import type { Form } from '@/modules/forms/entities/form';
 import type { ModalConfirm } from '../entities/modalConfirm';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ModalBase } from '../entities/modalBase';
 import { ModalConfirmBase } from '../entities/modalConfirmBase';
-import { ModalConfirmForm } from '../entities/modalConfirmForm';
+import type { ActionUIElement } from '@/modules/uikit/entities/actionUIElement';
 
 @dependency(ButtonsFactory)
 export class ModalFactory
@@ -21,17 +20,10 @@ export class ModalFactory
         return new ModalBase();
     }
 
-    createModalConfirm(): ModalConfirm
+    createModalConfirm<Content extends ActionUIElement>(content: Content): ModalConfirm<Content>
     {
-        const result = new ModalConfirmBase(this.buttonsFactory);
-
-        return result;
-    }
-
-    createModalConfirmForm(form: Form): ModalConfirm<Form>
-    {
-        const result = new ModalConfirmForm(this.buttonsFactory);
-        result.content = form;
+        const result = new ModalConfirmBase<Content>(this.buttonsFactory);
+        result.content = content;
 
         return result;
     }
