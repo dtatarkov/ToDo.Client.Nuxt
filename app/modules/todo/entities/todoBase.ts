@@ -20,7 +20,7 @@ export class ToDoBase extends ToDo
 
   private schemeCommon = {
     id: {
-      type: EntityFieldType.identity,
+      type: EntityFieldType.hidden,
     },
 
     title: {

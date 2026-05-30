@@ -3,7 +3,7 @@ import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { FormElementType } from '../enums/formElementType';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import { EntitySchemeToFormElementsMapper } from './entitySchemeToFormElementsMapper';
-import type { EntityFieldScheme } from '@/modules/shared/types/entityFieldScheme';
+import type { EntityDateTimeFieldScheme, EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { EntityValidatorFactory } from '@/modules/validation/factories/entityValidatorFactory';
 
@@ -55,13 +55,8 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
         }
     }
 
-    private mapStringField(fieldScheme: EntityFieldScheme): FormElementCreateData
+    private mapStringField(fieldScheme: EntityStringFieldScheme): FormElementCreateData
     {
-        if (fieldScheme.type != EntityFieldType.string)
-        {
-            throw new Error('invalid field type');
-        }
-
         const isLongText = fieldScheme.isLong;
 
         if (isLongText)
@@ -80,13 +75,8 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
         };
     }
 
-    private mapDateTimeField(fieldScheme: EntityFieldScheme): FormElementCreateData
+    private mapDateTimeField(fieldScheme: EntityDateTimeFieldScheme): FormElementCreateData
     {
-        if (fieldScheme.type != EntityFieldType.datetime)
-        {
-            throw new Error('invalid field type');
-        }
-
         return {
             type: FormElementType.inputDateTime,
             label: fieldScheme.label,
