@@ -3,10 +3,8 @@ import { DatesService } from "../interfaces/datesService";
 import { StringsService } from "../interfaces/stringsService";
 import { DatesServiceImpl } from "../services/datesServiceImpl";
 import { StringsServiceImpl } from "../services/stringsServiceImpl";
-import { SSRLoaderImpl } from "../services/ssrLoaderImpl";
 import { TimeMapperImpl } from "../mappers/internal/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/internal/zonedDateTimeMapperImpl";
-import { SSRLoader } from "../interfaces/ssrLoader";
 import { ZonedDateTimeMapper } from "../interfaces/zonedDateTimeMapper";
 import { TimeMapper } from "../interfaces/timeMapper";
 import { VueComponentPropsFactoryImpl } from '../factories/vueComponentPropsFactoryImpl';
@@ -29,7 +27,6 @@ export function useSharedServices(): void
 
     useServiceRegistration(DatesService).to(DatesServiceImpl).asTransient();
     useServiceRegistration(StringsService).to(StringsServiceImpl).asTransient();
-    useServiceRegistration(SSRLoader).to(SSRLoaderImpl).asScoped();
     useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
     useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
     useServiceRegistration(VueComponentPropsFactory).to(VueComponentPropsFactoryImpl).asTransient();
