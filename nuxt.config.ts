@@ -55,7 +55,8 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: '',
       locale: 'ru',
-      longTaskSpinnerDelay: 500 // ms
+      longTaskSpinnerDelay: 500, // ms
+      validatorsCacheSizeMax: 50
     },
   },
 

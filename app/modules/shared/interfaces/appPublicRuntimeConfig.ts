@@ -5,4 +5,5 @@ export abstract class AppPublicRuntimeConfig implements SharedPublicRuntimeConfi
   abstract apiBaseUrl: string;
   abstract locale: string;
   abstract longTaskSpinnerDelay: number;
-} 
+  abstract validatorsCacheSizeMax: number;
+}

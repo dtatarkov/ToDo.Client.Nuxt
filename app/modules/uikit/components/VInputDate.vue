@@ -1,11 +1,12 @@
 <template>
   <UInputDate
-    :id="props.id" 
-    v-model="date" 
-    :name="props.name" 
-    :autofocus="props.hasAutofocus" 
-    :disabled="props.isDisabled" 
-    :hide-time-zone="true"    
+    :id="props.id"
+    v-model="date"
+    :name="props.name"
+    :autofocus="props.hasAutofocus"
+    :disabled="props.isDisabled"
+    :color="props.color"
+    :hide-time-zone="true"
     granularity="day"
     v-bind="$attrs"
   />

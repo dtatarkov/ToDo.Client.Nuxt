@@ -4,6 +4,7 @@ import { UFormField } from "#components";
 type Props = {
  name?: string;
  label?: string;
+ hint?: string;
 }
 
 const props = defineProps<Props>();
@@ -14,7 +15,7 @@ const uiModifiers = {
 </script>
 
 <template>
-  <UFormField class="flex flex-col gap-1" :name="props.name" :label="props.label" :ui="uiModifiers">
+  <UFormField class="flex flex-col gap-1" :name="props.name" :label="props.label" :hint="props.hint" :ui="uiModifiers">
     <slot />
   </UFormField>
 </template>

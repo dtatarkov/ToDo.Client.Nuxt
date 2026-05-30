@@ -1,11 +1,12 @@
 <template>
-  <UTextarea 
-    :id="props.id" 
-    v-model="valueModel" 
-    :name="props.name" 
-    :autofocus="props.hasAutofocus" 
+  <UTextarea
+    :id="props.id"
+    v-model="valueModel"
+    :name="props.name"
+    :autofocus="props.hasAutofocus"
     :placeholder="props.placeholder"
-    :disabled="props.isDisabled" 
+    :disabled="props.isDisabled"
+    :color="props.color"
     v-bind="$attrs"
   />
 </template>

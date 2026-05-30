@@ -7,4 +7,5 @@ export abstract class FormElement<V = any> extends UIElement
 
   abstract disable(): void;
   abstract enable(): void;
+  abstract validate(): boolean;
 }

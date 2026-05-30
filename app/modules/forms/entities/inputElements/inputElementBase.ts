@@ -1,5 +1,6 @@
 import { InputElement } from './inputElement';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import type { Color } from '@/modules/uikit/types/color';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {
@@ -11,6 +12,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
         value: this.getDefaultValue(),
         hasAutofocus: false,
         isDisabled: false,
+        color: <Color | undefined>undefined,
 
         'onUpdate:value': (value: V) =>
         {
@@ -83,6 +85,16 @@ export abstract class InputElementBase<V> extends InputElement<V>
     override enable(): void
     {
         this.isDisabled = false;
+    }
+
+    override toErrorMode(): void
+    {
+        this.writeField<Color | undefined>('color', 'error');
+    }
+
+    override toDefaultMode(): void
+    {
+        this.writeField<Color | undefined>('color', undefined);
     }
 
     protected abstract getDefaultValue(): V;

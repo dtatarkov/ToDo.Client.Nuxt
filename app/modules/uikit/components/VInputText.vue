@@ -1,12 +1,13 @@
 <template>
-  <UInput 
-    :id="props.id" 
-    v-model="valueModel"     
-    :name="props.name" 
-    :autofocus="props.hasAutofocus" 
+  <UInput
+    :id="props.id"
+    v-model="valueModel"
+    :name="props.name"
+    :autofocus="props.hasAutofocus"
     :placeholder="props.placeholder"
     :disabled="props.isDisabled"
-    v-bind="$attrs"    
+    :color="props.color"
+    v-bind="$attrs"
   />
 </template>
 

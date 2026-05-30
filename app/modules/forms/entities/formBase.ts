@@ -137,6 +137,12 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
 
     this.assertNotDisabled();
+
+    if (!this.validate())
+    {
+      return;
+    }
+
     this.disable();
 
     try
@@ -148,6 +154,13 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     {
       this.enable();
     }
+  }
+
+  private validate(): boolean
+  {
+    const result = this.elements.every(element => element.validate());
+
+    return result;
   }
 
   private disable(): void

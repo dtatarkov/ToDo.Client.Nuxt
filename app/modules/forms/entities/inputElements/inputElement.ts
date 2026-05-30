@@ -19,4 +19,7 @@ export abstract class InputElement<V = unknown> extends UIElement implements Inp
 
   abstract disable(): void;
   abstract enable(): void;
+
+  abstract toErrorMode(): void;
+  abstract toDefaultMode(): void;
 }

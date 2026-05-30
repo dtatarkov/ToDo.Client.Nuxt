@@ -5,11 +5,22 @@ import { FormElementType } from '../enums/formElementType';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import { EntitySchemeToFormElementsMapper } from './entitySchemeToFormElementsMapper';
 import type { EntityFieldScheme } from '@/modules/shared/types/entityFieldScheme';
+import { dependency } from '@/modules/shared/decorators/dependency';
+import { EntityValidatorFactory } from '@/modules/validation/factories/entityValidatorFactory';
 
+@dependency(EntityValidatorFactory)
 export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElementsMapper
 {
+    constructor(
+        private entityValidatorFactory: EntityValidatorFactory,
+    )
+    {
+        super();
+    }
+
     override map<TEntity extends Record<string, any>>(scheme: EntityScheme<TEntity>): Partial<Record<keyof TEntity, FormElementCreateData>>
     {
+        const validator = this.entityValidatorFactory.getValidator(scheme);
         const elements: Partial<Record<keyof TEntity, FormElementCreateData>> = {};
 
         for (const [key, fieldScheme] of Object.entries(scheme))
@@ -18,7 +29,12 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
 
             if (elementCreateData)
             {
-                elements[key as keyof TEntity] = elementCreateData;
+                const fieldKey = key as keyof TEntity;
+
+                elementCreateData.validate = (value: TEntity[keyof TEntity]) =>
+                    validator.validateField(fieldKey, value);
+
+                elements[fieldKey] = elementCreateData;
             }
         }
 

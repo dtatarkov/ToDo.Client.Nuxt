@@ -1,11 +1,12 @@
 <template>
   <UInputTime
-    :id="props.id" 
-    v-model="time" 
-    :name="props.name" 
-    :autofocus="props.hasAutofocus" 
-    :disabled="props.isDisabled" 
-    :hide-time-zone="true"    
+    :id="props.id"
+    v-model="time"
+    :name="props.name"
+    :autofocus="props.hasAutofocus"
+    :disabled="props.isDisabled"
+    :color="props.color"
+    :hide-time-zone="true"
     :hour-cycle="24"
     granularity="minute"
     v-bind="$attrs"

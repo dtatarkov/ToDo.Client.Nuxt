@@ -7,7 +7,8 @@ describe('DatesServiceImpl', () =>
   const config: AppPublicRuntimeConfig = {
     apiBaseUrl: '',
     locale: 'ru',
-    longTaskSpinnerDelay: 500
+    longTaskSpinnerDelay: 500,
+    validatorsCacheSizeMax: 0
   };
 
   const service = new DatesServiceImpl(config);

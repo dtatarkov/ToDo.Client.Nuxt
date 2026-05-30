@@ -11,6 +11,8 @@ export class FormElementBase<V = any> extends FormElement
 
   protected formField = new FormFieldBase();
 
+  protected validateFn: ((value: V) => string | undefined) | undefined;
+
   constructor(protected inputElement: InputElement<V>)
   {
     super();
@@ -42,6 +44,7 @@ export class FormElementBase<V = any> extends FormElement
   {
     updatePropertiesWithData(this.formField, data);
     updatePropertiesWithData(this.inputElement, data);
+    this.validateFn = data.validate;
   }
 
   override disable(): void
@@ -52,5 +55,23 @@ export class FormElementBase<V = any> extends FormElement
   override enable(): void
   {
     this.inputElement.enable();
+  }
+
+  override validate(): boolean
+  {
+    const errorMessage = this.validateFn?.(this.value);
+
+    if (errorMessage)
+    {
+      this.inputElement.toErrorMode();
+      this.formField.toErrorMode(errorMessage);
+    }
+    else
+    {
+      this.inputElement.toDefaultMode();
+      this.formField.toDefaultMode();
+    }
+
+    return errorMessage != undefined;
   }
 }
