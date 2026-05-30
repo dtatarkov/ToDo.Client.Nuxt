@@ -2,23 +2,14 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { createToDoMock } from '../../mocks/todoMock';
+import { todoRepositoryMock } from '../../mocks/todoRepositoryMock';
+import { todoFactoryMock } from '../../mocks/todoFactoryMock';
 
 describe('ToDosOwnerBase', () =>
 {
-    const mockRepository = {
-        getAllToDosAsync: vi.fn(),
-        saveToDoAsync: vi.fn()
-    };
-
-    const mockTodoFactory = {
-        create: vi.fn()
-    };
-
     beforeEach(() =>
     {
-        mockRepository.getAllToDosAsync.mockReset();
-        mockRepository.saveToDoAsync.mockReset();
-        mockTodoFactory.create.mockReset();
+        vi.resetAllMocks();
     });
 
     describe('getAllToDos', () =>
@@ -26,14 +17,14 @@ describe('ToDosOwnerBase', () =>
         it('should return observable with todos', async () =>
         {
             const mockTodos = [createToDoMock({ id: '1' }), createToDoMock({ id: '2' })];
-            mockRepository.getAllToDosAsync.mockReturnValue(mockTodos);
+            todoRepositoryMock.getAllToDosAsync.mockReturnValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.initializeToDosAsync();
-            const observable = owner.getAllToDos();
+            const todos = owner.getAllToDos();
 
-            expect(observable).toEqual(mockTodos);
-            expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(1);
+            expect(todos).toEqual(mockTodos);
+            expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -44,30 +35,30 @@ describe('ToDosOwnerBase', () =>
             const initialTodos = [createToDoMock({ id: '1' })];
             const updatedTodos = [createToDoMock({ id: '2' })];
 
-            mockRepository.getAllToDosAsync
+            todoRepositoryMock.getAllToDosAsync
                 .mockResolvedValueOnce(initialTodos)
                 .mockResolvedValueOnce(updatedTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.initializeToDosAsync();
             await owner.updateToDosAsync();
 
             const observable = owner.getAllToDos();
             expect(observable).toEqual(updatedTodos);
-            expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(2);
+            expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(2);
         });
 
         it('should initialize if not initialized', async () =>
         {
             const mockTodos = [createToDoMock({ id: '1' })];
-            mockRepository.getAllToDosAsync = vi.fn().mockResolvedValue(mockTodos);
+            todoRepositoryMock.getAllToDosAsync = vi.fn().mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.updateToDosAsync();
 
             const observable = owner.getAllToDos();
             expect(observable).toEqual(mockTodos);
-            expect(mockRepository.getAllToDosAsync).toHaveBeenCalledTimes(1);
+            expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(1);
         });
     });
 
@@ -78,24 +69,24 @@ describe('ToDosOwnerBase', () =>
             const todo = createToDoMock({ id: '1' });
             const mockTodos = [createToDoMock({ id: '1' })];
 
-            mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
+            todoRepositoryMock.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.saveToDoAsync(todo);
 
-            expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(todo);
+            expect(todoRepositoryMock.updateToDoAsync).toHaveBeenCalledWith(todo);
         });
 
         it('should save new todo and add to list', async () =>
         {
             const newTodo = createToDoMock();
             // The initial list is empty (or doesn't contain this id)
-            mockRepository.getAllToDosAsync.mockResolvedValue([]);
+            todoRepositoryMock.getAllToDosAsync.mockResolvedValue([]);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.saveToDoAsync(newTodo);
 
-            expect(mockRepository.saveToDoAsync).toHaveBeenCalledWith(newTodo);
+            expect(todoRepositoryMock.addToDoAsync).toHaveBeenCalledWith(newTodo);
             // Verify that the todo is added to the internal list
             const todosObservable = owner.getAllToDos();
             expect(todosObservable).toContain(newTodo);
@@ -106,9 +97,9 @@ describe('ToDosOwnerBase', () =>
             const todo = createToDoMock({ id: '999' });
             const mockTodos = [createToDoMock({ id: '1' })];
 
-            mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
+            todoRepositoryMock.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await expect(owner.saveToDoAsync(todo)).rejects.toThrow(ToDoNotFoundException);
         });
     });
@@ -118,12 +109,12 @@ describe('ToDosOwnerBase', () =>
         it('should create a todo using factory', () =>
         {
             const mockTodo = createToDoMock();
-            mockTodoFactory.create.mockReturnValue(mockTodo);
+            todoFactoryMock.create.mockReturnValue(mockTodo);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             const result = owner.createToDo();
 
-            expect(mockTodoFactory.create).toHaveBeenCalledTimes(1);
+            expect(todoFactoryMock.create).toHaveBeenCalledTimes(1);
             expect(result).toBe(mockTodo);
             expect(result.owner).toBe(owner);
         });
@@ -137,9 +128,9 @@ describe('ToDosOwnerBase', () =>
             const todo2 = createToDoMock({ id: '2' });
             const mockTodos = [todo1, todo2];
 
-            mockRepository.getAllToDosAsync.mockResolvedValue(mockTodos);
+            todoRepositoryMock.getAllToDosAsync.mockResolvedValue(mockTodos);
 
-            const owner = new ToDosOwnerBase(mockRepository, mockTodoFactory);
+            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.initializeToDosAsync();
 
             expect(todo1.owner).toBe(owner);

@@ -61,11 +61,14 @@ export class ToDosOwnerBase extends ToDosOwner
 
     this.assertNewOrExistingToDo(todo);
 
-    await this.todosRepository.saveToDoAsync(todo);
-
     if (todo.isNew)
     {
+      this.todosRepository.addToDoAsync(todo);
       this.addToDo(todo);
+    }
+    else
+    {
+      this.todosRepository.updateToDoAsync(todo);
     }
   }
 

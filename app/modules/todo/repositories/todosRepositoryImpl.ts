@@ -33,7 +33,26 @@ export class ToDosRepositoryImpl extends ToDosRepository
     return todos;
   }
 
-  override async saveToDoAsync(todo: ToDo): Promise<void>
+  override async addToDoAsync(todo: ToDo): Promise<void>
+  {
+    if (!todo.isNew)
+    {
+      throw new Error('todo is not new');
+    }
+
+    const addDto = this.todoDtoMapper.mapToAddDto(todo);
+
+    const dto: ToDoGetDto = await $fetch(`${this.config.apiBaseUrl}/todos`, {
+      method: 'POST',
+      credentials: 'include',
+      body: addDto
+    });
+
+    const addedToDo = this.todoDtoMapper.mapToEntity(dto);
+    updatePropertiesWithData(todo, addedToDo.getData());
+  }
+
+  override async updateToDoAsync(todo: ToDo): Promise<void>
   {
     const updateDto = this.todoDtoMapper.mapToUpdateDto(todo);
 

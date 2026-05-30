@@ -5,6 +5,7 @@ import type { ToDo } from "../entities/todo";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { ToDoFactory } from "../factories/todoFactory";
 import { dependency } from '@/modules/shared/decorators/dependency';
+import type { ToDoAddDto } from '../types/ToDoAddDto';
 
 @dependency(DatesService)
 @dependency(ToDoFactory)
@@ -32,10 +33,23 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
 
   mapToUpdateDto(todo: ToDo): ToDoUpdateDto
   {
-    return {
+    const dto = {
       title: todo.title,
       description: todo.description,
       completionDatePlanned: todo.completionDatePlanned?.toISOString()
     };
+
+    return dto;
+  }
+
+  mapToAddDto(todo: ToDo): ToDoAddDto
+  {
+    const dto = {
+      title: todo.title,
+      description: todo.description,
+      completionDatePlanned: todo.completionDatePlanned?.toISOString()
+    };
+
+    return dto;
   }
 }
