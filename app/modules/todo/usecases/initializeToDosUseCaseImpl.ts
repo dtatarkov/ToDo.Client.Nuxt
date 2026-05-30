@@ -1,6 +1,6 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { InitializeToDosUseCase } from "../interfaces/initializeToDosUseCase";
-import { ToDosOwner } from '../interfaces/todosOwner';
+import { InitializeToDosUseCase } from "./initializeToDosUseCase";
+import { ToDosOwner } from '../entities/todosOwner';
 
 @dependency(ToDosOwner)
 export class InitializeToDosUseCaseImpl extends InitializeToDosUseCase

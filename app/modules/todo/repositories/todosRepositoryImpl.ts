@@ -1,7 +1,7 @@
 import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
-import { ToDosRepository } from "../interfaces/todosRepository";
-import { ToDoDtoMapper } from "../interfaces/todoDtoMapper";
-import type { ToDo } from "../interfaces/todo";
+import { ToDosRepository } from "./todosRepository";
+import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
+import type { ToDo } from "../entities/todo";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoGetDto } from '../types/toDoGetDto';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';

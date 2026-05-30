@@ -1,4 +1,4 @@
-import type { ToDo } from "./todo";
+import type { ToDo } from "../entities/todo";
 
 export abstract class ToDosRepository
 {

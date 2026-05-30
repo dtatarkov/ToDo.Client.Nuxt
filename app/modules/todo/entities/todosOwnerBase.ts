@@ -1,9 +1,9 @@
-import { ToDosOwner } from "../interfaces/todosOwner";
-import type { ToDo } from "../interfaces/todo";
-import { ToDosRepository } from "../interfaces/todosRepository";
+import { ToDosOwner } from "./todosOwner";
+import type { ToDo } from "./todo";
+import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { ToDoFactory } from '../interfaces/todoFactory';
+import { ToDoFactory } from '../factories/todoFactory';
 import { shallowReactive, type Reactive } from 'vue';
 
 @dependency(ToDosRepository)

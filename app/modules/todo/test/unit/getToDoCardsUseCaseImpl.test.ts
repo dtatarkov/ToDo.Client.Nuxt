@@ -1,9 +1,9 @@
 import { GetToDoCardsUseCaseImpl } from '@/modules/todo/usecases/getToDoCardsUseCaseImpl';
-import type { ToDoData } from '@/modules/todo/interfaces/todo';
+import type { ToDoData } from '../../types/todoData';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { ToDoCardViewmodelData } from '../../interfaces/todoCardViewmodel';
-import type { ToDoCardDataMapper } from '../../interfaces/todoCardDataMapper';
+import type { ToDoCardDataMapper } from '../../mappers/todoCardDataMapper';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
+import type { ToDoCardData } from '../../types/todoCardData';
 
 describe('GetToDoCardsUseCaseImpl', () =>
 {
@@ -32,7 +32,7 @@ describe('GetToDoCardsUseCaseImpl', () =>
       description: 'Test Description',
       completionDatePlanned: undefined,
       completionDateActual: undefined,
-    } satisfies ToDoCardViewmodelData;
+    } satisfies ToDoCardData;
   }
 
   beforeEach(() =>

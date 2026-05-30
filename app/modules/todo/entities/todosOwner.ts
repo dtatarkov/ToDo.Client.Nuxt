@@ -1,5 +1,5 @@
 import type { Reactive } from 'vue';
-import type { ToDo } from "../interfaces/todo";
+import type { ToDo } from "./todo";
 
 export abstract class ToDosOwner
 {

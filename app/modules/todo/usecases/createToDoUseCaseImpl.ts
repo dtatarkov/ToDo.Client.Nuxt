@@ -1,7 +1,7 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { ToDosOwner } from '../interfaces/todosOwner';
+import { ToDosOwner } from '../entities/todosOwner';
 import { CreateToDoUseCase } from './createToDoUseCase';
-import type { ToDoData } from '../interfaces/todo';
+import type { ToDoData } from '../types/todoData';
 import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { AddFormModalUseCase } from '@/modules/overlay/usecases/addFormModalUseCase';
 import { FormFactory } from '@/modules/forms/factories/formFactory';

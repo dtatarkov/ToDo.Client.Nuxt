@@ -1,5 +1,5 @@
-import { ToDoCardDataMapper } from "../interfaces/todoCardDataMapper";
-import type { ToDoData } from "../interfaces/todo";
+import { ToDoCardDataMapper } from "./todoCardDataMapper";
+import type { ToDoData } from '../types/todoData';
 import type { ToDoCardData } from '../types/todoCardData';
 import { reactive, computed } from 'vue';
 

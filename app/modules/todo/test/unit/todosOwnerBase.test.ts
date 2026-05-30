@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
-import type { ToDo, ToDoData } from '../../interfaces/todo';
+import type { ToDo } from '../../entities/todo';
+import type { ToDoData } from '../../types/todoData';
 import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 
 // Simple mock ToDo

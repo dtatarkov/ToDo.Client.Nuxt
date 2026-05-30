@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ToDoImpl } from '../../entities/todoImpl';
+import { ToDoBase } from '../../entities/todoBase';
 import { StringsServiceImpl } from '@/modules/shared/services/stringsServiceImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 
@@ -7,13 +7,13 @@ const stringsService = new StringsServiceImpl();
 
 describe('ToDoImpl', () =>
 {
-    let todo: ToDoImpl;
+    let todo: ToDoBase;
 
     beforeEach(() =>
     {
         vi.resetAllMocks();
 
-        todo = new ToDoImpl(stringsService);
+        todo = new ToDoBase(stringsService);
     });
 
     describe('properties', () =>
@@ -77,7 +77,7 @@ describe('ToDoImpl', () =>
 
             const clone = todo.clone();
 
-            expect(clone).toBeInstanceOf(ToDoImpl);
+            expect(clone).toBeInstanceOf(ToDoBase);
             expect(clone.id).toBe('1');
             expect(clone.title).toBe('Original');
             expect(clone.description).toBe('Desc');

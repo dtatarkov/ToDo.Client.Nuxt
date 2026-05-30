@@ -1,5 +1,6 @@
 import type { Reactive } from 'vue';
 import type { ToDosOwner } from './todosOwner';
+import type { ToDoData } from '../types/todoData';
 
 export abstract class ToDo
 {
@@ -16,11 +17,3 @@ export abstract class ToDo
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
 }
-
-export type ToDoData = {
-  id: string;
-  title: string;
-  description: string;
-  completionDatePlanned: Date | undefined;
-  completionDateActual: Date | undefined;
-};

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import type { ToDoCardViewmodelData } from '../interfaces/todoCardViewmodel';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 import VToDoCard from '../components/VToDoCard.vue';
 import { fn } from 'storybook/test';
+import type { ToDoCardData } from '../types/todoCardData';
 
-type ToDoCardViewmodelStoryArgs = Partial<ToDoCardViewmodelData>;
+type ToDoCardViewmodelStoryArgs = Partial<ToDoCardData>;
 
 const meta: Meta<typeof VToDoCard> = {
     title: 'ToDo/ToDoCard',

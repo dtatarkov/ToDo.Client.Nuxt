@@ -1,9 +1,10 @@
-import { ToDo, type ToDoData } from "../interfaces/todo";
-import type { ToDosOwner } from '../interfaces/todosOwner';
+import { ToDo } from "./todo";
+import type { ToDoData } from '../types/todoData';
+import type { ToDosOwner } from './todosOwner';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { shallowReactive, type Reactive } from 'vue';
 
-export class ToDoImpl extends ToDo
+export class ToDoBase extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
 
@@ -94,7 +95,7 @@ export class ToDoImpl extends ToDo
 
   override clone(): ToDo
   {
-    const todo = new ToDoImpl(this.stringsService);
+    const todo = new ToDoBase(this.stringsService);
 
     todo.id = this.id;
     todo.title = this.title;

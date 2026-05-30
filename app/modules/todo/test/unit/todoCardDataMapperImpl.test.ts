@@ -1,6 +1,7 @@
 import { ToDoCardDataMapperImpl } from '@/modules/todo/mappers/todoCardDataMapperImpl';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { ToDo, ToDoData } from '@/modules/todo/interfaces/todo';
+import type { ToDo } from '@/modules/todo/entities/todo';
+import type { ToDoData } from '../../types/todoData';
 
 describe('ToDoCardDataMapperImpl', () =>
 {

@@ -1,8 +1,8 @@
-import { GetToDoCardsUseCase } from "../interfaces/getToDoCardsUseCase";
+import { GetToDoCardsUseCase } from "./getToDoCardsUseCase";
 import { dependency } from '@/modules/shared/decorators/dependency';
-import { ToDoCardDataMapper } from '../interfaces/todoCardDataMapper';
+import { ToDoCardDataMapper } from '../mappers/todoCardDataMapper';
 import type { ToDoCardData } from '../types/todoCardData';
-import { ToDosOwner } from '../interfaces/todosOwner';
+import { ToDosOwner } from '../entities/todosOwner';
 import { type Ref, computed } from 'vue';
 
 @dependency(ToDosOwner)

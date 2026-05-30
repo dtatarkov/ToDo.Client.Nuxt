@@ -16,8 +16,8 @@ import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VGrid from '@/modules/uikit/components/VGrid.vue';
 import VToDoCard from './VToDoCard.vue';
 import { useService } from '@/modules/shared/composables/useService';
-import { GetToDoCardsUseCase } from '../interfaces/getToDoCardsUseCase';
-import { InitializeToDosUseCase } from '../interfaces/initializeToDosUseCase';
+import { GetToDoCardsUseCase } from '../usecases/getToDoCardsUseCase';
+import { InitializeToDosUseCase } from '../usecases/initializeToDosUseCase';
 import { CreateToDoUseCase } from '../usecases/createToDoUseCase';
 import { EditToDoUseCase } from '../usecases/editToDoUseCase';
 

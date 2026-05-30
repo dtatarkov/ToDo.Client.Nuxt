@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
-import type { ToDoData } from '../interfaces/todo';
-import type { ToDosOwner } from '../interfaces/todosOwner';
+import type { ToDoData } from '../types/todoData';
+import type { ToDosOwner } from '../entities/todosOwner';
 
 const defaultToDoData: ToDoData = {
     id: '',
