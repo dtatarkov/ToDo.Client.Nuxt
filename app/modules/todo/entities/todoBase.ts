@@ -5,7 +5,6 @@ import type { StringsService } from '@/modules/shared/interfaces/stringsService'
 import { shallowReactive, type Reactive } from 'vue';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
-import { EntityFieldTag } from '@/modules/shared/enums/entityFieldTag';
 
 export class ToDoBase extends ToDo
 {
@@ -32,9 +31,9 @@ export class ToDoBase extends ToDo
 
     description: {
       type: EntityFieldType.string,
-      tags: [EntityFieldTag.long],
       label: 'Описание задачи',
-      placeholder: 'Введите описание задачи'
+      placeholder: 'Введите описание задачи',
+      isLong: true,
     },
 
     completionDatePlanned: {

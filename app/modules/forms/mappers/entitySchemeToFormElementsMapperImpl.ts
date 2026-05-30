@@ -1,5 +1,4 @@
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
-import { EntityFieldTag } from '@/modules/shared/enums/entityFieldTag';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { FormElementType } from '../enums/formElementType';
 import type { FormElementCreateData } from '../types/formElementCreateData';
@@ -58,7 +57,7 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
 
     private mapStringField(fieldScheme: EntityFieldScheme): FormElementCreateData
     {
-        const isLongText = fieldScheme.tags?.includes(EntityFieldTag.long);
+        const isLongText = fieldScheme.isLong;
 
         if (isLongText)
         {
