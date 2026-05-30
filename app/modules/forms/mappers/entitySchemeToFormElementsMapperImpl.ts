@@ -57,6 +57,11 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
 
     private mapStringField(fieldScheme: EntityFieldScheme): FormElementCreateData
     {
+        if (fieldScheme.type != EntityFieldType.string)
+        {
+            throw new Error('invalid field type');
+        }
+
         const isLongText = fieldScheme.isLong;
 
         if (isLongText)
@@ -77,6 +82,11 @@ export class EntitySchemeToFormElementsMapperImpl extends EntitySchemeToFormElem
 
     private mapDateTimeField(fieldScheme: EntityFieldScheme): FormElementCreateData
     {
+        if (fieldScheme.type != EntityFieldType.datetime)
+        {
+            throw new Error('invalid field type');
+        }
+
         return {
             type: FormElementType.inputDateTime,
             label: fieldScheme.label,
