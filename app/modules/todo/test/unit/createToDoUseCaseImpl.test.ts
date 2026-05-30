@@ -2,9 +2,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { CreateToDoUseCaseImpl } from '../../usecases/createToDoUseCaseImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
-import { createMockToDo } from '../../mocks/todoMock';
+import { createToDoMock } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
-import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { modalConfirmMock } from '../../../overlay/mocks/modalConfirmMock';
 import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
 
@@ -21,7 +20,7 @@ describe('CreateToDoUseCaseImpl', () =>
     {
         vi.resetAllMocks();
 
-        const todo = createMockToDo();
+        const todo = createToDoMock();
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
@@ -38,27 +37,12 @@ describe('CreateToDoUseCaseImpl', () =>
             expect(todosOwnerMock.createToDo).toHaveBeenCalledTimes(1);
         });
 
-        it('should create a form with the correct elements', () =>
+        it('should pass scheme to form', () =>
         {
             useCase.execute();
 
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(formMock.setElements).toHaveBeenCalledTimes(1);
-
-            //@ts-expect-error data will be there
-            const setElementsArgs = formMock.setElements.mock.calls[0][0];
-
-            expect(setElementsArgs).toHaveProperty('title');
-            expect(setElementsArgs.title.type).toBe(FormElementType.inputText);
-            expect(setElementsArgs.title.label).toBe('Название задачи');
-
-            expect(setElementsArgs).toHaveProperty('description');
-            expect(setElementsArgs.description.type).toBe(FormElementType.textarea);
-            expect(setElementsArgs.description.label).toBe('Описание задачи');
-
-            expect(setElementsArgs).toHaveProperty('completionDatePlanned');
-            expect(setElementsArgs.completionDatePlanned.type).toBe(FormElementType.inputDateTime);
-            expect(setElementsArgs.completionDatePlanned.label).toBe('Плановая дата выполнения');
+            expect(formMock.setElementsFromScheme).toHaveBeenCalledTimes(1);
         });
 
         it('should set form data from todo', () =>

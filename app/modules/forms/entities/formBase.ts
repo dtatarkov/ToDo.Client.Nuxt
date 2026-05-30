@@ -7,6 +7,8 @@ import type { FormElement } from './formElement.js';
 import type { FormElementFactory } from '../factories/formElementFactory';
 import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import { UIElementActionBase } from '@/modules/uikit/entities/uiElementActionBase';
+import type { EntityScheme } from '@/modules/shared/types/entityScheme.js';
+import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper.js';
 
 enum FormBaseState
 {
@@ -35,6 +37,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   constructor(
     private formElementFactory: FormElementFactory,
+    private schemeToElementsMapper: EntitySchemeToFormElementsMapper,
   )
   {
     super();
@@ -98,6 +101,12 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
       return element;
     });
+  }
+
+  override setElementsFromScheme(scheme: EntityScheme<TEntity>): void
+  {
+    const elements = this.schemeToElementsMapper.map(scheme);
+    this.setElements(elements);
   }
 
   override setSubmitHandler(handler: FormSubmitHandler<TEntity>): void

@@ -3,6 +3,9 @@ import type { ToDoData } from '../types/todoData';
 import type { ToDosOwner } from './todosOwner';
 import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { shallowReactive, type Reactive } from 'vue';
+import type { EntityScheme } from '@/modules/shared/types/entityScheme';
+import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
+import { EntityFieldTag } from '@/modules/shared/enums/entityFieldTag';
 
 export class ToDoBase extends ToDo
 {
@@ -15,6 +18,47 @@ export class ToDoBase extends ToDo
     completionDatePlanned: undefined,
     completionDateActual: undefined
   });
+
+  private schemeCommon = {
+    id: {
+      type: EntityFieldType.identity,
+    },
+
+    title: {
+      type: EntityFieldType.string,
+      label: 'Название задачи',
+      placeholder: 'Введите название задачи',
+    },
+
+    description: {
+      type: EntityFieldType.string,
+      tags: [EntityFieldTag.long],
+      label: 'Описание задачи',
+      placeholder: 'Введите описание задачи'
+    },
+
+    completionDatePlanned: {
+      type: EntityFieldType.datetime,
+      label: 'Плановая дата выполнения',
+    },
+  } satisfies EntityScheme<Partial<ToDoData>>;
+
+  private addScheme: EntityScheme<ToDoData> = {
+    ...this.schemeCommon,
+
+    completionDateActual: {
+      type: EntityFieldType.hidden,
+    }
+  };
+
+  private editScheme: EntityScheme<ToDoData> = {
+    ...this.schemeCommon,
+
+    completionDateActual: {
+      type: EntityFieldType.datetime,
+      label: 'Фактическая дата выполнения',
+    }
+  };
 
   constructor(
     private stringsService: StringsService,
@@ -86,6 +130,16 @@ export class ToDoBase extends ToDo
   get isNew()
   {
     return this.stringsService.isStringEmpty(this.id);
+  }
+
+  override getAddScheme(): EntityScheme<ToDoData>
+  {
+    return this.addScheme;
+  }
+
+  override getEditScheme(): EntityScheme<ToDoData>
+  {
+    return this.editScheme;
   }
 
   override getData(): Reactive<ToDoData>

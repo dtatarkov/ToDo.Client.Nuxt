@@ -2,9 +2,9 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDosOwner } from '../entities/todosOwner';
 import { CreateToDoUseCase } from './createToDoUseCase';
 import type { ToDoData } from '../types/todoData';
-import { FormElementType } from '@/modules/forms/enums/formElementType';
 import { AddFormModalUseCase } from '@/modules/overlay/usecases/addFormModalUseCase';
 import { FormFactory } from '@/modules/forms/factories/formFactory';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 @dependency(ToDosOwner)
 @dependency(FormFactory)
@@ -28,32 +28,11 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
 
     form.setSubmitHandler(async formData =>
     {
-      todo.title = formData.title;
-      todo.description = formData.description;
-      todo.completionDatePlanned = formData.completionDatePlanned;
-
+      updatePropertiesWithData(todo, formData);
       await todo.saveAsync();
     });
 
-    form.setElements({
-      title: {
-        type: FormElementType.inputText,
-        label: 'Название задачи',
-        placeholder: 'Введите название задачи',
-      },
-
-      description: {
-        type: FormElementType.textarea,
-        label: 'Описание задачи',
-        placeholder: 'Введите описание задачи'
-      },
-
-      completionDatePlanned: {
-        type: FormElementType.inputDateTime,
-        label: 'Плановая дата выполнения',
-      }
-    });
-
+    form.setElementsFromScheme(todo.getAddScheme());
     form.setData(todo.getData());
 
     const modal = this.addFormModalUseCase.execute(form);
