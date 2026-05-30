@@ -41,23 +41,27 @@ export class ToDoBase extends ToDo
       type: EntityFieldType.datetime,
       label: 'Плановая дата выполнения',
     },
+
+    completionDateActual: {
+      type: EntityFieldType.hidden,
+    }
   } satisfies EntityScheme<Partial<ToDoData>>;
 
   private addScheme: EntityScheme<ToDoData> = {
     ...this.schemeCommon,
 
-    completionDateActual: {
-      type: EntityFieldType.hidden,
-    }
+    // completionDateActual: {
+    //   type: EntityFieldType.hidden,
+    // }
   };
 
   private editScheme: EntityScheme<ToDoData> = {
     ...this.schemeCommon,
 
-    completionDateActual: {
-      type: EntityFieldType.datetime,
-      label: 'Фактическая дата выполнения',
-    }
+    // completionDateActual: {
+    //   type: EntityFieldType.datetime,
+    //   label: 'Фактическая дата выполнения',
+    // }
   };
 
   constructor(
