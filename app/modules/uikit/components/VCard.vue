@@ -19,10 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { useService } from '@/modules/shared/composables/useService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
 import type { CardData } from '../types/cardData';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 defineOptions({
   inheritAttrs: false
@@ -39,16 +38,14 @@ const cardUIOptions = {
   body: 'grow'
 }
 
-const stringsService = useService(StringsService);
-
 const slots = useSlots();
 
-const hasTitle = computed(() => !stringsService.isStringEmpty(props.title));
-const hasDescription = computed(() => !stringsService.isStringEmpty(props.description));
+const hasTitle = computed(() => !isStringEmpty(props.title));
+const hasDescription = computed(() => !isStringEmpty(props.description));
 const hasActions = computed(() => !isEmptySlot(slots.actions));
 const hasFooter = computed(() => !isEmptySlot(slots.footer));
 
-const hasHeader = computed(() => !stringsService.isStringEmpty(props.title) || hasActions.value);
+const hasHeader = computed(() => !isStringEmpty(props.title) || hasActions.value);
 
 const hasContent = computed(() => 
   hasTitle.value ||

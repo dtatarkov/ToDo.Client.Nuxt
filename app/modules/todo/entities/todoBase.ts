@@ -1,10 +1,10 @@
 import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
 import type { ToDosOwner } from './todosOwner';
-import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { shallowReactive, type Reactive } from 'vue';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 export class ToDoBase extends ToDo
 {
@@ -63,13 +63,6 @@ export class ToDoBase extends ToDo
     //   label: 'Фактическая дата выполнения',
     // }
   };
-
-  constructor(
-    private stringsService: StringsService,
-  )
-  {
-    super();
-  }
 
   get owner(): ToDosOwner | undefined
   {
@@ -133,7 +126,7 @@ export class ToDoBase extends ToDo
 
   get isNew()
   {
-    return this.stringsService.isStringEmpty(this.id);
+    return isStringEmpty(this.id);
   }
 
   override getAddScheme(): EntityScheme<ToDoData>
@@ -153,7 +146,7 @@ export class ToDoBase extends ToDo
 
   override clone(): ToDo
   {
-    const todo = new ToDoBase(this.stringsService);
+    const todo = new ToDoBase();
 
     todo.id = this.id;
     todo.title = this.title;

@@ -3,7 +3,6 @@ import { InfoBlockViewmodel } from "../interfaces/infoBlockViewmodel";
 import type { InfoRowViewmodel, InfoRowData } from "../interfaces/infoRowViewmodel";
 import { InfoRowViewmodelImpl } from "./infoRowViewmodelImpl";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 
 export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 {
@@ -25,12 +24,6 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
     private readonly rowsInternal = shallowRef(new Array<InfoRowViewmodel>());
     private readonly rowsVisible = computed(() => this.rowsInternal.value.filter(row => !row.isEmpty));
 
-    constructor(
-        private stringsService: StringsService
-    )
-    {
-        super();
-    }
 
     get rows(): InfoRowViewmodel[]
     {
@@ -44,7 +37,7 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 
     override createRow(data?: Partial<InfoRowData>): InfoRowViewmodel
     {
-        const row = new InfoRowViewmodelImpl(this.stringsService);
+        const row = new InfoRowViewmodelImpl();
 
         if (data != undefined)
         {

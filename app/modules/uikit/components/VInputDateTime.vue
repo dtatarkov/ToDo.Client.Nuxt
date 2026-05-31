@@ -24,15 +24,14 @@ import { DatesService } from '@/modules/shared/interfaces/datesService';
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { useService } from '@/modules/shared/composables/useService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
+import { postfixNotEmptyString } from '@/modules/shared/utils/postfixNotEmptyString.js';
 
 defineOptions({
   inheritAttrs: false
 });
 
 const datesService = useService(DatesService);
-const stringsService = useService(StringsService);
 
 const props = defineProps<InputDateTimeData>();
 const valueModel = defineModel<Date>('value');
@@ -43,11 +42,11 @@ const time = shallowRef<number>();
 const inputDatePostfix = 'date';
 const inputTimePostfix = 'time';
 
-const inputDateId = computed(() => stringsService.postfixNotEmpty(props.id, inputDatePostfix));
-const inputTimeId = computed(() => stringsService.postfixNotEmpty(props.id, inputTimePostfix));
+const inputDateId = computed(() => postfixNotEmptyString(props.id, inputDatePostfix));
+const inputTimeId = computed(() => postfixNotEmptyString(props.id, inputTimePostfix));
 
-const inputDateName = computed(() => stringsService.postfixNotEmpty(props.name, inputDatePostfix));
-const inputTimeName = computed(() => stringsService.postfixNotEmpty(props.name, inputTimePostfix));
+const inputDateName = computed(() => postfixNotEmptyString(props.name, inputDatePostfix));
+const inputTimeName = computed(() => postfixNotEmptyString(props.name, inputTimePostfix));
 
 watchEffect(() => {
     if(valueModel.value)

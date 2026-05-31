@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { UButton } from '#components';
-import { useService } from '@/modules/shared/composables/useService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 import { computed } from 'vue';
 
 type VButtonIconProps = {
@@ -24,10 +23,8 @@ const props = withDefaults(defineProps<VButtonIconProps>(), {
 
 defineEmits<VButtonIconEmits>();
 
-const stringsService = useService(StringsService);
-
 const hasIcon = computed(() => {
-  return !stringsService.isStringEmpty(props.icon);
+  return !isStringEmpty(props.icon);
 });
 </script>
 

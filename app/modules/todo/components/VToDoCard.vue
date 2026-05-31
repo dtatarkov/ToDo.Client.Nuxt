@@ -4,9 +4,9 @@ import VCard from '@/modules/uikit/components/VCard.vue';
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { useService } from '@/modules/shared/composables/useService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import type { ToDoCardData } from '../types/todoCardData';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 type Emits = {
     (e: 'edit'): void;
@@ -16,13 +16,12 @@ const props = defineProps<ToDoCardData>();
 const emits = defineEmits<Emits>();
 
 const datesService = useService(DatesService);
-const stringsService = useService(StringsService);
 
 const formattedCompletionDateActual = computed(() => datesService.formatDateOptional(props.completionDateActual));
 const formattedCompletionDatePlanned = computed(() => datesService.formatDateOptional(props.completionDatePlanned));
 
-const hasFormattedCompletionDateActual = computed(() => !stringsService.isStringEmpty(formattedCompletionDateActual.value));
-const hasFormattedCompletionDatePlanned = computed(() => !stringsService.isStringEmpty(formattedCompletionDatePlanned.value));
+const hasFormattedCompletionDateActual = computed(() => !isStringEmpty(formattedCompletionDateActual.value));
+const hasFormattedCompletionDatePlanned = computed(() => !isStringEmpty(formattedCompletionDatePlanned.value));
 const hasFooter = computed(() => hasFormattedCompletionDateActual.value || hasFormattedCompletionDatePlanned.value);
 </script>
 

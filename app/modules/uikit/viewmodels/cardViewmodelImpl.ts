@@ -2,9 +2,8 @@ import VCard from "../components/VCard.vue";
 import { CardViewmodel } from "../interfaces/cardViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { Viewmodel } from "../interfaces/viewmodel";
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
-import { useService } from '@/modules/shared/composables/useService';
 import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 export class CardViewmodelImpl extends CardViewmodel
 {
@@ -19,10 +18,8 @@ export class CardViewmodelImpl extends CardViewmodel
     readonly component = {
         setup: () =>
         {
-            const stringsService = useService(StringsService);
-
-            const isEmpty = computed(() => stringsService.isStringEmpty(this.title.value) &&
-                stringsService.isStringEmpty(this.description.value) &&
+            const isEmpty = computed(() => isStringEmpty(this.title.value) &&
+                isStringEmpty(this.description.value) &&
                 this.actions.value.length === 0 &&
                 this.footer.value == undefined);
 

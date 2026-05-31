@@ -1,8 +1,6 @@
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
 import { DatesService } from "../interfaces/datesService";
-import { StringsService } from "../interfaces/stringsService";
 import { DatesServiceImpl } from "../services/datesServiceImpl";
-import { StringsServiceImpl } from "../services/stringsServiceImpl";
 import { TimeMapperImpl } from "../mappers/internal/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/internal/zonedDateTimeMapperImpl";
 import { ZonedDateTimeMapper } from "../interfaces/zonedDateTimeMapper";
@@ -26,7 +24,6 @@ export function useSharedServices(): void
     }).asSingleton();
 
     useServiceRegistration(DatesService).to(DatesServiceImpl).asTransient();
-    useServiceRegistration(StringsService).to(StringsServiceImpl).asTransient();
     useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
     useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
     useServiceRegistration(VueComponentPropsFactory).to(VueComponentPropsFactoryImpl).asTransient();

@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { UButton } from '#components';
-import { useService } from '@/modules/shared/composables/useService';
-import { StringsService } from '@/modules/shared/interfaces/stringsService';
 import { computed } from 'vue';
 import type { Color } from '../types/color';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 type VButtonGeneralProps = {
   title?: string;
@@ -29,8 +28,7 @@ const props = withDefaults(defineProps<VButtonGeneralProps>(), {
 
 defineEmits<VButtonGeneralEmits>();
 
-const stringsService = useService(StringsService);
-const hasTitle = computed(() => !stringsService.isStringEmpty(props.title));
+const hasTitle = computed(() => !isStringEmpty(props.title));
 </script>
 
 <template>

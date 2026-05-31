@@ -1,9 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDoBase } from '../../entities/todoBase';
-import { StringsServiceImpl } from '@/modules/shared/services/stringsServiceImpl';
 import { todosOwnerMock } from '../../mocks/todoOwnerMock';
-
-const stringsService = new StringsServiceImpl();
 
 describe('ToDoImpl', () =>
 {
@@ -13,7 +10,7 @@ describe('ToDoImpl', () =>
     {
         vi.resetAllMocks();
 
-        todo = new ToDoBase(stringsService);
+        todo = new ToDoBase();
     });
 
     describe('properties', () =>

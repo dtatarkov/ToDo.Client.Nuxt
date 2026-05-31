@@ -1,9 +1,9 @@
-import type { StringsService } from '@/modules/shared/interfaces/stringsService';
 import VInfoRow from "../components/VInfoRow.vue";
 import { InfoRowViewmodel, type InfoRowData } from "../interfaces/infoRowViewmodel";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { ReactiveFieldVue } from '@/modules/shared/entities/reactiveFieldVue';
 import { updateReactiveFields } from '@/modules/shared/utils/updateReactiveFields';
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 export class InfoRowViewmodelImpl extends InfoRowViewmodel
 {
@@ -32,14 +32,7 @@ export class InfoRowViewmodelImpl extends InfoRowViewmodel
 
     get isEmpty(): boolean
     {
-        return this.stringsService.isStringEmpty(this.content.value);
-    }
-
-    constructor(
-        private stringsService: StringsService
-    )
-    {
-        super();
+        return isStringEmpty(this.content.value);
     }
 
     override setData(data: Partial<InfoRowData>)
