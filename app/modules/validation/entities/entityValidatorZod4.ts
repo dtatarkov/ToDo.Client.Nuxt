@@ -1,6 +1,6 @@
 import { EntityValidator } from './entityValidator';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import type { EntityFieldScheme } from '@/modules/shared/types/entityFieldScheme';
+import type { EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
 import { z } from 'zod';
 
@@ -51,25 +51,32 @@ export class EntityValidatorZod4<TEntity extends Record<string, any>> extends En
         switch (scheme.type)
         {
             case EntityFieldType.string:
-                return this.createStringSchema();
+                return this.createStringScheme(scheme);
             case EntityFieldType.datetime:
-                return this.createDateTimeSchema();
+                return this.createDateTimeScheme();
             default:
-                return this.createDefaultSchema();
+                return this.createDefaultScheme();
         }
     }
 
-    private createStringSchema(): z.ZodType
+    private createStringScheme(fieldScheme: EntityStringFieldScheme): z.ZodType
     {
-        return z.string();
+        let result = z.string();
+
+        if (fieldScheme.isRequired)
+        {
+            result = result.nonempty('Заполните значение');
+        }
+
+        return result;
     }
 
-    private createDateTimeSchema(): z.ZodType
+    private createDateTimeScheme(): z.ZodType
     {
         return z.date().optional();
     }
 
-    private createDefaultSchema(): z.ZodType
+    private createDefaultScheme(): z.ZodType
     {
         return z.any();
     }

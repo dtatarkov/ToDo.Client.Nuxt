@@ -27,6 +27,7 @@ export class ToDoBase extends ToDo
       type: EntityFieldType.string,
       label: 'Название задачи',
       placeholder: 'Введите название задачи',
+      isRequired: true,
     },
 
     description: {

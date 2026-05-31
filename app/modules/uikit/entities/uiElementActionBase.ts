@@ -14,7 +14,7 @@ export class UIElementActionBase extends UIElementAction
     }
 
     constructor(
-        private executeAsyncInternal: Func<Promise<void>>
+        private executeAsyncInternal: Func<Promise<boolean>>
     )
     {
         super();
@@ -31,9 +31,16 @@ export class UIElementActionBase extends UIElementAction
 
         try
         {
-            await this.executeAsyncInternal();
+            const result = await this.executeAsyncInternal();
 
-            this.setActionState(UIElementActionState.finishedProcessing);
+            if (result)
+            {
+                this.setActionState(UIElementActionState.finishedProcessing);
+            }
+            else
+            {
+                this.setActionState(UIElementActionState.idle);
+            }
         }
         catch (ex)
         {

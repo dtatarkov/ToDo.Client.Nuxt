@@ -129,18 +129,18 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     this.action.destroy();
   }
 
-  private async submitAsyncInternal(): Promise<void>
+  private async submitAsyncInternal(): Promise<boolean>
   {
     if (!this.submitHandler)
     {
-      return;
+      return false;
     }
 
     this.assertNotDisabled();
 
     if (!this.validate())
     {
-      return;
+      return false;
     }
 
     this.disable();
@@ -149,11 +149,15 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     {
       const data = this.getData();
       await this.submitHandler(data);
+
+      return true;
     }
     finally
     {
       this.enable();
     }
+
+    return false;
   }
 
   private validate(): boolean

@@ -1,6 +1,6 @@
 <template>
   <UCard v-if="hasContent" variant="subtle" :ui="cardUIOptions">
-    <template v-if="props.title" #header>
+    <template v-if="hasHeader" #header>
       <div class="font-semibold text-lg grow">{{ props.title }}</div>
 
       <div v-if="$slots.actions">
@@ -47,6 +47,8 @@ const hasTitle = computed(() => !stringsService.isStringEmpty(props.title));
 const hasDescription = computed(() => !stringsService.isStringEmpty(props.description));
 const hasActions = computed(() => !isEmptySlot(slots.actions));
 const hasFooter = computed(() => !isEmptySlot(slots.footer));
+
+const hasHeader = computed(() => !stringsService.isStringEmpty(props.title) || hasActions.value);
 
 const hasContent = computed(() => 
   hasTitle.value ||

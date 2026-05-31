@@ -8,6 +8,7 @@ export type EntityStringFieldScheme = {
     label?: string;
     placeholder?: string;
     isLong?: boolean;
+    isRequired?: boolean;
 };
 
 export type EntityDateTimeFieldScheme = {

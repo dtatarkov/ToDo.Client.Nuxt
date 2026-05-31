@@ -72,6 +72,6 @@ export class FormElementBase<V = any> extends FormElement
       this.formField.toDefaultMode();
     }
 
-    return errorMessage != undefined;
+    return errorMessage == undefined;
   }
 }

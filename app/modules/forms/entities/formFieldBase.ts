@@ -8,7 +8,7 @@ export class FormFieldBase extends FormField
   private data = reactive({
     label: '',
     name: '',
-    hint: <string | undefined>undefined,
+    help: <string | undefined>undefined,
   });
 
   private children = {
@@ -56,16 +56,16 @@ export class FormFieldBase extends FormField
 
   get hint(): string | undefined
   {
-    return this.data.hint;
+    return this.data.help;
   }
 
   override toErrorMode(errorMessage: string): void
   {
-    this.data.hint = errorMessage;
+    this.data.help = errorMessage;
   }
 
   override toDefaultMode(): void
   {
-    this.data.hint = undefined;
+    this.data.help = undefined;
   }
 }
