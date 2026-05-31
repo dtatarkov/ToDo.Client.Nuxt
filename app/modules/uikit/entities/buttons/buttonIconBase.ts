@@ -11,7 +11,7 @@ export class ButtonIconBase extends ButtonBase implements ButtonIcon
         icon: ''
     });
 
-    key = getUniqueId('button-element-icon');
+    readonly key = getUniqueId('button-element-icon');
 
     private onClickFn = () =>
     {

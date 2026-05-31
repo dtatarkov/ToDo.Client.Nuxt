@@ -25,7 +25,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
         }
     });
 
-    key = getUniqueId('input-base');
+    readonly key = getUniqueId('input-base');
 
     get vnode()
     {

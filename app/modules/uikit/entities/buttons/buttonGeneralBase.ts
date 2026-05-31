@@ -14,7 +14,7 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
         isLoading: false,
     });
 
-    key = getUniqueId('button-element-general');
+    readonly key = getUniqueId('button-element-general');
 
     private onClickFn = () =>
     {
