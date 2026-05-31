@@ -1,5 +1,5 @@
 import { DateTime, Duration } from 'luxon';
-import { DatesService } from '../interfaces/datesService';
+import { DatesService } from './datesService';
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
 import { dependency } from '../decorators/dependency';
 

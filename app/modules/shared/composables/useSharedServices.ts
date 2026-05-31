@@ -1,5 +1,5 @@
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
-import { DatesService } from "../interfaces/datesService";
+import { DatesService } from "../services/datesService";
 import { DatesServiceImpl } from "../services/datesServiceImpl";
 import { TimeMapperImpl } from "../mappers/internal/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/internal/zonedDateTimeMapperImpl";

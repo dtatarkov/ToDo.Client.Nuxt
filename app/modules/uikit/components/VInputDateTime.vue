@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { DatesService } from '@/modules/shared/interfaces/datesService';
+import { DatesService } from '@/modules/shared/services/datesService.js';
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { useService } from '@/modules/shared/composables/useService';
