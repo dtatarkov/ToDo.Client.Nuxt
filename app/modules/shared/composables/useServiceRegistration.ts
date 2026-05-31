@@ -1,4 +1,4 @@
-import type { BindingBuilder } from '../entities/internal/servicesContainer';
+import type { BindingBuilder } from '../entities/servicesContainer';
 import type { ServiceIdentifier } from '../types/serviceIdentifier';
 import { useServicesContainer } from './useServicesContainer';
 

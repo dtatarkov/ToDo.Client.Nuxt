@@ -1,7 +1,7 @@
-import type { ServiceIdentifier } from "../../types/serviceIdentifier";
-import type { Constructor } from "../../types/constructor";
-import { getDependencies } from "../../decorators/dependency";
-import { Destroyable } from '../../interfaces/destroyable';
+import type { ServiceIdentifier } from "../types/serviceIdentifier";
+import type { Constructor } from "../types/constructor";
+import { getDependencies } from "../decorators/dependency";
+import { Destroyable } from '../interfaces/destroyable';
 
 enum BindingScope
 {

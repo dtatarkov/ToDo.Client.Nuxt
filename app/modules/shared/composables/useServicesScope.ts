@@ -1,7 +1,7 @@
 import { getCurrentInstance, onUnmounted } from 'vue';
 import { useNuxtApp } from '#app';
 import type { ComponentInternalInstance } from 'vue';
-import type { ServicesScope } from '../entities/internal/servicesContainer';
+import type { ServicesScope } from '../entities/servicesContainer';
 import { useServicesContainer } from './useServicesContainer';
 
 /**

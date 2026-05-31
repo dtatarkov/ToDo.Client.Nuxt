@@ -1,5 +1,5 @@
 import { useNuxtApp } from '#app';
-import { ServicesContainer } from '../entities/internal/servicesContainer';
+import { ServicesContainer } from '../entities/servicesContainer';
 
 export const containerKey = "$ServicesContainer";
 
