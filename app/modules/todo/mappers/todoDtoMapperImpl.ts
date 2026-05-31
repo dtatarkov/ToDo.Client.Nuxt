@@ -5,7 +5,7 @@ import type { ToDo } from "../entities/todo";
 import { DatesService } from '@/modules/shared/interfaces/datesService';
 import { ToDoFactory } from "../factories/todoFactory";
 import { dependency } from '@/modules/shared/decorators/dependency';
-import type { ToDoAddDto } from '../types/ToDoAddDto';
+import type { ToDoAddDto } from '../types/todoAddDto';
 
 @dependency(DatesService)
 @dependency(ToDoFactory)
