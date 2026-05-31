@@ -5,10 +5,6 @@ import { TimeMapperImpl } from "../mappers/internal/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/internal/zonedDateTimeMapperImpl";
 import { ZonedDateTimeMapper } from "../interfaces/zonedDateTimeMapper";
 import { TimeMapper } from "../interfaces/timeMapper";
-import { VueComponentPropsFactoryImpl } from '../factories/vueComponentPropsFactoryImpl';
-import { DataAdapterFactoryImpl } from '../factories/dataAdapterFactoryImpl';
-import { VueComponentPropsFactory } from "../interfaces/vueComponentPropsFactory";
-import { DataAdapterFactory } from "../interfaces/dataAdapterFactory";
 import { EffectsContainer } from '../interfaces/effectsContainer';
 import { EffectsContainerImpl } from '../entities/effectsContainerImpl';
 import { useRuntimeConfig } from "#imports";
@@ -26,7 +22,5 @@ export function useSharedServices(): void
     useServiceRegistration(DatesService).to(DatesServiceImpl).asTransient();
     useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
     useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
-    useServiceRegistration(VueComponentPropsFactory).to(VueComponentPropsFactoryImpl).asTransient();
-    useServiceRegistration(DataAdapterFactory).to(DataAdapterFactoryImpl).asTransient();
     useServiceRegistration(EffectsContainer).to(EffectsContainerImpl).asTransient();
 }
