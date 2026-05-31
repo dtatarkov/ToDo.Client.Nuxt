@@ -1,5 +1,11 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInputTextarea from '../components/VInputTextarea.vue';
+import { storybookColorSelect } from '../storybook/storybookColorSelect';
+import { inputIdArgType } from '../storybook/inputIdArgType';
+import { inputNameArgType } from '../storybook/inputNameArgType';
+import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
+import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
+import { inputPlaceholderArgType } from '../storybook/inputPlaceholderArgType';
 
 const meta: Meta<typeof VInputTextarea> = {
     title: 'UIKit/InputTextarea',
@@ -9,21 +15,12 @@ const meta: Meta<typeof VInputTextarea> = {
         value: {
             control: 'text',
         },
-        placeholder: {
-            control: 'text',
-        },
-        id: {
-            control: 'text',
-        },
-        name: {
-            control: 'text',
-        },
-        hasAutofocus: {
-            control: 'boolean',
-        },
-        isDisabled: {
-            control: 'boolean',
-        },
+        placeholder: inputPlaceholderArgType,
+        id: inputIdArgType,
+        name: inputNameArgType,
+        hasAutofocus: inputHasAutofocusArgType,
+        isDisabled: inputIsDisabledArgType,
+        color: storybookColorSelect,
     },
 };
 
@@ -62,5 +59,17 @@ export const Disabled: Story = {
         name: 'inputTextarea',
         hasAutofocus: false,
         isDisabled: true,
+    },
+};
+
+export const Error: Story = {
+    args: {
+        value: 'Invalid content',
+        placeholder: 'Error state',
+        id: 'input-textarea-6',
+        name: 'inputTextarea',
+        hasAutofocus: false,
+        isDisabled: false,
+        color: 'error',
     },
 };

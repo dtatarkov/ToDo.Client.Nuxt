@@ -1,6 +1,11 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInputTime from '../components/VInputTime.vue';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { storybookColorSelect } from '../storybook/storybookColorSelect';
+import { inputIdArgType } from '../storybook/inputIdArgType';
+import { inputNameArgType } from '../storybook/inputNameArgType';
+import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
+import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
 
 const meta: Meta<typeof VInputTime> = {
     title: 'UIKit/InputTime',
@@ -10,18 +15,11 @@ const meta: Meta<typeof VInputTime> = {
         value: {
             control: 'number',
         },
-        id: {
-            control: 'text',
-        },
-        name: {
-            control: 'text',
-        },
-        hasAutofocus: {
-            control: 'boolean',
-        },
-        isDisabled: {
-            control: 'boolean',
-        },
+        id: inputIdArgType,
+        name: inputNameArgType,
+        hasAutofocus: inputHasAutofocusArgType,
+        isDisabled: inputIsDisabledArgType,
+        color: storybookColorSelect,
     },
 
     render: (args) =>
@@ -73,5 +71,16 @@ export const Disabled: Story = {
         name: 'inputTime',
         hasAutofocus: false,
         isDisabled: true,
+    },
+};
+
+export const Error: Story = {
+    args: {
+        value: 0,
+        id: 'input-time-5',
+        name: 'inputTime',
+        hasAutofocus: false,
+        isDisabled: false,
+        color: 'error',
     },
 };

@@ -1,6 +1,11 @@
-import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import VInputDateTime from '../components/VInputDateTime.vue';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { storybookColorSelect } from '../storybook/storybookColorSelect';
+import { inputIdArgType } from '../storybook/inputIdArgType';
+import { inputNameArgType } from '../storybook/inputNameArgType';
+import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
+import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
 
 const meta: Meta<typeof VInputDateTime> = {
     title: 'UIKit/InputDateTime',
@@ -26,18 +31,11 @@ const meta: Meta<typeof VInputDateTime> = {
         value: {
             control: 'date',
         },
-        id: {
-            control: 'text',
-        },
-        name: {
-            control: 'text',
-        },
-        hasAutofocus: {
-            control: 'boolean',
-        },
-        isDisabled: {
-            control: 'boolean',
-        },
+        id: inputIdArgType,
+        name: inputNameArgType,
+        hasAutofocus: inputHasAutofocusArgType,
+        isDisabled: inputIsDisabledArgType,
+        color: storybookColorSelect,
     },
 };
 
@@ -73,5 +71,16 @@ export const Disabled: Story = {
         name: 'inputDateTime',
         hasAutofocus: false,
         isDisabled: true,
+    },
+};
+
+export const Error: Story = {
+    args: {
+        value: new Date('2026-05-01T12:00:00'),
+        id: 'input-datetime-5',
+        name: 'inputDateTime',
+        hasAutofocus: false,
+        isDisabled: false,
+        color: 'error',
     },
 };

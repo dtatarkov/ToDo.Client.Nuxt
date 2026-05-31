@@ -1,8 +1,8 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import type { Color } from '../types/color';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import { fn } from 'storybook/test';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { storybookColorSelect } from '../storybook/storybookColorSelect';
 
 const meta: Meta<typeof VButtonGeneral> = {
     title: 'UIKit/ButtonGeneral',
@@ -13,10 +13,7 @@ const meta: Meta<typeof VButtonGeneral> = {
     },
 
     argTypes: {
-        color: {
-            control: 'select',
-            options: ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral'] as Color[],
-        },
+        color: storybookColorSelect,
 
         isDisabled: {
             control: 'boolean',

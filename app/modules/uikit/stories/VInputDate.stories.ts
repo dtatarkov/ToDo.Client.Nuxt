@@ -1,6 +1,11 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInputDate from '../components/VInputDate.vue';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { storybookColorSelect } from '../storybook/storybookColorSelect';
+import { inputIdArgType } from '../storybook/inputIdArgType';
+import { inputNameArgType } from '../storybook/inputNameArgType';
+import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
+import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
 
 type InputDateStoryArgs = {
     value: Date | undefined;
@@ -8,6 +13,7 @@ type InputDateStoryArgs = {
     name: string;
     hasAutofocus: boolean;
     isDisabled: boolean;
+    color?: import('../types/color').Color;
 };
 
 const meta: Meta<typeof VInputDate> = {
@@ -34,18 +40,11 @@ const meta: Meta<typeof VInputDate> = {
         value: {
             control: 'date',
         },
-        id: {
-            control: 'text',
-        },
-        name: {
-            control: 'text',
-        },
-        hasAutofocus: {
-            control: 'boolean',
-        },
-        isDisabled: {
-            control: 'boolean',
-        },
+        id: inputIdArgType,
+        name: inputNameArgType,
+        hasAutofocus: inputHasAutofocusArgType,
+        isDisabled: inputIsDisabledArgType,
+        color: storybookColorSelect,
     },
 };
 
@@ -81,5 +80,16 @@ export const Disabled: Story = {
         name: 'inputDate',
         hasAutofocus: false,
         isDisabled: true,
+    },
+};
+
+export const Error: Story = {
+    args: {
+        value: new Date('2026-04-01'),
+        id: 'input-date-5',
+        name: 'inputDate',
+        hasAutofocus: false,
+        isDisabled: false,
+        color: 'error',
     },
 };
