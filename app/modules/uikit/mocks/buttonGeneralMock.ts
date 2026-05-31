@@ -13,5 +13,4 @@ export const buttonGeneralMock = {
     },
 
     setClickHandler: vi.fn(),
-    applyHandlers: vi.fn(),
 } satisfies ButtonGeneral;

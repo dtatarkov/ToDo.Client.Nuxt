@@ -1,10 +1,8 @@
-import { Button, type ButtonData, type ButtonHandlers } from './button';
+import { Button, type ButtonData } from './button';
 
 export type ButtonIconData = ButtonData & {
     icon: string;
 };
-
-export type ButtonIconHandlers = ButtonHandlers;
 
 export abstract class ButtonIcon extends Button
 {
