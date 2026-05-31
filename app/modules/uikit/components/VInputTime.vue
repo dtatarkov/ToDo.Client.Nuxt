@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { useService } from '@/modules/shared/composables/useService';
-import { TimeMapper } from '@/modules/shared/interfaces/timeMapper';
+import { TimeMapper } from '@/modules/shared/mappers/timeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
 import type { InputTimeData } from '@/modules/uikit/types/inputTimeData';
 

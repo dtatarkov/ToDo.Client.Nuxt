@@ -1,10 +1,10 @@
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
 import { DatesService } from "../services/datesService";
 import { DatesServiceImpl } from "../services/datesServiceImpl";
-import { TimeMapperImpl } from "../mappers/internal/timeMapperImpl";
-import { ZonedDateTimeMapperImpl } from "../mappers/internal/zonedDateTimeMapperImpl";
-import { ZonedDateTimeMapper } from "../interfaces/zonedDateTimeMapper";
-import { TimeMapper } from "../interfaces/timeMapper";
+import { TimeMapperImpl } from "../mappers/timeMapperImpl";
+import { ZonedDateTimeMapperImpl } from "../mappers/zonedDateTimeMapperImpl";
+import { ZonedDateTimeMapper } from "../mappers/zonedDateTimeMapper";
+import { TimeMapper } from "../mappers/timeMapper";
 import { useRuntimeConfig } from "#imports";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 
