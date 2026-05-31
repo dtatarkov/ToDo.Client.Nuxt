@@ -1,4 +1,5 @@
 import { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { Action } from '@/modules/shared/types/action';
 
 export interface InputElementData<V>
 {
@@ -22,4 +23,6 @@ export abstract class InputElement<V = unknown> extends UIElement implements Inp
 
   abstract toErrorMode(): void;
   abstract toDefaultMode(): void;
+
+  abstract setValueChangeHandler(handler: Action<[value: V]>): void;
 }

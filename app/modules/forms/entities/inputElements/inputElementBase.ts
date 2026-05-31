@@ -1,9 +1,13 @@
 import { InputElement } from './inputElement';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
+import type { Action } from '@/modules/shared/types/action';
 import type { Color } from '@/modules/uikit/types/color';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {
+    private valueChangeHandler = new HandlerWrapper<[V]>();
+
     protected abstract component: any;
 
     protected props: Record<string, any> = shallowReactive({
@@ -55,7 +59,13 @@ export abstract class InputElementBase<V> extends InputElement<V>
 
     set value(value: V)
     {
-        this.writeField('value', value);
+        const hasChanged = this.value !== value;
+
+        if (hasChanged)
+        {
+            this.writeField('value', value);
+            this.valueChangeHandler.handle(value);
+        }
     }
 
     get hasAutofocus(): boolean
@@ -98,6 +108,11 @@ export abstract class InputElementBase<V> extends InputElement<V>
     {
         this.writeField<Color | undefined>('color', undefined);
         this.writeField<boolean>('highlight', false);
+    }
+
+    setValueChangeHandler(handler: Action<[value: V]>): void
+    {
+        this.valueChangeHandler.setHandler(handler);
     }
 
     protected abstract getDefaultValue(): V;

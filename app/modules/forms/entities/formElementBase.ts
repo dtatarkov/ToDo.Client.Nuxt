@@ -7,11 +7,12 @@ import type { FormElementCreateDataWithName } from '../types/formElementCreateDa
 
 export class FormElementBase<V = any> extends FormElement
 {
-  readonly key = getUniqueId('form-element');
+  private isInitialValidation = true;
 
   protected formField = new FormFieldBase();
-
   protected validateFn: ((value: V) => string | undefined) | undefined;
+
+  readonly key = getUniqueId('form-element');
 
   constructor(protected inputElement: InputElement<V>)
   {
@@ -59,8 +60,30 @@ export class FormElementBase<V = any> extends FormElement
 
   override validate(): boolean
   {
-    const errorMessage = this.validateFn?.(this.value);
+    if (this.isInitialValidation)
+    {
+      this.handleInitialValidation();
+    }
 
+    const errorMessage = this.validateFn?.(this.value);
+    this.handleErrorMessage(errorMessage);
+
+    return errorMessage == undefined;
+  }
+
+  private setupInputValueTracking(): void
+  {
+    this.inputElement.setValueChangeHandler(() => this.validate());
+  }
+
+  private handleInitialValidation(): void
+  {
+    this.isInitialValidation = false;
+    this.setupInputValueTracking();
+  }
+
+  private handleErrorMessage(errorMessage: string | undefined): void
+  {
     if (errorMessage)
     {
       this.inputElement.toErrorMode();
@@ -71,7 +94,5 @@ export class FormElementBase<V = any> extends FormElement
       this.inputElement.toDefaultMode();
       this.formField.toDefaultMode();
     }
-
-    return errorMessage == undefined;
   }
 }
