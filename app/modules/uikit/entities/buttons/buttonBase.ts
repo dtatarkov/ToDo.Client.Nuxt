@@ -1,8 +1,8 @@
-import { ButtonBaseViewmodel as ButtonBaseViewmodel, type ButtonBaseViewmodelHandlers } from '../../interfaces/buttonBaseViewmodel';
+import { Button, type ButtonHandlers } from './button';
 import type { Action } from '@/modules/shared/types/action';
 import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
 
-export abstract class ButtonBaseViewmodelImpl extends ButtonBaseViewmodel
+export abstract class ButtonBase extends Button
 {
     protected clickHandler = new HandlerWrapper();
 
@@ -11,7 +11,7 @@ export abstract class ButtonBaseViewmodelImpl extends ButtonBaseViewmodel
         this.clickHandler.setHandler(handler);
     }
 
-    override applyHandlers(handlers: Partial<ButtonBaseViewmodelHandlers>): void
+    override applyHandlers(handlers: Partial<ButtonHandlers>): void
     {
         if (handlers.click)
         {

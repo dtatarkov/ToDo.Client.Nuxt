@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
-import type { ButtonGeneralViewmodel } from '../interfaces/buttonGeneralViewmodel';
+import type { ButtonGeneral } from '../entities/buttons/buttonGeneral';
 
-export const buttonGeneralViewmodelMock = {
+export const buttonGeneralMock = {
     key: '',
     title: '',
     color: 'neutral',
@@ -14,4 +14,4 @@ export const buttonGeneralViewmodelMock = {
 
     setClickHandler: vi.fn(),
     applyHandlers: vi.fn(),
-} satisfies ButtonGeneralViewmodel;
+} satisfies ButtonGeneral;

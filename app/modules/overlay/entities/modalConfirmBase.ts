@@ -1,5 +1,5 @@
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import type { ButtonGeneralViewmodel } from '@/modules/uikit/interfaces/buttonGeneralViewmodel';
+import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
 import type { ActionUIElement } from '@/modules/uikit/entities/actionUIElement';
@@ -8,8 +8,8 @@ import { UIElementActionState } from '@/modules/uikit/entities/uiElementAction';
 
 export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase<Content> implements ModalConfirm<Content>
 {
-    private buttonConfirmInternal: ButtonGeneralViewmodel;
-    private buttonCancelInternal: ButtonGeneralViewmodel;
+    private buttonConfirmInternal: ButtonGeneral;
+    private buttonCancelInternal: ButtonGeneral;
 
     constructor(
         private buttonsFactory: ButtonsFactory
@@ -25,13 +25,13 @@ export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase
         this.toEditMode();
     }
 
-    get buttonConfirm(): ButtonGeneralViewmodel
+    get buttonConfirm(): ButtonGeneral
     {
         this.destroyToken.assertNotDestroyed();
         return this.buttonConfirmInternal;
     }
 
-    get buttonCancel(): ButtonGeneralViewmodel
+    get buttonCancel(): ButtonGeneral
     {
         this.destroyToken.assertNotDestroyed();
         return this.buttonCancelInternal;

@@ -1,8 +1,8 @@
-import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from '../interfaces/buttonGeneralViewmodel';
-import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from '../interfaces/buttonIconViewmodel';
+import type { ButtonGeneral, ButtonGeneralData, ButtonGeneralHandlers } from '../entities/buttons/buttonGeneral';
+import type { ButtonIcon, ButtonIconData, ButtonIconHandlers } from '../entities/buttons/buttonIcon';
 
 export abstract class ButtonsFactory
 {
-    abstract createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel;
-    abstract createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel;
+    abstract createButtonGeneral(config?: Partial<ButtonGeneralData> & Partial<ButtonGeneralHandlers>): ButtonGeneral;
+    abstract createButtonIcon(config?: Partial<ButtonIconData> & Partial<ButtonIconHandlers>): ButtonIcon;
 }

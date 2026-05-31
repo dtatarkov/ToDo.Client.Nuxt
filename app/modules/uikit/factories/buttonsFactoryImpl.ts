@@ -1,15 +1,15 @@
 import { ButtonsFactory } from './buttonsFactory';
-import type { ButtonGeneralViewmodel, ButtonGeneralViewmodelData, ButtonGeneralViewmodelHandlers } from '../interfaces/buttonGeneralViewmodel';
-import type { ButtonIconViewmodel, ButtonIconViewmodelData, ButtonIconViewmodelHandlers } from '../interfaces/buttonIconViewmodel';
-import { ButtonGeneralViewmodelImpl } from '../viewmodels/buttons/buttonGeneralViewmodelImpl';
-import { ButtonIconViewmodelImpl } from '../viewmodels/buttons/buttonIconViewmodelImpl';
+import type { ButtonGeneral, ButtonGeneralData, ButtonGeneralHandlers } from '../entities/buttons/buttonGeneral';
+import type { ButtonIcon, ButtonIconData, ButtonIconHandlers } from '../entities/buttons/buttonIcon';
+import { ButtonGeneralBase } from '../entities/buttons/buttonGeneralBase';
+import { ButtonIconBase } from '../entities/buttons/buttonIconBase';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export class ButtonsFactoryImpl extends ButtonsFactory
 {
-    override createButtonGeneral(config?: Partial<ButtonGeneralViewmodelData> & Partial<ButtonGeneralViewmodelHandlers>): ButtonGeneralViewmodel
+    override createButtonGeneral(config?: Partial<ButtonGeneralData> & Partial<ButtonGeneralHandlers>): ButtonGeneral
     {
-        const button = new ButtonGeneralViewmodelImpl();
+        const button = new ButtonGeneralBase();
 
         if (config != undefined)
         {
@@ -20,9 +20,9 @@ export class ButtonsFactoryImpl extends ButtonsFactory
         return button;
     }
 
-    override createButtonIcon(config?: Partial<ButtonIconViewmodelData> & Partial<ButtonIconViewmodelHandlers>): ButtonIconViewmodel
+    override createButtonIcon(config?: Partial<ButtonIconData> & Partial<ButtonIconHandlers>): ButtonIcon
     {
-        const button = new ButtonIconViewmodelImpl();
+        const button = new ButtonIconBase();
 
         if (config != undefined)
         {

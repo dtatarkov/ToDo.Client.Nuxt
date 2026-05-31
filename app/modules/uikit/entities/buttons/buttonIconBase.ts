@@ -1,11 +1,11 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { ButtonIconViewmodel } from "../../interfaces/buttonIconViewmodel";
-import { ButtonBaseViewmodelImpl } from './buttonBaseViewmodelImpl';
+import type { ButtonIcon } from './buttonIcon';
+import { ButtonBase } from './buttonBase';
 import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import { useObservable } from '@/modules/shared/composables/useObservable';
 
-export class ButtonIconViewmodelImpl extends ButtonBaseViewmodelImpl implements ButtonIconViewmodel
+export class ButtonIconBase extends ButtonBase implements ButtonIcon
 {
     protected readonly data = new ObservableSource({
         isDisabled: false,
@@ -52,4 +52,3 @@ export class ButtonIconViewmodelImpl extends ButtonBaseViewmodelImpl implements 
         this.data.mutate({ isDisabled: value });
     }
 }
-
