@@ -6,7 +6,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
 {
     protected abstract component: any;
 
-    protected props: Record<string, any> = {
+    protected props: Record<string, any> = shallowReactive({
         id: undefined,
         name: undefined,
         value: this.getDefaultValue(),
@@ -19,7 +19,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
         {
             this.value = value;
         }
-    };
+    });
 
     key = getUniqueId('input-base');
 
