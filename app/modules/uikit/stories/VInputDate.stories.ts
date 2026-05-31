@@ -6,6 +6,7 @@ import { inputIdArgType } from '../storybook/inputIdArgType';
 import { inputNameArgType } from '../storybook/inputNameArgType';
 import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
 import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
+import { inputHighlightArgType } from '../storybook/inputHighlightArgType';
 
 type InputDateStoryArgs = {
     value: Date | undefined;
@@ -14,6 +15,7 @@ type InputDateStoryArgs = {
     hasAutofocus: boolean;
     isDisabled: boolean;
     color?: import('../types/color').Color;
+    highlight?: boolean;
 };
 
 const meta: Meta<typeof VInputDate> = {
@@ -45,6 +47,7 @@ const meta: Meta<typeof VInputDate> = {
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
         color: storybookColorSelect,
+        highlight: inputHighlightArgType,
     },
 };
 
@@ -91,5 +94,6 @@ export const Error: Story = {
         hasAutofocus: false,
         isDisabled: false,
         color: 'error',
+        highlight: true,
     },
 };

@@ -13,6 +13,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
         hasAutofocus: false,
         isDisabled: false,
         color: <Color | undefined>undefined,
+        highlight: false,
 
         'onUpdate:value': (value: V) =>
         {
@@ -90,11 +91,13 @@ export abstract class InputElementBase<V> extends InputElement<V>
     override toErrorMode(): void
     {
         this.writeField<Color | undefined>('color', 'error');
+        this.writeField<boolean>('highlight', true);
     }
 
     override toDefaultMode(): void
     {
         this.writeField<Color | undefined>('color', undefined);
+        this.writeField<boolean>('highlight', false);
     }
 
     protected abstract getDefaultValue(): V;

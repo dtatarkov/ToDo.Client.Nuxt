@@ -6,6 +6,7 @@ import { inputNameArgType } from '../storybook/inputNameArgType';
 import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
 import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
 import { inputPlaceholderArgType } from '../storybook/inputPlaceholderArgType';
+import { inputHighlightArgType } from '../storybook/inputHighlightArgType';
 
 const meta: Meta<typeof VInputTextarea> = {
     title: 'UIKit/InputTextarea',
@@ -21,6 +22,7 @@ const meta: Meta<typeof VInputTextarea> = {
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
         color: storybookColorSelect,
+        highlight: inputHighlightArgType,
     },
 };
 
@@ -71,5 +73,6 @@ export const Error: Story = {
         hasAutofocus: false,
         isDisabled: false,
         color: 'error',
+        highlight: true,
     },
 };

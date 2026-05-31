@@ -8,4 +8,5 @@ export type InputData<V = unknown> = {
     isDisabled?: boolean;
     value?: V;
     color?: Color;
+    highlight?: boolean;
 };

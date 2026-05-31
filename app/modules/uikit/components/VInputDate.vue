@@ -6,6 +6,7 @@
     :autofocus="props.hasAutofocus"
     :disabled="props.isDisabled"
     :color="props.color"
+    :highlight="props.highlight"
     :hide-time-zone="true"
     granularity="day"
     v-bind="$attrs"

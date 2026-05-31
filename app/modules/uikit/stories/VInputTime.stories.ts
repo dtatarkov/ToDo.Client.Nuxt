@@ -6,6 +6,7 @@ import { inputIdArgType } from '../storybook/inputIdArgType';
 import { inputNameArgType } from '../storybook/inputNameArgType';
 import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
 import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
+import { inputHighlightArgType } from '../storybook/inputHighlightArgType';
 
 const meta: Meta<typeof VInputTime> = {
     title: 'UIKit/InputTime',
@@ -20,6 +21,7 @@ const meta: Meta<typeof VInputTime> = {
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
         color: storybookColorSelect,
+        highlight: inputHighlightArgType,
     },
 
     render: (args) =>
@@ -82,5 +84,6 @@ export const Error: Story = {
         hasAutofocus: false,
         isDisabled: false,
         color: 'error',
+        highlight: true,
     },
 };

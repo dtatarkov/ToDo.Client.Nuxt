@@ -7,6 +7,7 @@
     :placeholder="props.placeholder"
     :disabled="props.isDisabled"
     :color="props.color"
+    :highlight="props.highlight"
     v-bind="$attrs"
   />
 </template>
