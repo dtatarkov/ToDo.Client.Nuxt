@@ -1,6 +1,8 @@
 import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
-import { DatesService } from "../services/datesService";
-import { DatesServiceImpl } from "../services/datesServiceImpl";
+import { DateParser } from "../services/dateParser";
+import { DateParserImpl } from "../services/dateParserImpl";
+import { DateFormatter } from "../services/dateFormatter";
+import { DateFormatterImpl } from "../services/dateFormatterImpl";
 import { TimeMapperImpl } from "../mappers/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/zonedDateTimeMapperImpl";
 import { ZonedDateTimeMapper } from "../mappers/zonedDateTimeMapper";
@@ -17,7 +19,8 @@ export function useSharedServices(): void
         return config.public;
     }).asSingleton();
 
-    useServiceRegistration(DatesService).to(DatesServiceImpl).asTransient();
+    useServiceRegistration(DateParser).to(DateParserImpl).asTransient();
+    useServiceRegistration(DateFormatter).to(DateFormatterImpl).asTransient();
     useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
     useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
 }

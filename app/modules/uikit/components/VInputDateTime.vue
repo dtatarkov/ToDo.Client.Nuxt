@@ -20,18 +20,16 @@
 </template>
 
 <script setup lang="ts">
-import { DatesService } from '@/modules/shared/services/datesService.js';
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
-import { useService } from '@/modules/shared/composables/useService';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
 import { postfixNotEmptyString } from '@/modules/shared/utils/postfixNotEmptyString';
+import { setTime } from '@/modules/shared/utils/setTime';
+import { getTime } from '@/modules/shared/utils/getTime';
 
 defineOptions({
   inheritAttrs: false
 });
-
-const datesService = useService(DatesService);
 
 const props = defineProps<InputDateTimeData>();
 const valueModel = defineModel<Date>('value');
@@ -51,8 +49,8 @@ const inputTimeName = computed(() => postfixNotEmptyString(props.name, inputTime
 watchEffect(() => {
     if(valueModel.value)
     {
-        date.value = datesService.setTime(valueModel.value, 0);        
-        time.value = datesService.getTime(valueModel.value);        
+        date.value = setTime(valueModel.value, 0);        
+        time.value = getTime(valueModel.value);        
     }
     else {
         date.value = undefined;
@@ -66,7 +64,7 @@ watchEffect(() => {
       return;
     }
 
-    const result = datesService.setTime(date.value, time.value);
+    const result = setTime(date.value, time.value);
 
     if(valueModel.value?.getTime() != result.getTime())
     {

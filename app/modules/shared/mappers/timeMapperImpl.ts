@@ -1,30 +1,21 @@
 import { Time } from "@internationalized/date";
 import { ValueMapper } from '../interfaces/valueMapper';
-import { DatesService } from '../services/datesService';
-import { dependency } from '../decorators/dependency';
+import { hourInMilliseconds, minuteInMilliseconds, secondInMilliseconds } from '../constants/dateConstants';
 
-@dependency(DatesService)
 export class TimeMapperImpl extends ValueMapper<number, Time>
 {
-  constructor(
-    private datesService: DatesService
-  )
-  {
-    super();
-  }
-
   map(value: number): Time
   {
     let availableMilliseconds = value;
 
-    const hours = Math.floor(availableMilliseconds / this.datesService.hourInMilliseconds);
-    availableMilliseconds -= hours * this.datesService.hourInMilliseconds;
+    const hours = Math.floor(availableMilliseconds / hourInMilliseconds);
+    availableMilliseconds -= hours * hourInMilliseconds;
 
-    const minutes = Math.floor(availableMilliseconds / this.datesService.minuteInMilliseconds);
-    availableMilliseconds -= minutes * this.datesService.minuteInMilliseconds;
+    const minutes = Math.floor(availableMilliseconds / minuteInMilliseconds);
+    availableMilliseconds -= minutes * minuteInMilliseconds;
 
-    const seconds = Math.floor((availableMilliseconds) / this.datesService.secondInMilliseconds);
-    availableMilliseconds -= seconds * this.datesService.secondInMilliseconds;
+    const seconds = Math.floor((availableMilliseconds) / secondInMilliseconds);
+    availableMilliseconds -= seconds * secondInMilliseconds;
 
     const time = new Time(hours, minutes, seconds, availableMilliseconds);
 

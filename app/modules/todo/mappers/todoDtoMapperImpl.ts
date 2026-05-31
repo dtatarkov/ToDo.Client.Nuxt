@@ -2,17 +2,17 @@ import { ToDoDtoMapper } from "./todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import type { ToDo } from "../entities/todo";
-import { DatesService } from '@/modules/shared/services/datesService';
+import { DateParser } from '@/modules/shared/services/dateParser';
 import { ToDoFactory } from "../factories/todoFactory";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoAddDto } from '../types/todoAddDto';
 
-@dependency(DatesService)
+@dependency(DateParser)
 @dependency(ToDoFactory)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
   constructor(
-    private datesService: DatesService,
+    private dateParser: DateParser,
     private todoFactory: ToDoFactory
   )
   {
@@ -24,8 +24,8 @@ export class ToDoDtoMapperImpl extends ToDoDtoMapper
     const todo = this.todoFactory.create({
       ...dto,
 
-      completionDateActual: this.datesService.fromStringOptional(dto.completionDateActual),
-      completionDatePlanned: this.datesService.fromStringOptional(dto.completionDatePlanned),
+      completionDateActual: this.dateParser.fromStringOptional(dto.completionDateActual),
+      completionDatePlanned: this.dateParser.fromStringOptional(dto.completionDatePlanned),
     });
 
     return todo;
