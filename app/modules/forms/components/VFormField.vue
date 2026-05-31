@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UFormField } from "#components";
+import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 
 type Props = {
  name?: string;
@@ -9,9 +10,11 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const uiModifiers = {
-  container: 'grid grid-cols-1'
-}
+const uiModifiers = reactive({
+  container: computed(() => 'grid grid-cols-1' + 
+    isStringEmpty(props.help) ? 'mb-5' : ''),
+  help: 'text-xs mt-1 text-error',
+})
 </script>
 
 <template>

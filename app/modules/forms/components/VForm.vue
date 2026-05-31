@@ -12,7 +12,7 @@ const emits = defineEmits<Emits>();
 </script>
 
 <template>
-  <UForm class="p-4 flex flex-col gap-4" :disabled="props.isDisabled" @submit="emits('submit')">
+  <UForm class="p-4 flex flex-col gap-2" :disabled="props.isDisabled" @submit="emits('submit')">
     <slot />
   </UForm>
 </template>
