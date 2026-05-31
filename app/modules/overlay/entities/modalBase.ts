@@ -2,7 +2,7 @@ import { Modal } from "./modal";
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
-import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
+import { DestroyToken } from '@/modules/shared/entities/destroyToken';
 import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
@@ -10,7 +10,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
   private overlay: Overlay | undefined;
 
-  protected destroyToken = new DestroyTokenImpl();
+  protected destroyToken = new DestroyToken();
 
   protected data = shallowReactive({
     title: '',

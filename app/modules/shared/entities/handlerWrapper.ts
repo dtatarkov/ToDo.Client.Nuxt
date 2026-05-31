@@ -1,10 +1,10 @@
 import { HandlerAlreadySetException } from '../exceptions/handlerAlreadySetException';
 import type { Action } from '../types/action';
-import { DestroyTokenImpl } from './destroyTokenImpl';
+import { DestroyToken } from './destroyToken';
 
 export class HandlerWrapper<T extends any[] = []>
 {
-    private destroyToken = new DestroyTokenImpl();
+    private destroyToken = new DestroyToken();
     private handler: Action<T> | undefined;
 
     setHandler(handler: Action<T>): void

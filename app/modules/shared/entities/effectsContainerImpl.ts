@@ -1,11 +1,11 @@
 import { EffectsContainer } from '../interfaces/effectsContainer';
 import type { Action } from '../types/action';
-import { DestroyTokenImpl } from './destroyTokenImpl';
+import { DestroyToken } from './destroyToken';
 
 export class EffectsContainerImpl extends EffectsContainer
 {
     private destroyCallbacks = new Set<Action>();
-    private destroyToken = new DestroyTokenImpl();
+    private destroyToken = new DestroyToken();
 
     override withContainer(action: Action): void
     {

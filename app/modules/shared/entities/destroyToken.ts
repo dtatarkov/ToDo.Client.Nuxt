@@ -1,11 +1,6 @@
-import { DestroyToken } from '../interfaces/destroyToken';
 import { DestroyedException } from '../exceptions/destroyedException';
 
-/**
- * Base implementation of DestroyToken.
- * Provides basic destruction state tracking and assertion.
- */
-export class DestroyTokenImpl extends DestroyToken
+export class DestroyToken
 {
     private isDestroyedInternal = false;
 
@@ -33,7 +28,7 @@ export class DestroyTokenImpl extends DestroyToken
      * Destroys the token, marking it as destroyed.
      * Subsequent calls to destroy() have no effect.
      */
-    override destroy(): void
+    destroy(): void
     {
         if (this.isDestroyedInternal)
         {
