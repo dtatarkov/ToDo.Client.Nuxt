@@ -4,7 +4,7 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from './overlay';
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export class ModalBase<Content extends UIElement> extends Modal<Content>
 {

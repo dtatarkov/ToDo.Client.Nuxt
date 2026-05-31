@@ -1,4 +1,4 @@
-import { UIElement } from '../interfaces/uiElement';
+import { UIElement } from './uiElement';
 import type { UIElementAction } from './uiElementAction';
 
 export abstract class ActionUIElement extends UIElement

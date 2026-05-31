@@ -25,7 +25,7 @@ import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { useService } from '@/modules/shared/composables/useService';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
-import { postfixNotEmptyString } from '@/modules/shared/utils/postfixNotEmptyString.js';
+import { postfixNotEmptyString } from '@/modules/shared/utils/postfixNotEmptyString';
 
 defineOptions({
   inheritAttrs: false

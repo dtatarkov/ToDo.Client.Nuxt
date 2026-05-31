@@ -1,6 +1,6 @@
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import { Modal } from './modal';
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export abstract class ModalConfirm<Content extends UIElement = UIElement> extends Modal<Content>
 {

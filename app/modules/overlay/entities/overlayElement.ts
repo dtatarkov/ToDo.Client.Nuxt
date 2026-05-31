@@ -1,5 +1,5 @@
 import type { Overlay } from './overlay';
-import { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export abstract class OverlayElement extends UIElement
 {

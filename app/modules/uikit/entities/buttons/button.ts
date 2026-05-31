@@ -1,5 +1,5 @@
 import type { Action } from '@/modules/shared/types/action';
-import { UIElement } from '../../interfaces/uiElement';
+import { UIElement } from '../uiElement';
 
 export type ButtonData = {
     isDisabled: boolean;

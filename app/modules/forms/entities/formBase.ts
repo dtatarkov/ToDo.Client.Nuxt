@@ -1,14 +1,14 @@
 import VForm from "../components/VForm.vue";
-import { Form } from "@/modules/forms/entities/form.js";
+import { Form } from "@/modules/forms/entities/form";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
-import type { FormElementCreateData } from '../types/formElementCreateData.js';
-import type { FormElement } from './formElement.js';
+import type { FormElementCreateData } from '../types/formElementCreateData';
+import type { FormElement } from './formElement';
 import type { FormElementFactory } from '../factories/formElementFactory';
 import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import { UIElementActionBase } from '@/modules/uikit/entities/uiElementActionBase';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme.js';
-import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper.js';
+import type { EntityScheme } from '@/modules/shared/types/entityScheme';
+import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
 
 enum FormBaseState
 {

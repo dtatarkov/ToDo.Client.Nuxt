@@ -1,5 +1,5 @@
 import { OverlayElement } from "./overlayElement";
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export abstract class Modal<Content extends UIElement = UIElement> extends OverlayElement
 {

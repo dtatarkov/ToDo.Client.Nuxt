@@ -1,7 +1,7 @@
 import VFormField from "../components/VFormField.vue";
-import { FormField } from "./formField.js";
+import { FormField } from "./formField";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import type { UIElement } from '@/modules/uikit/interfaces/uiElement.js';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export class FormFieldBase extends FormField
 {

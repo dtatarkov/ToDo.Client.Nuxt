@@ -1,4 +1,4 @@
-import { UIElement } from '@/modules/uikit/interfaces/uiElement';
+import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { Action } from '@/modules/shared/types/action';
 
 export interface InputElementData<V>
