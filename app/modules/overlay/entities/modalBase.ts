@@ -1,7 +1,6 @@
 import { Modal } from "./modal";
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { Viewmodel } from '@/modules/uikit/interfaces/viewmodel';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyTokenImpl } from '@/modules/shared/entities/destroyTokenImpl';
 import type { Overlay } from './overlay';
@@ -19,7 +18,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     isDisabled: false,
   });
 
-  protected controls = shallowReactive(new Array<Viewmodel>());
+  protected controls = shallowReactive(new Array<UIElement>());
 
   protected children = shallowReactive({
     content: <Content | undefined>undefined
@@ -35,7 +34,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       isDismissible: !this.data.isDisabled
     }, {
       content: () => this.children.content ? this.children.content.vnode : undefined,
-      controls: () => this.controls.map(control => h(control.component, { key: control.key }))
+      controls: () => this.controls.map(control => control.vnode)
     });
   }
 

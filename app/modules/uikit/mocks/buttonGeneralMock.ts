@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import type { ButtonGeneral } from '../entities/buttons/buttonGeneral';
+import type { VNode } from 'vue';
 
 export const buttonGeneralMock = {
     key: '',
@@ -8,9 +9,7 @@ export const buttonGeneralMock = {
     isDisabled: false,
     isLoading: false,
 
-    component: {
-        setup: vi.fn(),
-    },
+    vnode: {} as VNode,
 
     setClickHandler: vi.fn(),
 } satisfies ButtonGeneral;

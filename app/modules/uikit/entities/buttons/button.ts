@@ -1,11 +1,11 @@
 import type { Action } from '@/modules/shared/types/action';
-import { Viewmodel } from '../../interfaces/viewmodel';
+import { UIElement } from '../../interfaces/uiElement';
 
 export type ButtonData = {
     isDisabled: boolean;
 };
 
-export abstract class Button extends Viewmodel<string>
+export abstract class Button extends UIElement
 {
     abstract isDisabled: boolean;
 

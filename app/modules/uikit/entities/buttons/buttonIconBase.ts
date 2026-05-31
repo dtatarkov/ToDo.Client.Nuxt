@@ -1,54 +1,49 @@
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { ButtonIcon } from './buttonIcon';
 import { ButtonBase } from './buttonBase';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
-import { useObservable } from '@/modules/shared/composables/useObservable';
+import { shallowReactive, type VNode } from 'vue';
 
 export class ButtonIconBase extends ButtonBase implements ButtonIcon
 {
-    protected readonly data = new ObservableSource({
+    protected data = shallowReactive({
         isDisabled: false,
         icon: ''
     });
 
-    readonly key = getUniqueId('button-element-icon');
+    key = getUniqueId('button-element-icon');
 
-    readonly component = {
-        setup: () =>
-        {
-            const data = useObservable(this.data);
-
-            const onClick = () =>
-            {
-                this.clickHandler.handle();
-            };
-
-            return () => h(VButtonIcon, {
-                ...data.value,
-
-                onClick
-            });
-        }
+    private onClickFn = () =>
+    {
+        this.clickHandler.handle();
     };
+
+    get vnode(): VNode
+    {
+        return h(VButtonIcon, {
+            ...this.data,
+
+            onClick: this.onClickFn,
+        });
+    }
 
     get icon(): string
     {
-        return this.data.value.icon;
+        return this.data.icon;
     }
 
     set icon(value: string)
     {
-        this.data.mutate({ icon: value });
+        this.data.icon = value;
     }
 
     get isDisabled(): boolean
     {
-        return this.data.value.isDisabled;
+        return this.data.isDisabled;
     }
 
     set isDisabled(value: boolean)
     {
-        this.data.mutate({ isDisabled: value });
+        this.data.isDisabled = value;
     }
 }
