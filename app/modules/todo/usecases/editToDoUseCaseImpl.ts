@@ -42,6 +42,7 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
     form.setData(todo.getData());
 
     const modal = this.addFormModalUseCase.execute(form);
+    modal.setConfirmCommand(form.getSubmitCommand());
     modal.toEditMode();
   }
 }

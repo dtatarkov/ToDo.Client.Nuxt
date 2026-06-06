@@ -2,14 +2,15 @@ import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
-import type { ActionUIElement } from '@/modules/uikit/entities/actionUIElement';
-import { UIElementActionState } from '@/modules/uikit/entities/uiElementAction';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
 
 
-export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase<Content> implements ModalConfirm<Content>
+export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Content> implements ModalConfirm<Content>
 {
     private buttonConfirmInternal: ButtonGeneral;
     private buttonCancelInternal: ButtonGeneral;
+    private confirmCommand: AsyncCommand<boolean> | undefined;
 
     constructor(
         private buttonsFactory: ButtonsFactory
@@ -50,28 +51,30 @@ export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase
         this.buttonCancelInternal.isDisabled = value;
     }
 
-    override get content(): Content | undefined
+    setConfirmCommand(command: AsyncCommand<boolean>): void
     {
-        return super.content;
-    }
+        this.confirmCommand = command;
 
-    override set content(content: Content | undefined)
-    {
-        super.content = content;
-
-        if (content)
+        command.setExecutionHandler(async (resultPromise) =>
         {
-            content.action.setActionStateChangeHandler(state =>
-            {
-                this.isDisabled = state == UIElementActionState.processing;
-                this.buttonConfirm.isLoading = state == UIElementActionState.processing;
+            this.isDisabled = true;
+            this.buttonConfirm.isLoading = true;
 
-                if (state == UIElementActionState.finishedProcessing)
+            try
+            {
+                const result = await resultPromise;
+
+                if (result)
                 {
                     this.close();
                 }
-            });
-        }
+            }
+            finally
+            {
+                this.isDisabled = false;
+                this.buttonConfirm.isLoading = false;
+            }
+        });
     }
 
     toAddMode()
@@ -106,10 +109,7 @@ export class ModalConfirmBase<Content extends ActionUIElement> extends ModalBase
 
     protected handleConfirmButtonClick()
     {
-        if (this.content)
-        {
-            this.content.action.executeAsync();
-        }
+        this.confirmCommand?.executeAsync();
     }
 
     protected handleCancelButtonClick()

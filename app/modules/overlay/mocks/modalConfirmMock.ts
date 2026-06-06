@@ -17,4 +17,5 @@ export const modalConfirmMock = {
     setOverlay: vi.fn(),
     toAddMode: vi.fn(),
     toEditMode: vi.fn(),
+    setConfirmCommand: vi.fn(),
 } satisfies ModalConfirm;

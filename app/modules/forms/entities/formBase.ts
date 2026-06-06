@@ -6,9 +6,10 @@ import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElement } from './formElement';
 import type { FormElementFactory } from '../factories/formElementFactory';
 import type { FormSubmitHandler } from '../types/formSubmitHandler';
-import { UIElementActionBase } from '@/modules/uikit/entities/uiElementActionBase';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
+import { AsyncCommandImpl } from '@/modules/shared/types/asyncCommandImpl';
+import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
 
 enum FormBaseState
 {
@@ -21,6 +22,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
   private submitHandler?: FormSubmitHandler<TEntity>;
+  private submitCommand = new AsyncCommandImpl(() => this.submitAsyncInternal());
 
   private get state()
   {
@@ -33,7 +35,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   }
 
   readonly key = getUniqueId('form');
-  readonly action = new UIElementActionBase(() => this.submitAsyncInternal());
 
   constructor(
     private formElementFactory: FormElementFactory,
@@ -121,12 +122,16 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   override async submitAsync(): Promise<void>
   {
-    this.action.executeAsync();
+    await this.submitCommand.executeAsync();
+  }
+
+  override getSubmitCommand(): AsyncCommand<boolean>
+  {
+    return this.submitCommand;
   }
 
   override destroy(): void
   {
-    this.action.destroy();
   }
 
   private async submitAsyncInternal(): Promise<boolean>
