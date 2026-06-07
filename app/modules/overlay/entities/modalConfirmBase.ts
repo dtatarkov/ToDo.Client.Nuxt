@@ -22,22 +22,10 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
         this.buttonCancel = this.createButtonCancel();
         this.buttonConfirm = this.createButtonConfirm();
 
-        this.controls.push(this.buttonCancel, this.buttonConfirm);
+        this.appendControl(this.buttonCancel);
+        this.appendControl(this.buttonConfirm);
 
         this.toEditMode();
-    }
-
-    override get isDisabled()
-    {
-        return super.isDisabled;
-    }
-
-    override set isDisabled(value: boolean)
-    {
-        super.isDisabled = value;
-
-        this.buttonConfirm.isDisabled = value;
-        this.buttonCancel.isDisabled = value;
     }
 
     setConfirmCommand(command: AsyncCommand): void
@@ -57,15 +45,33 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
         this.buttonConfirm.title = 'Сохранить';
     }
 
+    override disable()
+    {
+        super.disable();
+
+        this.buttonConfirm.disable();
+        this.buttonCancel.disable();
+    }
+
+    override enable()
+    {
+        super.enable();
+
+        this.buttonConfirm.enable();
+        this.buttonCancel.enable();
+    }
+
     private createButtonConfirm()
     {
         const button = this.buttonsFactory.createButtonGeneral();
 
         button.color = 'primary';
 
-        button.setClickHandler(() =>
-        {
-            this.confirmCommand?.executeAsync();
+        button.on({
+            click: () =>
+            {
+                this.confirmCommand?.executeAsync();
+            }
         });
 
         return button;
@@ -77,9 +83,11 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
 
         button.title = 'Отменить';
 
-        button.setClickHandler(() =>
-        {
-            this.close();
+        button.on({
+            click: () =>
+            {
+                this.close();
+            }
         });
 
         return button;
@@ -92,8 +100,16 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
             {
                 const isBusy = state === CommandState.busy;
 
-                this.isDisabled = isBusy;
-                this.buttonConfirm.isLoading = isBusy;
+                if (isBusy)
+                {
+                    this.disable();
+                    this.buttonConfirm.showLoader();
+                }
+                else
+                {
+                    this.enable();
+                    this.buttonConfirm.hideLoader();
+                }
             },
 
             result: (result) =>

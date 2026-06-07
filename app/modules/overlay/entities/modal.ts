@@ -6,5 +6,8 @@ export abstract class Modal<Content extends UIElement = UIElement> extends Overl
   abstract title: string;
   abstract description: string;
   abstract content: Content | undefined;
-  abstract isDisabled: boolean;
+  abstract readonly isDisabled: boolean;
+
+  abstract disable(): void;
+  abstract enable(): void;
 }

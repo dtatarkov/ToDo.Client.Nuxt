@@ -11,5 +11,9 @@ export const buttonGeneralMock = {
 
     vnode: {} as VNode,
 
-    setClickHandler: vi.fn(),
+    on: vi.fn(),
+    disable: vi.fn(),
+    enable: vi.fn(),
+    showLoader: vi.fn(),
+    hideLoader: vi.fn(),
 } satisfies ButtonGeneral;

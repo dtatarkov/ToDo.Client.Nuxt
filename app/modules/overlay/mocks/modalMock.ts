@@ -9,6 +9,8 @@ export const modalMock = {
     content: undefined,
     isDisabled: false,
 
+    enable: vi.fn(),
+    disable: vi.fn(),
     close: vi.fn(),
     setOverlay: vi.fn(),
 } satisfies Modal;

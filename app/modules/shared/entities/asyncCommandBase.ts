@@ -2,7 +2,7 @@ import type { Func } from '../types/func';
 import { AsyncCommand } from './asyncCommand';
 import type { AsyncCommandCallbacks } from './asyncCommand';
 import { CommandState } from '../enums/commandState';
-import { callbacksWrapper } from '../utils/callbacksWrapper';
+import { callbacksWrapper } from './callbacksWrapper';
 
 export class AsyncCommandBase extends AsyncCommand
 {

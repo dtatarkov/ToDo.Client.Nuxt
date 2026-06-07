@@ -15,7 +15,7 @@ export class ButtonIconBase extends ButtonBase implements ButtonIcon
 
     private onClickFn = () =>
     {
-        this.clickHandler.handle();
+        this.callbacks.click?.();
     };
 
     get vnode(): VNode
@@ -42,8 +42,13 @@ export class ButtonIconBase extends ButtonBase implements ButtonIcon
         return this.data.isDisabled;
     }
 
-    set isDisabled(value: boolean)
+    override disable(): void
     {
-        this.data.isDisabled = value;
+        this.data.isDisabled = true;
+    }
+
+    override enable(): void
+    {
+        this.data.isDisabled = false;
     }
 }

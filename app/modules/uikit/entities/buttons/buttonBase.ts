@@ -1,13 +1,12 @@
-import { Button } from './button';
-import type { Action } from '@/modules/shared/types/action';
-import { HandlerWrapper } from '@/modules/shared/entities/handlerWrapper';
+import { Button, type ButtonCallbacks } from './button';
+import { callbacksWrapper } from '@/modules/shared/entities/callbacksWrapper';
 
 export abstract class ButtonBase extends Button
 {
-    protected clickHandler = new HandlerWrapper();
+    protected callbacks = callbacksWrapper<ButtonCallbacks>();
 
-    override setClickHandler(handler: Action): void
+    override on(callbacks: Partial<ButtonCallbacks>): void
     {
-        this.clickHandler.setHandler(handler);
+        this.callbacks(callbacks);
     }
 }

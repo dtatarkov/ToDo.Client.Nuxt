@@ -10,6 +10,9 @@ export type ButtonGeneralData = ButtonData & {
 export abstract class ButtonGeneral extends Button
 {
     abstract title: string;
-    abstract isLoading: boolean;
     abstract color: Color;
+    abstract readonly isLoading: boolean;
+
+    abstract showLoader(): void;
+    abstract hideLoader(): void;
 }

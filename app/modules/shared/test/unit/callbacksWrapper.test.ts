@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { callbacksWrapper } from '../../utils/callbacksWrapper';
+import { callbacksWrapper } from '../../entities/callbacksWrapper';
 import type { Action } from '../../types/action';
 
 interface TestCallbacks extends Record<string, Action<any[]>>

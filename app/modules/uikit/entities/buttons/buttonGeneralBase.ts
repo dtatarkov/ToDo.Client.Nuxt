@@ -18,7 +18,7 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 
     private onClickFn = () =>
     {
-        this.clickHandler.handle();
+        this.callbacks.click?.();
     };
 
     get vnode(): VNode
@@ -55,18 +55,28 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
         return this.data.isDisabled;
     }
 
-    set isDisabled(value: boolean)
-    {
-        this.data.isDisabled = value;
-    }
-
     get isLoading(): boolean
     {
         return this.data.isLoading;
     }
 
-    set isLoading(value: boolean)
+    override disable(): void
     {
-        this.data.isLoading = value;
+        this.data.isDisabled = true;
+    }
+
+    override enable(): void
+    {
+        this.data.isDisabled = false;
+    }
+
+    showLoader(): void
+    {
+        this.data.isLoading = true;
+    }
+
+    hideLoader(): void
+    {
+        this.data.isLoading = false;
     }
 }

@@ -1,13 +1,20 @@
-import type { Action } from '@/modules/shared/types/action';
 import { UIElement } from '../uiElement';
+import type { CallbacksOwners } from '@/modules/shared/interfaces/callbacksOwners';
 
 export type ButtonData = {
     isDisabled: boolean;
 };
 
-export abstract class Button extends UIElement
-{
-    abstract isDisabled: boolean;
+export type ButtonCallbacks = {
+    click(): void;
+};
 
-    abstract setClickHandler(handler: Action): void;
+export abstract class Button extends UIElement implements CallbacksOwners<ButtonCallbacks>
+{
+    abstract readonly isDisabled: boolean;
+
+    abstract disable(): void;
+    abstract enable(): void;
+
+    abstract on(callbacks: Partial<ButtonCallbacks>): void;
 }

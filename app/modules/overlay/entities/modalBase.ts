@@ -9,6 +9,7 @@ import type { UIElement } from '@/modules/uikit/entities/uiElement';
 export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
   private overlay: Overlay | undefined;
+  private controls = shallowReactive(new Array<UIElement>());
 
   protected destroyToken = new DestroyToken();
 
@@ -17,8 +18,6 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     description: '',
     isDisabled: false,
   });
-
-  protected controls = shallowReactive(new Array<UIElement>());
 
   protected children = shallowReactive({
     content: <Content | undefined>undefined
@@ -68,12 +67,6 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     return this.data.isDisabled;
   }
 
-  set isDisabled(value)
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.isDisabled = value;
-  }
-
   get content()
   {
     this.destroyToken.assertNotDestroyed();
@@ -84,6 +77,18 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
   {
     this.destroyToken.assertNotDestroyed();
     this.children.content = content;
+  }
+
+  override disable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = true;
+  }
+
+  override enable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = false;
   }
 
   override close()
@@ -112,6 +117,11 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
 
     this.handleDestroy();
     this.destroyToken.destroy();
+  }
+
+  protected appendControl(control: UIElement): void
+  {
+    this.controls.push(control);
   }
 
   protected handleDestroy(): void
