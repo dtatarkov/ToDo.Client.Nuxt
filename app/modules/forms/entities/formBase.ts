@@ -22,7 +22,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
   private submitHandler?: FormSubmitHandler<TEntity>;
-  private submitCommand = new AsyncCommandBase(() => this.submitAsyncInternal());
+  private submitCommand = this.createSubmitCommand();
 
   private get state()
   {
@@ -134,37 +134,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
   }
 
-  private async submitAsyncInternal(): Promise<boolean>
-  {
-    if (!this.submitHandler)
-    {
-      return false;
-    }
-
-    this.assertNotDisabled();
-
-    if (!this.validate())
-    {
-      return false;
-    }
-
-    this.disable();
-
-    try
-    {
-      const data = this.getData();
-      await this.submitHandler(data);
-
-      return true;
-    }
-    finally
-    {
-      this.enable();
-    }
-
-    return false;
-  }
-
   private validate(): boolean
   {
     const result = this.elements.every(element => element.validate());
@@ -197,5 +166,39 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     {
       throw new FormDisabledException();
     }
+  }
+
+  private createSubmitCommand()
+  {
+    const command = new AsyncCommandBase(async () =>
+    {
+      if (!this.submitHandler)
+      {
+        return false;
+      }
+
+      this.assertNotDisabled();
+
+      if (!this.validate())
+      {
+        return false;
+      }
+
+      this.disable();
+
+      try
+      {
+        const data = this.getData();
+        await this.submitHandler(data);
+
+        return true;
+      }
+      finally
+      {
+        this.enable();
+      }
+    });
+
+    return command;
   }
 }
