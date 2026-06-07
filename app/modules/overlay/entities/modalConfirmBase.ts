@@ -3,7 +3,7 @@ import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGener
 import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
 
 export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Content> implements ModalConfirm<Content>

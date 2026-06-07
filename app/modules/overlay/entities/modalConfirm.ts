@@ -1,7 +1,7 @@
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import { Modal } from './modal';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
 export abstract class ModalConfirm<Content extends UIElement = UIElement> extends Modal<Content>
 {

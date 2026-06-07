@@ -1,8 +1,8 @@
-import type { Action } from './action';
-import type { Func } from './func';
+import type { Action } from '../types/action';
+import type { Func } from '../types/func';
 import { AsyncCommand } from './asyncCommand';
 
-export class AsyncCommandImpl<T> extends AsyncCommand<T>
+export class AsyncCommandBase<T> extends AsyncCommand<T>
 {
     private executionHandler: Action<[Promise<T>]> | undefined;
 

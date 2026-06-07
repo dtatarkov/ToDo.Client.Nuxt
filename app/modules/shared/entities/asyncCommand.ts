@@ -1,4 +1,4 @@
-import type { Action } from './action';
+import type { Action } from '../types/action';
 
 export abstract class AsyncCommand<T>
 {

@@ -4,7 +4,7 @@ import type { FormElement } from './formElement';
 import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Destroyable
 {

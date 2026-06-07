@@ -8,8 +8,8 @@ import type { FormElementFactory } from '../factories/formElementFactory';
 import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
-import { AsyncCommandImpl } from '@/modules/shared/types/asyncCommandImpl';
-import type { AsyncCommand } from '@/modules/shared/types/asyncCommand';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
 
 enum FormBaseState
 {
@@ -22,7 +22,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
   private submitHandler?: FormSubmitHandler<TEntity>;
-  private submitCommand = new AsyncCommandImpl(() => this.submitAsyncInternal());
+  private submitCommand = new AsyncCommandBase(() => this.submitAsyncInternal());
 
   private get state()
   {
