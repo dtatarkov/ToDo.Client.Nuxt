@@ -9,8 +9,8 @@ import { CommandState } from '@/modules/shared/enums/commandState';
 
 export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Content> implements ModalConfirm<Content>
 {
-    private buttonConfirmInternal: ButtonGeneral;
-    private buttonCancelInternal: ButtonGeneral;
+    private buttonConfirm: ButtonGeneral;
+    private buttonCancel: ButtonGeneral;
     private confirmCommand: AsyncCommand<boolean> | undefined;
 
     constructor(
@@ -19,24 +19,12 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
     {
         super();
 
-        this.buttonCancelInternal = this.createButtonCancelDefault();
-        this.buttonConfirmInternal = this.createButtonConfirmDefault();
+        this.buttonCancel = this.createButtonCancel();
+        this.buttonConfirm = this.createButtonConfirm();
 
-        this.controls.push(this.buttonCancelInternal, this.buttonConfirmInternal);
+        this.controls.push(this.buttonCancel, this.buttonConfirm);
 
         this.toEditMode();
-    }
-
-    get buttonConfirm(): ButtonGeneral
-    {
-        this.destroyToken.assertNotDestroyed();
-        return this.buttonConfirmInternal;
-    }
-
-    get buttonCancel(): ButtonGeneral
-    {
-        this.destroyToken.assertNotDestroyed();
-        return this.buttonCancelInternal;
     }
 
     override get isDisabled()
@@ -48,14 +36,57 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
     {
         super.isDisabled = value;
 
-        this.buttonConfirmInternal.isDisabled = value;
-        this.buttonCancelInternal.isDisabled = value;
+        this.buttonConfirm.isDisabled = value;
+        this.buttonCancel.isDisabled = value;
     }
 
     setConfirmCommand(command: AsyncCommand<boolean>): void
     {
         this.confirmCommand = command;
 
+        this.setupConfirmCommand(command);
+    }
+
+    toAddMode()
+    {
+        this.buttonConfirm.title = 'Добавить';
+    }
+
+    toEditMode()
+    {
+        this.buttonConfirm.title = 'Сохранить';
+    }
+
+    private createButtonConfirm()
+    {
+        const button = this.buttonsFactory.createButtonGeneral();
+
+        button.color = 'primary';
+
+        button.setClickHandler(() =>
+        {
+            this.confirmCommand?.executeAsync();
+        });
+
+        return button;
+    }
+
+    private createButtonCancel()
+    {
+        const button = this.buttonsFactory.createButtonGeneral();
+
+        button.title = 'Отменить';
+
+        button.setClickHandler(() =>
+        {
+            this.close();
+        });
+
+        return button;
+    }
+
+    private setupConfirmCommand(command: AsyncCommand<boolean>)
+    {
         command.on({
             stateChange: (state) =>
             {
@@ -73,45 +104,5 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
                 }
             }
         });
-    }
-
-    toAddMode()
-    {
-        this.buttonConfirmInternal.title = 'Добавить';
-    }
-
-    toEditMode()
-    {
-        this.buttonConfirmInternal.title = 'Сохранить';
-    }
-
-    private createButtonConfirmDefault()
-    {
-        const button = this.buttonsFactory.createButtonGeneral();
-
-        button.color = 'primary';
-        button.setClickHandler(() => this.handleConfirmButtonClick());
-
-        return button;
-    }
-
-    private createButtonCancelDefault()
-    {
-        const button = this.buttonsFactory.createButtonGeneral();
-
-        button.title = 'Отменить';
-        button.setClickHandler(() => this.handleCancelButtonClick());
-
-        return button;
-    }
-
-    protected handleConfirmButtonClick()
-    {
-        this.confirmCommand?.executeAsync();
-    }
-
-    protected handleCancelButtonClick()
-    {
-        this.close();
     }
 }

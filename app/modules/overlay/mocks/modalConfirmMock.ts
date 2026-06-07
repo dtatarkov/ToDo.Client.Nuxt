@@ -1,5 +1,4 @@
 import type { ModalConfirm } from '@/modules/overlay/entities/modalConfirm';
-import { buttonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
 import { vi } from 'vitest';
 
 export const modalConfirmMock = {
@@ -9,9 +8,6 @@ export const modalConfirmMock = {
     description: '',
     content: undefined,
     isDisabled: false,
-
-    buttonConfirm: buttonGeneralMock,
-    buttonCancel: buttonGeneralMock,
 
     close: vi.fn(),
     setOverlay: vi.fn(),
