@@ -4,29 +4,35 @@ import type { AsyncCommandCallbacks } from './asyncCommand';
 import { CommandState } from '../enums/commandState';
 import { callbacksWrapper } from '../utils/callbacksWrapper';
 
-export class AsyncCommandBase<T> extends AsyncCommand<T>
+export class AsyncCommandBase extends AsyncCommand
 {
-    private callbacks = callbacksWrapper<AsyncCommandCallbacks<T>>();
+    private state = CommandState.readyToStart;
+    private callbacks = callbacksWrapper<AsyncCommandCallbacks>();
 
     constructor(
-        private executeInternal: Func<Promise<T>>
+        private executeInternal: Func<Promise<boolean | undefined>>
     )
     {
         super();
     }
 
-    override on(callbacks: Partial<AsyncCommandCallbacks<T>>): void
+    override on(callbacks: Partial<AsyncCommandCallbacks>): void
     {
         this.callbacks(callbacks);
     }
 
-    async executeAsync(): Promise<T>
+    async executeAsync(): Promise<boolean>
     {
-        this.callbacks.stateChange?.(CommandState.busy);
+        if (this.state !== CommandState.readyToStart)
+        {
+            return false;
+        }
+
+        this.setState(CommandState.busy);
 
         try
         {
-            const result = await this.executeInternal();
+            const result = await this.executeInternal() ?? true;
 
             this.callbacks.result?.(result);
 
@@ -39,7 +45,13 @@ export class AsyncCommandBase<T> extends AsyncCommand<T>
         }
         finally
         {
-            this.callbacks.stateChange?.(CommandState.readyToStart);
+            this.setState(CommandState.readyToStart);
         }
+    }
+
+    private setState(state: CommandState): void
+    {
+        this.state = state;
+        this.callbacks.stateChange?.(state);
     }
 }

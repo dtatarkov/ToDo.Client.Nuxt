@@ -11,7 +11,7 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
 {
     private buttonConfirm: ButtonGeneral;
     private buttonCancel: ButtonGeneral;
-    private confirmCommand: AsyncCommand<boolean> | undefined;
+    private confirmCommand: AsyncCommand | undefined;
 
     constructor(
         private buttonsFactory: ButtonsFactory
@@ -40,7 +40,7 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
         this.buttonCancel.isDisabled = value;
     }
 
-    setConfirmCommand(command: AsyncCommand<boolean>): void
+    setConfirmCommand(command: AsyncCommand): void
     {
         this.confirmCommand = command;
 
@@ -85,7 +85,7 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
         return button;
     }
 
-    private setupConfirmCommand(command: AsyncCommand<boolean>)
+    private setupConfirmCommand(command: AsyncCommand)
     {
         command.on({
             stateChange: (state) =>

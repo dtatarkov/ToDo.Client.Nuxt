@@ -6,20 +6,20 @@ describe('AsyncCommandBase', () =>
 {
     it('should execute and call result callback with resolved value', async () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(42));
+        const command = new AsyncCommandBase(() => Promise.resolve(true));
         const resultFn = vi.fn();
 
         command.on({ result: resultFn });
 
         const result = await command.executeAsync();
 
-        expect(result).toBe(42);
-        expect(resultFn).toHaveBeenCalledWith(42);
+        expect(result).toBe(true);
+        expect(resultFn).toHaveBeenCalledWith(true);
     });
 
     it('should call stateChange with busy then readyToStart', async () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve('done'));
+        const command = new AsyncCommandBase(() => Promise.resolve(true));
         const stateChangeFn = vi.fn();
 
         command.on({ stateChange: stateChangeFn });
@@ -33,7 +33,7 @@ describe('AsyncCommandBase', () =>
 
     it('should throw if on is called twice', () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(0));
+        const command = new AsyncCommandBase(() => Promise.resolve(true));
 
         command.on({ result: vi.fn() });
 

@@ -2,13 +2,13 @@ import type { Action } from '../types/action';
 import { CallbacksOwners } from '../interfaces/callbacksOwners';
 import type { CommandState } from '../enums/commandState';
 
-export type AsyncCommandCallbacks<T> = {
-    result: Action<[T]>;
+export type AsyncCommandCallbacks = {
+    result: Action<[boolean]>;
     stateChange: Action<[CommandState]>;
     error: Action<[unknown]>;
 };
 
-export abstract class AsyncCommand<T> extends CallbacksOwners<AsyncCommandCallbacks<T>>
+export abstract class AsyncCommand extends CallbacksOwners<AsyncCommandCallbacks>
 {
-    abstract executeAsync(): Promise<T>;
+    abstract executeAsync(): Promise<boolean>;
 }

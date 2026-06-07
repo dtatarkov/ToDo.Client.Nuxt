@@ -7,5 +7,5 @@ export abstract class ModalConfirm<Content extends UIElement = UIElement> extend
     abstract toAddMode(): void;
     abstract toEditMode(): void;
 
-    abstract setConfirmCommand(command: AsyncCommand<boolean>): void;
+    abstract setConfirmCommand(command: AsyncCommand): void;
 }

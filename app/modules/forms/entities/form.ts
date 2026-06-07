@@ -12,7 +12,7 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract readonly isDisabled: boolean;
 
   abstract getData(): Record<keyof TEntity, any>;
-  abstract getSubmitCommand(): AsyncCommand<boolean>;
+  abstract getSubmitCommand(): AsyncCommand;
 
   abstract setData(data: Record<keyof TEntity, any>): void;
   abstract setElements(elements: Partial<Record<keyof TEntity, FormElementCreateData>>): void;
