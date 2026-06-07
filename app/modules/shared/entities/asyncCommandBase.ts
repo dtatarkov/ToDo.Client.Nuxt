@@ -1,10 +1,12 @@
-import type { Action } from '../types/action';
 import type { Func } from '../types/func';
 import { AsyncCommand } from './asyncCommand';
+import type { AsyncCommandCallbacks } from './asyncCommand';
+import { CommandState } from '../enums/commandState';
+import { callbacksWrapper } from '../utils/callbacksWrapper';
 
 export class AsyncCommandBase<T> extends AsyncCommand<T>
 {
-    private executionHandler: Action<[Promise<T>]> | undefined;
+    private callbacks = callbacksWrapper<AsyncCommandCallbacks<T>>();
 
     constructor(
         private executeInternal: Func<Promise<T>>
@@ -13,17 +15,31 @@ export class AsyncCommandBase<T> extends AsyncCommand<T>
         super();
     }
 
-    setExecutionHandler(handler: Action<[Promise<T>]>): void
+    override on(callbacks: Partial<AsyncCommandCallbacks<T>>): void
     {
-        this.executionHandler = handler;
+        this.callbacks(callbacks);
     }
 
     async executeAsync(): Promise<T>
     {
-        const resultPromise = this.executeInternal();
+        this.callbacks.stateChange?.(CommandState.busy);
 
-        this.executionHandler?.(resultPromise);
+        try
+        {
+            const result = await this.executeInternal();
 
-        return resultPromise;
+            this.callbacks.result?.(result);
+
+            return result;
+        }
+        catch (error)
+        {
+            this.callbacks.error?.(error);
+            throw error;
+        }
+        finally
+        {
+            this.callbacks.stateChange?.(CommandState.readyToStart);
+        }
     }
 }

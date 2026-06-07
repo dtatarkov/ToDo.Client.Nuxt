@@ -4,6 +4,7 @@ import type { ModalConfirm } from './modalConfirm';
 import { ModalBase } from './modalBase';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import { CommandState } from '@/modules/shared/enums/commandState';
 
 
 export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Content> implements ModalConfirm<Content>
@@ -55,24 +56,21 @@ export class ModalConfirmBase<Content extends UIElement> extends ModalBase<Conte
     {
         this.confirmCommand = command;
 
-        command.setExecutionHandler(async (resultPromise) =>
-        {
-            this.isDisabled = true;
-            this.buttonConfirm.isLoading = true;
-
-            try
+        command.on({
+            stateChange: (state) =>
             {
-                const result = await resultPromise;
+                const isBusy = state === CommandState.busy;
 
+                this.isDisabled = isBusy;
+                this.buttonConfirm.isLoading = isBusy;
+            },
+
+            result: (result) =>
+            {
                 if (result)
                 {
                     this.close();
                 }
-            }
-            finally
-            {
-                this.isDisabled = false;
-                this.buttonConfirm.isLoading = false;
             }
         });
     }
