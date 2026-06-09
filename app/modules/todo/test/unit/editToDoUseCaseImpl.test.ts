@@ -5,16 +5,16 @@ import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { createToDoMock } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
-import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
 import { modalMock } from '@/modules/overlay/mocks/modalMock';
 import { modalConfirmButtonConfiguratorMock } from '../../../overlay/mocks/modalConfirmButtonConfiguratorMock';
+import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 
 describe('EditToDoUseCaseImpl', () =>
 {
     const useCase = new EditToDoUseCaseImpl(
         todosOwnerMock,
+        overlayMock,
         formFactoryMock,
-        addFormModalUseCaseMock
     );
 
     beforeEach(() =>
@@ -23,8 +23,10 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        addFormModalUseCaseMock.execute.mockReturnValue(modalMock);
+        overlayMock.createModal.mockReturnValue(modalMock);
         modalMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
+        modalConfirmButtonConfiguratorMock.asCreateButton.mockReturnValue(modalMock);
+        modalConfirmButtonConfiguratorMock.asEditButton.mockReturnValue(modalMock);
     });
 
     describe('executeAsync', () =>
@@ -39,8 +41,8 @@ describe('EditToDoUseCaseImpl', () =>
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledTimes(1);
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledWith('123');
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(addFormModalUseCaseMock.execute).toHaveBeenCalledTimes(1);
-            expect(addFormModalUseCaseMock.execute).toHaveBeenCalledWith(formMock);
+            expect(overlayMock.createModal).toHaveBeenCalledTimes(1);
+            expect(overlayMock.createModal).toHaveBeenCalledWith(formMock);
         });
 
         it('should throw ToDoNotFoundException for non-existent todo', async () =>

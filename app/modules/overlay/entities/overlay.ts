@@ -1,51 +1,11 @@
 import type { OverlayElement } from './overlayElement';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
-import { shallowReactive } from 'vue';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import type { Modal } from './modal';
 
-export class Overlay
+export abstract class Overlay
 {
-  private elements = shallowReactive(new Array<OverlayElement>());
-
-  getElements(): OverlayElement[]
-  {
-    return this.elements;
-  }
-
-  addElement(element: OverlayElement): void
-  {
-    this.assertElementIsNotAdded(element);
-
-    element.setOverlay(this);
-
-    this.elements.push(element);
-  }
-
-  removeElement(element: OverlayElement): void
-  {
-    this.assertElementIsAdded(element);
-
-    removeFromArray(this.elements, element);
-  }
-
-  private assertElementIsAdded(element: OverlayElement)
-  {
-    if (!this.elements.includes(element))
-    {
-      const message = 'OverlayElement does not exist in Overlay';
-
-      console.error(message, element);
-      throw new Error(message);
-    }
-  }
-
-  private assertElementIsNotAdded(element: OverlayElement)
-  {
-    if (this.elements.includes(element))
-    {
-      const message = 'OverlayElement already added';
-
-      console.error(message, element);
-      throw new Error(message);
-    }
-  }
+  abstract getElements(): OverlayElement[];
+  abstract createModal<Content extends UIElement>(content: Content): Modal<Content>;
+  abstract addElement(element: OverlayElement): void;
+  abstract removeElement(element: OverlayElement): void;
 }

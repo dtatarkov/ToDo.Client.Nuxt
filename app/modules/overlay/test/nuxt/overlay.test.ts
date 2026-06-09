@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { Overlay } from '../../entities/overlay';
 import { modalMock } from '../../mocks/modalMock';
+import { OverlayBase } from '../../entities/overlayBase';
+import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
 
-describe('Overlay', () =>
+describe('OverlayBase', () =>
 {
     beforeEach(() =>
     {
@@ -13,7 +14,7 @@ describe('Overlay', () =>
     {
         it('should return observable with empty array initially', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
             const observable = overlay.getElements();
             expect(observable).toBeDefined();
             expect(observable).toEqual([]);
@@ -24,7 +25,7 @@ describe('Overlay', () =>
     {
         it('should add element to elements list', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
             overlay.addElement(modalMock);
             const elements = overlay.getElements();
             expect(elements).toContain(modalMock);
@@ -33,7 +34,7 @@ describe('Overlay', () =>
 
         it('should set element overlay', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
 
             overlay.addElement(modalMock);
             expect(modalMock.setOverlay).toHaveBeenCalledWith(overlay);
@@ -42,7 +43,7 @@ describe('Overlay', () =>
 
         it('should not add duplicate element', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
             overlay.addElement(modalMock);
 
             expect(() => overlay.addElement(modalMock)).toThrow();
@@ -50,7 +51,7 @@ describe('Overlay', () =>
 
         it('should call setOverlay on element with overlay instance', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
             overlay.addElement(modalMock);
 
             expect(modalMock.setOverlay).toHaveBeenCalledTimes(1);
@@ -62,7 +63,7 @@ describe('Overlay', () =>
     {
         it('should remove existing element', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
 
             overlay.addElement(modalMock);
             expect(overlay.getElements()).toContain(modalMock);
@@ -74,7 +75,7 @@ describe('Overlay', () =>
 
         it('should throw error if element not present', () =>
         {
-            const overlay = new Overlay();
+            const overlay = new OverlayBase(buttonsFactoryMock);
             expect(() => overlay.removeElement(modalMock)).toThrow();
         });
 

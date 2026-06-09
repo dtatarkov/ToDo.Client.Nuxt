@@ -3,19 +3,19 @@ import { EditToDoUseCase } from "./editToDoUseCase";
 import { ToDosOwner } from '../entities/todosOwner';
 import { ToDoNotFoundException } from '../exceptions/toDoNotFoundException';
 import type { ToDoData } from '../types/todoData';
-import { AddFormModalUseCase } from '@/modules/overlay/usecases/addFormModalUseCase';
 import { FormFactory } from '@/modules/forms/factories/formFactory';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import { Overlay } from '@/modules/overlay/entities/overlay';
 
 @dependency(ToDosOwner)
+@dependency(Overlay)
 @dependency(FormFactory)
-@dependency(AddFormModalUseCase)
 export class EditToDoUseCaseImpl extends EditToDoUseCase
 {
   constructor(
     private todosOwner: ToDosOwner,
+    private overlay: Overlay,
     private formFactory: FormFactory,
-    private addFormModalUseCase: AddFormModalUseCase,
   )
   {
     super();
@@ -41,8 +41,9 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
     form.setElementsFromScheme(todo.getEditScheme());
     form.setData(todo.getData());
 
-    const modal = this.addFormModalUseCase.execute(form);
-    modal.addButtonConfirm(form.getSubmitCommand()).asEditButton();
-    modal.addButtonCancel();
+    this.overlay
+      .createModal(form)
+      .addButtonConfirm(form.getSubmitCommand()).asEditButton()
+      .addButtonCancel();
   }
 }
