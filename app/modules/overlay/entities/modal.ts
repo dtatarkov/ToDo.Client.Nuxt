@@ -12,6 +12,4 @@ export abstract class Modal<Content extends UIElement = UIElement> extends Overl
 
   abstract addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>;
   abstract addButtonCancel(): Modal<Content>;
-  abstract disable(): void;
-  abstract enable(): void;
 }

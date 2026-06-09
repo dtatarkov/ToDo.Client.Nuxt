@@ -98,7 +98,9 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       button,
       command,
       this,
-      (btn) => this.appendControl(btn)
+      (btn) => this.appendControl(btn),
+      () => this.enable(),
+      () => this.disable(),
     );
   }
 
@@ -114,18 +116,6 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     this.appendControl(button);
 
     return this;
-  }
-
-  override disable()
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.isDisabled = true;
-  }
-
-  override enable()
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.isDisabled = false;
   }
 
   override close()
@@ -156,12 +146,24 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     this.destroyToken.destroy();
   }
 
-  protected appendControl(control: UIElement): void
+  private enable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = false;
+  }
+
+  private disable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = true;
+  }
+
+  private appendControl(control: UIElement): void
   {
     this.controls.push(control);
   }
 
-  protected handleDestroy(): void
+  private handleDestroy(): void
   {
     this.overlay?.removeElement(this);
 
@@ -179,3 +181,5 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     }
   }
 }
+
+

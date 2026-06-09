@@ -5,6 +5,7 @@ import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGener
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalBase } from './modalBase';
 import { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
+import type { Modal } from './modal';
 
 
 export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> extends ModalConfirmButtonConfigurator<Content>
@@ -13,13 +14,15 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
         private button: ButtonGeneral,
         private command: AsyncCommand,
         private modal: ModalBase<Content>,
-        private addControl: Action<[ButtonGeneral]>
+        private addControl: Action<[ButtonGeneral]>,
+        private enableModal: Action,
+        private disableModal: Action,
     )
     {
         super();
     }
 
-    override asCreateButton(): ModalBase<Content>
+    override asCreateButton(): Modal<Content>
     {
         return this
             .setDefaultColor()
@@ -29,7 +32,7 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
             .finalize();
     }
 
-    override asEditButton(): ModalBase<Content>
+    override asEditButton(): Modal<Content>
     {
         return this
             .setDefaultColor()
@@ -68,13 +71,13 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
 
                 if (isBusy)
                 {
-                    this.modal.disable();
+                    this.disableModal();
                     this.button.showLoader();
                 }
 
                 else
                 {
-                    this.modal.enable();
+                    this.enableModal();
                     this.button.hideLoader();
                 }
             },

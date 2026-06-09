@@ -11,8 +11,6 @@ export const modalMock = {
 
     addButtonConfirm: vi.fn(),
     addButtonCancel: vi.fn(),
-    enable: vi.fn(),
-    disable: vi.fn(),
     close: vi.fn(),
     setOverlay: vi.fn(),
 } satisfies Modal;
