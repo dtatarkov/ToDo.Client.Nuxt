@@ -27,7 +27,7 @@ export class OverlayBase extends Overlay
     createModal<Content extends UIElement>(content: Content): Modal<Content>
     {
         const modal = new ModalBase<Content>(this.buttonsFactory);
-        modal.content = content;
+        modal.setContent(content);
 
         this.addElement(modal);
 

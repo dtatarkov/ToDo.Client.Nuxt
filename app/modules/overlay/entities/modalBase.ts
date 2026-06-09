@@ -9,6 +9,7 @@ import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
 import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
+import { clearArray } from '@/modules/shared/utils/clearArray';
 
 export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
@@ -23,9 +24,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     isDisabled: false,
   });
 
-  protected children = shallowReactive({
-    content: <Content | undefined>undefined
-  });
+  protected content = shallowRef<Content>();
 
   readonly key = getUniqueId('modal');
 
@@ -43,7 +42,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       description: this.data.description,
       isDismissible: !this.data.isDisabled
     }, {
-      content: () => this.children.content ? this.children.content.vnode : undefined,
+      content: () => this.content.value ? this.content.value.vnode : undefined,
       controls: () => this.controls.map(control => control.vnode)
     });
   }
@@ -78,19 +77,15 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     return this.data.isDisabled;
   }
 
-  get content()
+  override setContent(content: Content): Modal<Content>
   {
     this.destroyToken.assertNotDestroyed();
-    return this.children.content;
+    this.content.value = content;
+
+    return this;
   }
 
-  set content(content)
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.children.content = content;
-  }
-
-  addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>
+  override addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>
   {
     const button = this.buttonsFactory.createButtonGeneral();
 
@@ -104,7 +99,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     );
   }
 
-  addButtonCancel(): ModalBase<Content>
+  override addButtonCancel(): ModalBase<Content>
   {
     const button = this.buttonsFactory.createButtonGeneral();
     button.title = 'Отменить';
@@ -167,9 +162,10 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
   {
     this.overlay?.removeElement(this);
 
-    if (Destroyable.isDestroyable(this.content))
+    if (Destroyable.isDestroyable(this.content.value))
     {
-      this.content.destroy();
+      this.content.value.destroy();
+      this.content.value = undefined;
     }
 
     for (const control of this.controls)
@@ -179,6 +175,8 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
         control.destroy();
       }
     }
+
+    clearArray(this.controls);
   }
 }
 

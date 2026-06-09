@@ -7,9 +7,9 @@ export abstract class Modal<Content extends UIElement = UIElement> extends Overl
 {
   abstract title: string;
   abstract description: string;
-  abstract content: Content | undefined;
   abstract readonly isDisabled: boolean;
 
+  abstract setContent(content: Content): Modal<Content>;
   abstract addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>;
   abstract addButtonCancel(): Modal<Content>;
 }
