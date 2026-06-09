@@ -71,12 +71,6 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     this.data.description = value;
   }
 
-  get isDisabled()
-  {
-    this.destroyToken.assertNotDestroyed();
-    return this.data.isDisabled;
-  }
-
   override setContent(content: Content): Modal<Content>
   {
     this.destroyToken.assertNotDestroyed();

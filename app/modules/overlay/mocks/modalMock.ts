@@ -6,7 +6,6 @@ export const modalMock = {
     vnode: {} as VNode,
     title: '',
     description: '',
-    isDisabled: false,
 
     setContent: vi.fn(),
     addButtonConfirm: vi.fn(),
