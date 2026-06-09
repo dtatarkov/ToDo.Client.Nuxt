@@ -4,8 +4,9 @@ import { todosOwnerMock } from '../../mocks/todoOwnerMock';
 import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { createToDoMock } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
-import { modalConfirmMock } from '../../../overlay/mocks/modalConfirmMock';
+import { modalMock } from '../../../overlay/mocks/modalMock';
 import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
+import { modalConfirmButtonConfiguratorMock } from '@/modules/overlay/mocks/modalConfirmButtonConfiguratorMock';
 
 // Reset mocks before each test
 describe('CreateToDoUseCaseImpl', () =>
@@ -24,8 +25,9 @@ describe('CreateToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        addFormModalUseCaseMock.execute.mockReturnValue(modalConfirmMock);
+        addFormModalUseCaseMock.execute.mockReturnValue(modalMock);
         todosOwnerMock.createToDo.mockReturnValue(todo);
+        modalMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
     });
 
     describe('execute', () =>

@@ -6,7 +6,8 @@ import { formFactoryMock as formFactoryMock } from '@/modules/forms/mocks/formFa
 import { createToDoMock } from '../../mocks/todoMock';
 import { formMock } from '../../../forms/mocks/formMock';
 import { addFormModalUseCaseMock } from '@/modules/overlay/mocks/addFormModalUseCaseMock';
-import { modalConfirmMock } from '@/modules/overlay/mocks/modalConfirmMock';
+import { modalMock } from '@/modules/overlay/mocks/modalMock';
+import { modalConfirmButtonConfiguratorMock } from '../../../overlay/mocks/modalConfirmButtonConfiguratorMock';
 
 describe('EditToDoUseCaseImpl', () =>
 {
@@ -22,7 +23,8 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        addFormModalUseCaseMock.execute.mockReturnValue(modalConfirmMock);
+        addFormModalUseCaseMock.execute.mockReturnValue(modalMock);
+        modalMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
     });
 
     describe('executeAsync', () =>

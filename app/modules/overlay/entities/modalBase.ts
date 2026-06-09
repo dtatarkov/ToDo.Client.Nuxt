@@ -5,6 +5,10 @@ import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyToken } from '@/modules/shared/entities/destroyToken';
 import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
+import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
 
 export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
@@ -24,6 +28,13 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
   });
 
   readonly key = getUniqueId('modal');
+
+  constructor(
+    private buttonsFactory: ButtonsFactory
+  )
+  {
+    super();
+  }
 
   get vnode()
   {
@@ -77,6 +88,32 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
   {
     this.destroyToken.assertNotDestroyed();
     this.children.content = content;
+  }
+
+  addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>
+  {
+    const button = this.buttonsFactory.createButtonGeneral();
+
+    return new ModalConfirmButtonConfiguratorBase(
+      button,
+      command,
+      this,
+      (btn) => this.appendControl(btn)
+    );
+  }
+
+  addButtonCancel(): ModalBase<Content>
+  {
+    const button = this.buttonsFactory.createButtonGeneral();
+    button.title = 'Отменить';
+
+    button.on({
+      click: () => this.close()
+    });
+
+    this.appendControl(button);
+
+    return this;
   }
 
   override disable()

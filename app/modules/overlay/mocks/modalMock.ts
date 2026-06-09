@@ -9,6 +9,8 @@ export const modalMock = {
     content: undefined,
     isDisabled: false,
 
+    addButtonConfirm: vi.fn(),
+    addButtonCancel: vi.fn(),
     enable: vi.fn(),
     disable: vi.fn(),
     close: vi.fn(),

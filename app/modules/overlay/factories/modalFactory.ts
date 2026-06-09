@@ -1,9 +1,7 @@
 import type { Modal } from '../entities/modal';
-import type { ModalConfirm } from '../entities/modalConfirm';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ModalBase } from '../entities/modalBase';
-import { ModalConfirmBase } from '../entities/modalConfirmBase';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 @dependency(ButtonsFactory)
@@ -15,15 +13,14 @@ export class ModalFactory
     {
     }
 
-    createModalBase(): Modal
+    createModalBase<Content extends UIElement>(content?: Content): Modal<Content>
     {
-        return new ModalBase();
-    }
+        const result = new ModalBase<Content>(this.buttonsFactory);
 
-    createModalConfirm<Content extends UIElement>(content: Content): ModalConfirm<Content>
-    {
-        const result = new ModalConfirmBase<Content>(this.buttonsFactory);
-        result.content = content;
+        if (content != undefined)
+        {
+            result.content = content;
+        }
 
         return result;
     }

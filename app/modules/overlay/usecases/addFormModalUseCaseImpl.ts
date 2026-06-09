@@ -1,6 +1,6 @@
 import type { Form } from '@/modules/forms/entities/form';
 import { dependency } from '@/modules/shared/decorators/dependency';
-import type { ModalConfirm } from '../entities/modalConfirm';
+import type { Modal } from '../entities/modal';
 import { Overlay } from '../entities/overlay';
 import { ModalFactory } from '../factories/modalFactory';
 import type { AddFormModalUseCase } from './addFormModalUseCase';
@@ -17,9 +17,9 @@ export class AddFormModalUseCaseImpl implements AddFormModalUseCase
     {
     }
 
-    execute(form: Form): ModalConfirm<Form>
+    execute(form: Form): Modal<Form>
     {
-        const modal = this.modalFactory.createModalConfirm(form);
+        const modal = this.modalFactory.createModalBase(form);
         this.overlay.addElement(modal);
 
         return modal;
