@@ -8,6 +8,7 @@ import { formMock } from '../../../forms/mocks/formMock';
 import { modalMock } from '@/modules/overlay/mocks/modalMock';
 import { modalConfirmButtonConfiguratorMock } from '../../../overlay/mocks/modalConfirmButtonConfiguratorMock';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
+import { modalConfiguratorMock } from '@/modules/overlay/mocks/modalConfiguratorMock';
 
 describe('EditToDoUseCaseImpl', () =>
 {
@@ -23,10 +24,13 @@ describe('EditToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayMock.createModal.mockReturnValue(modalMock);
-        modalMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
-        modalConfirmButtonConfiguratorMock.asCreateButton.mockReturnValue(modalMock);
-        modalConfirmButtonConfiguratorMock.asEditButton.mockReturnValue(modalMock);
+        overlayMock.createModal.mockReturnValue(modalConfiguratorMock);
+        modalConfiguratorMock.setContent.mockReturnValue(modalConfiguratorMock);
+        modalConfiguratorMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
+        modalConfiguratorMock.addButtonCancel.mockReturnValue(modalConfiguratorMock);
+        modalConfiguratorMock.init.mockReturnValue(modalMock);
+        modalConfirmButtonConfiguratorMock.asCreateButton.mockReturnValue(modalConfiguratorMock);
+        modalConfirmButtonConfiguratorMock.asEditButton.mockReturnValue(modalConfiguratorMock);
     });
 
     describe('executeAsync', () =>
@@ -42,7 +46,6 @@ describe('EditToDoUseCaseImpl', () =>
             expect(todosOwnerMock.getToDoByIdAsync).toHaveBeenCalledWith('123');
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
             expect(overlayMock.createModal).toHaveBeenCalledTimes(1);
-            expect(overlayMock.createModal).toHaveBeenCalledWith(formMock);
         });
 
         it('should throw ToDoNotFoundException for non-existent todo', async () =>

@@ -1,9 +1,8 @@
-import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { Modal } from './modal';
+import type { ModalConfigurator } from './modalConfigurator';
 
 
-export abstract class ModalConfirmButtonConfigurator<Content extends UIElement = UIElement>
+export abstract class ModalConfirmButtonConfigurator
 {
-    abstract asCreateButton(): Modal<Content>;
-    abstract asEditButton(): Modal<Content>;
+    abstract asCreateButton(): ModalConfigurator;
+    abstract asEditButton(): ModalConfigurator;
 }

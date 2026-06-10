@@ -7,6 +7,7 @@ import { formMock } from '../../../forms/mocks/formMock';
 import { modalMock } from '../../../overlay/mocks/modalMock';
 import { modalConfirmButtonConfiguratorMock } from '@/modules/overlay/mocks/modalConfirmButtonConfiguratorMock';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
+import { modalConfiguratorMock } from '@/modules/overlay/mocks/modalConfiguratorMock';
 
 // Reset mocks before each test
 describe('CreateToDoUseCaseImpl', () =>
@@ -25,11 +26,14 @@ describe('CreateToDoUseCaseImpl', () =>
 
         // Setup mocks
         formFactoryMock.create.mockReturnValue(formMock);
-        overlayMock.createModal.mockReturnValue(modalMock);
+        overlayMock.createModal.mockReturnValue(modalConfiguratorMock);
         todosOwnerMock.createToDo.mockReturnValue(todo);
-        modalMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
-        modalConfirmButtonConfiguratorMock.asCreateButton.mockReturnValue(modalMock);
-        modalConfirmButtonConfiguratorMock.asEditButton.mockReturnValue(modalMock);
+        modalConfiguratorMock.setContent.mockReturnValue(modalConfiguratorMock);
+        modalConfiguratorMock.addButtonConfirm.mockReturnValue(modalConfirmButtonConfiguratorMock);
+        modalConfiguratorMock.addButtonCancel.mockReturnValue(modalConfiguratorMock);
+        modalConfiguratorMock.init.mockReturnValue(modalMock);
+        modalConfirmButtonConfiguratorMock.asCreateButton.mockReturnValue(modalConfiguratorMock);
+        modalConfirmButtonConfiguratorMock.asEditButton.mockReturnValue(modalConfiguratorMock);
     });
 
     describe('execute', () =>

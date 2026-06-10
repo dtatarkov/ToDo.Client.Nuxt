@@ -36,8 +36,10 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
     form.setData(todo.getData());
 
     this.overlay
-      .createModal(form)
+      .createModal()
+      .setContent(form)
       .addButtonConfirm(form.getSubmitCommand()).asCreateButton()
-      .addButtonCancel();
+      .addButtonCancel()
+      .init();
   }
 }

@@ -1,11 +1,10 @@
 import type { OverlayElement } from './overlayElement';
-import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { Modal } from './modal';
+import type { ModalConfigurator } from './modalConfigurator';
 
 export abstract class Overlay
 {
   abstract getElements(): OverlayElement[];
-  abstract createModal<Content extends UIElement>(content: Content): Modal<Content>;
+  abstract createModal(): ModalConfigurator;
   abstract addElement(element: OverlayElement): void;
   abstract removeElement(element: OverlayElement): void;
 }

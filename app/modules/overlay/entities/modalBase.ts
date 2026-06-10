@@ -1,35 +1,39 @@
 import { Modal } from "./modal";
+import type { ModalConfigurator } from './modalConfigurator';
+import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
+import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import { DestroyToken } from '@/modules/shared/entities/destroyToken';
+import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
-import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
+import { InitializationToken } from '@/modules/shared/entities/initializationToken';
 import { clearArray } from '@/modules/shared/utils/clearArray';
-
-export class ModalBase<Content extends UIElement> extends Modal<Content>
+export class ModalBase extends Modal implements ModalConfigurator
 {
   private overlay: Overlay | undefined;
-  private controls = shallowReactive(new Array<UIElement>());
+  private content: UIElement | undefined;
+  private confirmButton: UIElement | undefined;
+  private cancelButton: UIElement | undefined;
+  private controls: UIElement[] = [];
 
-  protected destroyToken = new DestroyToken();
+  private destroyToken = new DestroyToken();
+  private initializationToken = new InitializationToken();
 
-  protected data = shallowReactive({
+  private data = shallowReactive({
     title: '',
     description: '',
     isDisabled: false,
   });
 
-  protected content = shallowRef<Content>();
-
   readonly key = getUniqueId('modal');
 
   constructor(
-    private buttonsFactory: ButtonsFactory
+    private buttonsFactory: ButtonsFactory,
   )
   {
     super();
@@ -42,69 +46,109 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       description: this.data.description,
       isDismissible: !this.data.isDisabled
     }, {
-      content: () => this.content.value ? this.content.value.vnode : undefined,
+      content: () => this.content?.vnode,
       controls: () => this.controls.map(control => control.vnode)
     });
   }
 
-  get title()
+  setTitle(title: string): this
   {
-    this.destroyToken.assertNotDestroyed();
-    return this.data.title;
-  }
-
-  set title(value)
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.title = value;
-  }
-
-  get description()
-  {
-    this.destroyToken.assertNotDestroyed();
-    return this.data.description;
-  }
-
-  set description(value)
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.description = value;
-  }
-
-  override setContent(content: Content): Modal<Content>
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.content.value = content;
+    this.initializationToken.assertNotInitialized();
+    this.data.title = title;
 
     return this;
   }
 
-  override addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator<Content>
+  setDescription(description: string): this
   {
+    this.initializationToken.assertNotInitialized();
+    this.data.description = description;
+
+    return this;
+  }
+
+  setContent(content: UIElement): this
+  {
+    this.initializationToken.assertNotInitialized();
+
+    if (this.content)
+    {
+      throw new InitializationOnlyException('content');
+    }
+
+    this.content = content;
+
+    return this;
+  }
+
+  addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator
+  {
+    this.initializationToken.assertNotInitialized();
+
+    if (this.confirmButton)
+    {
+      throw new InitializationOnlyException('confirm button');
+    }
+
     const button = this.buttonsFactory.createButtonGeneral();
 
-    return new ModalConfirmButtonConfiguratorBase(
+    const confirmButtonConfigurator = new ModalConfirmButtonConfiguratorBase(
       button,
       command,
       this,
-      (btn) => this.appendControl(btn),
-      () => this.enable(),
-      () => this.disable(),
+
+      () =>
+      {
+        this.confirmButton = button;
+        return this;
+      },
     );
+
+    return confirmButtonConfigurator;
   }
 
-  override addButtonCancel(): ModalBase<Content>
+  addButtonCancel(): this
   {
+    this.initializationToken.assertNotInitialized();
+
+    if (this.cancelButton)
+    {
+      throw new InitializationOnlyException('cancel button');
+    }
+
     const button = this.buttonsFactory.createButtonGeneral();
     button.title = 'Отменить';
 
-    button.on({
-      click: () => this.close()
-    });
-
-    this.appendControl(button);
+    this.cancelButton = button;
 
     return this;
+  }
+
+  init(): Modal
+  {
+    this.initializationToken.assertNotInitialized();
+
+    if (!this.content)
+    {
+      throw new Error('Content must be set before getModal');
+    }
+
+    this.controls = this.createControls();
+    this.initializationToken.initialize();
+
+    return this;
+  }
+
+  override enable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = false;
+  }
+
+  override disable()
+  {
+    this.destroyToken.assertNotDestroyed();
+    this.data.isDisabled = true;
   }
 
   override close()
@@ -118,50 +162,56 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
 
     if (this.overlay)
     {
-      throw new Error('Overlay change is forbidden');
+      throw new InitializationOnlyException('overlay');
     }
 
     this.overlay = overlay;
   }
 
-  destroy()
+  private destroy()
   {
     if (this.destroyToken.isDestroyed)
     {
       return;
     }
 
-    this.handleDestroy();
+    this.overlay?.removeElement(this);
+    this.destroyContent();
+    this.destroyControls();
     this.destroyToken.destroy();
   }
 
-  private enable()
+  private createControls(): Array<UIElement>
   {
-    this.destroyToken.assertNotDestroyed();
-    this.data.isDisabled = false;
-  }
+    const controls = new Array<UIElement>();
 
-  private disable()
-  {
-    this.destroyToken.assertNotDestroyed();
-    this.data.isDisabled = true;
-  }
-
-  private appendControl(control: UIElement): void
-  {
-    this.controls.push(control);
-  }
-
-  private handleDestroy(): void
-  {
-    this.overlay?.removeElement(this);
-
-    if (Destroyable.isDestroyable(this.content.value))
+    if (this.confirmButton)
     {
-      this.content.value.destroy();
-      this.content.value = undefined;
+      controls.push(this.confirmButton);
+      this.confirmButton = undefined;
     }
 
+    if (this.cancelButton)
+    {
+      controls.push(this.cancelButton);
+      this.cancelButton = undefined;
+    }
+
+    return controls;
+  }
+
+  private destroyContent()
+  {
+    if (this.content && Destroyable.isDestroyable(this.content))
+    {
+      this.content.destroy();
+    }
+
+    this.content = undefined;
+  }
+
+  private destroyControls()
+  {
     for (const control of this.controls)
     {
       if (Destroyable.isDestroyable(control))
@@ -173,5 +223,3 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     clearArray(this.controls);
   }
 }
-
-

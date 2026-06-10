@@ -1,28 +1,25 @@
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { CommandState } from '@/modules/shared/enums/commandState';
-import type { Action } from '@/modules/shared/types/action';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
-import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { ModalBase } from './modalBase';
 import { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
+import type { ModalConfigurator } from './modalConfigurator';
+import type { Func } from '@/modules/shared/types/func';
 import type { Modal } from './modal';
 
 
-export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> extends ModalConfirmButtonConfigurator<Content>
+export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfigurator
 {
     constructor(
         private button: ButtonGeneral,
         private command: AsyncCommand,
-        private modal: ModalBase<Content>,
-        private addControl: Action<[ButtonGeneral]>,
-        private enableModal: Action,
-        private disableModal: Action,
+        private modal: Modal,
+        private finalize: Func<ModalConfigurator>,
     )
     {
         super();
     }
 
-    override asCreateButton(): Modal<Content>
+    override asCreateButton(): ModalConfigurator
     {
         return this
             .setDefaultColor()
@@ -32,7 +29,7 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
             .finalize();
     }
 
-    override asEditButton(): Modal<Content>
+    override asEditButton(): ModalConfigurator
     {
         return this
             .setDefaultColor()
@@ -71,13 +68,13 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
 
                 if (isBusy)
                 {
-                    this.disableModal();
+                    this.modal.disable();
                     this.button.showLoader();
                 }
 
                 else
                 {
-                    this.enableModal();
+                    this.modal.enable();
                     this.button.hideLoader();
                 }
             },
@@ -90,12 +87,7 @@ export class ModalConfirmButtonConfiguratorBase<Content extends UIElement> exten
                 }
             }
         });
-        return this;
-    }
 
-    private finalize(): ModalBase<Content>
-    {
-        this.addControl(this.button);
-        return this.modal;
+        return this;
     }
 }

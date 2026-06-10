@@ -42,8 +42,10 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
     form.setData(todo.getData());
 
     this.overlay
-      .createModal(form)
+      .createModal()
+      .setContent(form)
       .addButtonConfirm(form.getSubmitCommand()).asEditButton()
-      .addButtonCancel();
+      .addButtonCancel()
+      .init();
   }
 }
