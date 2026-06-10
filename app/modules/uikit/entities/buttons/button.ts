@@ -1,5 +1,5 @@
 import { UIElement } from '../uiElement';
-import type { CallbacksOwners } from '@/modules/shared/interfaces/callbacksOwners';
+import type { CallbacksOwner } from '@/modules/shared/interfaces/callbacksOwner';
 
 export type ButtonData = {
     isDisabled: boolean;
@@ -9,7 +9,7 @@ export type ButtonCallbacks = {
     click(): void;
 };
 
-export abstract class Button extends UIElement implements CallbacksOwners<ButtonCallbacks>
+export abstract class Button extends UIElement implements CallbacksOwner<ButtonCallbacks>
 {
     abstract readonly isDisabled: boolean;
 

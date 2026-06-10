@@ -24,12 +24,14 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
   {
     const todo = this.todosOwner.createToDo();
 
-    const form = this.formFactory.create<ToDoData>();
-
-    form.setSubmitHandler(async formData =>
-    {
-      updatePropertiesWithData(todo, formData);
-      await todo.saveAsync();
+    const form = this.formFactory.create<ToDoData>({
+      callbacks: {
+        submit: async data =>
+        {
+          updatePropertiesWithData(todo, data);
+          await todo.saveAsync();
+        }
+      }
     });
 
     form.setElementsFromScheme(todo.getAddScheme());

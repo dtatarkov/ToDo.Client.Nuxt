@@ -30,12 +30,14 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
       throw new ToDoNotFoundException(id);
     }
 
-    const form = this.formFactory.create<ToDoData>();
-
-    form.setSubmitHandler(async formData =>
-    {
-      updatePropertiesWithData(todo, formData);
-      await todo.saveAsync();
+    const form = this.formFactory.create<ToDoData>({
+      callbacks: {
+        submit: async data =>
+        {
+          updatePropertiesWithData(todo, data);
+          await todo.saveAsync();
+        }
+      }
     });
 
     form.setElementsFromScheme(todo.getEditScheme());

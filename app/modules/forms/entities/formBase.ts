@@ -1,15 +1,15 @@
 import VForm from "../components/VForm.vue";
-import { Form } from "@/modules/forms/entities/form";
+import { Form, type FormCallbacks, type FormConfiguration } from "@/modules/forms/entities/form";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElement } from './formElement';
 import type { FormElementFactory } from '../factories/formElementFactory';
-import type { FormSubmitHandler } from '../types/formSubmitHandler';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
+import { callbacksWrapper } from '@/modules/shared/entities/callbacksWrapper';
 
 enum FormBaseState
 {
@@ -21,8 +21,8 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 {
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
-  private submitHandler?: FormSubmitHandler<TEntity>;
   private submitCommand = this.createSubmitCommand();
+  private callbacks = callbacksWrapper<FormCallbacks<TEntity>>();
 
   private get state()
   {
@@ -39,9 +39,15 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   constructor(
     private formElementFactory: FormElementFactory,
     private schemeToElementsMapper: EntitySchemeToFormElementsMapper,
+    configuration: FormConfiguration<TEntity> | undefined
   )
   {
     super();
+
+    if (configuration?.callbacks)
+    {
+      this.callbacks(configuration.callbacks);
+    }
   }
 
   get vnode()
@@ -110,16 +116,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     this.setElements(elements);
   }
 
-  override setSubmitHandler(handler: FormSubmitHandler<TEntity>): void
-  {
-    if (this.submitHandler)
-    {
-      throw new Error('Submit handler is already set');
-    }
-
-    this.submitHandler = handler;
-  }
-
   override async submitAsync(): Promise<void>
   {
     await this.submitCommand.executeAsync();
@@ -172,7 +168,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     const command = new AsyncCommandBase(async () =>
     {
-      if (!this.submitHandler)
+      if (!this.callbacks.submit)
       {
         return false;
       }
@@ -189,7 +185,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
       try
       {
         const data = this.getData();
-        await this.submitHandler(data);
+        await this.callbacks.submit(data);
 
         return true;
       }
