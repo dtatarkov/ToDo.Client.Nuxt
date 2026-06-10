@@ -19,7 +19,7 @@ export class ModalBase extends Modal implements ModalConfigurator
   private content: UIElement | undefined;
   private confirmButton: UIElement | undefined;
   private cancelButton: UIElement | undefined;
-  private controls: UIElement[] = [];
+  private readonly controls: UIElement[] = [];
 
   private destroyToken = new DestroyToken();
   private initializationToken = new InitializationToken();
@@ -100,6 +100,7 @@ export class ModalBase extends Modal implements ModalConfigurator
       () =>
       {
         this.confirmButton = button;
+        this.addControl(button);
         return this;
       },
     );
@@ -119,7 +120,12 @@ export class ModalBase extends Modal implements ModalConfigurator
     const button = this.buttonsFactory.createButtonGeneral();
     button.title = 'Отменить';
 
+    button.on({
+      click: () => this.close(),
+    });
+
     this.cancelButton = button;
+    this.addControl(button);
 
     return this;
   }
@@ -133,7 +139,6 @@ export class ModalBase extends Modal implements ModalConfigurator
       throw new Error('Content must be set before getModal');
     }
 
-    this.controls = this.createControls();
     this.initializationToken.initialize();
 
     return this;
@@ -181,25 +186,6 @@ export class ModalBase extends Modal implements ModalConfigurator
     this.destroyToken.destroy();
   }
 
-  private createControls(): Array<UIElement>
-  {
-    const controls = new Array<UIElement>();
-
-    if (this.confirmButton)
-    {
-      controls.push(this.confirmButton);
-      this.confirmButton = undefined;
-    }
-
-    if (this.cancelButton)
-    {
-      controls.push(this.cancelButton);
-      this.cancelButton = undefined;
-    }
-
-    return controls;
-  }
-
   private destroyContent()
   {
     if (this.content && Destroyable.isDestroyable(this.content))
@@ -221,5 +207,10 @@ export class ModalBase extends Modal implements ModalConfigurator
     }
 
     clearArray(this.controls);
+  }
+
+  private addControl(control: UIElement)
+  {
+    this.controls.unshift(control);
   }
 }
