@@ -1,8 +1,9 @@
-import type { ModalConfigurator } from './modalConfigurator';
-
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 
 export abstract class ModalButtonConfirmConfigurator
 {
-    abstract asCreateButton(): ModalConfigurator;
-    abstract asEditButton(): ModalConfigurator;
+    abstract withCommand(command: AsyncCommand): ModalButtonConfirmConfigurator;
+    abstract asCreateButton(): ButtonGeneral;
+    abstract asEditButton(): ButtonGeneral;
 }

@@ -1,10 +1,10 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import type { ModalConfigurator } from './modalConfigurator';
 import { ModalBase } from './modalBase';
 import type { OverlayElement } from './overlayElement';
 import { Overlay } from './overlay';
+import type { Modal, ModalConfiguration } from './modal';
 
 @dependency(ButtonsFactory)
 export class OverlayBase extends Overlay
@@ -23,9 +23,9 @@ export class OverlayBase extends Overlay
         return this.elements;
     }
 
-    createModal(): ModalConfigurator
+    createModal(configuration: ModalConfiguration): Modal
     {
-        const modal = new ModalBase(this.buttonsFactory);
+        const modal = new ModalBase(this.buttonsFactory, configuration);
         this.addElement(modal);
 
         return modal;

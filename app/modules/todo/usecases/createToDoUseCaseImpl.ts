@@ -37,11 +37,15 @@ export class CreateToDoUseCaseImpl extends CreateToDoUseCase
     form.setElementsFromScheme(todo.getAddScheme());
     form.setData(todo.getData());
 
-    this.overlay
-      .createModal()
-      .setContent(form)
-      .addButtonConfirm(form.getSubmitCommand()).asCreateButton()
-      .addButtonCancel()
-      .init();
+    this.overlay.createModal({
+      title: 'Создать задачу',
+      content: form,
+
+      buttonConfirm: configurator => configurator
+        .withCommand(form.getSubmitCommand())
+        .asCreateButton(),
+
+      buttonCancel: true,
+    });
   }
 }

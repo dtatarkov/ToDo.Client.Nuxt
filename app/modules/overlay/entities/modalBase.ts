@@ -1,31 +1,26 @@
-import { Modal } from "./modal";
-import type { ModalConfigurator } from './modalConfigurator';
+import { Modal, type ModalConfiguration } from "./modal";
 import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import { ModalButtonConfirmConfiguratorBase } from './modalButtonConfirmConfiguratorBase';
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import { InitializationToken } from '@/modules/shared/entities/initializationToken';
-import { clearArray } from '@/modules/shared/utils/clearArray';
 import { isDisposable } from '@/modules/shared/utils/isDisposable';
 import { ModalButtonConfirm } from './modalButtonConfirm';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
+import type { Func } from '@/modules/shared/types/func';
+import type { Button } from '@/modules/uikit/entities/buttons/button';
 
-export class ModalBase extends Modal implements ModalConfigurator
+export class ModalBase extends Modal
 {
   private overlay: Overlay | undefined;
   private content: UIElement | undefined;
-  private confirmButton: ButtonGeneral | undefined;
-  private cancelButton: ButtonGeneral | undefined;
-  private readonly controls: UIElement[] = [];
 
+  private controls: Button[] = [];
   private disposeToken = new DisposeToken();
-  private initializationToken = new InitializationToken();
 
   private data = shallowReactive({
     title: '',
@@ -37,9 +32,17 @@ export class ModalBase extends Modal implements ModalConfigurator
 
   constructor(
     private buttonsFactory: ButtonsFactory,
+    configuration: ModalConfiguration,
   )
   {
     super();
+
+    this.data.title = configuration.title;
+    this.data.description = configuration.description ?? '';
+    this.content = configuration.content;
+
+    this.setupButtonConfirm(configuration.buttonConfirm);
+    this.setupButtonCancel(configuration.buttonCancel);
   }
 
   get vnode()
@@ -54,112 +57,22 @@ export class ModalBase extends Modal implements ModalConfigurator
     });
   }
 
-  setTitle(title: string): this
-  {
-    this.initializationToken.assertNotInitialized();
-    this.data.title = title;
-
-    return this;
-  }
-
-  setDescription(description: string): this
-  {
-    this.initializationToken.assertNotInitialized();
-    this.data.description = description;
-
-    return this;
-  }
-
-  setContent(content: UIElement): this
-  {
-    this.initializationToken.assertNotInitialized();
-
-    if (this.content)
-    {
-      throw new InitializationOnlyException('content');
-    }
-
-    this.content = content;
-
-    return this;
-  }
-
-  addButtonConfirm(command: AsyncCommand): ModalButtonConfirmConfigurator
-  {
-    this.initializationToken.assertNotInitialized();
-
-    if (this.confirmButton)
-    {
-      throw new InitializationOnlyException('confirm button');
-    }
-
-    const button = new ModalButtonConfirm(this);
-
-    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(
-      button,
-      command,
-
-      () =>
-      {
-        this.confirmButton = button;
-        this.addControl(button);
-        return this;
-      },
-    );
-
-    return confirmButtonConfigurator;
-  }
-
-  addButtonCancel(): this
-  {
-    this.initializationToken.assertNotInitialized();
-
-    if (this.cancelButton)
-    {
-      throw new InitializationOnlyException('cancel button');
-    }
-
-    const button = this.buttonsFactory.createButtonGeneral();
-    button.title = 'Отменить';
-
-    button.on({
-      click: () => this.close(),
-    });
-
-    this.cancelButton = button;
-    this.addControl(button);
-
-    return this;
-  }
-
-  init(): Modal
-  {
-    this.initializationToken.assertNotInitialized();
-
-    if (!this.content)
-    {
-      throw new Error('Content must be set before getModal');
-    }
-
-    this.initializationToken.initialize();
-
-    return this;
-  }
-
   override enable()
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = false;
-    this.confirmButton?.enable();
-    this.cancelButton?.enable();
+
+    this.controls.forEach(control =>
+      control.enable());
   }
 
   override disable()
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = true;
-    this.confirmButton?.disable();
-    this.cancelButton?.disable();
+
+    this.controls.forEach(control =>
+      control.disable());
   }
 
   override close()
@@ -177,6 +90,36 @@ export class ModalBase extends Modal implements ModalConfigurator
     }
 
     this.overlay = overlay;
+  }
+
+  private setupButtonConfirm(setupFn?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>): void
+  {
+    if (!setupFn)
+    {
+      return;
+    }
+
+    const button = new ModalButtonConfirm(this);
+    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(button);
+
+    this.addControl(setupFn(confirmButtonConfigurator));
+  }
+
+  private setupButtonCancel(isAllowed?: boolean): void
+  {
+    if (isAllowed !== true)
+    {
+      return;
+    }
+
+    const button = this.buttonsFactory.createButtonGeneral();
+    button.title = 'Отменить';
+
+    button.on({
+      click: () => this.close(),
+    });
+
+    this.addControl(button);
   }
 
   private dispose()
@@ -212,10 +155,10 @@ export class ModalBase extends Modal implements ModalConfigurator
       }
     }
 
-    clearArray(this.controls);
+    this.controls = [];
   }
 
-  private addControl(control: UIElement)
+  private addControl(control: Button)
   {
     this.controls.unshift(control);
   }

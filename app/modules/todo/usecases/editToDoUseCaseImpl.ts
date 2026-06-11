@@ -43,11 +43,15 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
     form.setElementsFromScheme(todo.getEditScheme());
     form.setData(todo.getData());
 
-    this.overlay
-      .createModal()
-      .setContent(form)
-      .addButtonConfirm(form.getSubmitCommand()).asEditButton()
-      .addButtonCancel()
-      .init();
+    this.overlay.createModal({
+      title: 'Редактирование задачи',
+      content: form,
+
+      buttonConfirm: configurator => configurator
+        .withCommand(form.getSubmitCommand())
+        .asEditButton(),
+
+      buttonCancel: true,
+    });
   }
 }
