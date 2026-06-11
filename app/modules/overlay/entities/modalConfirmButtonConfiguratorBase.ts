@@ -58,21 +58,17 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
         this.command.onIdle(() =>
         {
             this.modal.enable();
-            this.button.hideLoader();
         }, this.disposeToken);
 
         this.command.onExecuting(() =>
         {
             this.modal.disable();
-            this.button.showLoader();
         }, this.disposeToken);
 
         this.command.onExecuted(() =>
         {
             this.modal.close();
         }, this.disposeToken);
-
-
 
         return this;
     }

@@ -4,6 +4,7 @@ import type { Color } from '../../types/color';
 import { ButtonBase } from './buttonBase';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import { shallowReactive, type VNode } from 'vue';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
 export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 {
@@ -58,6 +59,21 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
     get isLoading(): boolean
     {
         return this.data.isLoading;
+    }
+
+    override setCommand(command: AsyncCommand): void
+    {
+        super.setCommand(command);
+
+        command.onIdle(() =>
+        {
+            this.showLoader();
+        }, this.disposeToken);
+
+        command.onExecuting(() =>
+        {
+            this.hideLoader();
+        }, this.disposeToken);
     }
 
     override disable(): void
