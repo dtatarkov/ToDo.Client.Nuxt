@@ -1,6 +1,5 @@
 import { ToDoFactory } from "./todoFactory";
 import { ToDoBase } from "../entities/todoBase";
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { ToDo } from '../entities/todo';
 import type { ToDoData } from '../types/todoData';
 import { dependency } from '@/modules/shared/decorators/dependency';
@@ -25,7 +24,7 @@ export class ToDoFactoryImpl extends ToDoFactory
 
         if (data)
         {
-            updatePropertiesWithData(todo, data);
+            todo.setData(data);
         }
 
         return todo;

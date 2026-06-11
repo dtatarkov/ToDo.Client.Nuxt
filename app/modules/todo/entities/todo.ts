@@ -1,7 +1,6 @@
 import type { Reactive } from 'vue';
 import type { ToDosOwner } from './todosOwner';
 import type { ToDoData } from '../types/todoData';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { Modal } from '@/modules/overlay/entities/modal';
 
 export abstract class ToDo
@@ -14,10 +13,8 @@ export abstract class ToDo
   abstract owner: ToDosOwner | undefined;
 
   abstract get isNew(): boolean;
-
-  abstract getAddScheme(): EntityScheme<ToDoData>;
-  abstract getEditScheme(): EntityScheme<ToDoData>;
   abstract getData(): Reactive<ToDoData>;
+  abstract setData(data: Partial<ToDoData>): void;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
   abstract showForm(): Modal;

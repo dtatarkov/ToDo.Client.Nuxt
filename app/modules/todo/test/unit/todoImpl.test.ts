@@ -118,35 +118,15 @@ describe('ToDoImpl', () =>
 
     describe('showForm', () =>
     {
-        it('should create form using add scheme when todo is new', () =>
-        {
-            todo.id = '';
-
-            todo.showForm();
-
-            expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(formMock.setElementsFromScheme).toHaveBeenCalledTimes(1);
-            expect(formMock.setElementsFromScheme).toHaveBeenCalledWith(todo.getAddScheme());
-        });
-
-        it('should create form using edit scheme when todo is existing', () =>
-        {
-            todo.id = '123';
-
-            todo.showForm();
-
-            expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(formMock.setElementsFromScheme).toHaveBeenCalledTimes(1);
-            expect(formMock.setElementsFromScheme).toHaveBeenCalledWith(todo.getEditScheme());
-        });
-
-        it('should set form data from todo', () =>
+        it('should create form and set data from todo', () =>
         {
             todo.id = '123';
             todo.title = 'Test';
 
             todo.showForm();
 
+            expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
+            expect(formMock.setElementsFromScheme).toHaveBeenCalledTimes(1);
             expect(formMock.setData).toHaveBeenCalledTimes(1);
             expect(formMock.setData).toHaveBeenCalledWith(todo.getData());
         });
@@ -159,6 +139,67 @@ describe('ToDoImpl', () =>
 
             expect(overlayMock.createModal).toHaveBeenCalledTimes(1);
             expect(result).toBe(modalMock);
+        });
+    });
+
+    describe('setData', () =>
+    {
+        it('should set all properties from partial data', () =>
+        {
+            const id = '42';
+            const title = 'Updated Title';
+            const description = 'Updated Desc';
+            const completionDatePlanned = new Date('2025-06-01');
+            const completionDateActual = new Date('2025-06-02');
+
+            todo.setData({
+                id,
+                title,
+                description,
+                completionDatePlanned,
+                completionDateActual,
+            });
+
+            expect(todo.id).toBe('42');
+            expect(todo.title).toBe('Updated Title');
+            expect(todo.description).toBe('Updated Desc');
+            expect(todo.completionDatePlanned).toBe(completionDatePlanned);
+            expect(todo.completionDateActual).toBe(completionDateActual);
+        });
+
+        it('should set only provided properties and leave others unchanged', () =>
+        {
+            todo.id = '1';
+            todo.title = 'Original Title';
+            todo.description = 'Original Desc';
+
+            todo.setData({ title: 'New Title' });
+
+            expect(todo.id).toBe('1');
+            expect(todo.title).toBe('New Title');
+            expect(todo.description).toBe('Original Desc');
+            expect(todo.completionDatePlanned).toBeUndefined();
+            expect(todo.completionDateActual).toBeUndefined();
+        });
+
+        it('should set completionDatePlanned to undefined', () =>
+        {
+            todo.completionDatePlanned = new Date('2025-01-01');
+            expect(todo.completionDatePlanned).toBeDefined();
+
+            todo.setData({ completionDatePlanned: undefined });
+
+            expect(todo.completionDatePlanned).toBeUndefined();
+        });
+
+        it('should set completionDateActual to undefined', () =>
+        {
+            todo.completionDateActual = new Date('2025-01-01');
+            expect(todo.completionDateActual).toBeDefined();
+
+            todo.setData({ completionDateActual: undefined });
+
+            expect(todo.completionDateActual).toBeUndefined();
         });
     });
 });

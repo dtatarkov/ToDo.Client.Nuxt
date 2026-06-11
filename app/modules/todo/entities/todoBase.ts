@@ -2,17 +2,28 @@ import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
 import type { ToDosOwner } from './todosOwner';
 import { shallowReactive, type Reactive } from 'vue';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Modal } from '@/modules/overlay/entities/modal';
+import { ToDoStateNew } from './todoStateNew';
+import { ToDoStateSaved } from './todoStateSaved';
+import { satisfies } from '@/modules/shared/utils/satisfies';
+import type { ToDoState } from './todoState';
+import type { StateTransition } from '@/modules/shared/types/stateTransition';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+
+type ToDoStateTransitionConstraint = {
+  isNew: boolean;
+};
 
 export class ToDoBase extends ToDo
 {
   private ownerInternal: ToDosOwner | undefined;
+  private newState: ToDoStateNew;
+  private savedState: ToDoStateSaved;
+  private state: ToDoState;
+  private transitions: Array<StateTransition<ToDoState, ToDoStateTransitionConstraint>>;
 
   private dataInternal = shallowReactive(<ToDoData>{
     id: '',
@@ -28,53 +39,17 @@ export class ToDoBase extends ToDo
   )
   {
     super();
+
+    this.newState = new ToDoStateNew(this.overlay, this.formFactory, this);
+    this.savedState = new ToDoStateSaved(this.overlay, this.formFactory, this);
+
+    this.state = this.newState;
+
+    this.transitions = [
+      { from: this.newState, to: this.savedState, constraint: { isNew: false } },
+      { from: this.savedState, to: this.newState, constraint: { isNew: true } },
+    ];
   }
-
-  private schemeCommon = {
-    id: {
-      type: EntityFieldType.hidden,
-    },
-
-    title: {
-      type: EntityFieldType.string,
-      label: 'Название задачи',
-      placeholder: 'Введите название задачи',
-      isRequired: true,
-    },
-
-    description: {
-      type: EntityFieldType.string,
-      label: 'Описание задачи',
-      placeholder: 'Введите описание задачи',
-      isLong: true,
-    },
-
-    completionDatePlanned: {
-      type: EntityFieldType.datetime,
-      label: 'Плановая дата выполнения',
-    },
-
-    completionDateActual: {
-      type: EntityFieldType.hidden,
-    }
-  } satisfies EntityScheme<Partial<ToDoData>>;
-
-  private addScheme: EntityScheme<ToDoData> = {
-    ...this.schemeCommon,
-
-    // completionDateActual: {
-    //   type: EntityFieldType.hidden,
-    // }
-  };
-
-  private editScheme: EntityScheme<ToDoData> = {
-    ...this.schemeCommon,
-
-    // completionDateActual: {
-    //   type: EntityFieldType.datetime,
-    //   label: 'Фактическая дата выполнения',
-    // }
-  };
 
   get owner(): ToDosOwner | undefined
   {
@@ -114,6 +89,7 @@ export class ToDoBase extends ToDo
   set id(value: string)
   {
     this.dataInternal.id = value;
+    this.updateState();
   }
 
   set title(value: string)
@@ -141,19 +117,27 @@ export class ToDoBase extends ToDo
     return isStringEmpty(this.id);
   }
 
-  override getAddScheme(): EntityScheme<ToDoData>
+  private updateState(): void
   {
-    return this.addScheme;
-  }
+    const transition = this.transitions.find(t =>
+      t.from === this.state && satisfies(this, t.constraint)
+    );
 
-  override getEditScheme(): EntityScheme<ToDoData>
-  {
-    return this.editScheme;
+    if (transition)
+    {
+      this.state = transition.to;
+    }
   }
 
   override getData(): Reactive<ToDoData>
   {
     return this.dataInternal;
+  }
+
+  override setData(data: Partial<ToDoData>)
+  {
+    updatePropertiesWithData(this.dataInternal, data);
+    this.updateState();
   }
 
   override clone(): ToDo
@@ -182,62 +166,6 @@ export class ToDoBase extends ToDo
 
   override showForm(): Modal
   {
-    return this.isNew
-      ? this.showAddForm()
-      : this.showEditForm();
-  }
-
-  private showAddForm(): Modal
-  {
-    const form = this.formFactory.create<ToDoData>({
-      callbacks: {
-        submit: async data =>
-        {
-          updatePropertiesWithData(this, data);
-          await this.saveAsync();
-        }
-      }
-    });
-
-    form.setElementsFromScheme(this.getAddScheme());
-    form.setData(this.getData());
-
-    return this.overlay.createModal({
-      title: 'Создать задачу',
-      content: form,
-
-      buttonConfirm: configurator => configurator
-        .withCommand(form.getSubmitCommand())
-        .asCreateButton(),
-
-      buttonCancel: true,
-    });
-  }
-
-  private showEditForm(): Modal
-  {
-    const form = this.formFactory.create<ToDoData>({
-      callbacks: {
-        submit: async data =>
-        {
-          updatePropertiesWithData(this, data);
-          await this.saveAsync();
-        }
-      }
-    });
-
-    form.setElementsFromScheme(this.getEditScheme());
-    form.setData(this.getData());
-
-    return this.overlay.createModal({
-      title: 'Изменить задачу',
-      content: form,
-
-      buttonConfirm: configurator => configurator
-        .withCommand(form.getSubmitCommand())
-        .asEditButton(),
-
-      buttonCancel: true,
-    });
+    return this.state.showForm();
   }
 }
