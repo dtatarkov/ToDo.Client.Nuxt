@@ -1,43 +1,52 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AsyncCommandBase } from '../../entities/asyncCommandBase';
-import { CommandState } from '../../enums/commandState';
+import { DisposeToken } from '../../entities/disposeToken';
 
 describe('AsyncCommandBase', () =>
 {
-    it('should execute and call result callback with resolved value', async () =>
+    it('should execute and call onExecuted with resolved true', async () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(true));
-        const resultFn = vi.fn();
+        const command = new AsyncCommandBase(async () => true);
+        const executedFn = vi.fn();
+        const disposeToken = new DisposeToken();
 
-        command.on({ result: resultFn });
+        command.onExecuted(executedFn, disposeToken);
 
         const result = await command.executeAsync();
 
         expect(result).toBe(true);
-        expect(resultFn).toHaveBeenCalledWith(true);
+        expect(executedFn).toHaveBeenCalledOnce();
     });
 
-    it('should call stateChange with busy then readyToStart', async () =>
+    it('should call onExecuting then onIdle during execution', async () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(true));
-        const stateChangeFn = vi.fn();
+        const command = new AsyncCommandBase(async () => true);
+        const executingFn = vi.fn();
+        const idleFn = vi.fn();
+        const disposeToken = new DisposeToken();
 
-        command.on({ stateChange: stateChangeFn });
+        command.onExecuting(executingFn, disposeToken);
+        command.onIdle(idleFn, disposeToken);
 
         await command.executeAsync();
 
-        expect(stateChangeFn).toHaveBeenCalledTimes(2);
-        expect(stateChangeFn).toHaveBeenNthCalledWith(1, CommandState.busy);
-        expect(stateChangeFn).toHaveBeenNthCalledWith(2, CommandState.readyToStart);
+        expect(executingFn).toHaveBeenCalledOnce();
+        expect(idleFn).toHaveBeenCalledOnce();
+        expect(executingFn.mock.invocationCallOrder[0]).toBeLessThan(idleFn.mock.invocationCallOrder[0] as number);
     });
 
-    it('should throw if on is called twice', () =>
+    it('should not call onExecuted when result is false', async () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(true));
+        const command = new AsyncCommandBase(() => Promise.resolve(false));
+        const executedFn = vi.fn();
+        const disposeToken = new DisposeToken();
 
-        command.on({ result: vi.fn() });
+        command.onExecuted(executedFn, disposeToken);
 
-        expect(() => command.on({ result: vi.fn() })).toThrow('Callbacks already set');
+        const result = await command.executeAsync();
+
+        expect(result).toBe(false);
+        expect(executedFn).not.toHaveBeenCalled();
     });
 
     it('should propagate rejection from executeInternal', async () =>
@@ -48,16 +57,31 @@ describe('AsyncCommandBase', () =>
         await expect(command.executeAsync()).rejects.toThrow('test error');
     });
 
-    it('should not call result callback on rejection', async () =>
+    it('should call onIdle even on rejection', async () =>
     {
         const error = new Error('fail');
         const command = new AsyncCommandBase(() => Promise.reject(error));
-        const resultFn = vi.fn();
+        const idleFn = vi.fn();
+        const disposeToken = new DisposeToken();
 
-        command.on({ result: resultFn });
+        command.onIdle(idleFn, disposeToken);
 
         await expect(command.executeAsync()).rejects.toThrow('fail');
 
-        expect(resultFn).not.toHaveBeenCalled();
+        expect(idleFn).toHaveBeenCalledOnce();
+    });
+
+    it('should not call onExecuted on rejection', async () =>
+    {
+        const error = new Error('fail');
+        const command = new AsyncCommandBase(() => Promise.reject(error));
+        const executedFn = vi.fn();
+        const disposeToken = new DisposeToken();
+
+        command.onExecuted(executedFn, disposeToken);
+
+        await expect(command.executeAsync()).rejects.toThrow('fail');
+
+        expect(executedFn).not.toHaveBeenCalled();
     });
 });

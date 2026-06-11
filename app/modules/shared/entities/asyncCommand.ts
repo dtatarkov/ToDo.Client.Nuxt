@@ -1,14 +1,11 @@
 import type { Action } from '../types/action';
-import { CallbacksOwner } from '../interfaces/callbacksOwner';
-import type { CommandState } from '../enums/commandState';
+import type { DisposeToken } from './disposeToken';
 
-export type AsyncCommandCallbacks = {
-    result: Action<[boolean]>;
-    stateChange: Action<[CommandState]>;
-    error: Action<[unknown]>;
-};
-
-export abstract class AsyncCommand extends CallbacksOwner<AsyncCommandCallbacks>
+export abstract class AsyncCommand
 {
     abstract executeAsync(): Promise<boolean>;
+
+    abstract onIdle(handler: Action, token: DisposeToken): void;
+    abstract onExecuting(handler: Action, token: DisposeToken): void;
+    abstract onExecuted(handler: Action, token: DisposeToken): void;
 }

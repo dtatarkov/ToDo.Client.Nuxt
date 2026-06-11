@@ -1,14 +1,16 @@
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import { CommandState } from '@/modules/shared/enums/commandState';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
 import type { ModalConfigurator } from './modalConfigurator';
 import type { Func } from '@/modules/shared/types/func';
 import type { Modal } from './modal';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 
 export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfigurator
 {
+    private disposeToken = new DisposeToken();
+
     constructor(
         private button: ButtonGeneral,
         private command: AsyncCommand,
@@ -61,33 +63,30 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
 
     private setupCommand(): this
     {
-        this.command.on({
-            stateChange: (state) =>
-            {
-                const isBusy = state === CommandState.busy;
+        this.command.onIdle(() =>
+        {
+            this.modal.enable();
+            this.button.hideLoader();
+        }, this.disposeToken);
 
-                if (isBusy)
-                {
-                    this.modal.disable();
-                    this.button.showLoader();
-                }
+        this.command.onExecuting(() =>
+        {
+            this.modal.disable();
+            this.button.showLoader();
+        }, this.disposeToken);
 
-                else
-                {
-                    this.modal.enable();
-                    this.button.hideLoader();
-                }
-            },
+        this.command.onExecuted(() =>
+        {
+            this.modal.close();
+        }, this.disposeToken);
 
-            result: (result) =>
-            {
-                if (result)
-                {
-                    this.modal.close();
-                }
-            }
-        });
+
 
         return this;
+    }
+
+    [Symbol.dispose](): void
+    {
+        this.disposeToken[Symbol.dispose]();
     }
 }

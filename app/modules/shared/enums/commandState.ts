@@ -1,5 +1,5 @@
 export enum CommandState
 {
-    readyToStart = 0,
-    busy = 1,
+    idle = 0,
+    executing = 1,
 }
