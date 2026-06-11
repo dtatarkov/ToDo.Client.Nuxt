@@ -5,6 +5,10 @@ import { shallowReactive, type Reactive } from 'vue';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
+import type { FormFactory } from '@/modules/forms/factories/formFactory';
+import type { Overlay } from '@/modules/overlay/entities/overlay';
+import type { Modal } from '@/modules/overlay/entities/modal';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export class ToDoBase extends ToDo
 {
@@ -17,6 +21,14 @@ export class ToDoBase extends ToDo
     completionDatePlanned: undefined,
     completionDateActual: undefined
   });
+
+  constructor(
+    private overlay: Overlay,
+    private formFactory: FormFactory,
+  )
+  {
+    super();
+  }
 
   private schemeCommon = {
     id: {
@@ -146,7 +158,7 @@ export class ToDoBase extends ToDo
 
   override clone(): ToDo
   {
-    const todo = new ToDoBase();
+    const todo = new ToDoBase(this.overlay, this.formFactory);
 
     todo.id = this.id;
     todo.title = this.title;
@@ -158,7 +170,7 @@ export class ToDoBase extends ToDo
     return todo;
   }
 
-  override async saveAsync(): Promise<void> 
+  override async saveAsync(): Promise<void>
   {
     if (!this.owner)
     {
@@ -166,5 +178,66 @@ export class ToDoBase extends ToDo
     }
 
     await this.ownerInternal?.saveToDoAsync(this);
+  }
+
+  override showForm(): Modal
+  {
+    return this.isNew
+      ? this.showAddForm()
+      : this.showEditForm();
+  }
+
+  private showAddForm(): Modal
+  {
+    const form = this.formFactory.create<ToDoData>({
+      callbacks: {
+        submit: async data =>
+        {
+          updatePropertiesWithData(this, data);
+          await this.saveAsync();
+        }
+      }
+    });
+
+    form.setElementsFromScheme(this.getAddScheme());
+    form.setData(this.getData());
+
+    return this.overlay.createModal({
+      title: 'Создать задачу',
+      content: form,
+
+      buttonConfirm: configurator => configurator
+        .withCommand(form.getSubmitCommand())
+        .asCreateButton(),
+
+      buttonCancel: true,
+    });
+  }
+
+  private showEditForm(): Modal
+  {
+    const form = this.formFactory.create<ToDoData>({
+      callbacks: {
+        submit: async data =>
+        {
+          updatePropertiesWithData(this, data);
+          await this.saveAsync();
+        }
+      }
+    });
+
+    form.setElementsFromScheme(this.getEditScheme());
+    form.setData(this.getData());
+
+    return this.overlay.createModal({
+      title: 'Изменить задачу',
+      content: form,
+
+      buttonConfirm: configurator => configurator
+        .withCommand(form.getSubmitCommand())
+        .asEditButton(),
+
+      buttonCancel: true,
+    });
   }
 }

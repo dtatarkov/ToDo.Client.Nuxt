@@ -27,5 +27,6 @@ export function createToDoMock(data?: Partial<ToDoData>, owner?: ToDosOwner)
         getData: () => fullData,
         clone: vi.fn(),
         saveAsync: vi.fn(),
+        showForm: vi.fn(),
     } satisfies ToDo;
 };

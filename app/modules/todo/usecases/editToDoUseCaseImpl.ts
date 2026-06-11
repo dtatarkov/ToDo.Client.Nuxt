@@ -2,20 +2,12 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { EditToDoUseCase } from "./editToDoUseCase";
 import { ToDosOwner } from '../entities/todosOwner';
 import { ToDoNotFoundException } from '../exceptions/toDoNotFoundException';
-import type { ToDoData } from '../types/todoData';
-import { FormFactory } from '@/modules/forms/factories/formFactory';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
-import { Overlay } from '@/modules/overlay/entities/overlay';
 
 @dependency(ToDosOwner)
-@dependency(Overlay)
-@dependency(FormFactory)
 export class EditToDoUseCaseImpl extends EditToDoUseCase
 {
   constructor(
     private todosOwner: ToDosOwner,
-    private overlay: Overlay,
-    private formFactory: FormFactory,
   )
   {
     super();
@@ -30,28 +22,6 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
       throw new ToDoNotFoundException(id);
     }
 
-    const form = this.formFactory.create<ToDoData>({
-      callbacks: {
-        submit: async data =>
-        {
-          updatePropertiesWithData(todo, data);
-          await todo.saveAsync();
-        }
-      }
-    });
-
-    form.setElementsFromScheme(todo.getEditScheme());
-    form.setData(todo.getData());
-
-    this.overlay.createModal({
-      title: 'Изменить задачу',
-      content: form,
-
-      buttonConfirm: configurator => configurator
-        .withCommand(form.getSubmitCommand())
-        .asEditButton(),
-
-      buttonCancel: true,
-    });
+    todo.showForm();
   }
 }
