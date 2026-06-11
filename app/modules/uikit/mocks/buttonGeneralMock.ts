@@ -11,6 +11,7 @@ export const buttonGeneralMock = {
 
     vnode: {} as VNode,
 
+    setCommand: vi.fn(),
     on: vi.fn(),
     disable: vi.fn(),
     enable: vi.fn(),

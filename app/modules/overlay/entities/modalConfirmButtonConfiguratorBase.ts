@@ -26,7 +26,6 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
         return this
             .setDefaultColor()
             .setTitle('Добавить')
-            .setupClickHandler()
             .setupCommand()
             .finalize();
     }
@@ -36,7 +35,6 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
         return this
             .setDefaultColor()
             .setTitle('Сохранить')
-            .setupClickHandler()
             .setupCommand()
             .finalize();
     }
@@ -53,16 +51,10 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
         return this;
     }
 
-    private setupClickHandler(): this
-    {
-        this.button.on({
-            click: () => this.command.executeAsync()
-        });
-        return this;
-    }
-
     private setupCommand(): this
     {
+        this.button.setCommand(this.command);
+
         this.command.onIdle(() =>
         {
             this.modal.enable();
