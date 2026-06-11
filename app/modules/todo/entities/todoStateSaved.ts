@@ -20,12 +20,10 @@ export class ToDoStateSaved extends ToDoStateBase
     showForm(): Modal
     {
         const form = this.formFactory.create<ToDoData>({
-            callbacks: {
-                submit: async data =>
-                {
-                    updatePropertiesWithData(this.todo, data);
-                    await this.todo.saveAsync();
-                }
+            submit: async data =>
+            {
+                updatePropertiesWithData(this.todo, data);
+                await this.todo.saveAsync();
             }
         });
 

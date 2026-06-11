@@ -1,5 +1,5 @@
 import VForm from "../components/VForm.vue";
-import { Form, type FormCallbacks, type FormConfiguration } from "@/modules/forms/entities/form";
+import { Form, type FormConfiguration } from "@/modules/forms/entities/form";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElementCreateData } from '../types/formElementCreateData';
@@ -9,7 +9,7 @@ import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
-import { callbacksWrapper } from '@/modules/shared/entities/callbacksWrapper';
+import type { Func } from '@/modules/shared/types/func';
 
 enum FormBaseState
 {
@@ -22,7 +22,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
   private submitCommand = this.createSubmitCommand();
-  private callbacks = callbacksWrapper<FormCallbacks<TEntity>>();
+  private handleSubmit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
 
   private get state()
   {
@@ -39,15 +39,12 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   constructor(
     private formElementFactory: FormElementFactory,
     private schemeToElementsMapper: EntitySchemeToFormElementsMapper,
-    configuration: FormConfiguration<TEntity> | undefined
+    configuration: FormConfiguration<TEntity>
   )
   {
     super();
 
-    if (configuration?.callbacks)
-    {
-      this.callbacks(configuration.callbacks);
-    }
+    this.handleSubmit = configuration.submit;
   }
 
   get vnode()
@@ -126,7 +123,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.submitCommand;
   }
 
-  override [Symbol.dispose](): void
+  override[Symbol.dispose](): void
   {
   }
 
@@ -168,11 +165,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     const command = new AsyncCommandBase(async () =>
     {
-      if (!this.callbacks.submit)
-      {
-        return false;
-      }
-
       this.assertNotDisabled();
 
       if (!this.validate())
@@ -185,7 +177,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
       try
       {
         const data = this.getData();
-        await this.callbacks.submit(data);
+        await this.handleSubmit(data);
 
         return true;
       }

@@ -3,13 +3,10 @@ import type { FormElement } from './formElement';
 import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-
-export type FormCallbacks<TEntity extends Record<string, any>> = {
-  submit(data: Record<keyof TEntity, any>): Promise<void>;
-};
+import type { Func } from '@/modules/shared/types/func';
 
 export type FormConfiguration<TEntity extends Record<string, any>> = {
-  callbacks?: Partial<FormCallbacks<TEntity>>;
+  submit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
 };
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Disposable
