@@ -18,15 +18,18 @@ const props = defineProps<{
   <UModal
       :default-open="true"
       :transition="false"
-      :title="props.title"
       :description="props.description"
       :dismissible="props.isDismissible"
       @update:open="handleOpen"
   >
-    <template #content>
+    <template #title>
+      {{ props.title }}
+    </template>
+
+    <template #body>
       <slot name="content" />
       
-      <div v-if="$slots.controls" class="flex gap-2 justify-end p-2">
+      <div v-if="$slots.controls" class="flex gap-2 justify-end pt-2">
         <slot name="controls" />
       </div>
     </template>
