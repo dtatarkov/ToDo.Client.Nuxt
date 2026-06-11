@@ -44,7 +44,7 @@ export class EditToDoUseCaseImpl extends EditToDoUseCase
     form.setData(todo.getData());
 
     this.overlay.createModal({
-      title: 'Редактирование задачи',
+      title: 'Изменить задачу',
       content: form,
 
       buttonConfirm: configurator => configurator
