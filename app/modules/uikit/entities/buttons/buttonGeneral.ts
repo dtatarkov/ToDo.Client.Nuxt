@@ -1,11 +1,5 @@
 import type { Color } from '../../types/color';
-import { Button, type ButtonData } from './button';
-
-export type ButtonGeneralData = ButtonData & {
-    title: string;
-    isLoading: boolean;
-    color: Color;
-};
+import { Button } from './button';
 
 export abstract class ButtonGeneral extends Button
 {

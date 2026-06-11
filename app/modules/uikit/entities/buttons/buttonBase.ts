@@ -1,12 +1,13 @@
-import { Button, type ButtonCallbacks } from './button';
-import { callbacksWrapper } from '@/modules/shared/entities/callbacksWrapper';
+import { Button } from './button';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
+import { Event } from '@/modules/shared/entities/event';
+import type { Action } from '@/modules/shared/types/action';
 
 export abstract class ButtonBase extends Button implements Disposable
 {
-    protected callbacks = callbacksWrapper<ButtonCallbacks>();
+    protected onClickEvent = new Event();
     protected disposeToken = new DisposeToken();
 
     private command: AsyncCommand | undefined;
@@ -23,10 +24,10 @@ export abstract class ButtonBase extends Button implements Disposable
         this.command = command;
     }
 
-    override on(callbacks: Partial<ButtonCallbacks>): void
+    override onClick(handler: Action): void
     {
         this.disposeToken.assertNotDisposed();
-        this.callbacks(callbacks);
+        this.onClickEvent.on(handler, this.disposeToken);
     }
 
     [Symbol.dispose](): void
@@ -38,6 +39,6 @@ export abstract class ButtonBase extends Button implements Disposable
     {
         this.disposeToken.assertNotDisposed();
         this.command?.executeAsync();
-        this.callbacks.click?.();
+        this.onClickEvent.emit();
     }
 }
