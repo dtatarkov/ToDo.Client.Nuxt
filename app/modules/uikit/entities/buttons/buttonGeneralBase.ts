@@ -67,12 +67,12 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 
         command.onIdle(() =>
         {
-            this.showLoader();
+            this.hideLoader();
         }, this.disposeToken);
 
         command.onExecuting(() =>
         {
-            this.hideLoader();
+            this.showLoader();
         }, this.disposeToken);
     }
 

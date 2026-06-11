@@ -1,20 +1,18 @@
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
-import { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
+import { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import type { ModalConfigurator } from './modalConfigurator';
 import type { Func } from '@/modules/shared/types/func';
-import type { Modal } from './modal';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 
-export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfigurator
+export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfigurator
 {
     private disposeToken = new DisposeToken();
 
     constructor(
         private button: ButtonGeneral,
         private command: AsyncCommand,
-        private modal: Modal,
         private finalize: Func<ModalConfigurator>,
     )
     {
@@ -54,21 +52,6 @@ export class ModalConfirmButtonConfiguratorBase extends ModalConfirmButtonConfig
     private setupCommand(): this
     {
         this.button.setCommand(this.command);
-
-        this.command.onIdle(() =>
-        {
-            this.modal.enable();
-        }, this.disposeToken);
-
-        this.command.onExecuting(() =>
-        {
-            this.modal.disable();
-        }, this.disposeToken);
-
-        this.command.onExecuted(() =>
-        {
-            this.modal.close();
-        }, this.disposeToken);
 
         return this;
     }

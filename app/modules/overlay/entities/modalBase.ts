@@ -1,7 +1,7 @@
 import { Modal } from "./modal";
 import type { ModalConfigurator } from './modalConfigurator';
-import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigurator';
-import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
+import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
+import { ModalButtonConfirmConfiguratorBase } from './modalButtonConfirmConfiguratorBase';
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
@@ -13,13 +13,15 @@ import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import { InitializationToken } from '@/modules/shared/entities/initializationToken';
 import { clearArray } from '@/modules/shared/utils/clearArray';
 import { isDisposable } from '@/modules/shared/utils/isDisposable';
+import { ModalButtonConfirm } from './modalButtonConfirm';
+import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 
 export class ModalBase extends Modal implements ModalConfigurator
 {
   private overlay: Overlay | undefined;
   private content: UIElement | undefined;
-  private confirmButton: UIElement | undefined;
-  private cancelButton: UIElement | undefined;
+  private confirmButton: ButtonGeneral | undefined;
+  private cancelButton: ButtonGeneral | undefined;
   private readonly controls: UIElement[] = [];
 
   private disposeToken = new DisposeToken();
@@ -82,7 +84,7 @@ export class ModalBase extends Modal implements ModalConfigurator
     return this;
   }
 
-  addButtonConfirm(command: AsyncCommand): ModalConfirmButtonConfigurator
+  addButtonConfirm(command: AsyncCommand): ModalButtonConfirmConfigurator
   {
     this.initializationToken.assertNotInitialized();
 
@@ -91,12 +93,11 @@ export class ModalBase extends Modal implements ModalConfigurator
       throw new InitializationOnlyException('confirm button');
     }
 
-    const button = this.buttonsFactory.createButtonGeneral();
+    const button = new ModalButtonConfirm(this);
 
-    const confirmButtonConfigurator = new ModalConfirmButtonConfiguratorBase(
+    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(
       button,
       command,
-      this,
 
       () =>
       {
@@ -149,12 +150,16 @@ export class ModalBase extends Modal implements ModalConfigurator
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = false;
+    this.confirmButton?.enable();
+    this.cancelButton?.enable();
   }
 
   override disable()
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = true;
+    this.confirmButton?.disable();
+    this.cancelButton?.disable();
   }
 
   override close()
