@@ -1,5 +1,4 @@
 import type { FormElementCreateData } from "../types/formElementCreateData";
-import type { Destroyable } from '@/modules/shared/interfaces/destroyable';
 import type { FormElement } from './formElement';
 import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
@@ -13,7 +12,7 @@ export type FormConfiguration<TEntity extends Record<string, any>> = {
   callbacks?: Partial<FormCallbacks<TEntity>>;
 };
 
-export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Destroyable
+export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Disposable
 {
   abstract readonly elements: FormElement[];
   abstract readonly isDisabled: boolean;
@@ -26,5 +25,5 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract setElementsFromScheme(scheme: EntityScheme<TEntity>): void;
 
   abstract submitAsync(): Promise<void>;
-  abstract destroy(): void;
+  abstract [Symbol.dispose](): void;
 }

@@ -14,7 +14,7 @@ export const serviceScopesKey = '$ServiceScopes';
  * Provides a service scope tied to the current Vue component instance.
  *
  * This composable ensures each component has its own isolated service scope,
- * which is automatically destroyed when the component unmounts.
+ * which is automatically disposed when the component unmounts.
  *
  * The scope is stored in Nuxt app context under a symbol key, using a map
  * from component instance to scope. If a scope already exists for the instance,
@@ -70,7 +70,7 @@ export function useServicesScope(): ServicesScope
         // Automatically clean up the scope when the component unmounts.
         onUnmounted(() =>
         {
-            scope?.destroy();
+            scope?.[Symbol.dispose]();
             scopes.delete(instance);
         });
     }

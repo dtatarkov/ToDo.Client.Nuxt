@@ -126,7 +126,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.submitCommand;
   }
 
-  override destroy(): void
+  override [Symbol.dispose](): void
   {
   }
 

@@ -1,7 +1,7 @@
 import type { ServiceIdentifier } from "../types/serviceIdentifier";
 import type { Constructor } from "../types/constructor";
 import { getDependencies } from "../decorators/dependency";
-import { Destroyable } from '../interfaces/destroyable';
+import { isDisposable } from "../utils/isDisposable";
 
 enum BindingScope
 {
@@ -21,9 +21,9 @@ const defaultContainerSettings: ContainerSettings = {
 
 /**
  * Abstract scope for service resolution with hierarchical support.
- * Provides methods to get services, destroy the scope, and create child scopes.
+ * Provides methods to get services, dispose the scope, and create child scopes.
  */
-export abstract class ServicesScope
+export abstract class ServicesScope implements Disposable
 {
     /**
      * Get a service instance by its identifier.
@@ -33,9 +33,9 @@ export abstract class ServicesScope
     abstract get<T>(identifier: ServiceIdentifier<T>): T;
 
     /**
-     * Destroy this scope, clearing all scoped service instances.
+     * Dispose this scope, clearing all scoped service instances.
      */
-    abstract destroy(): void;
+    abstract [Symbol.dispose](): void;
 
     /**
      * Create a child scope that can resolve services from this parent scope.
@@ -51,8 +51,8 @@ export abstract class ServicesScope
 class ServicesScopeImpl extends ServicesScope
 {
     private instancesMap = new Map<ServiceIdentifier<any>, any>();
-    private destroyables = new Set<Destroyable>();
-    private isDestroyed = false;
+    private disposables = new Set<Disposable>();
+    private isDisposed = false;
 
     constructor(
         private bindings: Map<ServiceIdentifier<any>, Binding<any>>,
@@ -64,7 +64,7 @@ class ServicesScopeImpl extends ServicesScope
 
     override get<T>(identifier: ServiceIdentifier<T>): T
     {
-        this.assertNotDestroyed();
+        this.assertNotDisposed();
 
         const binding = this.bindings.get(identifier);
 
@@ -78,36 +78,36 @@ class ServicesScopeImpl extends ServicesScope
         return instance;
     }
 
-    override destroy(): void
+    override[Symbol.dispose](): void
     {
-        if (this.isDestroyed)
+        if (this.isDisposed)
         {
             return;
         }
 
-        for (const instance of this.destroyables)
+        for (const instance of this.disposables)
         {
-            instance.destroy();
+            instance[Symbol.dispose]();
         }
 
         this.instancesMap.clear();
-        this.isDestroyed = true;
+        this.isDisposed = true;
     }
 
     override createScope(): ServicesScope
     {
-        this.assertNotDestroyed();
+        this.assertNotDisposed();
 
         const scope = new ServicesScopeImpl(this.bindings, this);
 
         return scope;
     }
 
-    private assertNotDestroyed()
+    private assertNotDisposed()
     {
-        if (this.isDestroyed)
+        if (this.isDisposed)
         {
-            throw new Error('Cannot create child scope from destroyed scope');
+            throw new Error('Cannot create child scope from disposed scope');
         }
     }
 
@@ -141,9 +141,9 @@ class ServicesScopeImpl extends ServicesScope
     {
         const instance = binding.createInstance(this);
 
-        if (Destroyable.isDestroyable(instance))
+        if (isDisposable(instance))
         {
-            this.destroyables.add(instance);
+            this.disposables.add(instance);
         }
 
         return instance;
@@ -346,7 +346,7 @@ class BindingScopeBuilderImpl<T> extends BindingScopeBuilder
     }
 }
 
-export class ServicesContainer
+export class ServicesContainer implements Disposable
 {
     private bindings = new Map<ServiceIdentifier<any>, Binding<any>>();
     private settings: ContainerSettings;
@@ -368,9 +368,9 @@ export class ServicesContainer
         return this.rootScope.get(identifier);
     }
 
-    destroy(): void
+    [Symbol.dispose](): void
     {
-        this.rootScope.destroy();
+        this.rootScope[Symbol.dispose]();
     }
 
     createScope(): ServicesScope

@@ -13,5 +13,5 @@ export const formMock = {
     submitAsync: vi.fn(),
     getData: vi.fn(),
     getSubmitCommand: vi.fn(),
-    destroy: vi.fn(),
+    [Symbol.dispose]: vi.fn(),
 } satisfies Form;

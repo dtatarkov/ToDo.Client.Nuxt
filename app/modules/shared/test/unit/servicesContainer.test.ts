@@ -100,76 +100,76 @@ describe('ServicesContainer', () =>
             expect(childInstance).toBe(rootInstance); // same singleton instance
         });
 
-        it('should destroy child scope and clear its instances', () =>
+        it('should dispose child scope and clear its instances', () =>
         {
-            const destroyableInstance = {
-                destroy: vi.fn(),
+            const disposableInstance = {
+                [Symbol.dispose]: vi.fn(),
             };
 
-            container.bind(ServiceA).toDynamicValue(() => destroyableInstance).asScoped();
+            container.bind(ServiceA).toDynamicValue(() => disposableInstance).asScoped();
 
             const childScope = container.createScope();
 
             childScope.get(ServiceA);
-            childScope.destroy();
+            childScope[Symbol.dispose]();
 
-            expect(destroyableInstance.destroy).toHaveBeenCalledOnce();
+            expect(disposableInstance[Symbol.dispose]).toHaveBeenCalledOnce();
             expect(() => childScope.get(ServiceA)).toThrow();
         });
     });
 
-    describe('destroy', () =>
+    describe('dispose', () =>
     {
-        it('should destroy scope', () =>
+        it('should dispose scope', () =>
         {
             container.bind(ServiceA).to(ServiceAImpl).asScoped();
 
             const childScope = container.createScope();
-            childScope.destroy();
+            childScope[Symbol.dispose]();
 
             expect(() => childScope.get(ServiceA)).toThrow();
         });
 
-        it('should destroy transient services', () =>
+        it('should dispose transient services', () =>
         {
-            const destroyFn = vi.fn();
+            const disposeFn = vi.fn();
 
-            container.bind(ServiceA).toDynamicValue(() => ({ destroy: destroyFn })).asTransient();
+            container.bind(ServiceA).toDynamicValue(() => ({ [Symbol.dispose]: disposeFn })).asTransient();
 
             const childScope = container.createScope();
 
             childScope.get(ServiceA);
-            childScope.destroy();
+            childScope[Symbol.dispose]();
 
-            expect(destroyFn).toHaveBeenCalledOnce();
+            expect(disposeFn).toHaveBeenCalledOnce();
         });
 
-        it('should destroy scoped services', () =>
+        it('should dispose scoped services', () =>
         {
-            const destroyFn = vi.fn();
+            const disposeFn = vi.fn();
 
-            container.bind(ServiceA).toDynamicValue(() => ({ destroy: destroyFn })).asScoped();
+            container.bind(ServiceA).toDynamicValue(() => ({ [Symbol.dispose]: disposeFn })).asScoped();
 
             const childScope = container.createScope();
 
             childScope.get(ServiceA);
-            childScope.destroy();
+            childScope[Symbol.dispose]();
 
-            expect(destroyFn).toHaveBeenCalledOnce();
+            expect(disposeFn).toHaveBeenCalledOnce();
         });
 
-        it('should not destroy singleton services', () =>
+        it('should not dispose singleton services', () =>
         {
-            const destroyFn = vi.fn();
+            const disposeFn = vi.fn();
 
-            container.bind(ServiceA).toDynamicValue(() => ({ destroy: destroyFn })).asSingleton();
+            container.bind(ServiceA).toDynamicValue(() => ({ [Symbol.dispose]: disposeFn })).asSingleton();
 
             const childScope = container.createScope();
 
             childScope.get(ServiceA);
-            childScope.destroy();
+            childScope[Symbol.dispose]();
 
-            expect(destroyFn).not.toHaveBeenCalled();
+            expect(disposeFn).not.toHaveBeenCalled();
         });
     });
 });

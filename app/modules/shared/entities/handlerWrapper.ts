@@ -1,15 +1,15 @@
 import { HandlerAlreadySetException } from '../exceptions/handlerAlreadySetException';
 import type { Action } from '../types/action';
-import { DestroyToken } from './destroyToken';
+import { DisposeToken } from './disposeToken';
 
-export class HandlerWrapper<T extends any[] = []>
+export class HandlerWrapper<T extends any[] = []> implements Disposable
 {
-    private destroyToken = new DestroyToken();
+    private disposeToken = new DisposeToken();
     private handler: Action<T> | undefined;
 
     setHandler(handler: Action<T>): void
     {
-        this.destroyToken.assertNotDestroyed();
+        this.disposeToken.assertNotDisposed();
 
         if (this.handler)
         {
@@ -24,9 +24,9 @@ export class HandlerWrapper<T extends any[] = []>
         this.handler?.(...args);
     }
 
-    destroy()
+    [Symbol.dispose]()
     {
-        this.destroyToken.destroy();
+        this.disposeToken[Symbol.dispose]();
         this.handler = undefined;
     }
 }

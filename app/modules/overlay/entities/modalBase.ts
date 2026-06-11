@@ -4,8 +4,7 @@ import type { ModalConfirmButtonConfigurator } from './modalConfirmButtonConfigu
 import { ModalConfirmButtonConfiguratorBase } from './modalConfirmButtonConfiguratorBase';
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { Destroyable } from '@/modules/shared/interfaces/destroyable';
-import { DestroyToken } from '@/modules/shared/entities/destroyToken';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
@@ -13,6 +12,8 @@ import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import { InitializationToken } from '@/modules/shared/entities/initializationToken';
 import { clearArray } from '@/modules/shared/utils/clearArray';
+import { isDisposable } from '@/modules/shared/utils/isDisposable';
+
 export class ModalBase extends Modal implements ModalConfigurator
 {
   private overlay: Overlay | undefined;
@@ -21,7 +22,7 @@ export class ModalBase extends Modal implements ModalConfigurator
   private cancelButton: UIElement | undefined;
   private readonly controls: UIElement[] = [];
 
-  private destroyToken = new DestroyToken();
+  private disposeToken = new DisposeToken();
   private initializationToken = new InitializationToken();
 
   private data = shallowReactive({
@@ -146,24 +147,24 @@ export class ModalBase extends Modal implements ModalConfigurator
 
   override enable()
   {
-    this.destroyToken.assertNotDestroyed();
+    this.disposeToken.assertNotDisposed();
     this.data.isDisabled = false;
   }
 
   override disable()
   {
-    this.destroyToken.assertNotDestroyed();
+    this.disposeToken.assertNotDisposed();
     this.data.isDisabled = true;
   }
 
   override close()
   {
-    this.destroy();
+    this.dispose();
   }
 
   override setOverlay(overlay: Overlay)
   {
-    this.destroyToken.assertNotDestroyed();
+    this.disposeToken.assertNotDisposed();
 
     if (this.overlay)
     {
@@ -173,36 +174,36 @@ export class ModalBase extends Modal implements ModalConfigurator
     this.overlay = overlay;
   }
 
-  private destroy()
+  private dispose()
   {
-    if (this.destroyToken.isDestroyed)
+    if (this.disposeToken.isDisposed)
     {
       return;
     }
 
     this.overlay?.removeElement(this);
-    this.destroyContent();
-    this.destroyControls();
-    this.destroyToken.destroy();
+    this.disposeContent();
+    this.disposeControls();
+    this.disposeToken[Symbol.dispose]();
   }
 
-  private destroyContent()
+  private disposeContent()
   {
-    if (this.content && Destroyable.isDestroyable(this.content))
+    if (isDisposable(this.content))
     {
-      this.content.destroy();
+      this.content[Symbol.dispose]();
     }
 
     this.content = undefined;
   }
 
-  private destroyControls()
+  private disposeControls()
   {
     for (const control of this.controls)
     {
-      if (Destroyable.isDestroyable(control))
+      if (isDisposable(control))
       {
-        control.destroy();
+        control[Symbol.dispose]();
       }
     }
 
