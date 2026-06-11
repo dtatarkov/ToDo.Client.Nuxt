@@ -4,7 +4,6 @@ import type { ToDoBase } from './todoBase';
 import type { Modal } from '@/modules/overlay/entities/modal';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export class ToDoStateSaved extends ToDoStateBase
 {
@@ -20,11 +19,9 @@ export class ToDoStateSaved extends ToDoStateBase
     showForm(): Modal
     {
         const form = this.formFactory.create<ToDoData>({
-            submit: async data =>
-            {
-                updatePropertiesWithData(this.todo, data);
-                await this.todo.saveAsync();
-            }
+            submit: data => this.todo
+                .setData(data)
+                .saveAsync()
         });
 
         form.setElementsFromScheme(this.scheme);

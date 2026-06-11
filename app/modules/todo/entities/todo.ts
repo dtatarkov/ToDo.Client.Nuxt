@@ -14,7 +14,7 @@ export abstract class ToDo
 
   abstract get isNew(): boolean;
   abstract getData(): Reactive<ToDoData>;
-  abstract setData(data: Partial<ToDoData>): void;
+  abstract setData(data: Partial<ToDoData>): ToDo;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
   abstract showForm(): Modal;

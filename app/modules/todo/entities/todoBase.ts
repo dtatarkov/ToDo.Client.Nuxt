@@ -138,6 +138,8 @@ export class ToDoBase extends ToDo
   {
     updatePropertiesWithData(this.dataInternal, data);
     this.updateState();
+
+    return this;
   }
 
   override clone(): ToDo
