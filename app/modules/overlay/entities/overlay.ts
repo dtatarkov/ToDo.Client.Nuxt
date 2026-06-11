@@ -5,6 +5,5 @@ export abstract class Overlay
 {
   abstract getElements(): OverlayElement[];
   abstract createModal(configuration: ModalConfiguration): Modal;
-  abstract addElement(element: OverlayElement): void;
   abstract removeElement(element: OverlayElement): void;
 }

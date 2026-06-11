@@ -31,20 +31,20 @@ export class OverlayBase extends Overlay
         return modal;
     }
 
-    addElement(element: OverlayElement): void
+    removeElement(element: OverlayElement): void
+    {
+        this.assertElementIsAdded(element);
+
+        removeFromArray(this.elements, element);
+    }
+
+    private addElement(element: OverlayElement): void
     {
         this.assertElementIsNotAdded(element);
 
         element.setOverlay(this);
 
         this.elements.push(element);
-    }
-
-    removeElement(element: OverlayElement): void
-    {
-        this.assertElementIsAdded(element);
-
-        removeFromArray(this.elements, element);
     }
 
     private assertElementIsAdded(element: OverlayElement)
