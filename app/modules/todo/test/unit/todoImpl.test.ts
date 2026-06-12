@@ -126,7 +126,6 @@ describe('ToDoImpl', () =>
             todo.showForm();
 
             expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(formMock.setElementsFromScheme).toHaveBeenCalledTimes(1);
             expect(formMock.setData).toHaveBeenCalledTimes(1);
             expect(formMock.setData).toHaveBeenCalledWith(todo.getData());
         });

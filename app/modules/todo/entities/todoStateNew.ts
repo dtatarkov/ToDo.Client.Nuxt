@@ -19,12 +19,13 @@ export class ToDoStateNew extends ToDoStateBase
     showForm(): Modal
     {
         const form = this.formFactory.create<ToDoData>({
+            scheme: this.scheme,
+
             submit: data => this.todo
                 .setData(data)
                 .saveAsync()
         });
 
-        form.setElementsFromScheme(this.scheme);
         form.setData(this.todo.getData());
 
         return this.overlay.createModal({

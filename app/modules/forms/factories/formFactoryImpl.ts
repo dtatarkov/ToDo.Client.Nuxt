@@ -1,23 +1,20 @@
-import { FormElementFactory } from './formElementFactory';
 import type { Form, FormConfiguration } from "../entities/form";
 import { dependency } from "@/modules/shared/decorators/dependency";
 import type { FormFactory } from './formFactory';
 import { FormBase } from '../entities/formBase';
-import { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
+import { FormElementsFactory } from './formElementsFactory';
 
-@dependency(FormElementFactory)
-@dependency(EntitySchemeToFormElementsMapper)
+@dependency(FormElementsFactory)
 export class FormFactoryImpl implements FormFactory
 {
   constructor(
-    private formElementFactory: FormElementFactory,
-    private schemeToElementsMapper: EntitySchemeToFormElementsMapper,
+    private formElementsFactory: FormElementsFactory,
   )
   {
   }
 
   create<TEntity extends Record<string, any> = Record<string, any>>(configuration: FormConfiguration<TEntity>): Form<TEntity>
   {
-    return new FormBase(this.formElementFactory, this.schemeToElementsMapper, configuration);
+    return new FormBase(this.formElementsFactory, configuration);
   }
 }

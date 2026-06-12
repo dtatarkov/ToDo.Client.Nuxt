@@ -2,11 +2,8 @@ import VForm from "../components/VForm.vue";
 import { Form, type FormConfiguration } from "@/modules/forms/entities/form";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
-import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElement } from './formElement';
-import type { FormElementFactory } from '../factories/formElementFactory';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import type { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
+import type { FormElementsFactory } from '../factories/formElementsFactory';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
 import type { Func } from '@/modules/shared/types/func';
@@ -17,7 +14,7 @@ enum FormBaseState
   disabled = 1,
 }
 
-export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form
+export class FormBase<TEntity extends Record<string, any> = Record<string, any>> extends Form<TEntity>
 {
   private elementsRef = shallowRef(new Array<FormElement>());
   private stateRef = shallowRef(FormBaseState.initial);
@@ -37,14 +34,14 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   readonly key = getUniqueId('form');
 
   constructor(
-    private formElementFactory: FormElementFactory,
-    private schemeToElementsMapper: EntitySchemeToFormElementsMapper,
+    private formElementsFactory: FormElementsFactory,
     configuration: FormConfiguration<TEntity>
   )
   {
     super();
 
     this.handleSubmit = configuration.submit;
+    this.elementsRef.value = this.formElementsFactory.createElements(configuration.scheme);
   }
 
   get vnode()
@@ -93,24 +90,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
         element.value = data[element.name];
       }
     }
-  }
-
-  override setElements(elements: Partial<Record<keyof TEntity, FormElementCreateData>>)
-  {
-    this.assertNotDisabled();
-
-    this.elementsRef.value = Object.entries(elements).map(([name, createData]) =>
-    {
-      const element = this.formElementFactory.createElement(name, createData as FormElementCreateData);
-
-      return element;
-    });
-  }
-
-  override setElementsFromScheme(scheme: EntityScheme<TEntity>): void
-  {
-    const elements = this.schemeToElementsMapper.map(scheme);
-    this.setElements(elements);
   }
 
   override async submitAsync(): Promise<void>

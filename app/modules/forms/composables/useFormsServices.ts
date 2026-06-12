@@ -1,17 +1,14 @@
-import { FormElementFactoryImpl } from '../factories/formElementFactoryImpl';
+import { FormElementsFactoryImpl } from '../factories/formElementsFactoryImpl';
 import { FormFactoryImpl } from '../factories/formFactoryImpl';
 import { InputElementsFactory } from '../factories/inputElementsFactory';
 import { InputElementsFactoryImpl } from '../factories/inputElementsFactoryImpl';
-import { FormElementFactory } from '../factories/formElementFactory';
+import { FormElementsFactory } from '../factories/formElementsFactory';
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { FormFactory } from '../factories/formFactory';
-import { EntitySchemeToFormElementsMapper } from '../mappers/entitySchemeToFormElementsMapper';
-import { EntitySchemeToFormElementsMapperImpl } from '../mappers/entitySchemeToFormElementsMapperImpl';
 
 export function useFormsServices(): void
 {
-    useServiceRegistration(FormElementFactory).to(FormElementFactoryImpl).asTransient();
+    useServiceRegistration(FormElementsFactory).to(FormElementsFactoryImpl).asTransient();
     useServiceRegistration(FormFactory).to(FormFactoryImpl).asTransient();
     useServiceRegistration(InputElementsFactory).to(InputElementsFactoryImpl).asTransient();
-    useServiceRegistration(EntitySchemeToFormElementsMapper).to(EntitySchemeToFormElementsMapperImpl).asTransient();
 }

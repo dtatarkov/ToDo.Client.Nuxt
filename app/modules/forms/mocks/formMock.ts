@@ -7,8 +7,6 @@ export const formMock = {
     elements: [],
     isDisabled: false,
 
-    setElements: vi.fn(),
-    setElementsFromScheme: vi.fn(),
     setData: vi.fn(),
     submitAsync: vi.fn(),
     getData: vi.fn(),

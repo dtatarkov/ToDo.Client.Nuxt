@@ -1,4 +1,3 @@
-import type { FormElementCreateData } from "../types/formElementCreateData";
 import type { FormElement } from './formElement';
 import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
@@ -7,6 +6,7 @@ import type { Func } from '@/modules/shared/types/func';
 
 export type FormConfiguration<TEntity extends Record<string, any>> = {
   submit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
+  scheme: EntityScheme<TEntity>;
 };
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Disposable
@@ -18,8 +18,6 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract getSubmitCommand(): AsyncCommand;
 
   abstract setData(data: Record<keyof TEntity, any>): void;
-  abstract setElements(elements: Partial<Record<keyof TEntity, FormElementCreateData>>): void;
-  abstract setElementsFromScheme(scheme: EntityScheme<TEntity>): void;
 
   abstract submitAsync(): Promise<void>;
   abstract [Symbol.dispose](): void;
