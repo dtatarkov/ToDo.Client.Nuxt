@@ -8,7 +8,7 @@ import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
 export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 {
-    protected data = shallowReactive({
+    private data = shallowReactive({
         title: '',
         color: <Color>'neutral',
         isDisabled: false,
@@ -19,7 +19,7 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 
     private onClickFn = () =>
     {
-        this.handleClick();
+        this.click();
     };
 
     get vnode(): VNode

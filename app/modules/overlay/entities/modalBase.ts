@@ -128,7 +128,7 @@ export class ModalBase extends Modal
     const button = this.buttonsFactory.createButtonGeneral();
     button.title = 'Отменить';
 
-    button.onClick(() => this.close());
+    button.onClick(() => this.close(), this.disposeToken);
 
     this.addControl(button);
   }

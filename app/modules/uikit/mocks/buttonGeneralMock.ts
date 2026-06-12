@@ -15,6 +15,7 @@ export const buttonGeneralMock = {
     onClick: vi.fn(),
     disable: vi.fn(),
     enable: vi.fn(),
+    click: vi.fn(),
     showLoader: vi.fn(),
     hideLoader: vi.fn(),
     [Symbol.dispose]: vi.fn(),

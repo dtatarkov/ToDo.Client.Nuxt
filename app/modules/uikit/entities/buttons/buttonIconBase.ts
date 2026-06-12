@@ -6,7 +6,7 @@ import { shallowReactive, type VNode } from 'vue';
 
 export class ButtonIconBase extends ButtonBase implements ButtonIcon
 {
-    protected data = shallowReactive({
+    private data = shallowReactive({
         isDisabled: false,
         icon: ''
     });
@@ -15,7 +15,7 @@ export class ButtonIconBase extends ButtonBase implements ButtonIcon
 
     private onClickFn = () =>
     {
-        this.handleClick();
+        this.click();
     };
 
     get vnode(): VNode

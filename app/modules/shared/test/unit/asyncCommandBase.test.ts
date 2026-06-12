@@ -1,87 +1,176 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AsyncCommandBase } from '../../entities/asyncCommandBase';
 import { DisposeToken } from '../../entities/disposeToken';
+import { DisposedException } from '../../exceptions/disposedException';
+import { delay } from '../../utils/delay';
 
 describe('AsyncCommandBase', () =>
 {
-    it('should execute and call onExecuted with resolved true', async () =>
+    describe('executeAsync', () =>
     {
-        const command = new AsyncCommandBase(async () => true);
-        const executedFn = vi.fn();
-        const disposeToken = new DisposeToken();
+        it('should execute and call onExecuted with resolved true', async () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+            const executedFn = vi.fn();
+            const disposeToken = new DisposeToken();
 
-        command.onExecuted(executedFn, disposeToken);
+            command.onExecuted(executedFn, disposeToken);
 
-        const result = await command.executeAsync();
+            const result = await command.executeAsync();
 
-        expect(result).toBe(true);
-        expect(executedFn).toHaveBeenCalledOnce();
+            expect(result).toBe(true);
+            expect(executedFn).toHaveBeenCalledOnce();
+        });
+
+        it('should call onExecuting then onIdle during execution', async () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+            const executingFn = vi.fn();
+            const idleFn = vi.fn();
+            const disposeToken = new DisposeToken();
+
+            command.onExecuting(executingFn, disposeToken);
+            command.onIdle(idleFn, disposeToken);
+
+            await command.executeAsync();
+
+            expect(executingFn).toHaveBeenCalledOnce();
+            expect(idleFn).toHaveBeenCalledOnce();
+            expect(executingFn.mock.invocationCallOrder[0]).toBeLessThan(idleFn.mock.invocationCallOrder[0] as number);
+        });
+
+        it('should not call onExecuted when result is false', async () =>
+        {
+            const command = new AsyncCommandBase(() => Promise.resolve(false));
+            const executedFn = vi.fn();
+            const disposeToken = new DisposeToken();
+
+            command.onExecuted(executedFn, disposeToken);
+
+            const result = await command.executeAsync();
+
+            expect(result).toBe(false);
+            expect(executedFn).not.toHaveBeenCalled();
+        });
+
+        it('should propagate rejection from executeInternal', async () =>
+        {
+            const error = new Error('test error');
+            const command = new AsyncCommandBase(() => Promise.reject(error));
+
+            await expect(command.executeAsync()).rejects.toThrow('test error');
+        });
+
+        it('should call onIdle even on rejection', async () =>
+        {
+            const error = new Error('fail');
+            const command = new AsyncCommandBase(() => Promise.reject(error));
+            const idleFn = vi.fn();
+            const disposeToken = new DisposeToken();
+
+            command.onIdle(idleFn, disposeToken);
+
+            await expect(command.executeAsync()).rejects.toThrow('fail');
+
+            expect(idleFn).toHaveBeenCalledOnce();
+        });
+
+        it('should not call onExecuted on rejection', async () =>
+        {
+            const error = new Error('fail');
+            const command = new AsyncCommandBase(() => Promise.reject(error));
+            const executedFn = vi.fn();
+            const disposeToken = new DisposeToken();
+
+            command.onExecuted(executedFn, disposeToken);
+
+            await expect(command.executeAsync()).rejects.toThrow('fail');
+
+            expect(executedFn).not.toHaveBeenCalled();
+        });
+
+        it('should return false when already executing', async () =>
+        {
+            const command = new AsyncCommandBase(() => delay(10000));
+            command.executeAsync();
+
+            const secondResult = await command.executeAsync();
+
+            expect(secondResult).toBe(false);
+        });
+
+        it('should coerce undefined result to true and call onExecuted', async () =>
+        {
+            const command = new AsyncCommandBase(async () => undefined);
+            const executedFn = vi.fn();
+            const disposeToken = new DisposeToken();
+
+            command.onExecuted(executedFn, disposeToken);
+
+            const result = await command.executeAsync();
+
+            expect(result).toBe(true);
+            expect(executedFn).toHaveBeenCalledOnce();
+        });
+
+        it('should throw DisposedException when executed after dispose', async () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+
+            command[Symbol.dispose]();
+
+            await expect(command.executeAsync()).rejects.toThrow(DisposedException);
+        });
     });
 
-    it('should call onExecuting then onIdle during execution', async () =>
+    describe('onIdle', () =>
     {
-        const command = new AsyncCommandBase(async () => true);
-        const executingFn = vi.fn();
-        const idleFn = vi.fn();
-        const disposeToken = new DisposeToken();
+        it('should throw DisposedException when registered after dispose', () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+            const disposeToken = new DisposeToken();
 
-        command.onExecuting(executingFn, disposeToken);
-        command.onIdle(idleFn, disposeToken);
+            command[Symbol.dispose]();
 
-        await command.executeAsync();
-
-        expect(executingFn).toHaveBeenCalledOnce();
-        expect(idleFn).toHaveBeenCalledOnce();
-        expect(executingFn.mock.invocationCallOrder[0]).toBeLessThan(idleFn.mock.invocationCallOrder[0] as number);
+            expect(() => command.onIdle(() => { }, disposeToken)).toThrow(DisposedException);
+        });
     });
 
-    it('should not call onExecuted when result is false', async () =>
+    describe('onExecuting', () =>
     {
-        const command = new AsyncCommandBase(() => Promise.resolve(false));
-        const executedFn = vi.fn();
-        const disposeToken = new DisposeToken();
+        it('should throw DisposedException when registered after dispose', () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+            const disposeToken = new DisposeToken();
 
-        command.onExecuted(executedFn, disposeToken);
+            command[Symbol.dispose]();
 
-        const result = await command.executeAsync();
-
-        expect(result).toBe(false);
-        expect(executedFn).not.toHaveBeenCalled();
+            expect(() => command.onExecuting(() => { }, disposeToken)).toThrow(DisposedException);
+        });
     });
 
-    it('should propagate rejection from executeInternal', async () =>
+    describe('onExecuted', () =>
     {
-        const error = new Error('test error');
-        const command = new AsyncCommandBase(() => Promise.reject(error));
+        it('should throw DisposedException when registered after dispose', () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
+            const disposeToken = new DisposeToken();
 
-        await expect(command.executeAsync()).rejects.toThrow('test error');
+            command[Symbol.dispose]();
+
+            expect(() => command.onExecuted(() => { }, disposeToken)).toThrow(DisposedException);
+        });
     });
 
-    it('should call onIdle even on rejection', async () =>
+    describe('[Symbol.dispose]', () =>
     {
-        const error = new Error('fail');
-        const command = new AsyncCommandBase(() => Promise.reject(error));
-        const idleFn = vi.fn();
-        const disposeToken = new DisposeToken();
+        it('should not throw when disposed multiple times', () =>
+        {
+            const command = new AsyncCommandBase(async () => true);
 
-        command.onIdle(idleFn, disposeToken);
+            command[Symbol.dispose]();
 
-        await expect(command.executeAsync()).rejects.toThrow('fail');
-
-        expect(idleFn).toHaveBeenCalledOnce();
-    });
-
-    it('should not call onExecuted on rejection', async () =>
-    {
-        const error = new Error('fail');
-        const command = new AsyncCommandBase(() => Promise.reject(error));
-        const executedFn = vi.fn();
-        const disposeToken = new DisposeToken();
-
-        command.onExecuted(executedFn, disposeToken);
-
-        await expect(command.executeAsync()).rejects.toThrow('fail');
-
-        expect(executedFn).not.toHaveBeenCalled();
+            expect(() => command[Symbol.dispose]()).not.toThrow();
+        });
     });
 });

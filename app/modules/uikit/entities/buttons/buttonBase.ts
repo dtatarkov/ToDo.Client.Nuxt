@@ -12,6 +12,13 @@ export abstract class ButtonBase extends Button implements Disposable
 
     private command: AsyncCommand | undefined;
 
+    override click(): void
+    {
+        this.disposeToken.assertNotDisposed();
+        this.command?.executeAsync();
+        this.onClickEvent.emit();
+    }
+
     override setCommand(command: AsyncCommand): void
     {
         this.disposeToken.assertNotDisposed();
@@ -24,21 +31,20 @@ export abstract class ButtonBase extends Button implements Disposable
         this.command = command;
     }
 
-    override onClick(handler: Action): void
+    override onClick(handler: Action, disposeToken: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
-        this.onClickEvent.on(handler, this.disposeToken);
+        this.onClickEvent.on(handler, disposeToken);
     }
 
     override[Symbol.dispose](): void
     {
-        this.disposeToken[Symbol.dispose]();
-    }
+        if (this.disposeToken.isDisposed)
+        {
+            return;
+        }
 
-    protected handleClick(): void
-    {
-        this.disposeToken.assertNotDisposed();
-        this.command?.executeAsync();
-        this.onClickEvent.emit();
+        this.onClickEvent[Symbol.dispose]();
+        this.disposeToken[Symbol.dispose]();
     }
 }
