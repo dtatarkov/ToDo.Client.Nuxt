@@ -20,5 +20,4 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract setData(data: Record<keyof TEntity, any>): void;
 
   abstract submitAsync(): Promise<void>;
-  abstract [Symbol.dispose](): void;
 }

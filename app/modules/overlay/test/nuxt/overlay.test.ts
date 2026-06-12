@@ -7,6 +7,7 @@ import type { UIElement } from '@/modules/uikit/entities/uiElement';
 const contentMock = {
     key: '',
     vnode: {} as VNode,
+    [Symbol.dispose]: vi.fn(),
 } satisfies UIElement;
 
 const modalConfiguration: ModalConfiguration = {

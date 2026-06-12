@@ -2,15 +2,15 @@ import type { Func } from '../types/func';
 import type { Action } from '../types/action';
 import type { DisposeToken } from './disposeToken';
 import { AsyncCommand } from './asyncCommand';
-import { Event } from './event';
+import { EntityEvent } from './entityEvent';
 import { CommandState } from '../enums/commandState';
 
 export class AsyncCommandBase extends AsyncCommand
 {
     private state = CommandState.idle;
-    private onIdleEvent = new Event<void>();
-    private onExecutingEvent = new Event<void>();
-    private onExecutedEvent = new Event<void>();
+    private onIdleEvent = new EntityEvent<void>();
+    private onExecutingEvent = new EntityEvent<void>();
+    private onExecutedEvent = new EntityEvent<void>();
 
     constructor(
         private executeInternal: Func<Promise<boolean | undefined>>

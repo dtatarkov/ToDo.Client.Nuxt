@@ -1,5 +1,6 @@
 import { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 export interface InputElementData<V>
 {
@@ -24,5 +25,5 @@ export abstract class InputElement<V = unknown> extends UIElement implements Inp
   abstract toErrorMode(): void;
   abstract toDefaultMode(): void;
 
-  abstract setValueChangeHandler(handler: Action<[value: V]>): void;
+  abstract onValueChange(handler: Action<[value: V]>, disposeToken: DisposeToken): void;
 }

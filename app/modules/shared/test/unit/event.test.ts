@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
-import { Event } from '../../entities/event';
+import { EntityEvent } from '../../entities/entityEvent';
 import { DisposeToken } from '../../entities/disposeToken';
 
-describe('Event', () =>
+describe('EntityEvent', () =>
 {
     it('should call handler on emit', () =>
     {
-        const event = new Event();
+        const event = new EntityEvent();
         const handler = vi.fn();
         const disposeToken = new DisposeToken();
 
@@ -18,7 +18,7 @@ describe('Event', () =>
 
     it('should pass value to handler on emit', () =>
     {
-        const event = new Event<string>();
+        const event = new EntityEvent<string>();
         const handler = vi.fn();
         const disposeToken = new DisposeToken();
 
@@ -30,7 +30,7 @@ describe('Event', () =>
 
     it('should call multiple handlers on emit', () =>
     {
-        const event = new Event();
+        const event = new EntityEvent();
         const handler1 = vi.fn();
         const handler2 = vi.fn();
         const disposeToken = new DisposeToken();
@@ -45,7 +45,7 @@ describe('Event', () =>
 
     it('should not call handler after dispose token is disposed', () =>
     {
-        const event = new Event();
+        const event = new EntityEvent();
         const handler = vi.fn();
         const disposeToken = new DisposeToken();
 
@@ -58,7 +58,7 @@ describe('Event', () =>
 
     it('should throw when adding handler after event is disposed', () =>
     {
-        const event = new Event<void>();
+        const event = new EntityEvent<void>();
         const handler = vi.fn();
         const disposeToken = new DisposeToken();
 
@@ -69,7 +69,7 @@ describe('Event', () =>
 
     it('should silently ignore handler when adding with disposed token', () =>
     {
-        const event = new Event<void>();
+        const event = new EntityEvent<void>();
         const handler = vi.fn();
         const disposeToken = new DisposeToken();
 

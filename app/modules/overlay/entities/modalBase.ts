@@ -77,7 +77,20 @@ export class ModalBase extends Modal
 
   override close()
   {
-    this.dispose();
+    this.overlay?.removeElement(this);
+    this[Symbol.dispose]();
+  }
+
+  override[Symbol.dispose](): void
+  {
+    if (this.disposeToken.isDisposed)
+    {
+      return;
+    }
+
+    this.disposeContent();
+    this.disposeControls();
+    this.disposeToken[Symbol.dispose]();
   }
 
   override setOverlay(overlay: Overlay)
@@ -118,19 +131,6 @@ export class ModalBase extends Modal
     button.onClick(() => this.close());
 
     this.addControl(button);
-  }
-
-  private dispose()
-  {
-    if (this.disposeToken.isDisposed)
-    {
-      return;
-    }
-
-    this.overlay?.removeElement(this);
-    this.disposeContent();
-    this.disposeControls();
-    this.disposeToken[Symbol.dispose]();
   }
 
   private disposeContent()

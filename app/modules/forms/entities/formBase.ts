@@ -104,6 +104,10 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   override[Symbol.dispose](): void
   {
+    this.elementsRef.value.forEach(element =>
+      element[Symbol.dispose]());
+
+    this.elementsRef.value = [];
   }
 
   private validate(): boolean

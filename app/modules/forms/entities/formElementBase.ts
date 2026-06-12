@@ -3,10 +3,12 @@ import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 export class FormElementBase<V = any> extends FormElement
 {
   private isInitialValidation = true;
+  private disposeToken = new DisposeToken();
 
   readonly key = getUniqueId('form-element');
 
@@ -38,21 +40,26 @@ export class FormElementBase<V = any> extends FormElement
 
   set value(value: V)
   {
+    this.disposeToken.assertNotDisposed();
     this.inputElement.value = value;
   }
 
   override disable(): void
   {
+    this.disposeToken.assertNotDisposed();
     this.inputElement.disable();
   }
 
   override enable(): void
   {
+    this.disposeToken.assertNotDisposed();
     this.inputElement.enable();
   }
 
   override validate(): boolean
   {
+    this.disposeToken.assertNotDisposed();
+
     if (this.isInitialValidation)
     {
       this.handleInitialValidation();
@@ -64,9 +71,14 @@ export class FormElementBase<V = any> extends FormElement
     return errorMessage == undefined;
   }
 
+  override[Symbol.dispose](): void
+  {
+    this.disposeToken[Symbol.dispose]();
+  }
+
   private setupInputValueTracking(): void
   {
-    this.inputElement.setValueChangeHandler(() => this.validate());
+    this.inputElement.onValueChange(() => this.validate(), this.disposeToken);
   }
 
   private handleInitialValidation(): void

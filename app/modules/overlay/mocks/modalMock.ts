@@ -9,5 +9,6 @@ export const modalMock = {
     disable: vi.fn(),
     close: vi.fn(),
     setOverlay: vi.fn(),
+    [Symbol.dispose]: vi.fn(),
 } satisfies Modal;
 

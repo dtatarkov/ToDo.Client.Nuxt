@@ -17,4 +17,5 @@ export const buttonGeneralMock = {
     enable: vi.fn(),
     showLoader: vi.fn(),
     hideLoader: vi.fn(),
+    [Symbol.dispose]: vi.fn(),
 } satisfies ButtonGeneral;
