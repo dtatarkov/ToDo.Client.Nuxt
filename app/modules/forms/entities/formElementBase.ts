@@ -1,20 +1,20 @@
-import { FormFieldBase } from "./formFieldBase";
+import type { FormFieldBase } from "./formFieldBase";
 import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
-import { updatePropertiesWithData } from "@/modules/shared/utils/updatePropertiesWithData";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
-import type { FormElementCreateDataWithName } from '../types/formElementCreateDataWithName';
+import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
 
 export class FormElementBase<V = any> extends FormElement
 {
   private isInitialValidation = true;
 
-  protected formField = new FormFieldBase();
-  protected validateFn: ((value: V) => string | undefined) | undefined;
-
   readonly key = getUniqueId('form-element');
 
-  constructor(protected inputElement: InputElement<V>)
+  constructor(
+    protected inputElement: InputElement<V>,
+    protected formField: FormFieldBase,
+    private validator: EntityValidator,
+  )
   {
     super();
 
@@ -41,13 +41,6 @@ export class FormElementBase<V = any> extends FormElement
     this.inputElement.value = value;
   }
 
-  setData(data: FormElementCreateDataWithName): void
-  {
-    updatePropertiesWithData(this.formField, data);
-    updatePropertiesWithData(this.inputElement, data);
-    this.validateFn = data.validate;
-  }
-
   override disable(): void
   {
     this.inputElement.disable();
@@ -65,7 +58,7 @@ export class FormElementBase<V = any> extends FormElement
       this.handleInitialValidation();
     }
 
-    const errorMessage = this.validateFn?.(this.value);
+    const errorMessage = this.validator.validateField(this.name, this.value);
     this.handleErrorMessage(errorMessage);
 
     return errorMessage == undefined;

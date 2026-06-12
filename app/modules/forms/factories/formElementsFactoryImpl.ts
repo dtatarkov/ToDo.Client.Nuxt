@@ -1,23 +1,22 @@
 import type { FormElement } from '../entities/formElement';
-import { FormElementType } from '../enums/formElementType';
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
+import { FormFieldBase } from '../entities/formFieldBase';
 import type { FormElementsFactory } from './formElementsFactory';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
-import type { EntityDateTimeFieldScheme, EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
+import type { EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
 import { EntityValidatorFactory } from '@/modules/validation/factories/entityValidatorFactory';
 import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
-import type { FormElementCreateData } from '../types/formElementCreateData';
 
 @dependency(InputElementsFactory)
 @dependency(EntityValidatorFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory
 {
     constructor(
-        protected inputElementsFactory: InputElementsFactory,
+        private inputElementsFactory: InputElementsFactory,
         private entityValidatorFactory: EntityValidatorFactory,
     )
     {
@@ -49,81 +48,86 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         validator: EntityValidator<TEntity>,
     ): FormElement | undefined
     {
-        const createData = this.mapSchemeFieldIntoElementCreateData(fieldScheme);
+        const inputElement = this.createFieldInputElement(name, fieldScheme);
 
-        if (!createData)
+        if (!inputElement)
         {
             return undefined;
         }
 
-        const inputElement = this.createInputElement(createData.type);
-        const formElement = new FormElementBase(inputElement);
-
-        formElement.setData({
-            ...createData,
-            name,
-            validate: (value: any) =>
-                validator.validateField(name as keyof TEntity, value),
-        });
+        const formField = this.createFormField(name, fieldScheme);
+        const formElement = new FormElementBase(inputElement, formField, validator);
 
         return formElement;
     }
 
-    private mapSchemeFieldIntoElementCreateData(fieldScheme: EntityFieldScheme): FormElementCreateData | undefined
+    private createFormField(name: string, fieldScheme: EntityFieldScheme)
     {
+        const formField = new FormFieldBase();
+        formField.name = name;
+        formField.label = (fieldScheme as { label?: string; }).label ?? '';
+
+        return formField;
+    }
+
+    private createFieldInputElement(name: string, fieldScheme: EntityFieldScheme): InputElement | undefined
+    {
+        let inputElement: InputElement | undefined = undefined;
+
         switch (fieldScheme.type)
         {
             case EntityFieldType.string:
-                return this.mapStringField(fieldScheme);
+                inputElement = this.createStringFieldInputElement(fieldScheme);
+                break;
 
             case EntityFieldType.datetime:
-                return this.mapDateTimeField(fieldScheme);
-
-            default:
-                return undefined;
+                inputElement = this.createInputDateTime();
+                break;
         }
-    }
 
-    private mapStringField(fieldScheme: EntityStringFieldScheme): FormElementCreateData
-    {
-        if (fieldScheme.isLong)
+        if (inputElement)
         {
-            return {
-                type: FormElementType.textarea,
-                label: fieldScheme.label,
-                placeholder: fieldScheme.placeholder,
-            };
+            inputElement.name = name;
         }
 
-        return {
-            type: FormElementType.inputText,
-            label: fieldScheme.label,
-            placeholder: fieldScheme.placeholder,
-        };
+        return inputElement;
     }
 
-    private mapDateTimeField(fieldScheme: EntityDateTimeFieldScheme): FormElementCreateData
+    private createStringFieldInputElement(fieldScheme: EntityStringFieldScheme): InputElement
     {
-        return {
-            type: FormElementType.inputDateTime,
-            label: fieldScheme.label,
-        };
+        return fieldScheme.isLong
+            ? this.createTextarea(fieldScheme)
+            : this.createInputText(fieldScheme);
     }
 
-    private createInputElement(type: FormElementType): InputElement
+    private createInputText(fieldScheme: EntityStringFieldScheme): InputElement
     {
-        switch (type)
+        const inputElement = this.inputElementsFactory.createInputText();
+
+        if (fieldScheme.placeholder)
         {
-            case FormElementType.inputText:
-                return this.inputElementsFactory.createInputText();
-            case FormElementType.textarea:
-                return this.inputElementsFactory.createTextarea();
-            case FormElementType.inputDate:
-                return this.inputElementsFactory.createInputDate();
-            case FormElementType.inputTime:
-                return this.inputElementsFactory.createInputTime();
-            case FormElementType.inputDateTime:
-                return this.inputElementsFactory.createInputDateTime();
+            inputElement.placeholder = fieldScheme.placeholder;
         }
+
+        return inputElement;
+    }
+
+    private createTextarea(fieldScheme: EntityStringFieldScheme): InputElement
+    {
+        const inputElement = this.inputElementsFactory.createTextarea();
+
+        if (fieldScheme.placeholder)
+        {
+            inputElement.placeholder = fieldScheme.placeholder;
+        }
+
+        return inputElement;
+    }
+
+    private createInputDateTime(): InputElement
+    {
+        const inputElement = this.inputElementsFactory.createInputDateTime();
+
+        return inputElement;
     }
 }
