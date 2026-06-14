@@ -31,6 +31,16 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     this.stateRef.value = value;
   }
 
+  private get elements()
+  {
+    return this.elementsRef.value;
+  }
+
+  private set elements(value)
+  {
+    this.elementsRef.value = value;
+  }
+
   readonly key = getUniqueId('form');
 
   constructor(
@@ -47,7 +57,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   get vnode()
   {
     const props = {
-      isDisabled: this.isDisabled
+      isDisabled: this.isDisabled()
     };
 
     const children = {
@@ -57,12 +67,12 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return h(VForm, props, children);
   }
 
-  get elements(): FormElement[]
+  override getElements(): FormElement[]
   {
     return this.elementsRef.value;
   }
 
-  get isDisabled(): boolean
+  override isDisabled(): boolean
   {
     return this.state === FormBaseState.disabled;
   }
@@ -133,7 +143,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   private assertNotDisabled(): void
   {
-    if (this.isDisabled)
+    if (this.isDisabled())
     {
       throw new FormDisabledException();
     }

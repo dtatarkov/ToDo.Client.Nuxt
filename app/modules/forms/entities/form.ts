@@ -11,11 +11,10 @@ export type FormConfiguration<TEntity extends Record<string, any>> = {
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Disposable
 {
-  abstract readonly elements: FormElement[];
-  abstract readonly isDisabled: boolean;
-
+  abstract getElements(): FormElement[];
   abstract getData(): Record<keyof TEntity, any>;
   abstract setData(data: Record<keyof TEntity, any>): void;
+  abstract isDisabled(): boolean;
 
   abstract getSubmitCommand(): AsyncCommand;
 }

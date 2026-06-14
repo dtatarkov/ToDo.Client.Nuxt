@@ -103,12 +103,12 @@ describe('FormBase', () =>
             const command = form.getSubmitCommand();
             const executePromise = command.executeAsync();
 
-            expect(form.isDisabled).toBe(true);
+            expect(form.isDisabled()).toBe(true);
 
             resolveSubmit?.();
             await executePromise;
 
-            expect(form.isDisabled).toBe(false);
+            expect(form.isDisabled()).toBe(false);
         });
     });
 });
