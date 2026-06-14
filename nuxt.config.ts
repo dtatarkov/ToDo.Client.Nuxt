@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       include: [
         'UApp',
         'UModal',
+        'UToast',
         'UForm',
         'UFormField',
         'UCard',

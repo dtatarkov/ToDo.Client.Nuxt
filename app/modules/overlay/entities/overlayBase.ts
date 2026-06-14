@@ -2,9 +2,12 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ModalBase } from './modalBase';
+import { NotificationBase } from './notificationBase';
 import type { OverlayElement } from './overlayElement';
 import { Overlay } from './overlay';
 import type { Modal, ModalConfiguration } from './modal';
+import type { Notification } from './notification';
+import type { NotificationConfiguration } from './notificationConfiguration';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
@@ -38,6 +41,14 @@ export class OverlayBase extends Overlay
         this.addElement(modal);
 
         return modal;
+    }
+
+    createNotification(configuration: NotificationConfiguration): Notification
+    {
+        const notification = new NotificationBase(configuration);
+        this.addElement(notification);
+
+        return notification;
     }
 
     removeElement(element: OverlayElement): void
