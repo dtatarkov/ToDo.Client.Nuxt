@@ -33,6 +33,11 @@ export class FormElementBase<V = any> extends FormElement
     return this.formField.name;
   }
 
+  get label()
+  {
+    return this.formField.label;
+  }
+
   get value(): V
   {
     return this.inputElement.value;

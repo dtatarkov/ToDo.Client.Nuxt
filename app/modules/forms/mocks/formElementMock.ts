@@ -5,6 +5,7 @@ export function createFormElementMock<V = unknown>(name: string, initialValue: V
 {
     return {
         name,
+        label: '',
         value: initialValue,
         validate: vi.fn(() => validateResult),
         disable: vi.fn(),
