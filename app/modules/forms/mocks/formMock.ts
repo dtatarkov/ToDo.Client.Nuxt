@@ -8,7 +8,6 @@ export const formMock = {
     isDisabled: false,
 
     setData: vi.fn(),
-    submitAsync: vi.fn(),
     getData: vi.fn(),
     getSubmitCommand: vi.fn(),
     [Symbol.dispose]: vi.fn(),

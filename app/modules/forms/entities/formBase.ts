@@ -92,11 +92,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
   }
 
-  override async submitAsync(): Promise<void>
-  {
-    await this.submitCommand.executeAsync();
-  }
-
   override getSubmitCommand(): AsyncCommand
   {
     return this.submitCommand;

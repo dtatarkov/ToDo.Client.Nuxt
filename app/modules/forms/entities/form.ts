@@ -15,9 +15,7 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract readonly isDisabled: boolean;
 
   abstract getData(): Record<keyof TEntity, any>;
-  abstract getSubmitCommand(): AsyncCommand;
-
   abstract setData(data: Record<keyof TEntity, any>): void;
 
-  abstract submitAsync(): Promise<void>;
+  abstract getSubmitCommand(): AsyncCommand;
 }
