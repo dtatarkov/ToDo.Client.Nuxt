@@ -1,9 +1,13 @@
 import type { OverlayElement } from './overlayElement';
 import type { Modal, ModalConfiguration } from './modal';
+import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
-export abstract class Overlay
+export abstract class Overlay implements Disposable
 {
   abstract getElements(): OverlayElement[];
   abstract createModal(configuration: ModalConfiguration): Modal;
   abstract removeElement(element: OverlayElement): void;
+  abstract onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken: DisposeToken): void;
+  abstract [Symbol.dispose](): void;
 }

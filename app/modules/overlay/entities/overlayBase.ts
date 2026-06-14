@@ -5,11 +5,15 @@ import { ModalBase } from './modalBase';
 import type { OverlayElement } from './overlayElement';
 import { Overlay } from './overlay';
 import type { Modal, ModalConfiguration } from './modal';
+import { EntityEvent } from '@/modules/shared/entities/entityEvent';
+import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@/modules/shared/types/action';
 
 @dependency(ButtonsFactory)
 export class OverlayBase extends Overlay
 {
-    private elements = shallowReactive(new Array<OverlayElement>());
+    private elements = new Array<OverlayElement>();
+    private elementsChangeEvent = new EntityEvent<OverlayElement[]>();
 
     constructor(
         private buttonsFactory: ButtonsFactory,
@@ -21,6 +25,11 @@ export class OverlayBase extends Overlay
     getElements(): OverlayElement[]
     {
         return this.elements;
+    }
+
+    onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken: DisposeToken): void
+    {
+        this.elementsChangeEvent.on(callback, disposeToken);
     }
 
     createModal(configuration: ModalConfiguration): Modal
@@ -36,6 +45,12 @@ export class OverlayBase extends Overlay
         this.assertElementIsAdded(element);
 
         removeFromArray(this.elements, element);
+        this.elementsChangeEvent.emit(this.elements);
+    }
+
+    override[Symbol.dispose](): void
+    {
+        this.elementsChangeEvent[Symbol.dispose]();
     }
 
     private addElement(element: OverlayElement): void
@@ -45,6 +60,7 @@ export class OverlayBase extends Overlay
         element.setOverlay(this);
 
         this.elements.push(element);
+        this.elementsChangeEvent.emit(this.elements);
     }
 
     private assertElementIsAdded(element: OverlayElement)

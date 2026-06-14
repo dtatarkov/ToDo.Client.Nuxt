@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { OverlayBase } from '../../entities/overlayBase';
 import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { ModalConfiguration } from '../../entities/modal';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
@@ -24,7 +25,7 @@ describe('OverlayBase', () =>
 
     describe('getElements', () =>
     {
-        it('should return observable with empty array initially', () =>
+        it('should return empty array initially', () =>
         {
             const overlay = new OverlayBase(buttonsFactoryMock);
             const observable = overlay.getElements();
@@ -77,6 +78,39 @@ describe('OverlayBase', () =>
             const modal = overlay.createModal(modalConfiguration);
             overlay.removeElement(modal);
             expect(() => overlay.removeElement(modal)).toThrow();
+        });
+    });
+
+    describe('onElementsChange', () =>
+    {
+        it('should invoke callback when element is added', () =>
+        {
+            const overlay = new OverlayBase(buttonsFactoryMock);
+            const disposeToken = new DisposeToken();
+            const callback = vi.fn();
+
+            overlay.onElementsChange(callback, disposeToken);
+            const modal = overlay.createModal(modalConfiguration);
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([modal]);
+        });
+
+        it('should invoke callback when element is removed', () =>
+        {
+            const overlay = new OverlayBase(buttonsFactoryMock);
+            const disposeToken = new DisposeToken();
+            const callback = vi.fn();
+
+            overlay.onElementsChange(callback, disposeToken);
+            const modal = overlay.createModal(modalConfiguration);
+
+            callback.mockClear();
+
+            overlay.removeElement(modal);
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([]);
         });
     });
 });

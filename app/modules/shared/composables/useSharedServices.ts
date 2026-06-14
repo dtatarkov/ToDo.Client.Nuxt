@@ -9,6 +9,7 @@ import { ZonedDateTimeMapper } from "../mappers/zonedDateTimeMapper";
 import { TimeMapper } from "../mappers/timeMapper";
 import { useRuntimeConfig } from "#imports";
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 export function useSharedServices(): void
 {
@@ -19,6 +20,7 @@ export function useSharedServices(): void
         return config.public;
     }).asSingleton();
 
+    useServiceRegistration(DisposeToken).to(DisposeToken).asTransient();
     useServiceRegistration(DateParser).to(DateParserImpl).asTransient();
     useServiceRegistration(DateFormatter).to(DateFormatterImpl).asTransient();
     useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
