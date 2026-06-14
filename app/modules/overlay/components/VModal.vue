@@ -1,16 +1,19 @@
 <script setup lang="ts">
-const props = defineProps<{ 
-  title: string,
-  description: string,
-  isDismissible: boolean,
- }>();
+import type { ModalData } from '../types/modalData';
+
+const props = defineProps<ModalData>();
 
  const emits = defineEmits<{
-   (e: 'open', isOpened: boolean): void
+   (e: 'close'): void
  }>();
 
+ const isDismissible = computed(() => !props.isDisabled);
+
  function handleOpen(isOpened: boolean) {
-  emits('open', isOpened)
+  if(!isOpened) 
+  {
+    emits('close');
+  }
  }
 </script>
 
@@ -19,7 +22,7 @@ const props = defineProps<{
       :default-open="true"
       :transition="false"
       :description="props.description"
-      :dismissible="props.isDismissible"
+      :dismissible="isDismissible"
       @update:open="handleOpen"
   >
     <template #title>

@@ -13,20 +13,18 @@ import { ModalButtonConfirm } from './modalButtonConfirm';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { Func } from '@/modules/shared/types/func';
 import type { Button } from '@/modules/uikit/entities/buttons/button';
+import type { ModalData } from '../types/modalData';
 
 export class ModalBase extends Modal
 {
   private overlay: Overlay | undefined;
   private content: UIElement | undefined;
+  private data: ModalData;
 
-  private controls: Button[] = [];
+  private controls = new Array<Button>;
   private disposeToken = new DisposeToken();
 
-  private data = shallowReactive({
-    title: '',
-    description: '',
-    isDisabled: false,
-  });
+  private onCloseFn = () => this.close();
 
   readonly key = getUniqueId('modal');
 
@@ -37,8 +35,12 @@ export class ModalBase extends Modal
   {
     super();
 
-    this.data.title = configuration.title;
-    this.data.description = configuration.description ?? '';
+    this.data = shallowReactive({
+      title: configuration.title,
+      description: configuration.description ?? '',
+      isDisabled: false,
+    });
+
     this.content = configuration.content;
 
     this.setupButtonConfirm(configuration.buttonConfirm);
@@ -48,9 +50,9 @@ export class ModalBase extends Modal
   get vnode()
   {
     return h(VModal, {
-      title: this.data.title,
-      description: this.data.description,
-      isDismissible: !this.data.isDisabled
+      ...this.data,
+
+      onClose: this.onCloseFn,
     }, {
       content: () => this.content?.vnode,
       controls: () => this.controls.map(control => control.vnode)
@@ -128,7 +130,7 @@ export class ModalBase extends Modal
     const button = this.buttonsFactory.createButtonGeneral();
     button.title = 'Отменить';
 
-    button.onClick(() => this.close(), this.disposeToken);
+    button.onClick(this.onCloseFn, this.disposeToken);
 
     this.addControl(button);
   }
