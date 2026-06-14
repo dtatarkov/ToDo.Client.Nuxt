@@ -5,7 +5,7 @@
     </VToolbar>
 
     <VGrid>
-      <VToDoCard v-for="cardData in cardsData" v-bind="cardData" :key="cardData.id" @edit="handleEditToDoRequest(cardData.id)" />
+      <VToDoCard v-for="card in todoCards" v-bind="card" :key="card.id" @edit="handleEditToDoRequest(card.id)" />
     </VGrid>
   </div>
 </template>
@@ -15,26 +15,17 @@ import VToolbar from '@/modules/uikit/components/VToolbar.vue';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VGrid from '@/modules/uikit/components/VGrid.vue';
 import VToDoCard from './VToDoCard.vue';
-import { useService } from '@/modules/shared/composables/useService';
-import { GetToDoCardsUseCase } from '../usecases/getToDoCardsUseCase';
-import { InitializeToDosUseCase } from '../usecases/initializeToDosUseCase';
-import { CreateToDoUseCase } from '../usecases/createToDoUseCase';
-import { EditToDoUseCase } from '../usecases/editToDoUseCase';
+import { useToDoCards } from '../composables/useToDoCards';
 
-const initializeToDosUseCase = useService(InitializeToDosUseCase);
-const getToDoCardsUseCase = useService(GetToDoCardsUseCase);
-const showAddToDoDialogUseCase = useService(CreateToDoUseCase);
-const showEditToDoDialogUseCase = useService(EditToDoUseCase);
-
-const cardsData = getToDoCardsUseCase.execute();
+const { todoCards, initializeToDosAsync, createToDo, editToDo } = useToDoCards();
 
 function handleAddToDoButtonClick() {
-  showAddToDoDialogUseCase.execute();
+  createToDo();
 }
 
 function handleEditToDoRequest(id: string) {
-    showEditToDoDialogUseCase.executeAsync(id);
+  editToDo(id);
 }
 
-await initializeToDosUseCase.executeAsync();
+await initializeToDosAsync();
 </script>

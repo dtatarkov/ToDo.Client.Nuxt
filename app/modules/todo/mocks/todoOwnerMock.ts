@@ -7,5 +7,7 @@ export const todosOwnerMock = {
     updateToDosAsync: vi.fn(),
     initializeToDosAsync: vi.fn(),
     saveToDoAsync: vi.fn(),
-    createToDo: vi.fn()
+    createToDo: vi.fn(),
+    onToDosChange: vi.fn(),
+    [Symbol.dispose]: vi.fn(),
 } satisfies ToDosOwner;

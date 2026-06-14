@@ -4,14 +4,17 @@ import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { ToDoFactory } from '../factories/todoFactory';
-import { shallowReactive, type Reactive } from 'vue';
+import { EntityEvent } from '@/modules/shared/entities/entityEvent';
+import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@/modules/shared/types/action';
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)
 export class ToDosOwnerBase extends ToDosOwner
 {
   private initializationPromise: Promise<void> | undefined;
-  private todos = shallowReactive(new Array<ToDo>());
+  private todos = new Array<ToDo>();
+  private todosChangeEvent = new EntityEvent<ToDo[]>();
 
   constructor(
     private todosRepository: ToDosRepository,
@@ -21,9 +24,14 @@ export class ToDosOwnerBase extends ToDosOwner
     super();
   }
 
-  override getAllToDos(): Reactive<ToDo[]>
+  override getAllToDos(): ToDo[]
   {
     return this.todos;
+  }
+
+  override onToDosChange(callback: Action<[ToDo[]]>, disposeToken: DisposeToken): void
+  {
+    this.todosChangeEvent.on(callback, disposeToken);
   }
 
   override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
@@ -80,6 +88,11 @@ export class ToDosOwnerBase extends ToDosOwner
     return todo;
   }
 
+  override[Symbol.dispose](): void
+  {
+    this.todosChangeEvent[Symbol.dispose]();
+  }
+
   private assertNewOrExistingToDo(todo: ToDo): void
   {
     if (!todo.isNew)
@@ -94,6 +107,7 @@ export class ToDosOwnerBase extends ToDosOwner
   private addToDo(todo: ToDo)
   {
     this.todos.push(todo);
+    this.todosChangeEvent.emit(this.todos);
   }
 
   private async updateToDosInternalAsync(): Promise<void>
@@ -105,6 +119,7 @@ export class ToDosOwnerBase extends ToDosOwner
       todo.owner = this;
     }
 
-    this.todos.splice(0, this.todos.length, ...todos);
+    this.todos = todos;
+    this.todosChangeEvent.emit(this.todos);
   }
 }
