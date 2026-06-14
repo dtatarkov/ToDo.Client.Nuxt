@@ -62,7 +62,18 @@ describe('FormBase', () =>
             form.setData({ title: 'new-title' });
 
             expect(titleElement.value).toBe('new-title');
-            expect(descriptionElement.value).toBe('old-desc');
+        });
+
+        it('should call setDefaultValue on element not present in data', () =>
+        {
+            const titleElement = createFormElementMock('title', 'old-title');
+            const descriptionElement = createFormElementMock('description', 'old-desc');
+
+            const form = createForm([titleElement, descriptionElement]);
+
+            form.setData({ title: 'new-title' });
+
+            expect(descriptionElement.setDefaultValue).toHaveBeenCalledTimes(1);
         });
     });
 

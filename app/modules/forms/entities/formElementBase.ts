@@ -61,6 +61,12 @@ export class FormElementBase<V = any> extends FormElement
     this.inputElement.enable();
   }
 
+  override setDefaultValue(): void
+  {
+    this.disposeToken.assertNotDisposed();
+    this.inputElement.setDefaultValue();
+  }
+
   override validate(): boolean
   {
     this.disposeToken.assertNotDisposed();

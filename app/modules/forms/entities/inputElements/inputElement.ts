@@ -25,5 +25,7 @@ export abstract class InputElement<V = unknown> extends UIElement implements Inp
   abstract toErrorMode(): void;
   abstract toDefaultMode(): void;
 
+  abstract setDefaultValue(): void;
+
   abstract onValueChange(handler: Action<[value: V]>, disposeToken: DisposeToken): void;
 }

@@ -129,6 +129,12 @@ export abstract class InputElementBase<V> extends InputElement<V>
         this.valueChangeEvent.on(handler, disposeToken);
     }
 
+    override setDefaultValue(): void
+    {
+        this.disposeToken.assertNotDisposed();
+        this.value = this.getDefaultValue();
+    }
+
     override[Symbol.dispose](): void
     {
         if (this.disposeToken.isDisposed)

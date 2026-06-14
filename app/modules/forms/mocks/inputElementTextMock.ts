@@ -14,6 +14,7 @@ export function createInputElementTextMock(data?: Partial<InputElementTextData>)
         vnode: {} as any,
         disable: vi.fn(),
         enable: vi.fn(),
+        setDefaultValue: vi.fn(),
         toErrorMode: vi.fn(),
         toDefaultMode: vi.fn(),
         onValueChange: vi.fn(),
