@@ -1,7 +1,7 @@
 export class ReadonlyRefValueChangeException extends Error
 {
-    constructor(refName: string)
+    constructor()
     {
-        super(`"${refName}" ref is readonly and cannot be set`);
+        super('Ref is readonly and cannot be set');
     }
 }

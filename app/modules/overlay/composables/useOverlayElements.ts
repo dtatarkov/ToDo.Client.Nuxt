@@ -1,36 +1,15 @@
-import { customRef } from 'vue';
 import { useService } from '@/modules/shared/composables/useService';
+import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
 import { Overlay } from '../entities/overlay';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
-import type { OverlayElement } from '../entities/overlayElement';
-import type { Ref } from 'vue';
 
-export function useOverlayElements(): { overlayElements: Ref<OverlayElement[]>; }
+export function useOverlayElements()
 {
     const overlay = useService(Overlay);
-    const disposeToken = useService(DisposeToken);
 
-    const overlayElements = customRef<OverlayElement[]>((track, trigger) =>
-    {
-        overlay.onElementsChange(() =>
-        {
-            trigger();
-        }, disposeToken);
-
-        return {
-            get()
-            {
-                track();
-                return overlay.getElements();
-            },
-
-            set()
-            {
-                throw new ReadonlyRefValueChangeException('overlayElements');
-            },
-        };
-    });
+    const overlayElements = useEventDrivenRef(
+        () => overlay.getElements(),
+        (callback, disposeToken) => overlay.onElementsChange(callback, disposeToken),
+    );
 
     return { overlayElements };
 }
