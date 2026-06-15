@@ -2,6 +2,7 @@ import type { Reactive } from 'vue';
 import type { ToDosOwner } from './todosOwner';
 import type { ToDoData } from '../types/todoData';
 import type { Modal } from '@/modules/overlay/entities/modal';
+import type { Form } from '@/modules/forms/entities/form';
 
 export abstract class ToDo
 {
@@ -17,5 +18,5 @@ export abstract class ToDo
   abstract setData(data: Partial<ToDoData>): ToDo;
   abstract clone(): ToDo;
   abstract saveAsync(): Promise<void>;
-  abstract showForm(): Modal;
+  abstract showForm(): Modal<Form>;
 }

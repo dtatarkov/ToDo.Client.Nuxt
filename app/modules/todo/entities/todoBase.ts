@@ -12,6 +12,7 @@ import { satisfies } from '@/modules/shared/utils/satisfies';
 import type { ToDoState } from './todoState';
 import type { StateTransition } from '@/modules/shared/types/stateTransition';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import type { Form } from '@/modules/forms/entities/form';
 
 type ToDoStateTransitionConstraint = {
   isNew: boolean;
@@ -166,7 +167,7 @@ export class ToDoBase extends ToDo
     await this.ownerInternal?.saveToDoAsync(this);
   }
 
-  override showForm(): Modal
+  override showForm(): Modal<Form>
   {
     return this.state.showForm();
   }

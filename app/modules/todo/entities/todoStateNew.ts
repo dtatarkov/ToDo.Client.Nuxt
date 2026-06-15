@@ -4,6 +4,7 @@ import type { ToDoBase } from './todoBase';
 import type { Modal } from '@/modules/overlay/entities/modal';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
+import type { Form } from '@/modules/forms/entities/form';
 
 export class ToDoStateNew extends ToDoStateBase
 {
@@ -16,7 +17,7 @@ export class ToDoStateNew extends ToDoStateBase
         super(todo);
     }
 
-    showForm(): Modal
+    showForm(): Modal<Form>
     {
         const form = this.formFactory.create<ToDoData>({
             scheme: this.scheme,

@@ -11,6 +11,7 @@ import type { NotificationConfiguration } from './notificationConfiguration';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
+import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 @dependency(ButtonsFactory)
 export class OverlayBase extends Overlay
@@ -35,7 +36,7 @@ export class OverlayBase extends Overlay
         this.elementsChangeEvent.on(callback, disposeToken);
     }
 
-    createModal(configuration: ModalConfiguration): Modal
+    createModal<Content extends UIElement>(configuration: ModalConfiguration<Content>): Modal<Content>
     {
         const modal = new ModalBase(this.buttonsFactory, configuration);
         this.addElement(modal);

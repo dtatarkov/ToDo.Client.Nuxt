@@ -4,16 +4,22 @@ import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigu
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { Func } from '@/modules/shared/types/func';
 
-export type ModalConfiguration = {
+export type ModalConfiguration<Content extends UIElement> = {
     title: string;
     description?: string;
-    content: UIElement;
+    content: Content;
     buttonConfirm?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>;
     buttonCancel?: boolean;
 };
 
-export abstract class Modal extends OverlayElement
+export abstract class Modal<Content extends UIElement> extends OverlayElement
 {
+    abstract readonly title: string;
+    abstract readonly description: string;
+    abstract readonly content: Content;
+    abstract readonly buttonConfirm: ButtonGeneral | undefined;
+    abstract readonly buttonCancel: ButtonGeneral | undefined;
+
     abstract enable(): void;
     abstract disable(): void;
 }

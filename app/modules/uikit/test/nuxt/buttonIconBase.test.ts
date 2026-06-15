@@ -63,6 +63,26 @@ describe('ButtonIconBase', () =>
         });
     });
 
+    describe('getCommand', () =>
+    {
+        it('should return undefined when no command is set', () =>
+        {
+            const button = new ButtonIconBase();
+
+            expect(button.getCommand()).toBeUndefined();
+        });
+
+        it('should return the command after setCommand', () =>
+        {
+            const button = new ButtonIconBase();
+            const command = new AsyncCommandBase(async () => true);
+
+            button.setCommand(command);
+
+            expect(button.getCommand()).toBe(command);
+        });
+    });
+
     describe('setCommand', () =>
     {
         it('should set the command without error', () =>

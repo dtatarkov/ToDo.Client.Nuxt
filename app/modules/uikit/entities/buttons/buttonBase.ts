@@ -19,6 +19,11 @@ export abstract class ButtonBase extends Button implements Disposable
         this.onClickEvent.emit();
     }
 
+    override getCommand(): AsyncCommand | undefined
+    {
+        return this.command;
+    }
+
     override setCommand(command: AsyncCommand): void
     {
         this.disposeToken.assertNotDisposed();

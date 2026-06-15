@@ -9,28 +9,33 @@ import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { Overlay } from './overlay';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import { isDisposable } from '@/modules/shared/utils/isDisposable';
-import { ModalButtonConfirm } from './modalButtonConfirm';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { Func } from '@/modules/shared/types/func';
-import type { Button } from '@/modules/uikit/entities/buttons/button';
 import type { ModalData } from '../types/modalData';
+import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 
-export class ModalBase extends Modal
+export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
   private overlay: Overlay | undefined;
-  private content: UIElement | undefined;
   private data: ModalData;
 
-  private controls = new Array<Button>;
+  private buttons: Array<ButtonGeneral>;
   private disposeToken = new DisposeToken();
-
   private onCloseFn = () => this.close();
 
+  private children = {
+    content: () => this.content?.vnode,
+    controls: () => this.buttons.map(control => control.vnode)
+  };
+
   readonly key = getUniqueId('modal');
+  readonly content: Content;
+  readonly buttonConfirm: ButtonGeneral | undefined;
+  readonly buttonCancel: ButtonGeneral | undefined;
 
   constructor(
     private buttonsFactory: ButtonsFactory,
-    configuration: ModalConfiguration,
+    configuration: ModalConfiguration<Content>,
   )
   {
     super();
@@ -43,20 +48,31 @@ export class ModalBase extends Modal
 
     this.content = configuration.content;
 
-    this.setupButtonConfirm(configuration.buttonConfirm);
-    this.setupButtonCancel(configuration.buttonCancel);
+    this.buttonConfirm = this.createButtonConfirm(configuration.buttonConfirm);
+    this.buttonCancel = this.createButtonCancel(configuration.buttonCancel);
+
+    this.buttons = this.collectButtons(this.buttonConfirm, this.buttonCancel);
+  }
+
+  get title()
+  {
+    return this.data.title;
+  }
+
+  get description()
+  {
+    return this.data.description;
   }
 
   get vnode()
   {
-    return h(VModal, {
+    const props = {
       ...this.data,
 
       onClose: this.onCloseFn,
-    }, {
-      content: () => this.content?.vnode,
-      controls: () => this.controls.map(control => control.vnode)
-    });
+    };
+
+    return h(VModal, props, this.children);
   }
 
   override enable()
@@ -64,7 +80,7 @@ export class ModalBase extends Modal
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = false;
 
-    this.controls.forEach(control =>
+    this.buttons.forEach(control =>
       control.enable());
   }
 
@@ -73,7 +89,7 @@ export class ModalBase extends Modal
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = true;
 
-    this.controls.forEach(control =>
+    this.buttons.forEach(control =>
       control.disable());
   }
 
@@ -107,32 +123,38 @@ export class ModalBase extends Modal
     this.overlay = overlay;
   }
 
-  private setupButtonConfirm(setupFn?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>): void
+  private createButtonConfirm(setupFn?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>): ButtonGeneral | undefined
   {
     if (!setupFn)
     {
-      return;
+      return undefined;
     }
 
-    const button = new ModalButtonConfirm(this);
-    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(button);
+    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(this.buttonsFactory.createButtonGeneral());
+    const buttonConfirm = setupFn(confirmButtonConfigurator);
+    const buttonConfirmCommand = buttonConfirm.getCommand();
 
-    this.addControl(setupFn(confirmButtonConfigurator));
+    if (buttonConfirmCommand)
+    {
+      this.setupCommandTracking(buttonConfirmCommand);
+    }
+
+    return buttonConfirm;
   }
 
-  private setupButtonCancel(isAllowed?: boolean): void
+  private createButtonCancel(isAllowed?: boolean): ButtonGeneral | undefined
   {
     if (isAllowed !== true)
     {
-      return;
+      return undefined;
     }
 
-    const button = this.buttonsFactory.createButtonGeneral();
-    button.title = 'Отменить';
+    const buttonCancel = this.buttonsFactory.createButtonGeneral();
+    buttonCancel.title = 'Отменить';
 
-    button.onClick(this.onCloseFn, this.disposeToken);
+    buttonCancel.onClick(this.onCloseFn, this.disposeToken);
 
-    this.addControl(button);
+    return buttonCancel;
   }
 
   private disposeContent()
@@ -141,13 +163,29 @@ export class ModalBase extends Modal
     {
       this.content[Symbol.dispose]();
     }
+  }
 
-    this.content = undefined;
+  private setupCommandTracking(command: AsyncCommand)
+  {
+    command.onIdle(() =>
+    {
+      this.enable();
+    }, this.disposeToken);
+
+    command.onExecuting(() =>
+    {
+      this.disable();
+    }, this.disposeToken);
+
+    command.onExecuted(() =>
+    {
+      this.close();
+    }, this.disposeToken);
   }
 
   private disposeControls()
   {
-    for (const control of this.controls)
+    for (const control of this.buttons)
     {
       if (isDisposable(control))
       {
@@ -155,11 +193,21 @@ export class ModalBase extends Modal
       }
     }
 
-    this.controls = [];
+    this.buttons = [];
   }
 
-  private addControl(control: Button)
+  private collectButtons(...buttons: (ButtonGeneral | undefined)[]): ButtonGeneral[]
   {
-    this.controls.unshift(control);
+    const result = new Array<ButtonGeneral>();
+
+    for (const button of buttons)
+    {
+      if (button)
+      {
+        result.push(button);
+      }
+    }
+
+    return result;
   }
 }
