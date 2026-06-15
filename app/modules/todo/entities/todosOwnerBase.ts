@@ -29,7 +29,7 @@ export class ToDosOwnerBase extends ToDosOwner
     return this.todos;
   }
 
-  override onToDosChange(callback: Action<[ToDo[]]>, disposeToken: DisposeToken): void
+  override onToDosChange(callback: Action<[ToDo[]]>, disposeToken?: DisposeToken): void
   {
     this.todosChangeEvent.on(callback, disposeToken);
   }

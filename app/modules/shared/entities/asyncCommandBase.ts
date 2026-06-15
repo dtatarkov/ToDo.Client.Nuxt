@@ -22,19 +22,19 @@ export class AsyncCommandBase extends AsyncCommand
         super();
     }
 
-    override onIdle(handler: Action, token: DisposeToken): void
+    override onIdle(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onIdleEvent.on(handler, token);
     }
 
-    override onExecuting(handler: Action, token: DisposeToken): void
+    override onExecuting(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onExecutingEvent.on(handler, token);
     }
 
-    override onExecuted(handler: Action, token: DisposeToken): void
+    override onExecuted(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onExecutedEvent.on(handler, token);

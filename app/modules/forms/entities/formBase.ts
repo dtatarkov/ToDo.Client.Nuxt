@@ -117,7 +117,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.submitCommand;
   }
 
-  override onError(handler: Action<[FormValidationError]>, token: DisposeToken): void
+  override onError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
   {
     this.errorEvent.on(handler, token);
   }

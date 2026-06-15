@@ -10,6 +10,6 @@ export abstract class ToDosOwner implements Disposable
   abstract initializeToDosAsync(): Promise<void>;
   abstract saveToDoAsync(todo: ToDo): Promise<void>;
   abstract createToDo(): ToDo;
-  abstract onToDosChange(callback: Action<[ToDo[]]>, disposeToken: DisposeToken): void;
+  abstract onToDosChange(callback: Action<[ToDo[]]>, disposeToken?: DisposeToken): void;
   abstract [Symbol.dispose](): void;
 }

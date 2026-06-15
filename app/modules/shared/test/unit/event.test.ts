@@ -8,9 +8,8 @@ describe('EntityEvent', () =>
     {
         const event = new EntityEvent();
         const handler = vi.fn();
-        const disposeToken = new DisposeToken();
 
-        event.on(handler, disposeToken);
+        event.on(handler);
         event.emit();
 
         expect(handler).toHaveBeenCalledOnce();
@@ -20,9 +19,8 @@ describe('EntityEvent', () =>
     {
         const event = new EntityEvent<string>();
         const handler = vi.fn();
-        const disposeToken = new DisposeToken();
 
-        event.on(handler, disposeToken);
+        event.on(handler);
         event.emit('test');
 
         expect(handler).toHaveBeenCalledWith('test');
@@ -33,10 +31,9 @@ describe('EntityEvent', () =>
         const event = new EntityEvent();
         const handler1 = vi.fn();
         const handler2 = vi.fn();
-        const disposeToken = new DisposeToken();
 
-        event.on(handler1, disposeToken);
-        event.on(handler2, disposeToken);
+        event.on(handler1);
+        event.on(handler2);
         event.emit();
 
         expect(handler1).toHaveBeenCalledOnce();
@@ -60,11 +57,10 @@ describe('EntityEvent', () =>
     {
         const event = new EntityEvent<void>();
         const handler = vi.fn();
-        const disposeToken = new DisposeToken();
 
         event[Symbol.dispose]();
 
-        expect(() => event.on(handler, disposeToken)).toThrow();
+        expect(() => event.on(handler)).toThrow();
     });
 
     it('should silently ignore handler when adding with disposed token', () =>

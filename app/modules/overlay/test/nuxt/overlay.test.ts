@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { OverlayBase } from '../../entities/overlayBase';
 import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonConfirmConfigurator';
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
@@ -236,10 +235,9 @@ describe('OverlayBase', () =>
         it('should invoke callback when element is added', () =>
         {
             const overlay = new OverlayBase(buttonsFactoryMock);
-            const disposeToken = new DisposeToken();
             const callback = vi.fn();
 
-            overlay.onElementsChange(callback, disposeToken);
+            overlay.onElementsChange(callback);
 
             const modal = overlay.createModal({
                 title: testModalTitle,
@@ -253,10 +251,9 @@ describe('OverlayBase', () =>
         it('should invoke callback when element is removed', () =>
         {
             const overlay = new OverlayBase(buttonsFactoryMock);
-            const disposeToken = new DisposeToken();
             const callback = vi.fn();
 
-            overlay.onElementsChange(callback, disposeToken);
+            overlay.onElementsChange(callback);
 
             const modal = overlay.createModal({
                 title: testModalTitle,

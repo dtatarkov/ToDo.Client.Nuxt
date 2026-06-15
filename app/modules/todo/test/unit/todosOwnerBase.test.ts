@@ -4,7 +4,6 @@ import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
 import { createToDoMock } from '../../mocks/todoMock';
 import { todoRepositoryMock } from '../../mocks/todoRepositoryMock';
 import { todoFactoryMock } from '../../mocks/todoFactoryMock';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 describe('ToDosOwnerBase', () =>
 {
@@ -149,10 +148,9 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.initializeToDosAsync();
 
-            const disposeToken = new DisposeToken();
             const callback = vi.fn();
 
-            owner.onToDosChange(callback, disposeToken);
+            owner.onToDosChange(callback);
             await owner.saveToDoAsync(newTodo);
 
             expect(callback).toHaveBeenCalledTimes(1);
@@ -164,10 +162,9 @@ describe('ToDosOwnerBase', () =>
             todoRepositoryMock.getAllToDosAsync.mockResolvedValue(mockTodos);
 
             const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
-            const disposeToken = new DisposeToken();
             const callback = vi.fn();
 
-            owner.onToDosChange(callback, disposeToken);
+            owner.onToDosChange(callback);
             await owner.initializeToDosAsync();
 
             expect(callback).toHaveBeenCalledTimes(1);

@@ -20,5 +20,5 @@ export abstract class Form<TEntity extends Record<string, any> = Record<string, 
   abstract isDisabled(): boolean;
 
   abstract getSubmitCommand(): AsyncCommand;
-  abstract onError(handler: Action<[FormValidationError]>, token: DisposeToken): void;
+  abstract onError(handler: Action<[FormValidationError]>, token?: DisposeToken): void;
 }

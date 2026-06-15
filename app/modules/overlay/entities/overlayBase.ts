@@ -31,7 +31,7 @@ export class OverlayBase extends Overlay
         return this.elements;
     }
 
-    onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken: DisposeToken): void
+    onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken?: DisposeToken): void
     {
         this.elementsChangeEvent.on(callback, disposeToken);
     }

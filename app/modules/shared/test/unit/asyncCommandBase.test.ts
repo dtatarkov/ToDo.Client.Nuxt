@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AsyncCommandBase } from '../../entities/asyncCommandBase';
-import { DisposeToken } from '../../entities/disposeToken';
 import { DisposedException } from '../../exceptions/disposedException';
 import { delay } from '../../utils/delay';
 
@@ -12,9 +11,8 @@ describe('AsyncCommandBase', () =>
         {
             const command = new AsyncCommandBase(async () => true);
             const executedFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onExecuted(executedFn, disposeToken);
+            command.onExecuted(executedFn);
 
             const result = await command.executeAsync();
 
@@ -27,10 +25,9 @@ describe('AsyncCommandBase', () =>
             const command = new AsyncCommandBase(async () => true);
             const executingFn = vi.fn();
             const idleFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onExecuting(executingFn, disposeToken);
-            command.onIdle(idleFn, disposeToken);
+            command.onExecuting(executingFn);
+            command.onIdle(idleFn);
 
             await command.executeAsync();
 
@@ -43,9 +40,8 @@ describe('AsyncCommandBase', () =>
         {
             const command = new AsyncCommandBase(() => Promise.resolve(false));
             const executedFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onExecuted(executedFn, disposeToken);
+            command.onExecuted(executedFn);
 
             const result = await command.executeAsync();
 
@@ -66,9 +62,8 @@ describe('AsyncCommandBase', () =>
             const error = new Error('fail');
             const command = new AsyncCommandBase(() => Promise.reject(error));
             const idleFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onIdle(idleFn, disposeToken);
+            command.onIdle(idleFn);
 
             await expect(command.executeAsync()).rejects.toThrow('fail');
 
@@ -80,9 +75,8 @@ describe('AsyncCommandBase', () =>
             const error = new Error('fail');
             const command = new AsyncCommandBase(() => Promise.reject(error));
             const executedFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onExecuted(executedFn, disposeToken);
+            command.onExecuted(executedFn);
 
             await expect(command.executeAsync()).rejects.toThrow('fail');
 
@@ -103,9 +97,8 @@ describe('AsyncCommandBase', () =>
         {
             const command = new AsyncCommandBase(async () => undefined);
             const executedFn = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            command.onExecuted(executedFn, disposeToken);
+            command.onExecuted(executedFn);
 
             const result = await command.executeAsync();
 
@@ -128,11 +121,9 @@ describe('AsyncCommandBase', () =>
         it('should throw DisposedException when registered after dispose', () =>
         {
             const command = new AsyncCommandBase(async () => true);
-            const disposeToken = new DisposeToken();
-
             command[Symbol.dispose]();
 
-            expect(() => command.onIdle(() => { }, disposeToken)).toThrow(DisposedException);
+            expect(() => command.onIdle(() => { })).toThrow(DisposedException);
         });
     });
 
@@ -141,11 +132,9 @@ describe('AsyncCommandBase', () =>
         it('should throw DisposedException when registered after dispose', () =>
         {
             const command = new AsyncCommandBase(async () => true);
-            const disposeToken = new DisposeToken();
-
             command[Symbol.dispose]();
 
-            expect(() => command.onExecuting(() => { }, disposeToken)).toThrow(DisposedException);
+            expect(() => command.onExecuting(() => { })).toThrow(DisposedException);
         });
     });
 
@@ -154,11 +143,9 @@ describe('AsyncCommandBase', () =>
         it('should throw DisposedException when registered after dispose', () =>
         {
             const command = new AsyncCommandBase(async () => true);
-            const disposeToken = new DisposeToken();
-
             command[Symbol.dispose]();
 
-            expect(() => command.onExecuted(() => { }, disposeToken)).toThrow(DisposedException);
+            expect(() => command.onExecuted(() => { })).toThrow(DisposedException);
         });
     });
 

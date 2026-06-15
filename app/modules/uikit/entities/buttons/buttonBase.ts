@@ -36,7 +36,7 @@ export abstract class ButtonBase extends Button implements Disposable
         this.command = command;
     }
 
-    override onClick(handler: Action, disposeToken: DisposeToken): void
+    override onClick(handler: Action, disposeToken?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onClickEvent.on(handler, disposeToken);

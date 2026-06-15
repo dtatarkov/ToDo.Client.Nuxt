@@ -6,21 +6,24 @@ export class EntityEvent<T = void> implements Disposable
     private eventDisposeToken = new DisposeToken();
     private handlers = new Set<Action<[T]>>();
 
-    on(handler: Action<[T]>, callbackDisposeToken: DisposeToken): void
+    on(handler: Action<[T]>, callbackDisposeToken?: DisposeToken): void
     {
         this.eventDisposeToken.assertNotDisposed();
 
-        if (callbackDisposeToken.isDisposed)
+        if (callbackDisposeToken && callbackDisposeToken.isDisposed)
         {
             return;
         }
 
         this.handlers.add(handler);
 
-        callbackDisposeToken.onDispose(() =>
+        if (callbackDisposeToken)
         {
-            this.handlers.delete(handler);
-        });
+            callbackDisposeToken.onDispose(() =>
+            {
+                this.handlers.delete(handler);
+            });
+        }
     }
 
     emit(value: T): void

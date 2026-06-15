@@ -124,7 +124,7 @@ export abstract class InputElementBase<V> extends InputElement<V>
         this.writeField<boolean>('highlight', false);
     }
 
-    override onValueChange(handler: Action<[value: V]>, disposeToken: DisposeToken): void
+    override onValueChange(handler: Action<[value: V]>, disposeToken?: DisposeToken): void
     {
         this.valueChangeEvent.on(handler, disposeToken);
     }

@@ -14,5 +14,5 @@ export abstract class Button extends UIElement
     abstract enable(): void;
     abstract click(): void;
 
-    abstract onClick(handler: Action, disposeToken: DisposeToken): void;
+    abstract onClick(handler: Action, disposeToken?: DisposeToken): void;
 }

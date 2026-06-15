@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ButtonGeneralBase } from '../../entities/buttons/buttonGeneralBase';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { DisposedException } from '@/modules/shared/exceptions/disposedException';
 import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
@@ -194,9 +193,8 @@ describe('ButtonGeneralBase', () =>
         {
             const button = new ButtonGeneralBase();
             const handler = vi.fn();
-            const disposeToken = new DisposeToken();
 
-            button.onClick(handler, disposeToken);
+            button.onClick(handler);
             button.click();
 
             expect(handler).toHaveBeenCalledOnce();
@@ -205,11 +203,10 @@ describe('ButtonGeneralBase', () =>
         it('should throw DisposedException when registered after dispose', () =>
         {
             const button = new ButtonGeneralBase();
-            const disposeToken = new DisposeToken();
 
             button[Symbol.dispose]();
 
-            expect(() => button.onClick(() => { }, disposeToken)).toThrow(DisposedException);
+            expect(() => button.onClick(() => { })).toThrow(DisposedException);
         });
     });
 

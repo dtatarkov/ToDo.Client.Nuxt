@@ -12,6 +12,6 @@ export abstract class Overlay implements Disposable
   abstract createModal<Content extends UIElement>(configuration: ModalConfiguration<Content>): Modal<Content>;
   abstract createNotification(configuration: NotificationConfiguration): Notification;
   abstract removeElement(element: OverlayElement): void;
-  abstract onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken: DisposeToken): void;
+  abstract onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken?: DisposeToken): void;
   abstract [Symbol.dispose](): void;
 }
