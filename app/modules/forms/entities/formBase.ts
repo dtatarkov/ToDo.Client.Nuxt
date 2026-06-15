@@ -7,6 +7,11 @@ import type { FormElementsFactory } from '../factories/formElementsFactory';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
 import type { Func } from '@/modules/shared/types/func';
+import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { EntityEvent } from '@/modules/shared/entities/entityEvent';
+import { FormValidationError } from './formValidationError';
+import type { ValidationError } from '@/modules/validation/entities/validationError.js';
 
 enum FormBaseState
 {
@@ -20,6 +25,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private stateRef = shallowRef(FormBaseState.initial);
   private submitCommand = this.createSubmitCommand();
   private handleSubmit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
+  private errorEvent = new EntityEvent<FormValidationError>();
 
   private get state()
   {
@@ -111,19 +117,32 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.submitCommand;
   }
 
+  override onError(handler: Action<[FormValidationError]>, token: DisposeToken): void
+  {
+    this.errorEvent.on(handler, token);
+  }
+
   override[Symbol.dispose](): void
   {
+    this.errorEvent[Symbol.dispose]();
+
     this.elementsRef.value.forEach(element =>
       element[Symbol.dispose]());
 
     this.elementsRef.value = [];
   }
 
-  private validate(): boolean
+  private validate(): void
   {
-    const result = this.elements.every(element => element.validate());
+    this.elements.forEach(element =>
+      element.validate());
+  }
 
-    return result;
+  private isValid(): boolean
+  {
+    const isValid = this.elements.every(element => element.isValid());
+
+    return isValid;
   }
 
   private disable(): void
@@ -158,9 +177,12 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     const command = new AsyncCommandBase(async () =>
     {
       this.assertNotDisabled();
+      this.validate();
 
-      if (!this.validate())
+      if (!this.isValid())
       {
+        this.emitValidationError();
+
         return false;
       }
 
@@ -180,5 +202,24 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     });
 
     return command;
+  }
+
+  private emitValidationError(): void
+  {
+    const errors = this.elements.reduce<ValidationError[]>((result, element) =>
+    {
+      const error = element.getError();
+
+      if (error)
+      {
+        result.push(error);
+      }
+
+      return result;
+    }, []);
+
+    const formValidationError = new FormValidationError(errors);
+
+    this.errorEvent.emit(formValidationError);
   }
 }

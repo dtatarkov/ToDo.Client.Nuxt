@@ -3,10 +3,13 @@ import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
+import type { ValidationError } from '@/modules/validation/entities/validationError';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 export class FormElementBase<V = any> extends FormElement
 {
+  private validationError: ValidationError | undefined;
+
   private isInitialValidation = true;
   private disposeToken = new DisposeToken();
 
@@ -67,7 +70,7 @@ export class FormElementBase<V = any> extends FormElement
     this.inputElement.setDefaultValue();
   }
 
-  override validate(): boolean
+  override validate(): void
   {
     this.disposeToken.assertNotDisposed();
 
@@ -76,10 +79,18 @@ export class FormElementBase<V = any> extends FormElement
       this.handleInitialValidation();
     }
 
-    const errorMessage = this.validator.validateField(this.name, this.value);
-    this.handleErrorMessage(errorMessage);
+    this.validationError = this.validator.validateField(this.name, this.value);
+    this.handleValidationError(this.validationError);
+  }
 
-    return errorMessage == undefined;
+  override isValid(): boolean
+  {
+    return this.validationError == undefined;
+  }
+
+  override getError(): ValidationError | undefined
+  {
+    return this.validationError;
   }
 
   override[Symbol.dispose](): void
@@ -98,17 +109,17 @@ export class FormElementBase<V = any> extends FormElement
     this.setupInputValueTracking();
   }
 
-  private handleErrorMessage(errorMessage: string | undefined): void
+  private handleValidationError(error: ValidationError | undefined): void
   {
-    if (errorMessage)
+    if (error)
     {
       this.inputElement.toErrorMode();
-      this.formField.toErrorMode(errorMessage);
+      this.formField.setError(error);
     }
     else
     {
       this.inputElement.toDefaultMode();
-      this.formField.toDefaultMode();
+      this.formField.clearError();
     }
   }
 }

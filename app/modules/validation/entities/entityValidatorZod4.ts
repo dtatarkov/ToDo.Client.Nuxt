@@ -2,6 +2,7 @@ import { EntityValidator } from './entityValidator';
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
 import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
+import { ValidationError } from './validationError';
 import { z } from 'zod';
 
 export class EntityValidatorZod4<TEntity extends Record<string, any>> extends EntityValidator<TEntity>
@@ -14,7 +15,7 @@ export class EntityValidatorZod4<TEntity extends Record<string, any>> extends En
         this.zodSchemas = this.buildSchemas(scheme);
     }
 
-    override validateField<K extends keyof TEntity>(field: K, value: TEntity[K]): string | undefined
+    override validateField<K extends keyof TEntity>(field: K, value: TEntity[K]): ValidationError | undefined
     {
         const zodSchema = this.zodSchemas.get(field);
 
@@ -27,7 +28,8 @@ export class EntityValidatorZod4<TEntity extends Record<string, any>> extends En
 
         if (!result.success)
         {
-            return result.error.issues[0]?.message ?? '';
+            const error = new ValidationError(result.error.issues[0]?.message ?? '');
+            return error;
         }
 
         return undefined;

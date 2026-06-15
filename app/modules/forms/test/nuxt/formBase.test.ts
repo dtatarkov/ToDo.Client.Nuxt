@@ -6,6 +6,9 @@ import { createFormElementsFactoryMock } from '../../mocks/formElementsFactoryMo
 import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { Func } from '@/modules/shared/types/func';
 import type { Action } from '@/modules/shared/types/action';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { ValidationError } from '@/modules/validation/entities/validationError';
+import { FormValidationError } from '../../entities/formValidationError';
 
 function createForm(
     elements: FormElement[],
@@ -81,10 +84,13 @@ describe('FormBase', () =>
     {
         it('should be cancelled if form contains errors', async () =>
         {
-            const validElement = createFormElementMock('title', 'value', true);
-            const invalidElement = createFormElementMock('description', 'value', false);
-            const submitHandler = vi.fn(async () => { });
+            const validElement = createFormElementMock('title', 'value');
+            validElement.isValid.mockReturnValue(true);
 
+            const invalidElement = createFormElementMock('description', 'value');
+            invalidElement.isValid.mockReturnValue(false);
+
+            const submitHandler = vi.fn(async () => { });
             const form = createForm([validElement, invalidElement], submitHandler);
 
             const command = form.getSubmitCommand();
@@ -105,8 +111,11 @@ describe('FormBase', () =>
 
             const submitHandler = vi.fn(() => submitPromise);
 
+            const titleElement = createFormElementMock('title', 'value');
+            titleElement.isValid.mockReturnValueOnce(true);
+
             const elements = [
-                createFormElementMock('title', 'value', true),
+                titleElement,
             ];
 
             const form = createForm(elements, submitHandler);
@@ -120,6 +129,97 @@ describe('FormBase', () =>
             await executePromise;
 
             expect(form.isDisabled()).toBe(false);
+        });
+    });
+
+    describe('onError', () =>
+    {
+        it('should emit FormValidationError when submit fails validation', async () =>
+        {
+            const validationError = new ValidationError('Field is required');
+            const invalidFormElement = createFormElementMock('description', '');
+            invalidFormElement.isValid.mockReturnValue(false);
+            invalidFormElement.getError.mockReturnValue(validationError);
+
+            const validElement = createFormElementMock('title', 'value');
+            validElement.isValid.mockReturnValue(true);
+
+            const submitHandler = vi.fn(async () => { });
+            const form = createForm([validElement, invalidFormElement], submitHandler);
+
+            const onErrorHandler = vi.fn();
+            const disposeToken = new DisposeToken();
+            form.onError(onErrorHandler, disposeToken);
+
+            const command = form.getSubmitCommand();
+            const result = await command.executeAsync();
+
+            expect(result).toBe(false);
+            expect(submitHandler).not.toHaveBeenCalled();
+            expect(onErrorHandler).toHaveBeenCalledTimes(1);
+
+            const formValidationError = onErrorHandler.mock.calls[0]?.[0] as FormValidationError;
+            expect(formValidationError).toBeInstanceOf(FormValidationError);
+            expect(formValidationError.errors).toHaveLength(1);
+            expect(formValidationError.errors).contain(validationError);
+
+            disposeToken[Symbol.dispose]();
+        });
+
+        it('should emit FormValidationError with multiple errors when multiple elements fail', async () =>
+        {
+            const error1 = new ValidationError('Title is required');
+            const error2 = new ValidationError('Description is required');
+
+            const titleElement = createFormElementMock('title', '');
+            titleElement.isValid.mockReturnValue(false);
+            titleElement.getError.mockReturnValue(error1);
+
+            const descriptionElement = createFormElementMock('description', '');
+            descriptionElement.isValid.mockReturnValue(false);
+            descriptionElement.getError.mockReturnValue(error2);
+
+            const submitHandler = vi.fn(async () => { });
+            const form = createForm([titleElement, descriptionElement], submitHandler);
+
+            const onErrorHandler = vi.fn();
+            const disposeToken = new DisposeToken();
+            form.onError(onErrorHandler, disposeToken);
+
+            const command = form.getSubmitCommand();
+            const result = await command.executeAsync();
+
+            expect(result).toBe(false);
+            expect(onErrorHandler).toHaveBeenCalledTimes(1);
+
+            const formValidationError = onErrorHandler.mock.calls[0]?.[0] as FormValidationError;
+            expect(formValidationError.errors).toHaveLength(2);
+            expect(formValidationError.errors).contain(error1);
+            expect(formValidationError.errors).contain(error2);
+
+            disposeToken[Symbol.dispose]();
+        });
+
+        it('should not emit onError when validation passes', async () =>
+        {
+            const element = createFormElementMock('title', 'value');
+            element.isValid.mockReturnValue(true);
+
+            const submitHandler = vi.fn(async () => { });
+            const form = createForm([element], submitHandler);
+
+            const onErrorHandler = vi.fn();
+            const disposeToken = new DisposeToken();
+            form.onError(onErrorHandler, disposeToken);
+
+            const command = form.getSubmitCommand();
+            const result = await command.executeAsync();
+
+            expect(result).toBe(true);
+            expect(submitHandler).toHaveBeenCalledTimes(1);
+            expect(onErrorHandler).not.toHaveBeenCalled();
+
+            disposeToken[Symbol.dispose]();
         });
     });
 });

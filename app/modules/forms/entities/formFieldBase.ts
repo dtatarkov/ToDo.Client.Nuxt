@@ -2,6 +2,7 @@ import VFormField from "../components/VFormField.vue";
 import { FormField } from "./formField";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import type { ValidationError } from '@/modules/validation/entities/validationError';
 
 export class FormFieldBase extends FormField
 {
@@ -10,6 +11,8 @@ export class FormFieldBase extends FormField
     name: '',
     help: <string | undefined>undefined,
   });
+
+  private error: ValidationError | undefined = undefined;
 
   private children = {
     content: <UIElement | undefined>undefined
@@ -54,18 +57,20 @@ export class FormFieldBase extends FormField
     this.children.content = value;
   }
 
-  get hint(): string | undefined
+  override getError(): ValidationError | undefined
   {
-    return this.data.help;
+    return this.error;
   }
 
-  override toErrorMode(errorMessage: string): void
+  override setError(error: ValidationError): void
   {
-    this.data.help = errorMessage;
+    this.error = error;
+    this.data.help = error.message;
   }
 
-  override toDefaultMode(): void
+  override clearError(): void
   {
+    this.error = undefined;
     this.data.help = undefined;
   }
 
