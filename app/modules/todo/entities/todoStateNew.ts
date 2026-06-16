@@ -29,6 +29,16 @@ export class ToDoStateNew extends ToDoStateBase
 
         form.setData(this.todo.getData());
 
+        form.onValidationError(error =>
+        {
+            this.overlay.createNotification({
+                title: 'Ошибка создания задания',
+                description: error.toString(),
+                icon: 'i-heroicons-exclamation-triangle',
+                color: 'error'
+            });
+        });
+
         return this.overlay.createModal({
             title: 'Создать задачу',
             content: form,

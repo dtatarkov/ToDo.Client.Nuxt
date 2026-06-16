@@ -10,6 +10,6 @@ export const formMock = {
     setData: vi.fn(),
     getData: vi.fn(),
     getSubmitCommand: vi.fn(),
-    onError: vi.fn(),
+    onValidationError: vi.fn(),
     [Symbol.dispose]: vi.fn(),
 } satisfies Form;

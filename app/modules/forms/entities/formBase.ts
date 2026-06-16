@@ -25,7 +25,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   private stateRef = shallowRef(FormBaseState.initial);
   private submitCommand = this.createSubmitCommand();
   private handleSubmit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
-  private errorEvent = new EntityEvent<FormValidationError>();
+  private validationErrorEvent = new EntityEvent<FormValidationError>();
 
   private get state()
   {
@@ -117,14 +117,14 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     return this.submitCommand;
   }
 
-  override onError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
+  override onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
   {
-    this.errorEvent.on(handler, token);
+    this.validationErrorEvent.on(handler, token);
   }
 
   override[Symbol.dispose](): void
   {
-    this.errorEvent[Symbol.dispose]();
+    this.validationErrorEvent[Symbol.dispose]();
 
     this.elementsRef.value.forEach(element =>
       element[Symbol.dispose]());
@@ -220,6 +220,6 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
     const formValidationError = new FormValidationError(errors);
 
-    this.errorEvent.emit(formValidationError);
+    this.validationErrorEvent.emit(formValidationError);
   }
 }

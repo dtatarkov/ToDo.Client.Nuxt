@@ -149,7 +149,7 @@ describe('FormBase', () =>
 
             const onErrorHandler = vi.fn();
             const disposeToken = new DisposeToken();
-            form.onError(onErrorHandler, disposeToken);
+            form.onValidationError(onErrorHandler, disposeToken);
 
             const command = form.getSubmitCommand();
             const result = await command.executeAsync();
@@ -184,7 +184,7 @@ describe('FormBase', () =>
 
             const onErrorHandler = vi.fn();
             const disposeToken = new DisposeToken();
-            form.onError(onErrorHandler, disposeToken);
+            form.onValidationError(onErrorHandler, disposeToken);
 
             const command = form.getSubmitCommand();
             const result = await command.executeAsync();
@@ -210,7 +210,7 @@ describe('FormBase', () =>
 
             const onErrorHandler = vi.fn();
             const disposeToken = new DisposeToken();
-            form.onError(onErrorHandler, disposeToken);
+            form.onValidationError(onErrorHandler, disposeToken);
 
             const command = form.getSubmitCommand();
             const result = await command.executeAsync();
