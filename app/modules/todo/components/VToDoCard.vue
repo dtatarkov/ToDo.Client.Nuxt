@@ -7,8 +7,13 @@ import { useService } from '@/modules/shared/composables/useService';
 import type { ToDoCardData } from '../types/todoCardData';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 import { DateFormatter } from '@/modules/shared/services/dateFormatter';
+import { MessagesService } from '@/modules/shared/services/messagesService';
 
 const dateFormatter = useService(DateFormatter);
+const messagesService = useService(MessagesService);
+
+const completedLabel = messagesService.getMessage('todo.card.completed');
+const completeByLabel = messagesService.getMessage('todo.card.completeBy');
 
 type Emits = {
     (e: 'edit'): void;
@@ -35,8 +40,8 @@ const hasFooter = computed(() => hasFormattedCompletionDateActual.value || hasFo
 
         <template v-if="hasFooter" #footer>
             <VInfoBlock>
-                <VInfoRow v-if="formattedCompletionDateActual" label="Выполнено">{{ formattedCompletionDateActual }}</VInfoRow>
-                <VInfoRow v-if="formattedCompletionDatePlanned" label="Выполнить до">{{ formattedCompletionDatePlanned }}</VInfoRow>
+                <VInfoRow v-if="formattedCompletionDateActual" :label="completedLabel">{{ formattedCompletionDateActual }}</VInfoRow>
+                <VInfoRow v-if="formattedCompletionDatePlanned" :label="completeByLabel">{{ formattedCompletionDatePlanned }}</VInfoRow>
             </VInfoBlock>
         </template>
     </VCard>

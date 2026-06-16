@@ -4,6 +4,7 @@ import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonConfirmConfigurator';
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
+import { messagesServiceMock } from '@/modules/shared/mocks/messagesServiceMock';
 
 const testModalTitle = 'Test Modal';
 const testModalDescription = 'Test Description';
@@ -19,16 +20,29 @@ function createContentMock(): UIElement
 
 describe('OverlayBase', () =>
 {
+    let overlay: OverlayBase;
+
     beforeEach(() =>
     {
         vi.resetAllMocks();
+
+        overlay = new OverlayBase(buttonsFactoryMock, messagesServiceMock);
+
+        messagesServiceMock.getMessage.mockImplementation(key =>
+        {
+            switch (key)
+            {
+                case 'button.create': return 'Добавить';
+                case 'button.save': return 'Сохранить';
+                case 'button.cancel': return 'Отменить';
+            }
+        });
     });
 
     describe('getElements', () =>
     {
         it('should return empty array initially', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
             const observable = overlay.getElements();
             expect(observable).toBeDefined();
             expect(observable).toEqual([]);
@@ -39,8 +53,6 @@ describe('OverlayBase', () =>
     {
         it('should create modal and add it to elements list', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -54,8 +66,6 @@ describe('OverlayBase', () =>
 
         it('should create multiple modals', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal1 = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -75,8 +85,6 @@ describe('OverlayBase', () =>
 
         it('should set title from configuration', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -87,8 +95,6 @@ describe('OverlayBase', () =>
 
         it('should set description as empty string when not provided', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -99,8 +105,6 @@ describe('OverlayBase', () =>
 
         it('should set description from configuration', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -113,7 +117,6 @@ describe('OverlayBase', () =>
         it('should set content from configuration', () =>
         {
             const content = createContentMock();
-            const overlay = new OverlayBase(buttonsFactoryMock);
 
             const modal = overlay.createModal({
                 title: testModalTitle,
@@ -125,7 +128,6 @@ describe('OverlayBase', () =>
 
         it('should have empty buttons when no buttons are configured', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
 
             const modal = overlay.createModal({
                 title: testModalTitle,
@@ -141,8 +143,6 @@ describe('OverlayBase', () =>
             const buttonCancel = createButtonGeneralMock();
             buttonsFactoryMock.createButtonGeneral.mockReturnValue(buttonCancel);
 
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -155,10 +155,10 @@ describe('OverlayBase', () =>
 
         it('should add confirm button when buttonConfirm is provided', () =>
         {
+
+
             const buttonConfirm = createButtonGeneralMock();
             buttonsFactoryMock.createButtonGeneral.mockReturnValue(buttonConfirm);
-
-            const overlay = new OverlayBase(buttonsFactoryMock);
 
             const modal = overlay.createModal({
                 title: testModalTitle,
@@ -177,8 +177,6 @@ describe('OverlayBase', () =>
             buttonsFactoryMock.createButtonGeneral
                 .mockReturnValueOnce(createButtonGeneralMock())
                 .mockReturnValueOnce(createButtonGeneralMock());
-
-            const overlay = new OverlayBase(buttonsFactoryMock);
 
             const modal = overlay.createModal({
                 title: testModalTitle,
@@ -202,8 +200,6 @@ describe('OverlayBase', () =>
     {
         it('should remove existing element', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -218,8 +214,6 @@ describe('OverlayBase', () =>
 
         it('should throw error if element not present', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
-
             const modal = overlay.createModal({
                 title: testModalTitle,
                 content: createContentMock(),
@@ -234,7 +228,6 @@ describe('OverlayBase', () =>
     {
         it('should invoke callback when element is added', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
             const callback = vi.fn();
 
             overlay.onElementsChange(callback);
@@ -250,7 +243,6 @@ describe('OverlayBase', () =>
 
         it('should invoke callback when element is removed', () =>
         {
-            const overlay = new OverlayBase(buttonsFactoryMock);
             const callback = vi.fn();
 
             overlay.onElementsChange(callback);

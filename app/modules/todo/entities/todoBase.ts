@@ -13,6 +13,7 @@ import type { ToDoState } from './todoState';
 import type { StateTransition } from '@/modules/shared/types/stateTransition';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { Form } from '@/modules/forms/entities/form';
+import type { MessagesService } from '@/modules/shared/services/messagesService';
 
 type ToDoStateTransitionConstraint = {
   isNew: boolean;
@@ -37,12 +38,13 @@ export class ToDoBase extends ToDo
   constructor(
     private overlay: Overlay,
     private formFactory: FormFactory,
+    private messagesService: MessagesService,
   )
   {
     super();
 
-    this.newState = new ToDoStateNew(this.overlay, this.formFactory, this);
-    this.savedState = new ToDoStateSaved(this.overlay, this.formFactory, this);
+    this.newState = new ToDoStateNew(this.overlay, this.formFactory, this.messagesService, this);
+    this.savedState = new ToDoStateSaved(this.overlay, this.formFactory, this.messagesService, this);
 
     this.state = this.newState;
 
@@ -145,7 +147,7 @@ export class ToDoBase extends ToDo
 
   override clone(): ToDo
   {
-    const todo = new ToDoBase(this.overlay, this.formFactory);
+    const todo = new ToDoBase(this.overlay, this.formFactory, this.messagesService);
 
     todo.id = this.id;
     todo.title = this.title;

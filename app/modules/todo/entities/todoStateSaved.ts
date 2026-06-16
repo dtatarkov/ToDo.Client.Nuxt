@@ -5,16 +5,18 @@ import type { Modal } from '@/modules/overlay/entities/modal';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Form } from '@/modules/forms/entities/form';
+import type { MessagesService } from '@/modules/shared/services/messagesService';
 
 export class ToDoStateSaved extends ToDoStateBase
 {
     constructor(
         private overlay: Overlay,
         private formFactory: FormFactory,
+        messagesService: MessagesService,
         todo: ToDoBase,
     )
     {
-        super(todo);
+        super(todo, messagesService);
     }
 
     showForm(): Modal<Form>
@@ -32,7 +34,7 @@ export class ToDoStateSaved extends ToDoStateBase
         form.onValidationError(error =>
         {
             this.overlay.createNotification({
-                title: 'Ошибка изменения задания',
+                title: this.messagesService.getMessage('todo.notification.updateError.title'),
                 description: error.toString(),
                 icon: 'i-heroicons-exclamation-triangle',
                 color: 'error'
@@ -40,7 +42,7 @@ export class ToDoStateSaved extends ToDoStateBase
         });
 
         return this.overlay.createModal({
-            title: 'Изменить задачу',
+            title: this.messagesService.getMessage('todo.modal.edit.title'),
             content: form,
 
             buttonConfirm: configurator => configurator

@@ -1,12 +1,14 @@
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { MessagesService } from '@/modules/shared/services/messagesService';
 
 
 export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfigurator
 {
     constructor(
         private button: ButtonGeneral,
+        private messagesService: MessagesService,
     )
     {
         super();
@@ -23,7 +25,7 @@ export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfig
     {
         this
             .setDefaultColor()
-            .setTitle('Добавить');
+            .setTitle(this.messagesService.getMessage('button.create'));
 
         return this.button;
     }
@@ -32,7 +34,7 @@ export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfig
     {
         this
             .setDefaultColor()
-            .setTitle('Сохранить');
+            .setTitle(this.messagesService.getMessage('button.save'));
 
         return this.button;
     }

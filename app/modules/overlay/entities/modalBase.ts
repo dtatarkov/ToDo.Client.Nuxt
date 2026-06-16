@@ -13,6 +13,7 @@ import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGener
 import type { Func } from '@/modules/shared/types/func';
 import type { ModalData } from '../types/modalData';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { MessagesService } from '@/modules/shared/services/messagesService';
 
 export class ModalBase<Content extends UIElement> extends Modal<Content>
 {
@@ -35,6 +36,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
 
   constructor(
     private buttonsFactory: ButtonsFactory,
+    private messagesService: MessagesService,
     configuration: ModalConfiguration<Content>,
   )
   {
@@ -130,7 +132,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       return undefined;
     }
 
-    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(this.buttonsFactory.createButtonGeneral());
+    const confirmButtonConfigurator = new ModalButtonConfirmConfiguratorBase(this.buttonsFactory.createButtonGeneral(), this.messagesService);
     const buttonConfirm = setupFn(confirmButtonConfigurator);
     const buttonConfirmCommand = buttonConfirm.getCommand();
 
@@ -150,7 +152,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     }
 
     const buttonCancel = this.buttonsFactory.createButtonGeneral();
-    buttonCancel.title = 'Отменить';
+    buttonCancel.title = this.messagesService.getMessage('button.cancel');
 
     buttonCancel.onClick(this.onCloseFn, this.disposeToken);
 

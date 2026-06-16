@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/test-utils/module',
     '@nuxt/ui',
-    '@nuxt/eslint'
+    '@nuxt/eslint',
+    '@nuxtjs/i18n'
   ],
 
   css: ['@/assets/css/main.css'],
@@ -50,6 +51,14 @@ export default defineNuxtConfig({
     },
     // Disable safelist colors to reduce CSS size
     safelistColors: false
+  },
+
+  i18n: {
+    locales: [
+      { code: 'ru', iso: 'ru-RU', file: 'ru.json' },
+    ],
+    defaultLocale: 'ru',
+    langDir: 'locales',
   },
 
   runtimeConfig: {

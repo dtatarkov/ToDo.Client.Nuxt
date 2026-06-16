@@ -12,8 +12,12 @@ import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import { OverlayElementNotFoundException } from '../exceptions/overlayElementNotFoundException';
+import { OverlayElementAlreadyAddedException } from '../exceptions/overlayElementAlreadyAddedException';
+import { MessagesService } from '@/modules/shared/services/messagesService';
 
 @dependency(ButtonsFactory)
+@dependency(MessagesService)
 export class OverlayBase extends Overlay
 {
     private elements = new Array<OverlayElement>();
@@ -21,6 +25,7 @@ export class OverlayBase extends Overlay
 
     constructor(
         private buttonsFactory: ButtonsFactory,
+        private messagesService: MessagesService
     )
     {
         super();
@@ -38,7 +43,7 @@ export class OverlayBase extends Overlay
 
     createModal<Content extends UIElement>(configuration: ModalConfiguration<Content>): Modal<Content>
     {
-        const modal = new ModalBase(this.buttonsFactory, configuration);
+        const modal = new ModalBase(this.buttonsFactory, this.messagesService, configuration);
         this.addElement(modal);
 
         return modal;
@@ -79,10 +84,9 @@ export class OverlayBase extends Overlay
     {
         if (!this.elements.includes(element))
         {
-            const message = 'OverlayElement does not exist in Overlay';
-
-            console.error(message, element);
-            throw new Error(message);
+            const exception = new OverlayElementNotFoundException();
+            console.error(exception.message, element);
+            throw exception;
         }
     }
 
@@ -90,10 +94,10 @@ export class OverlayBase extends Overlay
     {
         if (this.elements.includes(element))
         {
-            const message = 'OverlayElement already added';
+            const exception = new OverlayElementAlreadyAddedException();
+            console.error(exception.message, element);
 
-            console.error(message, element);
-            throw new Error(message);
+            throw exception;
         }
     }
 }

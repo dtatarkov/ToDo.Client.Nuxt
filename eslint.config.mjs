@@ -21,6 +21,7 @@ export default withNuxt(
       '@typescript-eslint/no-this-alias': 'off',
       '@typescript-eslint/no-unsafe-function-type': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/unified-signatures': 'off',
       
       // Also consider unused imports as errors
       'import/no-unused-modules': ['error', { suppressMissingFileEnumeratorAPIWarning: true, unusedExports: true }],

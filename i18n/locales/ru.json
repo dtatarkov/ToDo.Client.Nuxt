@@ -1,0 +1,42 @@
+{
+  "todo": {
+    "field": {
+      "title": {
+        "label": "Название задачи",
+        "placeholder": "Введите название задачи"
+      },
+      "description": {
+        "label": "Описание задачи",
+        "placeholder": "Введите описание задачи"
+      },
+      "completionDatePlanned": {
+        "label": "Плановая дата выполнения"
+      }
+    },
+    "card": {
+      "completed": "Выполнено",
+      "completeBy": "Выполнить до"
+    },
+    "notification": {
+      "createError": {
+        "title": "Ошибка создания задания"
+      },
+      "updateError": {
+        "title": "Ошибка изменения задания"
+      }
+    },
+    "modal": {
+      "create": {
+        "title": "Создать задачу"
+      },
+      "edit": {
+        "title": "Изменить задачу"
+      }
+    }
+  },
+  "button": {
+    "create": "Добавить",
+    "save": "Сохранить",
+    "cancel": "Отменить"
+  }
+}
