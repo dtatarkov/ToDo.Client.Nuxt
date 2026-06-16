@@ -3,6 +3,7 @@ import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import VCard from '@/modules/uikit/components/VCard.vue';
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
+import { Icons } from '@/modules/shared/constants/icons';
 import { useService } from '@/modules/shared/composables/useService';
 import type { ToDoCardData } from '../types/todoCardData';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
@@ -35,7 +36,7 @@ const hasFooter = computed(() => hasFormattedCompletionDateActual.value || hasFo
 <template>
     <VCard :title="props.title" :description="props.description">
         <template #actions>
-            <VButtonIcon icon="i-heroicons-pencil-square" @click="emits('edit')" />
+            <VButtonIcon :icon="Icons.pencilSquare" @click="emits('edit')" />
         </template>
 
         <template v-if="hasFooter" #footer>

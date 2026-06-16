@@ -6,6 +6,7 @@ import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Form } from '@/modules/forms/entities/form';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
+import { Icons } from '@/modules/shared/constants/icons';
 
 export class ToDoStateNew extends ToDoStateBase
 {
@@ -36,7 +37,7 @@ export class ToDoStateNew extends ToDoStateBase
             this.overlay.createNotification({
                 title: this.messagesService.getMessage('todo.notification.createError.title'),
                 description: error.toString(),
-                icon: 'i-heroicons-exclamation-triangle',
+                icon: Icons.exclamationTriangle,
                 color: 'error'
             });
         });

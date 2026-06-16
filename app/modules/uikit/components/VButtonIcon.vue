@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UButton } from '#components';
+import { Icons } from '@/modules/shared/constants/icons';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 import { computed } from 'vue';
 
@@ -17,7 +18,7 @@ defineOptions({
 });
 
 const props = withDefaults(defineProps<VButtonIconProps>(), {
-  icon: 'i-heroicons-question-mark-circle',
+  icon: Icons.questionMarkCircle,
   isDisabled: false,
 });
 
