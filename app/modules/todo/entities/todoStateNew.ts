@@ -35,6 +35,7 @@ export class ToDoStateNew extends ToDoStateBase
         form.onValidationError(error =>
         {
             this.overlay.createNotification({
+                id: 'todo-create-error',
                 title: this.messagesService.getMessage('todo.notification.createError.title'),
                 description: error.toString(),
                 icon: Icons.exclamationTriangle,

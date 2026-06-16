@@ -9,7 +9,7 @@ export class FormValidationError
     toString(): string
     {
         return this.errors
-            .map(error => error.message)
+            .map(error => `- ${error.message}`)
             .join('\n');
     }
 }

@@ -25,6 +25,7 @@ export class NotificationBase extends Notification
         super();
 
         this.data = {
+            id: configuration.id,
             title: configuration.title,
             description: configuration.description,
             icon: configuration.icon,

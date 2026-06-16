@@ -19,10 +19,8 @@ function handleOpen(isOpen: boolean) {
 onMounted(() =>
 {
   toast.add({
-    title: props.title,
-    description: props.description,
-    icon: props.icon,
-    color: props.color,
+    ...props,
+    progress: false,
 
     'onUpdate:open': handleOpen
   });
