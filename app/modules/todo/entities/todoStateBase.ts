@@ -1,9 +1,8 @@
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { ToDoData } from '../types/todoData';
-import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
 import { ToDoState } from './todoState';
 import type { ToDoBase } from './todoBase';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
+import { EntityScheme } from '@/modules/shared/entities/entityScheme';
 
 export abstract class ToDoStateBase extends ToDoState
 {
@@ -16,33 +15,26 @@ export abstract class ToDoStateBase extends ToDoState
     {
         super();
 
-        this.scheme = {
-            id: {
-                type: EntityFieldType.hidden,
-            },
+        this.scheme = EntityScheme.create<ToDoData>(scheme => ({
+            id: scheme.hidden(),
 
-            title: {
-                type: EntityFieldType.string,
-                label: this.messagesService.getMessage('todo.field.title.label'),
-                placeholder: this.messagesService.getMessage('todo.field.title.placeholder'),
-                isRequired: true,
-            },
+            title: scheme
+                .string()
+                .withLabel(this.messagesService.getMessage('todo.field.title.label'))
+                .withPlaceholder(this.messagesService.getMessage('todo.field.title.placeholder'))
+                .isRequired('Заполните название задачи'),
 
-            description: {
-                type: EntityFieldType.string,
-                label: this.messagesService.getMessage('todo.field.description.label'),
-                placeholder: this.messagesService.getMessage('todo.field.description.placeholder'),
-                isLong: true,
-            },
+            description: scheme
+                .string()
+                .withLabel(this.messagesService.getMessage('todo.field.description.label'))
+                .withPlaceholder(this.messagesService.getMessage('todo.field.description.placeholder'))
+                .isLong(),
 
-            completionDatePlanned: {
-                type: EntityFieldType.datetime,
-                label: this.messagesService.getMessage('todo.field.completionDatePlanned.label'),
-            },
+            completionDatePlanned: scheme
+                .datetime()
+                .withLabel(this.messagesService.getMessage('todo.field.completionDatePlanned.label')),
 
-            completionDateActual: {
-                type: EntityFieldType.hidden,
-            },
-        };
+            completionDateActual: scheme.hidden(),
+        }));
     }
 }

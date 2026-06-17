@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { FormFieldBase } from '../../entities/formFieldBase';
-import { ValidationError } from '@/modules/validation/entities/validationError';
+import { ValidationError } from '@/modules/shared/entities/validationError';
 
 describe('FormFieldBase', () =>
 {

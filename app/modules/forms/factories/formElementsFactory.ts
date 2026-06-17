@@ -1,4 +1,4 @@
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
+import type { EntityScheme } from '@/modules/shared/entities/entityScheme';
 import type { FormElement } from "../entities/formElement";
 
 export abstract class FormElementsFactory

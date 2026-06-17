@@ -1,4 +1,4 @@
-import type { ValidationError } from '@/modules/validation/entities/validationError';
+import type { ValidationError } from '@/modules/shared/entities/validationError';
 
 export class FormValidationError
 {

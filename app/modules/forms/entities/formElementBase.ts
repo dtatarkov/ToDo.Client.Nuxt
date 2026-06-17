@@ -2,9 +2,9 @@ import type { FormFieldBase } from "./formFieldBase";
 import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
-import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
-import type { ValidationError } from '@/modules/validation/entities/validationError';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { EntityFieldScheme } from '@/modules/shared/entities/EntityFieldScheme';
+import type { ValidationError } from '@/modules/shared/entities/validationError';
 
 export class FormElementBase<V = any> extends FormElement
 {
@@ -18,7 +18,7 @@ export class FormElementBase<V = any> extends FormElement
   constructor(
     protected inputElement: InputElement<V>,
     protected formField: FormFieldBase,
-    private validator: EntityValidator,
+    private scheme: EntityFieldScheme,
   )
   {
     super();
@@ -79,7 +79,7 @@ export class FormElementBase<V = any> extends FormElement
       this.handleInitialValidation();
     }
 
-    this.validationError = this.validator.validateField(this.name, this.value);
+    this.validationError = this.scheme.validate(this.value);
     this.handleValidationError(this.validationError);
   }
 

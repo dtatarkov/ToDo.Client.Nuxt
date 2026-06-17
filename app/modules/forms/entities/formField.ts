@@ -1,5 +1,5 @@
 import { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { ValidationError } from '@/modules/validation/entities/validationError';
+import type { ValidationError } from '@/modules/shared/entities/validationError';
 
 export abstract class FormField extends UIElement
 {

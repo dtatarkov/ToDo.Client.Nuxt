@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { FormElementBase } from '../../entities/formElementBase';
 import { FormFieldBase } from '../../entities/formFieldBase';
-import { ValidationError } from '@/modules/validation/entities/validationError';
 import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
-import { createEntityValidatorMock } from '@/modules/validation/mocks/entityValidatorMock';
+import { ValidationError } from '@/modules/shared/entities/validationError';
+import { entityFieldSchemeMock } from '@/modules/shared/mocks/entityFieldSchemeMock';
+
 
 describe('FormElementBase', () =>
 {
@@ -17,13 +18,14 @@ describe('FormElementBase', () =>
         it('should save ValidationError and set isValid to false when validation fails', () =>
         {
             const inputElement = createInputElementTextMock();
+
             const formField = new FormFieldBase();
+            formField.name = 'testField';
 
-            const validator = createEntityValidatorMock();
             const error = new ValidationError('Field is required');
-            validator.validateField.mockReturnValue(error);
+            entityFieldSchemeMock.validate.mockReturnValueOnce(error);
 
-            const element = new FormElementBase(inputElement, formField, validator);
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             element.validate();
 
@@ -34,9 +36,11 @@ describe('FormElementBase', () =>
         it('should clear ValidationError and set isValid to true when validation passes', () =>
         {
             const inputElement = createInputElementTextMock();
+
             const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
-            const element = new FormElementBase(inputElement, formField, validator);
+            formField.name = 'testField';
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             element.validate();
 
@@ -47,13 +51,14 @@ describe('FormElementBase', () =>
         it('should call inputElement.toErrorMode and formField.setError on validation failure', () =>
         {
             const inputElement = createInputElementTextMock();
+
             const formField = new FormFieldBase();
+            formField.name = 'testField';
 
-            const validator = createEntityValidatorMock();
             const error = new ValidationError('Field is required');
-            validator.validateField.mockReturnValue(error);
+            entityFieldSchemeMock.validate.mockReturnValueOnce(error);
 
-            const element = new FormElementBase(inputElement, formField, validator);
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             element.validate();
 
@@ -64,11 +69,16 @@ describe('FormElementBase', () =>
         it('should call inputElement.toDefaultMode and formField.clearError on validation success', () =>
         {
             const inputElement = createInputElementTextMock();
-            const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
-            const element = new FormElementBase(inputElement, formField, validator);
 
-            validator.validateField.mockReturnValueOnce(new ValidationError('Field is required'));
+            const formField = new FormFieldBase();
+            formField.name = 'testField';
+
+            entityFieldSchemeMock.validate
+                .mockReturnValueOnce(new ValidationError('Field is required'))
+                .mockReturnValueOnce(undefined);
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+
             element.validate();
             element.validate();
 
@@ -79,10 +89,11 @@ describe('FormElementBase', () =>
         it('should set up input value tracking on first validation', () =>
         {
             const inputElement = createInputElementTextMock();
-            const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
 
-            const element = new FormElementBase(inputElement, formField, validator);
+            const formField = new FormFieldBase();
+            formField.name = 'testField';
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             element.validate();
 
@@ -92,10 +103,11 @@ describe('FormElementBase', () =>
         it('should not set up input value tracking on subsequent validations', () =>
         {
             const inputElement = createInputElementTextMock();
-            const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
 
-            const element = new FormElementBase(inputElement, formField, validator);
+            const formField = new FormFieldBase();
+            formField.name = 'testField';
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             element.validate();
             element.validate();
@@ -109,9 +121,11 @@ describe('FormElementBase', () =>
         it('should return true when no validation has been performed', () =>
         {
             const inputElement = createInputElementTextMock();
+
             const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
-            const element = new FormElementBase(inputElement, formField, validator);
+            formField.name = 'testField';
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             expect(element.isValid()).toBe(true);
         });
@@ -122,9 +136,11 @@ describe('FormElementBase', () =>
         it('should return undefined when no validation has been performed', () =>
         {
             const inputElement = createInputElementTextMock();
+
             const formField = new FormFieldBase();
-            const validator = createEntityValidatorMock();
-            const element = new FormElementBase(inputElement, formField, validator);
+            formField.name = 'testField';
+
+            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
 
             expect(element.getError()).toBeUndefined();
         });

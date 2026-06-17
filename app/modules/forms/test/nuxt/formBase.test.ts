@@ -3,12 +3,12 @@ import { FormBase } from '../../entities/formBase';
 import type { FormElement } from '../../entities/formElement';
 import { createFormElementMock } from '../../mocks/formElementMock';
 import { createFormElementsFactoryMock } from '../../mocks/formElementsFactoryMock';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
 import type { Func } from '@/modules/shared/types/func';
 import type { Action } from '@/modules/shared/types/action';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { ValidationError } from '@/modules/validation/entities/validationError';
 import { FormValidationError } from '../../entities/formValidationError';
+import { EntityScheme } from '@/modules/shared/entities/entityScheme';
+import { ValidationError } from '@/modules/shared/entities/validationError';
 
 function createForm(
     elements: FormElement[],
@@ -16,7 +16,7 @@ function createForm(
 ): FormBase
 {
     const factory = createFormElementsFactoryMock(elements);
-    const scheme: EntityScheme<any> = {};
+    const scheme = EntityScheme.create(() => ({}));
 
     const form = new FormBase(factory, {
         submit: submitHandler,

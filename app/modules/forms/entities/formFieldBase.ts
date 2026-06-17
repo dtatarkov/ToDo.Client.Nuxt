@@ -2,7 +2,7 @@ import VFormField from "../components/VFormField.vue";
 import { FormField } from "./formField";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { ValidationError } from '@/modules/validation/entities/validationError';
+import type { ValidationError } from '@/modules/shared/entities/validationError';
 
 export class FormFieldBase extends FormField
 {

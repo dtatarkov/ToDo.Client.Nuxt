@@ -5,19 +5,16 @@ import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
 import { FormFieldBase } from '../entities/formFieldBase';
 import type { FormElementsFactory } from './formElementsFactory';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
-import type { EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
-import { EntityValidatorFactory } from '@/modules/validation/factories/entityValidatorFactory';
-import type { EntityValidator } from '@/modules/validation/entities/entityValidator';
+import type { EntityScheme } from '@/modules/shared/entities/entityScheme';
+import type { EntityFieldScheme } from '@/modules/shared/entities/EntityFieldScheme';
+import { EntityFieldDateTimeScheme } from '@/modules/shared/entities/entityFieldDateTimeScheme';
+import { EntityFieldStringScheme } from '@/modules/shared/entities/entityFieldStringScheme';
 
 @dependency(InputElementsFactory)
-@dependency(EntityValidatorFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory
 {
     constructor(
         private inputElementsFactory: InputElementsFactory,
-        private entityValidatorFactory: EntityValidatorFactory,
     )
     {
     }
@@ -26,12 +23,11 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         scheme: EntityScheme<TEntity>
     ): FormElement[]
     {
-        const validator = this.entityValidatorFactory.getValidator(scheme);
         const elements: FormElement[] = [];
 
-        for (const [key, fieldScheme] of Object.entries(scheme))
+        for (const [key, fieldScheme] of Object.entries(scheme.fields))
         {
-            const element = this.createFormElement(key, fieldScheme, validator);
+            const element = this.createFormElement(key, fieldScheme);
 
             if (element)
             {
@@ -42,10 +38,9 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         return elements;
     }
 
-    private createFormElement<TEntity extends Record<string, any>>(
+    private createFormElement(
         name: string,
         fieldScheme: EntityFieldScheme,
-        validator: EntityValidator<TEntity>,
     ): FormElement | undefined
     {
         const inputElement = this.createFieldInputElement(name, fieldScheme);
@@ -56,7 +51,7 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         }
 
         const formField = this.createFormField(name, fieldScheme);
-        const formElement = new FormElementBase(inputElement, formField, validator);
+        const formElement = new FormElementBase(inputElement, formField, fieldScheme);
 
         return formElement;
     }
@@ -74,15 +69,13 @@ export class FormElementsFactoryImpl implements FormElementsFactory
     {
         let inputElement: InputElement | undefined = undefined;
 
-        switch (fieldScheme.type)
+        if (fieldScheme instanceof EntityFieldStringScheme)
         {
-            case EntityFieldType.string:
-                inputElement = this.createStringFieldInputElement(fieldScheme);
-                break;
-
-            case EntityFieldType.datetime:
-                inputElement = this.createInputDateTime();
-                break;
+            inputElement = this.createStringFieldInputElement(fieldScheme);
+        }
+        else if (fieldScheme instanceof EntityFieldDateTimeScheme)
+        {
+            inputElement = this.createInputDateTime();
         }
 
         if (inputElement)
@@ -93,14 +86,14 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         return inputElement;
     }
 
-    private createStringFieldInputElement(fieldScheme: EntityStringFieldScheme): InputElement
+    private createStringFieldInputElement(fieldScheme: EntityFieldStringScheme): InputElement
     {
         return fieldScheme.isLong
             ? this.createTextarea(fieldScheme)
             : this.createInputText(fieldScheme);
     }
 
-    private createInputText(fieldScheme: EntityStringFieldScheme): InputElement
+    private createInputText(fieldScheme: EntityFieldStringScheme): InputElement
     {
         const inputElement = this.inputElementsFactory.createInputText();
 
@@ -112,7 +105,7 @@ export class FormElementsFactoryImpl implements FormElementsFactory
         return inputElement;
     }
 
-    private createTextarea(fieldScheme: EntityStringFieldScheme): InputElement
+    private createTextarea(fieldScheme: EntityFieldStringScheme): InputElement
     {
         const inputElement = this.inputElementsFactory.createTextarea();
 

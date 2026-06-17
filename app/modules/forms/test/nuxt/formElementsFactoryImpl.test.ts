@@ -3,16 +3,13 @@ import { FormElementsFactoryImpl } from '../../factories/formElementsFactoryImpl
 import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
 import { createInputElementTextareaMock } from '../../mocks/inputElementTextareaMock';
 import { createInputElementDateTimeMock } from '../../mocks/inputElementDateTimeMock';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
 import { inputElementsFactoryMock } from '../../mocks/inputElementsFactoryMock';
-import { entityValidatorFactoryMock } from '@/modules/validation/mocks/entityValidatorFactoryMock';
+import { EntityScheme } from '@/modules/shared/entities/entityScheme';
 
 describe('FormElementsFactoryImpl', () =>
 {
     const factory = new FormElementsFactoryImpl(
         inputElementsFactoryMock,
-        entityValidatorFactoryMock,
     );
 
     beforeEach(() =>
@@ -24,7 +21,7 @@ describe('FormElementsFactoryImpl', () =>
     {
         it('should return empty array for empty scheme', () =>
         {
-            const scheme: EntityScheme<any> = {};
+            const scheme = EntityScheme.create(() => ({}));
 
             const elements = factory.createElements(scheme);
 
@@ -38,11 +35,9 @@ describe('FormElementsFactoryImpl', () =>
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const scheme: EntityScheme<any> = {
-                    title: {
-                        type: EntityFieldType.string,
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    title: scheme.string()
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -58,13 +53,11 @@ describe('FormElementsFactoryImpl', () =>
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const scheme: EntityScheme<any> = {
-                    title: {
-                        type: EntityFieldType.string,
-                        label: 'Title',
-                        placeholder: 'Enter title',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    title: scheme.string()
+                        .withLabel('Title')
+                        .withPlaceholder('Enter title')
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -84,18 +77,15 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputText1)
                     .mockReturnValueOnce(inputText2);
 
-                const scheme: EntityScheme<any> = {
-                    title: {
-                        type: EntityFieldType.string,
-                        label: 'Title',
-                        placeholder: 'Enter title',
-                    },
-                    description: {
-                        type: EntityFieldType.string,
-                        label: 'Description',
-                        placeholder: 'Enter description',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    title: scheme.string()
+                        .withLabel('Title')
+                        .withPlaceholder('Enter title'),
+
+                    description: scheme.string()
+                        .withLabel('Description')
+                        .withPlaceholder('Enter description')
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -117,12 +107,9 @@ describe('FormElementsFactoryImpl', () =>
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const scheme: EntityScheme<any> = {
-                    description: {
-                        type: EntityFieldType.string,
-                        isLong: true,
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    description: scheme.string().isLong()
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -138,14 +125,12 @@ describe('FormElementsFactoryImpl', () =>
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const scheme: EntityScheme<any> = {
-                    description: {
-                        type: EntityFieldType.string,
-                        isLong: true,
-                        label: 'Description',
-                        placeholder: 'Enter description',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    description: scheme.string()
+                        .withLabel('Description')
+                        .withPlaceholder('Enter description')
+                        .isLong()
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -164,20 +149,17 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(textarea1)
                     .mockReturnValueOnce(textarea2);
 
-                const scheme: EntityScheme<any> = {
-                    description: {
-                        type: EntityFieldType.string,
-                        isLong: true,
-                        label: 'Description',
-                        placeholder: 'Enter description',
-                    },
-                    notes: {
-                        type: EntityFieldType.string,
-                        isLong: true,
-                        label: 'Notes',
-                        placeholder: 'Enter notes',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    description: scheme.string()
+                        .withLabel('Description')
+                        .withPlaceholder('Enter description')
+                        .isLong(),
+
+                    notes: scheme.string()
+                        .withLabel('Notes')
+                        .withPlaceholder('Enter notes')
+                        .isLong()
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -199,11 +181,9 @@ describe('FormElementsFactoryImpl', () =>
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const scheme: EntityScheme<any> = {
-                    createdAt: {
-                        type: EntityFieldType.datetime,
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    createdAt: scheme.datetime()
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -218,12 +198,10 @@ describe('FormElementsFactoryImpl', () =>
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const scheme: EntityScheme<any> = {
-                    createdAt: {
-                        type: EntityFieldType.datetime,
-                        label: 'Created At',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    createdAt: scheme.datetime()
+                        .withLabel('Created At')
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -241,16 +219,13 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputDateTime1)
                     .mockReturnValueOnce(inputDateTime2);
 
-                const scheme: EntityScheme<any> = {
-                    createdAt: {
-                        type: EntityFieldType.datetime,
-                        label: 'Created At',
-                    },
-                    updatedAt: {
-                        type: EntityFieldType.datetime,
-                        label: 'Updated At',
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    createdAt: scheme.datetime()
+                        .withLabel('Created At'),
+
+                    updatedAt: scheme.datetime()
+                        .withLabel('Updated At')
+                }));
 
                 const elements = factory.createElements(scheme);
 
@@ -267,11 +242,10 @@ describe('FormElementsFactoryImpl', () =>
         {
             it('should skip hidden fields', () =>
             {
-                const scheme: EntityScheme<any> = {
-                    id: {
-                        type: EntityFieldType.hidden,
-                    },
-                };
+                const scheme = EntityScheme.create(scheme => ({
+                    id: scheme.hidden(),
+                }));
+
 
                 const elements = factory.createElements(scheme);
 
@@ -288,26 +262,21 @@ describe('FormElementsFactoryImpl', () =>
             inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
             inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-            const scheme: EntityScheme<any> = {
-                id: {
-                    type: EntityFieldType.hidden,
-                },
-                title: {
-                    type: EntityFieldType.string,
-                    label: 'Title',
-                    placeholder: 'Enter title',
-                },
-                description: {
-                    type: EntityFieldType.string,
-                    isLong: true,
-                    label: 'Description',
-                    placeholder: 'Enter description',
-                },
-                createdAt: {
-                    type: EntityFieldType.datetime,
-                    label: 'Created At',
-                },
-            };
+            const scheme = EntityScheme.create(scheme => ({
+                id: scheme.hidden(),
+
+                title: scheme.string()
+                    .withLabel('Title')
+                    .withPlaceholder('Enter title'),
+
+                description: scheme.string()
+                    .withLabel('Description')
+                    .withPlaceholder('Enter description')
+                    .isLong(),
+
+                createdAt: scheme.datetime()
+                    .withLabel('Created At'),
+            }));
 
             const elements = factory.createElements(scheme);
 

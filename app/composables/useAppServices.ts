@@ -4,7 +4,6 @@ import { useServicesContainer } from '@/modules/shared/composables/useServicesCo
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 import { useTodoServices } from '@/modules/todo/composables/useTodoServices';
 import { useUIKitServices } from '@/modules/uikit/composables/useUIKitServices';
-import { useValidationServices } from '@/modules/validation/composables/useValidationServices';
 
 export function useAppServices()
 {
@@ -15,5 +14,4 @@ export function useAppServices()
     useFormsServices();
     useOverlayServices();
     useTodoServices();
-    useValidationServices();
 }
