@@ -3,7 +3,7 @@ import { FormElementBase } from '../../entities/formElementBase';
 import { FormFieldBase } from '../../entities/formFieldBase';
 import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
 import { ValidationError } from '@/modules/shared/entities/validationError';
-import { entityFieldSchemeMock } from '@/modules/shared/mocks/entityFieldSchemeMock';
+import { entityFieldSchemeMock } from '@/modules/entitySchemes/mocks/entityFieldSchemeMock';
 
 
 describe('FormElementBase', () =>

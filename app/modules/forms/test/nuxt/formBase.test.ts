@@ -7,8 +7,8 @@ import type { Func } from '@/modules/shared/types/func';
 import type { Action } from '@/modules/shared/types/action';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { FormValidationError } from '../../entities/formValidationError';
-import { EntityScheme } from '@/modules/shared/entities/entityScheme';
 import { ValidationError } from '@/modules/shared/entities/validationError';
+import { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
 
 function createForm(
     elements: FormElement[],

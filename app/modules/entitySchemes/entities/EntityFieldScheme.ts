@@ -1,4 +1,4 @@
-import type { ValidationError } from './validationError';
+import type { ValidationError } from '../../shared/entities/validationError';
 
 
 export abstract class EntityFieldScheme<TValue = any>

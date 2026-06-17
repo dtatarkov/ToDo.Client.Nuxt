@@ -4,7 +4,7 @@ import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
 import { createInputElementTextareaMock } from '../../mocks/inputElementTextareaMock';
 import { createInputElementDateTimeMock } from '../../mocks/inputElementDateTimeMock';
 import { inputElementsFactoryMock } from '../../mocks/inputElementsFactoryMock';
-import { EntityScheme } from '@/modules/shared/entities/entityScheme';
+import { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
 
 describe('FormElementsFactoryImpl', () =>
 {

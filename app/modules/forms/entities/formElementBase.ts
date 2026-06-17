@@ -3,8 +3,8 @@ import { FormElement } from "./formElement";
 import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { EntityFieldScheme } from '@/modules/shared/entities/EntityFieldScheme';
 import type { ValidationError } from '@/modules/shared/entities/validationError';
+import type { EntityFieldScheme } from '@/modules/entitySchemes/entities/EntityFieldScheme';
 
 export class FormElementBase<V = any> extends FormElement
 {

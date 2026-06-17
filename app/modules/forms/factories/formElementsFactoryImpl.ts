@@ -5,10 +5,10 @@ import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
 import { FormFieldBase } from '../entities/formFieldBase';
 import type { FormElementsFactory } from './formElementsFactory';
-import type { EntityScheme } from '@/modules/shared/entities/entityScheme';
-import type { EntityFieldScheme } from '@/modules/shared/entities/EntityFieldScheme';
-import { EntityFieldDateTimeScheme } from '@/modules/shared/entities/entityFieldDateTimeScheme';
-import { EntityFieldStringScheme } from '@/modules/shared/entities/entityFieldStringScheme';
+import type { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
+import type { EntityFieldScheme } from '@/modules/entitySchemes/entities/EntityFieldScheme';
+import { EntityFieldStringScheme } from '@/modules/entitySchemes/entities/entityFieldStringScheme';
+import { EntityFieldDateTimeScheme } from '@/modules/entitySchemes/entities/entityFieldDateTimeScheme';
 
 @dependency(InputElementsFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory
