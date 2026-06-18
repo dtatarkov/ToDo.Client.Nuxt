@@ -5,10 +5,9 @@ import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
 import { FormFieldBase } from '../entities/formFieldBase';
 import type { FormElementsFactory } from './formElementsFactory';
-import type { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
-import type { EntityFieldScheme } from '@/modules/entitySchemes/entities/EntityFieldScheme';
-import { EntityFieldStringScheme } from '@/modules/entitySchemes/entities/entityFieldStringScheme';
-import { EntityFieldDateTimeScheme } from '@/modules/entitySchemes/entities/entityFieldDateTimeScheme';
+import type { FormElementsCreateData } from '../types/formElementsCreateData';
+import type { FormElementCreateData } from '../types/formElementCreateData';
+import { FormElementType } from '../enums/formElementType';
 
 @dependency(InputElementsFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory
@@ -19,15 +18,13 @@ export class FormElementsFactoryImpl implements FormElementsFactory
     {
     }
 
-    createElements<TEntity extends Record<string, any>>(
-        scheme: EntityScheme<TEntity>
-    ): FormElement[]
+    createElements(data: FormElementsCreateData): FormElement[]
     {
         const elements: FormElement[] = [];
 
-        for (const [key, fieldScheme] of Object.entries(scheme.fields))
+        for (const [key, elementData] of Object.entries(data))
         {
-            const element = this.createFormElement(key, fieldScheme);
+            const element = this.createFormElement(key, elementData);
 
             if (element)
             {
@@ -40,86 +37,64 @@ export class FormElementsFactoryImpl implements FormElementsFactory
 
     private createFormElement(
         name: string,
-        fieldScheme: EntityFieldScheme,
+        data: FormElementCreateData,
     ): FormElement | undefined
     {
-        const inputElement = this.createFieldInputElement(name, fieldScheme);
+        const inputElement = this.createFieldInputElement(name, data);
 
         if (!inputElement)
         {
             return undefined;
         }
 
-        const formField = this.createFormField(name, fieldScheme);
-        const formElement = new FormElementBase(inputElement, formField, fieldScheme);
+        const formField = this.createFormField(name, data);
+        const validateFn = data.validate ?? (() => undefined);
+        const formElement = new FormElementBase<any>(inputElement, formField, validateFn);
 
         return formElement;
     }
 
-    private createFormField(name: string, fieldScheme: EntityFieldScheme)
+    private createFormField(name: string, data: FormElementCreateData)
     {
         const formField = new FormFieldBase();
         formField.name = name;
-        formField.label = (fieldScheme as { label?: string; }).label ?? '';
+        formField.label = data.label ?? '';
 
         return formField;
     }
 
-    private createFieldInputElement(name: string, fieldScheme: EntityFieldScheme): InputElement | undefined
+    private createFieldInputElement(name: string, data: FormElementCreateData): InputElement | undefined
     {
-        let inputElement: InputElement | undefined = undefined;
+        let inputElement: InputElement | undefined;
 
-        if (fieldScheme instanceof EntityFieldStringScheme)
+        switch (data.type)
         {
-            inputElement = this.createStringFieldInputElement(fieldScheme);
-        }
-        else if (fieldScheme instanceof EntityFieldDateTimeScheme)
-        {
-            inputElement = this.createInputDateTime();
+            case FormElementType.inputText:
+                inputElement = this.inputElementsFactory.createInputText();
+                break;
+
+            case FormElementType.textarea:
+                inputElement = this.inputElementsFactory.createTextarea();
+                break;
+
+            case FormElementType.inputDate:
+                inputElement = this.inputElementsFactory.createInputDate();
+                break;
+
+            case FormElementType.inputTime:
+                inputElement = this.inputElementsFactory.createInputTime();
+                break;
+
+            case FormElementType.inputDateTime:
+                inputElement = this.inputElementsFactory.createInputDateTime();
+                break;
         }
 
         if (inputElement)
         {
             inputElement.name = name;
+            inputElement.setData(data);
         }
-
-        return inputElement;
-    }
-
-    private createStringFieldInputElement(fieldScheme: EntityFieldStringScheme): InputElement
-    {
-        return fieldScheme.isLong
-            ? this.createTextarea(fieldScheme)
-            : this.createInputText(fieldScheme);
-    }
-
-    private createInputText(fieldScheme: EntityFieldStringScheme): InputElement
-    {
-        const inputElement = this.inputElementsFactory.createInputText();
-
-        if (fieldScheme.placeholder)
-        {
-            inputElement.placeholder = fieldScheme.placeholder;
-        }
-
-        return inputElement;
-    }
-
-    private createTextarea(fieldScheme: EntityFieldStringScheme): InputElement
-    {
-        const inputElement = this.inputElementsFactory.createTextarea();
-
-        if (fieldScheme.placeholder)
-        {
-            inputElement.placeholder = fieldScheme.placeholder;
-        }
-
-        return inputElement;
-    }
-
-    private createInputDateTime(): InputElement
-    {
-        const inputElement = this.inputElementsFactory.createInputDateTime();
 
         return inputElement;
     }

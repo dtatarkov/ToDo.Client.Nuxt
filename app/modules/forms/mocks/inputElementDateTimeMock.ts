@@ -14,6 +14,7 @@ export function createInputElementDateTimeMock(data?: Partial<InputElementDateTi
         disable: vi.fn(),
         enable: vi.fn(),
         setDefaultValue: vi.fn(),
+        setData: vi.fn(),
         toErrorMode: vi.fn(),
         toDefaultMode: vi.fn(),
         onValueChange: vi.fn(),

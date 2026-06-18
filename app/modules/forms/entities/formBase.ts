@@ -51,13 +51,13 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   constructor(
     private formElementsFactory: FormElementsFactory,
-    configuration: FormConfiguration<TEntity>
+    configuration: FormConfiguration<TEntity>,
   )
   {
     super();
 
     this.handleSubmit = configuration.submit;
-    this.elementsRef.value = this.formElementsFactory.createElements(configuration.scheme);
+    this.elementsRef.value = this.formElementsFactory.createElements(configuration.elements);
   }
 
   get vnode()

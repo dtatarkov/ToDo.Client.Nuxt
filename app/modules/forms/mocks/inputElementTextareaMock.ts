@@ -15,6 +15,7 @@ export function createInputElementTextareaMock(data?: Partial<InputElementTextar
         disable: vi.fn(),
         enable: vi.fn(),
         setDefaultValue: vi.fn(),
+        setData: vi.fn(),
         toErrorMode: vi.fn(),
         toDefaultMode: vi.fn(),
         onValueChange: vi.fn(),

@@ -13,7 +13,9 @@ export class FormFactoryImpl implements FormFactory
   {
   }
 
-  create<TEntity extends Record<string, any> = Record<string, any>>(configuration: FormConfiguration<TEntity>): Form<TEntity>
+  create<TEntity extends Record<string, any> = Record<string, any>>(
+    configuration: FormConfiguration<TEntity>,
+  ): Form<TEntity>
   {
     return new FormBase(this.formElementsFactory, configuration);
   }

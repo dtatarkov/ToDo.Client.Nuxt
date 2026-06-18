@@ -1,9 +1,9 @@
 import type { EntityFieldDateTimeSchemeConfigurator } from './entityFieldDateTimeSchemeConfigurator';
 import { EntityFieldDateTimeSchemeConfiguratorImpl } from './entityFieldDateTimeSchemeConfiguratorImpl';
 import type { EntityFieldHiddenSchemeConfigurator } from './entityFieldHiddenSchemeConfigurator';
-import { EntityFieldHiddenSchemeConfiguratorImpl } from './EntityFieldHiddenSchemeConfiguratorImpl';
+import { EntityFieldHiddenSchemeConfiguratorImpl } from './entityFieldHiddenSchemeConfiguratorImpl';
 import type { EntityFieldStringSchemeConfigurator } from './entityFieldStringSchemeConfigurator';
-import { EntityFieldStringSchemeConfiguratorImpl } from './EntityFieldStringSchemeConfiguratorImpl';
+import { EntityFieldStringSchemeConfiguratorImpl } from './entityFieldStringSchemeConfiguratorImpl';
 import { EntitySchemeConfigurator } from './entitySchemeConfigurator';
 
 export class EntitySchemeConfiguratorImpl extends EntitySchemeConfigurator

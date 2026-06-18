@@ -8,8 +8,14 @@ import { EntityFieldStringScheme } from './entityFieldStringScheme';
 export class EntityFieldStringSchemeConfiguratorImpl extends EntityFieldStringSchemeConfigurator
 {
     private zod4Scheme = z.string();
-    private data: EntityFieldStringData = {};
-    private isRequiredCalled = false;
+
+    private data: EntityFieldStringData = {
+        label: '',
+        placeholder: '',
+        isLong: false
+    };
+
+    private isRequiredInternal = false;
 
     withLabel(label: string): this
     {
@@ -25,14 +31,14 @@ export class EntityFieldStringSchemeConfiguratorImpl extends EntityFieldStringSc
 
     isRequired(message: string): this
     {
-        if (this.isRequiredCalled)
+        if (this.isRequiredInternal)
         {
             throw new EntityFieldInvalidConfigurationException(
-                'isRequired can only be called once'
+                'Field is already required'
             );
         }
 
-        this.isRequiredCalled = true;
+        this.isRequiredInternal = true;
         this.zod4Scheme = this.zod4Scheme.nonempty(message);
         return this;
     }

@@ -7,7 +7,10 @@ import { EntityFieldDateTimeScheme } from './entityFieldDateTimeScheme';
 export class EntityFieldDateTimeSchemeConfiguratorImpl extends EntityFieldDateTimeSchemeConfigurator
 {
     private zod4Scheme = z.date().optional();
-    private data: EntityFieldDateTimeData = {};
+
+    private data: EntityFieldDateTimeData = {
+        label: ''
+    };
 
     withLabel(label: string): this
     {

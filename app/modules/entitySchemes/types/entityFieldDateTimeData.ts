@@ -1,4 +1,4 @@
 
 export type EntityFieldDateTimeData = {
-    label?: string;
+    label: string;
 };

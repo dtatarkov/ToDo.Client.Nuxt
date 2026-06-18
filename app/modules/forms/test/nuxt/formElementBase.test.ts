@@ -3,11 +3,12 @@ import { FormElementBase } from '../../entities/formElementBase';
 import { FormFieldBase } from '../../entities/formFieldBase';
 import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
 import { ValidationError } from '@/modules/shared/entities/validationError';
-import { entityFieldSchemeMock } from '@/modules/entitySchemes/mocks/entityFieldSchemeMock';
 
 
 describe('FormElementBase', () =>
 {
+    const validateFn = vi.fn();
+
     beforeEach(() =>
     {
         vi.resetAllMocks();
@@ -23,9 +24,9 @@ describe('FormElementBase', () =>
             formField.name = 'testField';
 
             const error = new ValidationError('Field is required');
-            entityFieldSchemeMock.validate.mockReturnValueOnce(error);
+            validateFn.mockReturnValueOnce(error);
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
 
@@ -40,7 +41,7 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
 
@@ -56,9 +57,9 @@ describe('FormElementBase', () =>
             formField.name = 'testField';
 
             const error = new ValidationError('Field is required');
-            entityFieldSchemeMock.validate.mockReturnValueOnce(error);
+            validateFn.mockReturnValueOnce(error);
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
 
@@ -73,11 +74,11 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            entityFieldSchemeMock.validate
+            validateFn
                 .mockReturnValueOnce(new ValidationError('Field is required'))
                 .mockReturnValueOnce(undefined);
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
             element.validate();
@@ -93,7 +94,7 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
 
@@ -107,7 +108,7 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             element.validate();
             element.validate();
@@ -125,7 +126,7 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             expect(element.isValid()).toBe(true);
         });
@@ -140,7 +141,7 @@ describe('FormElementBase', () =>
             const formField = new FormFieldBase();
             formField.name = 'testField';
 
-            const element = new FormElementBase(inputElement, formField, entityFieldSchemeMock);
+            const element = new FormElementBase(inputElement, formField, validateFn);
 
             expect(element.getError()).toBeUndefined();
         });

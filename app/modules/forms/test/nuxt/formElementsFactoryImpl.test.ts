@@ -4,7 +4,8 @@ import { createInputElementTextMock } from '../../mocks/inputElementTextMock';
 import { createInputElementTextareaMock } from '../../mocks/inputElementTextareaMock';
 import { createInputElementDateTimeMock } from '../../mocks/inputElementDateTimeMock';
 import { inputElementsFactoryMock } from '../../mocks/inputElementsFactoryMock';
-import { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
+import { FormElementType } from '../../enums/formElementType';
+import type { FormElementsCreateData } from '../../types/formElementsCreateData';
 
 describe('FormElementsFactoryImpl', () =>
 {
@@ -19,27 +20,29 @@ describe('FormElementsFactoryImpl', () =>
 
     describe('createElements', () =>
     {
-        it('should return empty array for empty scheme', () =>
+        it('should return empty array for empty data', () =>
         {
-            const scheme = EntityScheme.create(() => ({}));
+            const data: FormElementsCreateData = {};
 
-            const elements = factory.createElements(scheme);
+            const elements = factory.createElements(data);
 
             expect(elements).toEqual([]);
         });
 
         describe('string field', () =>
         {
-            it('should create input text element with minimal scheme', () =>
+            it('should create input text element with minimal data', () =>
             {
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    title: scheme.string()
-                }));
+                const data: FormElementsCreateData = {
+                    title: {
+                        type: FormElementType.inputText,
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('title');
@@ -48,24 +51,26 @@ describe('FormElementsFactoryImpl', () =>
                 expect(inputElementsFactoryMock.createTextarea).not.toHaveBeenCalled();
             });
 
-            it('should create input text element with full scheme', () =>
+            it('should create input text element with full data', () =>
             {
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    title: scheme.string()
-                        .withLabel('Title')
-                        .withPlaceholder('Enter title')
-                }));
+                const data: FormElementsCreateData = {
+                    title: {
+                        type: FormElementType.inputText,
+                        label: 'Title',
+                        placeholder: 'Enter title',
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('title');
                 expect(elements[0]?.label).toBe('Title');
-                expect(inputText.placeholder).toBe('Enter title');
                 expect(inputElementsFactoryMock.createInputText).toHaveBeenCalledTimes(1);
+                expect(inputText.setData).toBeCalledWith(data.title);
             });
 
             it('should support rendering multiple input text elements', () =>
@@ -77,41 +82,46 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputText1)
                     .mockReturnValueOnce(inputText2);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    title: scheme.string()
-                        .withLabel('Title')
-                        .withPlaceholder('Enter title'),
+                const data: FormElementsCreateData = {
+                    title: {
+                        type: FormElementType.inputText,
+                        label: 'Title',
+                        placeholder: 'Enter title',
+                    },
+                    description: {
+                        type: FormElementType.inputText,
+                        label: 'Description',
+                        placeholder: 'Enter description',
+                    }
+                };
 
-                    description: scheme.string()
-                        .withLabel('Description')
-                        .withPlaceholder('Enter description')
-                }));
-
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(2);
                 expect(elements[0]?.name).toBe('title');
                 expect(elements[0]?.label).toBe('Title');
-                expect(inputText1.placeholder).toBe('Enter title');
+                expect(inputText1.setData).toBeCalledWith(data.title);
                 expect(elements[1]?.name).toBe('description');
                 expect(elements[1]?.label).toBe('Description');
-                expect(inputText2.placeholder).toBe('Enter description');
+                expect(inputText2.setData).toBeCalledWith(data.description);
                 expect(inputElementsFactoryMock.createInputText).toHaveBeenCalledTimes(2);
             });
         });
 
         describe('long string field', () =>
         {
-            it('should create textarea element with minimal scheme', () =>
+            it('should create textarea element with minimal data', () =>
             {
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    description: scheme.string().isLong()
-                }));
+                const data: FormElementsCreateData = {
+                    description: {
+                        type: FormElementType.textarea,
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('description');
@@ -120,24 +130,25 @@ describe('FormElementsFactoryImpl', () =>
                 expect(inputElementsFactoryMock.createInputText).not.toHaveBeenCalled();
             });
 
-            it('should create textarea element with full scheme', () =>
+            it('should create textarea element with full data', () =>
             {
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    description: scheme.string()
-                        .withLabel('Description')
-                        .withPlaceholder('Enter description')
-                        .isLong()
-                }));
+                const data: FormElementsCreateData = {
+                    description: {
+                        type: FormElementType.textarea,
+                        label: 'Description',
+                        placeholder: 'Enter description',
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('description');
                 expect(elements[0]?.label).toBe('Description');
-                expect(textarea.placeholder).toBe('Enter description');
+                expect(textarea.setData).toBeCalledWith(data.description);
                 expect(inputElementsFactoryMock.createTextarea).toHaveBeenCalledTimes(1);
             });
 
@@ -149,43 +160,46 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(textarea1)
                     .mockReturnValueOnce(textarea2);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    description: scheme.string()
-                        .withLabel('Description')
-                        .withPlaceholder('Enter description')
-                        .isLong(),
+                const data: FormElementsCreateData = {
+                    description: {
+                        type: FormElementType.textarea,
+                        label: 'Description',
+                        placeholder: 'Enter description',
+                    },
+                    notes: {
+                        type: FormElementType.textarea,
+                        label: 'Notes',
+                        placeholder: 'Enter notes',
+                    }
+                };
 
-                    notes: scheme.string()
-                        .withLabel('Notes')
-                        .withPlaceholder('Enter notes')
-                        .isLong()
-                }));
-
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(2);
                 expect(elements[0]?.name).toBe('description');
                 expect(elements[0]?.label).toBe('Description');
-                expect(textarea1.placeholder).toBe('Enter description');
+                expect(textarea1.setData).toBeCalledWith(data.description);
                 expect(elements[1]?.name).toBe('notes');
                 expect(elements[1]?.label).toBe('Notes');
-                expect(textarea2.placeholder).toBe('Enter notes');
+                expect(textarea2.setData).toBeCalledWith(data.notes);
                 expect(inputElementsFactoryMock.createTextarea).toHaveBeenCalledTimes(2);
             });
         });
 
         describe('datetime field', () =>
         {
-            it('should create datetime input element with minimal scheme', () =>
+            it('should create datetime input element with minimal data', () =>
             {
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    createdAt: scheme.datetime()
-                }));
+                const data: FormElementsCreateData = {
+                    createdAt: {
+                        type: FormElementType.inputDateTime,
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('createdAt');
@@ -193,17 +207,19 @@ describe('FormElementsFactoryImpl', () =>
                 expect(inputElementsFactoryMock.createInputDateTime).toHaveBeenCalledTimes(1);
             });
 
-            it('should create datetime input element with full scheme', () =>
+            it('should create datetime input element with full data', () =>
             {
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    createdAt: scheme.datetime()
-                        .withLabel('Created At')
-                }));
+                const data: FormElementsCreateData = {
+                    createdAt: {
+                        type: FormElementType.inputDateTime,
+                        label: 'Created At',
+                    }
+                };
 
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(1);
                 expect(elements[0]?.name).toBe('createdAt');
@@ -219,15 +235,18 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputDateTime1)
                     .mockReturnValueOnce(inputDateTime2);
 
-                const scheme = EntityScheme.create(scheme => ({
-                    createdAt: scheme.datetime()
-                        .withLabel('Created At'),
+                const data: FormElementsCreateData = {
+                    createdAt: {
+                        type: FormElementType.inputDateTime,
+                        label: 'Created At',
+                    },
+                    updatedAt: {
+                        type: FormElementType.inputDateTime,
+                        label: 'Updated At',
+                    }
+                };
 
-                    updatedAt: scheme.datetime()
-                        .withLabel('Updated At')
-                }));
-
-                const elements = factory.createElements(scheme);
+                const elements = factory.createElements(data);
 
                 expect(elements).toHaveLength(2);
                 expect(elements[0]?.name).toBe('createdAt');
@@ -238,22 +257,7 @@ describe('FormElementsFactoryImpl', () =>
             });
         });
 
-        describe('hidden field', () =>
-        {
-            it('should skip hidden fields', () =>
-            {
-                const scheme = EntityScheme.create(scheme => ({
-                    id: scheme.hidden(),
-                }));
-
-
-                const elements = factory.createElements(scheme);
-
-                expect(elements).toHaveLength(0);
-            });
-        });
-
-        it('should handle mixed scheme with multiple field types', () =>
+        it('should handle mixed data with multiple field types', () =>
         {
             const inputText = createInputElementTextMock();
             const textarea = createInputElementTextareaMock();
@@ -262,23 +266,24 @@ describe('FormElementsFactoryImpl', () =>
             inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
             inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-            const scheme = EntityScheme.create(scheme => ({
-                id: scheme.hidden(),
+            const data: FormElementsCreateData = {
+                title: {
+                    type: FormElementType.inputText,
+                    label: 'Title',
+                    placeholder: 'Enter title',
+                },
+                description: {
+                    type: FormElementType.textarea,
+                    label: 'Description',
+                    placeholder: 'Enter description',
+                },
+                createdAt: {
+                    type: FormElementType.inputDateTime,
+                    label: 'Created At',
+                },
+            };
 
-                title: scheme.string()
-                    .withLabel('Title')
-                    .withPlaceholder('Enter title'),
-
-                description: scheme.string()
-                    .withLabel('Description')
-                    .withPlaceholder('Enter description')
-                    .isLong(),
-
-                createdAt: scheme.datetime()
-                    .withLabel('Created At'),
-            }));
-
-            const elements = factory.createElements(scheme);
+            const elements = factory.createElements(data);
 
             expect(elements).toHaveLength(3);
             expect(elements[0]?.name).toBe('title');

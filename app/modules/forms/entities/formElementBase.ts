@@ -4,7 +4,6 @@ import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { ValidationError } from '@/modules/shared/entities/validationError';
-import type { EntityFieldScheme } from '@/modules/entitySchemes/entities/EntityFieldScheme';
 
 export class FormElementBase<V = any> extends FormElement
 {
@@ -18,7 +17,7 @@ export class FormElementBase<V = any> extends FormElement
   constructor(
     protected inputElement: InputElement<V>,
     protected formField: FormFieldBase,
-    private scheme: EntityFieldScheme,
+    protected validateFn: (value: V) => ValidationError | undefined,
   )
   {
     super();
@@ -79,7 +78,7 @@ export class FormElementBase<V = any> extends FormElement
       this.handleInitialValidation();
     }
 
-    this.validationError = this.scheme.validate(this.value);
+    this.validationError = this.validateFn?.(this.value);
     this.handleValidationError(this.validationError);
   }
 

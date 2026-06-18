@@ -8,7 +8,6 @@ import type { Action } from '@/modules/shared/types/action';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { FormValidationError } from '../../entities/formValidationError';
 import { ValidationError } from '@/modules/shared/entities/validationError';
-import { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
 
 function createForm(
     elements: FormElement[],
@@ -16,11 +15,10 @@ function createForm(
 ): FormBase
 {
     const factory = createFormElementsFactoryMock(elements);
-    const scheme = EntityScheme.create(() => ({}));
 
     const form = new FormBase(factory, {
         submit: submitHandler,
-        scheme,
+        elements: {},
     });
 
     return form;

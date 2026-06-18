@@ -4,6 +4,7 @@ import type { Action } from '@/modules/shared/types/action';
 import type { Color } from '@/modules/uikit/types/color';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {
@@ -133,6 +134,11 @@ export abstract class InputElementBase<V> extends InputElement<V>
     {
         this.disposeToken.assertNotDisposed();
         this.value = this.getDefaultValue();
+    }
+
+    override setData(data: Record<string, any>): void
+    {
+        updatePropertiesWithData(this, data);
     }
 
     override[Symbol.dispose](): void

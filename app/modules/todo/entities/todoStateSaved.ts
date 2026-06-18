@@ -22,13 +22,14 @@ export class ToDoStateSaved extends ToDoStateBase
 
     showForm(): Modal<Form>
     {
-        const form = this.formFactory.create<ToDoData>({
-            scheme: this.scheme,
+        const form = this.formFactory.create<ToDoData>(
+            {
+                elements: this.scheme.getFormElementsData(),
 
-            submit: data => this.todo
-                .setData(data)
-                .saveAsync()
-        });
+                submit: data => this.todo
+                    .setData(data)
+                    .saveAsync()
+            });
 
         form.setData(this.todo.getData());
 

@@ -5,11 +5,11 @@ import type { Func } from '@/modules/shared/types/func';
 import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { FormValidationError } from './formValidationError';
-import type { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
+import type { FormElementsCreateData } from '../types/formElementsCreateData';
 
 export type FormConfiguration<TEntity extends Record<string, any>> = {
   submit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
-  scheme: EntityScheme<TEntity>;
+  elements: FormElementsCreateData;
 };
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> extends UIElement implements Disposable

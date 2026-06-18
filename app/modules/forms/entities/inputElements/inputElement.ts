@@ -11,7 +11,7 @@ export interface InputElementData<V>
   isDisabled: boolean;
 };
 
-export abstract class InputElement<V = unknown> extends UIElement implements InputElementData<V>
+export abstract class InputElement<V = any> extends UIElement implements InputElementData<V>
 {
   abstract id: string | undefined;
   abstract name: string | undefined;
@@ -26,6 +26,7 @@ export abstract class InputElement<V = unknown> extends UIElement implements Inp
   abstract toDefaultMode(): void;
 
   abstract setDefaultValue(): void;
+  abstract setData(data: Partial<InputElementData<V>>): void;
 
   abstract onValueChange(handler: Action<[value: V]>, disposeToken?: DisposeToken): void;
 }
