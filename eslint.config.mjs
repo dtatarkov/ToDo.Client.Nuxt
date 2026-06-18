@@ -23,6 +23,8 @@ export default withNuxt(
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/unified-signatures': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
+
+      'vue/valid-template-root': 'off',
       
       // Also consider unused imports as errors
       'import/no-unused-modules': ['error', { suppressMissingFileEnumeratorAPIWarning: true, unusedExports: true }],

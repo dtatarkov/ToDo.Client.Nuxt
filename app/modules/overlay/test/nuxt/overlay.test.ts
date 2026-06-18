@@ -47,6 +47,26 @@ describe('OverlayBase', () =>
             expect(observable).toBeDefined();
             expect(observable).toEqual([]);
         });
+
+        it('should combine modals and notifications', () =>
+        {
+            const modal = overlay.createModal({
+                title: testModalTitle,
+                content: createContentMock(),
+            });
+
+            const notification = overlay.createNotification({
+                title: 'Test Notification',
+                description: '',
+                icon: 'info',
+            });
+
+            const elements = overlay.getElements();
+
+            expect(elements.length).toBe(2);
+            expect(elements).toContain(modal);
+            expect(elements).toContain(notification);
+        });
     });
 
     describe('createModal', () =>
@@ -196,31 +216,90 @@ describe('OverlayBase', () =>
         });
     });
 
-    describe('removeElement', () =>
+    describe('createNotification', () =>
     {
-        it('should remove existing element', () =>
+        it('should create notification without id and add it to elements', () =>
         {
-            const modal = overlay.createModal({
-                title: testModalTitle,
-                content: createContentMock(),
+            const notification = overlay.createNotification({
+                title: 'Test',
+                description: '',
+                icon: 'info',
             });
 
-            expect(overlay.getElements()).toContain(modal);
+            const elements = overlay.getElements();
 
-            overlay.removeElement(modal);
-            expect(overlay.getElements()).not.toContain(modal);
-            expect(overlay.getElements().length).toBe(0);
+            expect(elements).toContain(notification);
+            expect(elements.length).toBe(1);
         });
 
-        it('should throw error if element not present', () =>
+        it('should create notification with new id as standalone notification', () =>
         {
-            const modal = overlay.createModal({
-                title: testModalTitle,
-                content: createContentMock(),
+            const notification = overlay.createNotification({
+                id: 'group1',
+                title: 'Standalone',
+                description: '',
+                icon: 'info',
             });
 
-            overlay.removeElement(modal);
-            expect(() => overlay.removeElement(modal)).toThrow();
+            const elements = overlay.getElements();
+
+            expect(elements).toContain(notification);
+            expect(elements.length).toBe(1);
+        });
+
+        it('should close existing notification when creating another with the same id', () =>
+        {
+            const first = overlay.createNotification({
+                id: 'group1',
+                title: 'First',
+                description: '',
+                icon: 'info',
+            });
+
+            const second = overlay.createNotification({
+                id: 'group1',
+                title: 'Second',
+                description: '',
+                icon: 'info',
+            });
+
+            const elements = overlay.getElements();
+
+            // First notification should be closed (removed from elements)
+            expect(elements).not.toContain(first);
+            expect(elements).toContain(second);
+            expect(elements.length).toBe(1);
+        });
+
+        it('should close each previous notification when creating multiple with the same id', () =>
+        {
+            const first = overlay.createNotification({
+                id: 'group1',
+                title: 'First',
+                description: '',
+                icon: 'info',
+            });
+
+            const second = overlay.createNotification({
+                id: 'group1',
+                title: 'Second',
+                description: '',
+                icon: 'info',
+            });
+
+            const third = overlay.createNotification({
+                id: 'group1',
+                title: 'Third',
+                description: '',
+                icon: 'info',
+            });
+
+            const elements = overlay.getElements();
+
+            expect(elements).not.toContain(first);
+            expect(elements).not.toContain(second);
+            expect(elements).toContain(third);
+            expect(elements.length).toBe(1);
         });
     });
 
@@ -241,7 +320,7 @@ describe('OverlayBase', () =>
             expect(callback).toHaveBeenCalledWith([modal]);
         });
 
-        it('should invoke callback when element is removed', () =>
+        it('should invoke callback when modal is removed via close()', () =>
         {
             const callback = vi.fn();
 
@@ -254,10 +333,52 @@ describe('OverlayBase', () =>
 
             callback.mockClear();
 
-            overlay.removeElement(modal);
+            modal.close();
 
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([]);
+        });
+
+        it('should invoke callback when notification is removed via close()', () =>
+        {
+            const callback = vi.fn();
+
+            overlay.onElementsChange(callback);
+
+            const notification = overlay.createNotification({
+                title: 'Test',
+                description: '',
+                icon: 'info',
+            });
+
+            callback.mockClear();
+
+            notification.close();
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([]);
+        });
+
+        it('should invoke callback when notification with same id replaces existing one', () =>
+        {
+            overlay.createNotification({
+                id: 'group1',
+                title: 'First',
+                description: '',
+                icon: 'info',
+            });
+
+            const callback = vi.fn();
+            overlay.onElementsChange(callback);
+
+            overlay.createNotification({
+                id: 'group1',
+                title: 'Second',
+                description: '',
+                icon: 'info',
+            });
+
+            expect(callback).toHaveBeenCalledTimes(2);
         });
     });
 });

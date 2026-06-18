@@ -1,8 +1,17 @@
 import { OverlayElement } from './overlayElement';
 import type { Color } from '@/modules/uikit/types/color';
 
-export abstract class Notification extends OverlayElement
+export type NotificationData = {
+    id: string | undefined;
+    title: string;
+    description: string;
+    icon: string;
+    color: Color;
+};
+
+export abstract class Notification extends OverlayElement implements NotificationData
 {
+    abstract readonly id: string | undefined;
     abstract readonly title: string;
     abstract readonly description: string;
     abstract readonly icon: string;

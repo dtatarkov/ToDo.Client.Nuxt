@@ -1,28 +1,27 @@
 import { h } from 'vue';
-import { Notification } from './notification';
+import type { Notification } from './notification';
 import type { NotificationConfiguration } from './notificationConfiguration';
 import VNotification from '../components/VNotification.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
-import type { Overlay } from './overlay';
+import type { NotificationsStore } from './notificationsStore';
 import type { Color } from '@/modules/uikit/types/color';
 import type { NotificationData } from '../types/notificationData';
+import { OverlayElementBase } from './overlayElementBase';
 
-export class NotificationBase extends Notification
+export class NotificationBase extends OverlayElementBase<NotificationsStore> implements Notification
 {
-    private overlay: Overlay | undefined;
     private data: NotificationData;
-
-    private disposeToken = new DisposeToken();
-
     private onCloseFn = () => this.close();
 
     readonly key = getUniqueId('notification');
 
-    constructor(configuration: NotificationConfiguration)
+
+    constructor(
+        store: NotificationsStore,
+        configuration: NotificationConfiguration,
+    )
     {
-        super();
+        super(store);
 
         this.data = {
             id: configuration.id,
@@ -31,6 +30,11 @@ export class NotificationBase extends Notification
             icon: configuration.icon,
             color: configuration.color ?? 'neutral'
         };
+    }
+
+    get id(): string | undefined
+    {
+        return this.data.id;
     }
 
     get title(): string
@@ -60,33 +64,5 @@ export class NotificationBase extends Notification
 
             onClose: this.onCloseFn,
         });
-    }
-
-    override close()
-    {
-        this.overlay?.removeElement(this);
-        this[Symbol.dispose]();
-    }
-
-    override setOverlay(overlay: Overlay)
-    {
-        this.disposeToken.assertNotDisposed();
-
-        if (this.overlay)
-        {
-            throw new InitializationOnlyException('overlay');
-        }
-
-        this.overlay = overlay;
-    }
-
-    override[Symbol.dispose](): void
-    {
-        if (this.disposeToken.isDisposed)
-        {
-            return;
-        }
-
-        this.disposeToken[Symbol.dispose]();
     }
 }

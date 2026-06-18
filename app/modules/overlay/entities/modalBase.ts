@@ -1,12 +1,11 @@
-import { Modal, type ModalConfiguration } from "./modal";
+import { h, shallowReactive } from 'vue';
+import type { Modal, ModalConfiguration } from "./modal";
 import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import { ModalButtonConfirmConfiguratorBase } from './modalButtonConfirmConfiguratorBase';
 import VModal from '../components/VModal.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import type { Overlay } from './overlay';
+import type { ModalsStore } from './modalsStore';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import { isDisposable } from '@/modules/shared/utils/isDisposable';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
@@ -14,14 +13,13 @@ import type { Func } from '@/modules/shared/types/func';
 import type { ModalData } from '../types/modalData';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
+import { OverlayElementBase } from './overlayElementBase';
 
-export class ModalBase<Content extends UIElement> extends Modal<Content>
+export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {
-  private overlay: Overlay | undefined;
   private data: ModalData;
 
   private buttons: Array<ButtonGeneral>;
-  private disposeToken = new DisposeToken();
   private onCloseFn = () => this.close();
 
   private children = {
@@ -37,10 +35,12 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
   constructor(
     private buttonsFactory: ButtonsFactory,
     private messagesService: MessagesService,
+    store: ModalsStore,
     configuration: ModalConfiguration<Content>,
+
   )
   {
-    super();
+    super(store);
 
     this.data = shallowReactive({
       title: configuration.title,
@@ -54,6 +54,12 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     this.buttonCancel = this.createButtonCancel(configuration.buttonCancel);
 
     this.buttons = this.collectButtons(this.buttonConfirm, this.buttonCancel);
+
+    this.disposeToken.onDispose(() =>
+    {
+      this.disposeContent();
+      this.disposeControls();
+    });
   }
 
   get title()
@@ -77,7 +83,7 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     return h(VModal, props, this.children);
   }
 
-  override enable()
+  enable()
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = false;
@@ -86,43 +92,13 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
       control.enable());
   }
 
-  override disable()
+  disable()
   {
     this.disposeToken.assertNotDisposed();
     this.data.isDisabled = true;
 
     this.buttons.forEach(control =>
       control.disable());
-  }
-
-  override close()
-  {
-    this.overlay?.removeElement(this);
-    this[Symbol.dispose]();
-  }
-
-  override[Symbol.dispose](): void
-  {
-    if (this.disposeToken.isDisposed)
-    {
-      return;
-    }
-
-    this.disposeContent();
-    this.disposeControls();
-    this.disposeToken[Symbol.dispose]();
-  }
-
-  override setOverlay(overlay: Overlay)
-  {
-    this.disposeToken.assertNotDisposed();
-
-    if (this.overlay)
-    {
-      throw new InitializationOnlyException('overlay');
-    }
-
-    this.overlay = overlay;
   }
 
   private createButtonConfirm(setupFn?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>): ButtonGeneral | undefined
@@ -159,14 +135,6 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     return buttonCancel;
   }
 
-  private disposeContent()
-  {
-    if (isDisposable(this.content))
-    {
-      this.content[Symbol.dispose]();
-    }
-  }
-
   private setupCommandTracking(command: AsyncCommand)
   {
     command.onIdle(() =>
@@ -183,6 +151,14 @@ export class ModalBase<Content extends UIElement> extends Modal<Content>
     {
       this.close();
     }, this.disposeToken);
+  }
+
+  private disposeContent()
+  {
+    if (isDisposable(this.content))
+    {
+      this.content[Symbol.dispose]();
+    }
   }
 
   private disposeControls()
