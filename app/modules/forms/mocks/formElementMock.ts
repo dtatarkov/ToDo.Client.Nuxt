@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import type { FormElement } from '../entities/formElement';
+import type { FormElementValidationError } from '../entities/formElementValidationError';
 
 export function createFormElementMock<V = unknown>(name: string, initialValue: V)
 {
@@ -10,7 +11,7 @@ export function createFormElementMock<V = unknown>(name: string, initialValue: V
         setDefaultValue: vi.fn(),
         validate: vi.fn(),
         isValid: vi.fn(),
-        getError: vi.fn(),
+        getError: vi.fn<() => FormElementValidationError | undefined>(),
         disable: vi.fn(),
         enable: vi.fn(),
         key: `test-element-${name}`,

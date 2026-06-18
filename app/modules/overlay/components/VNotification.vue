@@ -9,6 +9,10 @@ const emits = defineEmits<{
 
 const toast = useToast();
 
+const ui = {
+  description: 'whitespace-pre-wrap'
+}
+
 function handleOpen(isOpen: boolean) {
   if (!isOpen) 
   {
@@ -21,6 +25,7 @@ onMounted(() =>
   toast.add({
     ...props,
     progress: false,
+    ui,
 
     'onUpdate:open': handleOpen
   });

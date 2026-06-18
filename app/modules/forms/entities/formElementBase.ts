@@ -4,10 +4,11 @@ import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { ValidationError } from '@/modules/shared/entities/validationError';
+import { FormElementValidationError } from './formElementValidationError';
 
 export class FormElementBase<V = any> extends FormElement
 {
-  private validationError: ValidationError | undefined;
+  private validationError: FormElementValidationError | undefined;
 
   private isInitialValidation = true;
   private disposeToken = new DisposeToken();
@@ -78,7 +79,12 @@ export class FormElementBase<V = any> extends FormElement
       this.handleInitialValidation();
     }
 
-    this.validationError = this.validateFn?.(this.value);
+    const error = this.validateFn?.(this.value);
+
+    this.validationError = error
+      ? new FormElementValidationError(this.label, error.message)
+      : undefined;
+
     this.handleValidationError(this.validationError);
   }
 
@@ -87,7 +93,7 @@ export class FormElementBase<V = any> extends FormElement
     return this.validationError == undefined;
   }
 
-  override getError(): ValidationError | undefined
+  override getError(): FormElementValidationError | undefined
   {
     return this.validationError;
   }
@@ -108,7 +114,7 @@ export class FormElementBase<V = any> extends FormElement
     this.setupInputValueTracking();
   }
 
-  private handleValidationError(error: ValidationError | undefined): void
+  private handleValidationError(error: FormElementValidationError | undefined): void
   {
     if (error)
     {

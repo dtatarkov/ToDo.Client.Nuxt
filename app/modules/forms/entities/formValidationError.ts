@@ -1,15 +1,15 @@
-import type { ValidationError } from '@/modules/shared/entities/validationError';
+import type { FormElementValidationError } from './formElementValidationError';
 
 export class FormValidationError
 {
     constructor(
-        public readonly errors: ValidationError[]
+        public readonly errors: FormElementValidationError[]
     ) { }
 
     toString(): string
     {
         return this.errors
-            .map(error => `- ${error.message}`)
+            .map(error => error.toString())
             .join('\n');
     }
 }

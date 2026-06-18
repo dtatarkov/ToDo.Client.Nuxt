@@ -31,7 +31,7 @@ describe('FormElementBase', () =>
             element.validate();
 
             expect(element.isValid()).toBe(false);
-            expect(element.getError()).toBe(error);
+            expect(element.getError()?.message).toBe(error?.message);
         });
 
         it('should clear ValidationError and set isValid to true when validation passes', () =>
@@ -64,7 +64,7 @@ describe('FormElementBase', () =>
             element.validate();
 
             expect(inputElement.toErrorMode).toHaveBeenCalledTimes(1);
-            expect(formField.getError()).toBe(error);
+            expect(formField.getError()?.message).toBe(error.message);
         });
 
         it('should call inputElement.toDefaultMode and formField.clearError on validation success', () =>

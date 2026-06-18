@@ -1,5 +1,5 @@
 import { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { ValidationError } from '@/modules/shared/entities/validationError';
+import type { FormElementValidationError } from './formElementValidationError';
 
 export abstract class FormElement<V = any> extends UIElement
 {
@@ -12,5 +12,5 @@ export abstract class FormElement<V = any> extends UIElement
   abstract validate(): void;
   abstract setDefaultValue(): void;
   abstract isValid(): boolean;
-  abstract getError(): ValidationError | undefined;
+  abstract getError(): FormElementValidationError | undefined;
 }

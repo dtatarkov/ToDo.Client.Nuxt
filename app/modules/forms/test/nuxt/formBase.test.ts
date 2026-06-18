@@ -7,7 +7,7 @@ import type { Func } from '@/modules/shared/types/func';
 import type { Action } from '@/modules/shared/types/action';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { FormValidationError } from '../../entities/formValidationError';
-import { ValidationError } from '@/modules/shared/entities/validationError';
+import { FormElementValidationError } from '../../entities/formElementValidationError';
 
 function createForm(
     elements: FormElement[],
@@ -134,7 +134,7 @@ describe('FormBase', () =>
     {
         it('should emit FormValidationError when submit fails validation', async () =>
         {
-            const validationError = new ValidationError('Field is required');
+            const validationError = new FormElementValidationError('description', 'Field is required');
             const invalidFormElement = createFormElementMock('description', '');
             invalidFormElement.isValid.mockReturnValue(false);
             invalidFormElement.getError.mockReturnValue(validationError);
@@ -166,8 +166,8 @@ describe('FormBase', () =>
 
         it('should emit FormValidationError with multiple errors when multiple elements fail', async () =>
         {
-            const error1 = new ValidationError('Title is required');
-            const error2 = new ValidationError('Description is required');
+            const error1 = new FormElementValidationError('title', 'Title is required');
+            const error2 = new FormElementValidationError('description', 'Description is required');
 
             const titleElement = createFormElementMock('title', '');
             titleElement.isValid.mockReturnValue(false);

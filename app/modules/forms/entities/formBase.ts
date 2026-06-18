@@ -11,7 +11,7 @@ import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import { FormValidationError } from './formValidationError';
-import type { ValidationError } from '@/modules/shared/entities/validationError';
+import type { FormElementValidationError } from './formElementValidationError';
 
 enum FormBaseState
 {
@@ -216,7 +216,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
       }
 
       return result;
-    }, new Array<ValidationError>());
+    }, new Array<FormElementValidationError>());
 
     const formValidationError = new FormValidationError(errors);
 
