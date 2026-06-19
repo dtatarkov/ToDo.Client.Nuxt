@@ -2,6 +2,6 @@ export function awaitMicrotasks()
 {
     return new Promise<void>(resolve =>
     {
-        resolve();
+        setTimeout(() => resolve(), 0);
     });
 }

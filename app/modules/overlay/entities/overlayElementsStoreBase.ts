@@ -10,7 +10,7 @@ import { OverlayElementAlreadyAddedException } from '../exceptions/overlayElemen
 export abstract class OverlayElementsStoreBase<T extends OverlayElement> extends OverlayElementsStore<T>
 {
     protected elements = new Array<T>();
-    protected elementsChangeEvent = new EntityEvent<T[]>();
+    protected elementsChangeEvent = new EntityEvent<T[]>({ deferred: true });
 
     override getElements(): T[]
     {

@@ -5,6 +5,7 @@ import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonConfirmConfigurator';
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
 import { messagesServiceMock } from '@/modules/shared/mocks/messagesServiceMock';
+import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
 
 const testModalTitle = 'Test Modal';
 const testModalDescription = 'Test Description';
@@ -305,7 +306,21 @@ describe('OverlayBase', () =>
 
     describe('onElementsChange', () =>
     {
-        it('should invoke callback when element is added', () =>
+        it('should not invoke callback immediately when element is added (deferred)', () =>
+        {
+            const callback = vi.fn();
+
+            overlay.onElementsChange(callback);
+
+            overlay.createModal({
+                title: testModalTitle,
+                content: createContentMock(),
+            });
+
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('should invoke callback after microtask when element is added', async () =>
         {
             const callback = vi.fn();
 
@@ -315,12 +330,14 @@ describe('OverlayBase', () =>
                 title: testModalTitle,
                 content: createContentMock(),
             });
+
+            await awaitMicrotasks();
 
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([modal]);
         });
 
-        it('should invoke callback when modal is removed via close()', () =>
+        it('should invoke callback after microtask when modal is removed via close()', async () =>
         {
             const callback = vi.fn();
 
@@ -331,15 +348,18 @@ describe('OverlayBase', () =>
                 content: createContentMock(),
             });
 
+            await awaitMicrotasks();
             callback.mockClear();
 
             modal.close();
+
+            await awaitMicrotasks();
 
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([]);
         });
 
-        it('should invoke callback when notification is removed via close()', () =>
+        it('should invoke callback after microtask when notification is removed via close()', async () =>
         {
             const callback = vi.fn();
 
@@ -351,15 +371,18 @@ describe('OverlayBase', () =>
                 icon: 'info',
             });
 
+            await awaitMicrotasks();
             callback.mockClear();
 
             notification.close();
+
+            await awaitMicrotasks();
 
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([]);
         });
 
-        it('should invoke callback when notification with same id replaces existing one', () =>
+        it('should invoke callback after microtask when notification with same id replaces existing one', async () =>
         {
             overlay.createNotification({
                 id: 'group1',
@@ -378,7 +401,32 @@ describe('OverlayBase', () =>
                 icon: 'info',
             });
 
-            expect(callback).toHaveBeenCalledTimes(2);
+            await awaitMicrotasks();
+
+            expect(callback).toHaveBeenCalledTimes(1);
+        });
+
+        it('should deliver only the last elements state when multiple operations happen before microtask', async () =>
+        {
+            const callback = vi.fn();
+
+            overlay.onElementsChange(callback);
+
+            const modal = overlay.createModal({
+                title: testModalTitle,
+                content: createContentMock(),
+            });
+
+            const notification = overlay.createNotification({
+                title: 'Test',
+                description: '',
+                icon: 'info',
+            });
+
+            await awaitMicrotasks();
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([modal, notification]);
         });
     });
 });

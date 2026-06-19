@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ModalsStoreBase } from '../../entities/modalsStoreBase';
 import { createModalMock, modalMock } from '../../mocks/modalMock';
+import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
 
 describe('ModalsStoreBase', () =>
 {
@@ -70,17 +71,28 @@ describe('ModalsStoreBase', () =>
 
     describe('onElementsChange', () =>
     {
-        it('should emit on add', () =>
+        it('should not invoke callback immediately on add (deferred)', () =>
         {
             const callback = vi.fn();
             store.onElementsChange(callback);
             store.add(modalMock);
 
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('should invoke callback after microtask on add', async () =>
+        {
+            const callback = vi.fn();
+            store.onElementsChange(callback);
+            store.add(modalMock);
+
+            await awaitMicrotasks();
+
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([modalMock]);
         });
 
-        it('should emit on remove', () =>
+        it('should invoke callback after microtask on remove', async () =>
         {
             const callback = vi.fn();
 
@@ -88,8 +100,26 @@ describe('ModalsStoreBase', () =>
             store.onElementsChange(callback);
             store.remove(modalMock);
 
+            await awaitMicrotasks();
+
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([]);
+        });
+
+        it('should deliver only the last elements state when multiple operations happen before microtask', async () =>
+        {
+            const callback = vi.fn();
+            const modal1 = createModalMock();
+            const modal2 = createModalMock();
+
+            store.onElementsChange(callback);
+            store.add(modal1);
+            store.add(modal2);
+
+            await awaitMicrotasks();
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([modal1, modal2]);
         });
     });
 });

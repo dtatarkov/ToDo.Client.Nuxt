@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NotificationsStoreBase } from '../../entities/notificationsStoreBase';
 import { createNotificationMock, notificationMock } from '../../mocks/notificationMock';
+import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
 
 describe('NotificationsStoreBase', () =>
 {
@@ -131,18 +132,30 @@ describe('NotificationsStoreBase', () =>
 
     describe('onElementsChange', () =>
     {
-        it('should emit on add', () =>
+        it('should not invoke callback immediately on add (deferred)', () =>
         {
             const callback = vi.fn();
 
             store.onElementsChange(callback);
             store.add(notificationMock);
 
+            expect(callback).not.toHaveBeenCalled();
+        });
+
+        it('should invoke callback after microtask on add', async () =>
+        {
+            const callback = vi.fn();
+
+            store.onElementsChange(callback);
+            store.add(notificationMock);
+
+            await awaitMicrotasks();
+
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([notificationMock]);
         });
 
-        it('should emit on remove', () =>
+        it('should invoke callback after microtask on remove', async () =>
         {
             const callback = vi.fn();
 
@@ -150,11 +163,13 @@ describe('NotificationsStoreBase', () =>
             store.onElementsChange(callback);
             store.remove(notificationMock);
 
+            await awaitMicrotasks();
+
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([]);
         });
 
-        it('should emit when notification with same id is added (existing gets closed, new stays)', () =>
+        it('should invoke callback after microtask when notification with same id is added', async () =>
         {
             const store = new NotificationsStoreBase();
             const callback = vi.fn();
@@ -165,8 +180,26 @@ describe('NotificationsStoreBase', () =>
             store.onElementsChange(callback);
             store.add(newNotification);
 
+            await awaitMicrotasks();
+
             expect(callback).toHaveBeenCalledTimes(1);
             expect(callback).toHaveBeenCalledWith([existing, newNotification]);
+        });
+
+        it('should deliver only the last elements state when multiple adds happen before microtask', async () =>
+        {
+            const callback = vi.fn();
+            const notification1 = createNotificationMock();
+            const notification2 = createNotificationMock();
+
+            store.onElementsChange(callback);
+            store.add(notification1);
+            store.add(notification2);
+
+            await awaitMicrotasks();
+
+            expect(callback).toHaveBeenCalledTimes(1);
+            expect(callback).toHaveBeenCalledWith([notification1, notification2]);
         });
     });
 });

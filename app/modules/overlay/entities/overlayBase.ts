@@ -13,6 +13,7 @@ import type { NotificationConfiguration } from './notificationConfiguration';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
+import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 
 @dependency(ButtonsFactory)
 @dependency(MessagesService)
@@ -21,12 +22,19 @@ export class OverlayBase extends Overlay
     private modalsStore = new ModalsStoreBase();
     private notificationsStore = new NotificationsStoreBase();
 
+    private elementsChangeEvent = new EntityEvent<OverlayElement[]>({ deferred: true });
+
     constructor(
         private buttonsFactory: ButtonsFactory,
         private messagesService: MessagesService
     )
     {
         super();
+
+        const combinedCallback = () => this.elementsChangeEvent.emit(this.getElements());
+
+        this.modalsStore.onElementsChange(combinedCallback);
+        this.notificationsStore.onElementsChange(combinedCallback);
     }
 
     getElements(): OverlayElement[]
@@ -39,10 +47,7 @@ export class OverlayBase extends Overlay
 
     onElementsChange(callback: Action<[OverlayElement[]]>, disposeToken?: DisposeToken): void
     {
-        const combinedCallback = () => callback(this.getElements());
-
-        this.modalsStore.onElementsChange(combinedCallback, disposeToken);
-        this.notificationsStore.onElementsChange(combinedCallback, disposeToken);
+        this.elementsChangeEvent.on(callback, disposeToken);
     }
 
     createModal<Content extends UIElement>(configuration: ModalConfiguration<Content>): Modal<Content>
@@ -68,6 +73,7 @@ export class OverlayBase extends Overlay
 
     override[Symbol.dispose](): void
     {
+        this.elementsChangeEvent[Symbol.dispose]();
         this.modalsStore[Symbol.dispose]();
         this.notificationsStore[Symbol.dispose]();
     }
