@@ -1,8 +1,9 @@
-import { NotificationsStore } from './notificationsStore';
+import type { NotificationsStore } from './notificationsStore';
 import type { Notification } from './notification';
 import { isStringEmpty } from '../../shared/utils/isStringEmpty';
+import { OverlayElementsStoreBase } from './overlayElementsStoreBase';
 
-export class NotificationsStoreBase extends NotificationsStore
+export class NotificationsStoreBase extends OverlayElementsStoreBase<Notification> implements NotificationsStore
 {
     override remove(notification: Notification): void
     {
