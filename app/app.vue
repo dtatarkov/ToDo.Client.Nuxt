@@ -13,6 +13,7 @@ import * as locales from '@nuxt/ui/locale';
 import VOverlayWidget from '@/modules/overlay/widgets/VOverlayWidget.vue';
 
 useAppServices();
+useGlobalErrorsHandler();
 
 const config = useRuntimeConfig();
 const locale = (locales as any)[config.public.locale];
