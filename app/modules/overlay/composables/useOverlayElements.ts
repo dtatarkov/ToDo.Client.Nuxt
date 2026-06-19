@@ -11,10 +11,5 @@ export function useOverlayElements()
         (callback, disposeToken) => overlay.onElementsChange(callback, disposeToken),
     );
 
-    watchEffect(() =>
-    {
-        console.log('overlayElements', overlayElements.value);
-    });
-
     return { overlayElements };
 }
