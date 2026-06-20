@@ -114,6 +114,20 @@ describe('OverlayBase', () =>
             expect(modal.title).toBe(testModalTitle);
         });
 
+        it('should return data from getData matching configuration', () =>
+        {
+            const modal = overlay.createModal({
+                title: testModalTitle,
+                content: createContentMock(),
+                description: testModalDescription,
+            });
+
+            expect(modal.getData()).toEqual({
+                title: testModalTitle,
+                description: testModalDescription,
+            });
+        });
+
         it('should set description as empty string when not provided', () =>
         {
             const modal = overlay.createModal({
@@ -219,6 +233,25 @@ describe('OverlayBase', () =>
 
     describe('createNotification', () =>
     {
+        it('should return data from getData matching configuration', () =>
+        {
+            const notification = overlay.createNotification({
+                id: 'custom-id',
+                title: 'Test',
+                description: '',
+                icon: 'warning',
+                color: 'warning',
+            });
+
+            expect(notification.getData()).toEqual({
+                id: 'custom-id',
+                title: 'Test',
+                description: '',
+                icon: 'warning',
+                color: 'warning',
+            });
+        });
+
         it('should create notification without id and add it to elements', () =>
         {
             const notification = overlay.createNotification({
