@@ -22,6 +22,7 @@ export function createModalMock()
         enable: vi.fn(),
         disable: vi.fn(),
         close: vi.fn(),
+        getData: vi.fn(),
         [Symbol.dispose]: vi.fn(),
     } satisfies Modal<UIElement>;
 }

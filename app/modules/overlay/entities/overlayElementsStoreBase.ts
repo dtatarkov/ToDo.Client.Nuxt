@@ -4,8 +4,8 @@ import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
 import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
-import { OverlayElementNotFoundException } from '../exceptions/overlayElementNotFoundException';
-import { OverlayElementAlreadyAddedException } from '../exceptions/overlayElementAlreadyAddedException';
+import { OverlayElementExceptionNotFound } from '../exceptions/overlayElementExceptionNotFound';
+import { OverlayElementExceptionAlreadyAdded } from '../exceptions/overlayElementExceptionAlreadyAdded';
 
 export abstract class OverlayElementsStoreBase<T extends OverlayElement> extends OverlayElementsStore<T>
 {
@@ -47,9 +47,7 @@ export abstract class OverlayElementsStoreBase<T extends OverlayElement> extends
     {
         if (!this.elements.includes(element))
         {
-            const exception = new OverlayElementNotFoundException();
-            console.error(exception.message, element);
-            throw exception;
+            throw new OverlayElementExceptionNotFound(element);
         }
     }
 
@@ -57,9 +55,7 @@ export abstract class OverlayElementsStoreBase<T extends OverlayElement> extends
     {
         if (this.elements.includes(element))
         {
-            const exception = new OverlayElementAlreadyAddedException();
-            console.error(exception.message, element);
-            throw exception;
+            throw new OverlayElementExceptionAlreadyAdded(element);
         }
     }
 }

@@ -14,18 +14,23 @@ import type { ModalData } from '../types/modalData';
 import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
 import { OverlayElementBase } from './overlayElementBase';
+import type { ModalState } from '../types/modalState';
 
 export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {
   private data: ModalData;
-
   private buttons: Array<ButtonGeneral>;
-  private onCloseFn = () => this.close();
+
+  private state: ModalState = shallowReactive({
+    isDisabled: false,
+  });
 
   private children = {
     content: () => this.content?.vnode,
     controls: () => this.buttons.map(control => control.vnode)
   };
+
+  private onCloseFn = () => this.close();
 
   readonly key = getUniqueId('modal');
   readonly content: Content;
@@ -42,11 +47,10 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
   {
     super(store);
 
-    this.data = shallowReactive({
+    this.data = {
       title: configuration.title,
       description: configuration.description ?? '',
-      isDisabled: false,
-    });
+    };
 
     this.content = configuration.content;
 
@@ -76,6 +80,7 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
   {
     const props = {
       ...this.data,
+      ...this.state,
 
       onClose: this.onCloseFn,
     };
@@ -86,7 +91,7 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
   enable()
   {
     this.disposeToken.assertNotDisposed();
-    this.data.isDisabled = false;
+    this.state.isDisabled = false;
 
     this.buttons.forEach(control =>
       control.enable());
@@ -95,10 +100,15 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
   disable()
   {
     this.disposeToken.assertNotDisposed();
-    this.data.isDisabled = true;
+    this.state.isDisabled = true;
 
     this.buttons.forEach(control =>
       control.disable());
+  }
+
+  override getData()
+  {
+    return this.data;
   }
 
   private createButtonConfirm(setupFn?: Func<ButtonGeneral, [ModalButtonConfirmConfigurator]>): ButtonGeneral | undefined

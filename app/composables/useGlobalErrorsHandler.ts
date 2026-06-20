@@ -15,6 +15,8 @@ export function useGlobalErrorsHandler()
     {
         window.addEventListener('unhandledrejection', (event) =>
         {
+            event.preventDefault();
+
             loggingService.logError(event.reason);
         });
     }

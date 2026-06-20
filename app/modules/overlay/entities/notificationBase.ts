@@ -65,4 +65,9 @@ export class NotificationBase extends OverlayElementBase<NotificationsStore> imp
             onClose: this.onCloseFn,
         });
     }
+
+    override getData()
+    {
+        return this.data;
+    }
 }

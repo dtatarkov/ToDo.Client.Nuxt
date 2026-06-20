@@ -19,6 +19,7 @@ export function createNotificationMock(data: Partial<NotificationData> = {}): No
         key: '',
         close: vi.fn(),
         vnode: {} as VNode,
+        getData: vi.fn(),
         [Symbol.dispose]: vi.fn(),
     } satisfies Notification;
 }

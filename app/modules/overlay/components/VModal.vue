@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ModalData } from '../types/modalData';
+import type { ModalState } from '../types/modalState';
 
-const props = defineProps<ModalData>();
+const props = defineProps<ModalData & ModalState>();
 
  const emits = defineEmits<{
    (e: 'close'): void
