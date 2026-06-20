@@ -6,7 +6,7 @@ import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Form } from '@/modules/forms/entities/form';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
-import { Icons } from '@/modules/shared/constants/icons';
+import { Icon } from '@/modules/shared/enums/icons';
 
 export class ToDoStateNew extends ToDoStateBase
 {
@@ -39,7 +39,7 @@ export class ToDoStateNew extends ToDoStateBase
                 id: 'todo-create-error',
                 title: this.messagesService.getMessage('todo.notification.createError.title'),
                 description: error.toString(),
-                icon: Icons.exclamationTriangle,
+                icon: Icon.exclamationTriangle,
                 color: 'error'
             });
         });

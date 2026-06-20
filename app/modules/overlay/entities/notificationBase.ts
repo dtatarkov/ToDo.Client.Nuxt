@@ -6,6 +6,7 @@ import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { NotificationsStore } from './notificationsStore';
 import type { Color } from '@/modules/uikit/types/color';
 import type { NotificationData } from '../types/notificationData';
+import type { Icon } from '@/modules/shared/enums/icons';
 import { OverlayElementBase } from './overlayElementBase';
 
 export class NotificationBase extends OverlayElementBase<NotificationsStore> implements Notification
@@ -47,7 +48,7 @@ export class NotificationBase extends OverlayElementBase<NotificationsStore> imp
         return this.data.description;
     }
 
-    get icon(): string
+    get icon(): Icon
     {
         return this.data.icon;
     }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VButtonIcon from '../components/VButtonIcon.vue';
-import { Icons } from '@/modules/shared/constants/icons';
+import { Icon } from '@/modules/shared/enums/icons.js';
 import { fn } from 'storybook/test';
 import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
 
@@ -17,16 +17,16 @@ const meta: Meta<typeof VButtonIcon> = {
         icon: {
             control: 'select',
             options: [
-                Icons.pencilSquare,
-                Icons.trash,
-                Icons.plus,
-                Icons.check,
-                Icons.xMark,
-                Icons.heart,
-                Icons.star,
-                Icons.cog,
-                Icons.bell,
-                Icons.home,
+                Icon.pencilSquare,
+                Icon.trash,
+                Icon.plus,
+                Icon.check,
+                Icon.xMark,
+                Icon.heart,
+                Icon.star,
+                Icon.cog,
+                Icon.bell,
+                Icon.home,
             ],
         },
 
@@ -57,14 +57,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        icon: Icons.pencilSquare,
+        icon: Icon.pencilSquare,
         isDisabled: false,
     },
 };
 
 export const Disabled: Story = {
     args: {
-        icon: Icons.pencilSquare,
+        icon: Icon.pencilSquare,
         isDisabled: true,
     },
 };

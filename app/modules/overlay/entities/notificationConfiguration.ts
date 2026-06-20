@@ -1,9 +1,10 @@
 import type { Color } from '@/modules/uikit/types/color';
+import type { Icon } from '@/modules/shared/enums/icons';
 
 export type NotificationConfiguration = {
     id?: string;
     title: string;
     description: string;
-    icon: string;
+    icon: Icon;
     color?: Color;
 };

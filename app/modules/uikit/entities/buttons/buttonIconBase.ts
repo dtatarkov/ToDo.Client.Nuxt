@@ -3,12 +3,13 @@ import type { ButtonIcon } from './buttonIcon';
 import { ButtonBase } from './buttonBase';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import { shallowReactive, type VNode } from 'vue';
+import { Icon } from '@/modules/shared/enums/icons';
 
 export class ButtonIconBase extends ButtonBase implements ButtonIcon
 {
     private data = shallowReactive({
         isDisabled: false,
-        icon: ''
+        icon: Icon.questionMarkCircle
     });
 
     readonly key = getUniqueId('button-element-icon');
@@ -27,12 +28,12 @@ export class ButtonIconBase extends ButtonBase implements ButtonIcon
         });
     }
 
-    get icon(): string
+    get icon(): Icon
     {
         return this.data.icon;
     }
 
-    set icon(value: string)
+    set icon(value: Icon)
     {
         this.data.icon = value;
     }

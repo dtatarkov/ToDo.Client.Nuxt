@@ -1,5 +1,6 @@
 import { vi } from 'vitest';
 import type { Notification, NotificationData } from '../entities/notification';
+import { Icon } from '@/modules/shared/enums/icons';
 
 
 export function createNotificationMock(data: Partial<NotificationData> = {}): Notification
@@ -8,7 +9,7 @@ export function createNotificationMock(data: Partial<NotificationData> = {}): No
         id: '',
         title: '',
         description: '',
-        icon: 'info',
+        icon: Icon.questionMarkCircle,
         color: 'neutral',
     };
 

@@ -3,15 +3,16 @@ import { ButtonIconBase } from '../../entities/buttons/buttonIconBase';
 import { DisposedException } from '@/modules/shared/exceptions/disposedException';
 import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
 import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
+import { Icon } from '@/modules/shared/enums/icons';
 
 describe('ButtonIconBase', () =>
 {
     describe('icon', () =>
     {
-        it('should be empty string by default', () =>
+        it('should have default icon', () =>
         {
             const button = new ButtonIconBase();
-            expect(button.icon).toBe('');
+            expect(button.icon).toBe(Icon.questionMarkCircle);
         });
     });
 

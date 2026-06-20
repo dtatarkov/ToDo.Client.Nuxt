@@ -6,6 +6,7 @@ import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonC
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
 import { messagesServiceMock } from '@/modules/shared/mocks/messagesServiceMock';
 import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
+import { Icon } from '@/modules/shared/enums/icons';
 
 const testModalTitle = 'Test Modal';
 const testModalDescription = 'Test Description';
@@ -59,7 +60,7 @@ describe('OverlayBase', () =>
             const notification = overlay.createNotification({
                 title: 'Test Notification',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const elements = overlay.getElements();
@@ -239,7 +240,7 @@ describe('OverlayBase', () =>
                 id: 'custom-id',
                 title: 'Test',
                 description: 'Description',
-                icon: 'warning',
+                icon: Icon.exclamationTriangle,
                 color: 'warning',
             });
 
@@ -247,7 +248,7 @@ describe('OverlayBase', () =>
                 id: 'custom-id',
                 title: 'Test',
                 description: 'Description',
-                icon: 'warning',
+                icon: Icon.exclamationTriangle,
                 color: 'warning',
             });
         });
@@ -257,7 +258,7 @@ describe('OverlayBase', () =>
             const notification = overlay.createNotification({
                 title: 'Test',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const elements = overlay.getElements();
@@ -272,7 +273,7 @@ describe('OverlayBase', () =>
                 id: 'group1',
                 title: 'Standalone',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const elements = overlay.getElements();
@@ -287,14 +288,14 @@ describe('OverlayBase', () =>
                 id: 'group1',
                 title: 'First',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const second = overlay.createNotification({
                 id: 'group1',
                 title: 'Second',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const elements = overlay.getElements();
@@ -311,21 +312,21 @@ describe('OverlayBase', () =>
                 id: 'group1',
                 title: 'First',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const second = overlay.createNotification({
                 id: 'group1',
                 title: 'Second',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const third = overlay.createNotification({
                 id: 'group1',
                 title: 'Third',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const elements = overlay.getElements();
@@ -401,7 +402,7 @@ describe('OverlayBase', () =>
             const notification = overlay.createNotification({
                 title: 'Test',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             await awaitMicrotasks();
@@ -421,7 +422,7 @@ describe('OverlayBase', () =>
                 id: 'group1',
                 title: 'First',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             const callback = vi.fn();
@@ -431,7 +432,7 @@ describe('OverlayBase', () =>
                 id: 'group1',
                 title: 'Second',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             await awaitMicrotasks();
@@ -453,7 +454,7 @@ describe('OverlayBase', () =>
             const notification = overlay.createNotification({
                 title: 'Test',
                 description: '',
-                icon: 'info',
+                icon: Icon.questionMarkCircle,
             });
 
             await awaitMicrotasks();
