@@ -238,7 +238,7 @@ describe('OverlayBase', () =>
             const notification = overlay.createNotification({
                 id: 'custom-id',
                 title: 'Test',
-                description: '',
+                description: 'Description',
                 icon: 'warning',
                 color: 'warning',
             });
@@ -246,7 +246,7 @@ describe('OverlayBase', () =>
             expect(notification.getData()).toEqual({
                 id: 'custom-id',
                 title: 'Test',
-                description: '',
+                description: 'Description',
                 icon: 'warning',
                 color: 'warning',
             });
