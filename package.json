@@ -20,7 +20,7 @@
   "dependencies": {
     "@internationalized/date": "3.12.1",
     "@nuxt/eslint": "1.15.2",
-    "@nuxt/ui": "4.5.1",
+    "@nuxt/ui": "4.9.0",
     "@nuxtjs/i18n": "10.4.0",
     "luxon": "3.7.2",
     "nuxt": "4.3.1",

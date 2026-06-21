@@ -6,12 +6,14 @@ import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Form } from '@/modules/forms/entities/form';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
+import type { Notifier } from '@/modules/notifications/entities/notifier';
 import { Icon } from '@/modules/shared/enums/icons';
 
 export class ToDoStateNew extends ToDoStateBase
 {
     constructor(
         private overlay: Overlay,
+        private notifier: Notifier,
         private formFactory: FormFactory,
         messagesService: MessagesService,
         todo: ToDoBase,
@@ -35,8 +37,9 @@ export class ToDoStateNew extends ToDoStateBase
 
         form.onValidationError(error =>
         {
-            this.overlay.createNotification({
+            this.notifier.notify({
                 id: 'todo-create-error',
+                date: new Date(),
                 title: this.messagesService.getMessage('todo.notification.createError.title'),
                 description: error.toString(),
                 icon: Icon.exclamationTriangle,

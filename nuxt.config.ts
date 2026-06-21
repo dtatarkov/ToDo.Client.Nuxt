@@ -49,7 +49,9 @@ export default defineNuxtConfig({
         'UInputTime',
         'UHeader',
         'UMain',
-        'UFooter'
+        'UFooter',
+        'USidebar',
+        'UNavigationMenu'
       ]
     },
     // Disable safelist colors to reduce CSS size

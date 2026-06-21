@@ -6,6 +6,7 @@ import { formMock } from '@/modules/forms/mocks/formMock';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { modalMock } from '@/modules/overlay/mocks/modalMock';
 import { messagesServiceMock } from '@/modules/shared/mocks/messagesServiceMock';
+import { notifierMock } from '@/modules/notifications/mocks/notifierMock';
 
 describe('ToDoImpl', () =>
 {
@@ -18,7 +19,11 @@ describe('ToDoImpl', () =>
         formFactoryMock.create.mockReturnValue(formMock);
         overlayMock.createModal.mockReturnValue(modalMock);
 
-        todo = new ToDoBase(overlayMock, formFactoryMock, messagesServiceMock);
+        todo = new ToDoBase(
+            overlayMock,
+            notifierMock,
+            formFactoryMock,
+            messagesServiceMock);
     });
 
     describe('properties', () =>

@@ -8,10 +8,10 @@ export function useToDoCards()
 {
     const todosOwner = useService(ToDosOwner);
 
-    const todos = useEventDrivenRef(
-        () => todosOwner.getAllToDos(),
-        (callback, disposeToken) => todosOwner.onToDosChange(callback, disposeToken),
-    );
+    const todos = useEventDrivenRef({
+        getter: () => todosOwner.getAllToDos(),
+        on: (callback, disposeToken) => todosOwner.onToDosChange(callback, disposeToken)
+    });
 
     const todoCards = computed(() => todos.value.map<ToDoCardData>(todo => reactive({
         id: computed(() => todo.id),

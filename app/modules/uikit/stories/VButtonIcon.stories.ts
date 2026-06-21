@@ -25,7 +25,7 @@ const meta: Meta<typeof VButtonIcon> = {
                 Icon.heart,
                 Icon.star,
                 Icon.cog,
-                Icon.bell,
+                Icon.bellInactive,
                 Icon.home,
             ],
         },

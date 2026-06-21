@@ -6,10 +6,10 @@ export function useOverlayElements()
 {
     const overlay = useService(Overlay);
 
-    const overlayElements = useEventDrivenRef(
-        () => overlay.getElements(),
-        (callback, disposeToken) => overlay.onElementsChange(callback, disposeToken),
-    );
+    const overlayElements = useEventDrivenRef({
+        getter: () => overlay.getElements(),
+        on: (callback, disposeToken) => overlay.onElementsChange(callback, disposeToken),
+    });
 
     return { overlayElements };
 }

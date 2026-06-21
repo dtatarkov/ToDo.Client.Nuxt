@@ -1,5 +1,9 @@
 <template>
-  <UHeader :title="title" />
+  <UHeader :title="title">
+    <template #right>
+      <slot name="right" />
+    </template>
+  </UHeader>
 </template>
 
 <script setup lang="ts">

@@ -2,19 +2,24 @@
   <VAppWidget>
     <VHeaderWidget />
 
-    <VMain>
-      <NuxtPage />
-    </VMain>
+    <section class="flex">
+      <VMain class="grow">
+        <NuxtPage />
+      </VMain>
 
-    <VFooter />    
+      <VSidebarWidget />
+    </section>
+
+    <VFooter />
   </VAppWidget>
 </template>
 
 <script setup lang="ts">
 import VAppWidget from '@/modules/uikit/components/VAppWidget.vue';
-import VHeaderWidget from '@/modules/uikit/components/VHeaderWidget.vue';
+import VHeaderWidget from '@/modules/layouts/components/VHeaderWidget.vue';
 import VFooter from '@/modules/uikit/components/VFooter.vue';
 import VMain from '@/modules/uikit/components/VMain.vue';
+import VSidebarWidget from '@/modules/sidebar/widgets/VSidebarWidget.vue';
 
 useAppServices();
 useGlobalErrorsHandler();

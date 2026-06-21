@@ -4,12 +4,18 @@ import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
 import type { Action } from '@/modules/shared/types/action';
 import type { Ref } from 'vue';
+import type { Func } from '../types/func';
 
-export function useEventDrivenRef<T>(
-    getter: () => T,
-    on: (callback: Action<[]>, disposeToken: DisposeToken) => void,
-): Ref<T>
+export type UseEventDrivenRefConfiguration<T> = {
+    getter: Func<T>,
+    setter?: Action<[T]>;
+    on: Action<[Action, DisposeToken]>;
+};
+
+export function useEventDrivenRef<T>(configuration: UseEventDrivenRefConfiguration<T>): Ref<T>
 {
+    const { getter, setter, on } = configuration;
+
     const disposeToken = useService(DisposeToken);
 
     const ref = customRef<T>((track, trigger) =>
@@ -26,9 +32,14 @@ export function useEventDrivenRef<T>(
                 return getter();
             },
 
-            set()
+            set(value)
             {
-                throw new ReadonlyRefValueChangeException();
+                if (!setter)
+                {
+                    throw new ReadonlyRefValueChangeException();
+                }
+
+                setter(value);
             },
         };
     });
