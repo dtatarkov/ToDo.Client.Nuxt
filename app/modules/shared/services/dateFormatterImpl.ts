@@ -1,12 +1,11 @@
 import { DateTime } from 'luxon';
-import { DateFormatter } from './dateFormatter';
-import { AppPublicRuntimeConfig } from "../interfaces/appPublicRuntimeConfig";
+import { DateFormatter, DateFormatterConfiguration } from './dateFormatter';
 import { dependency } from '../decorators/dependency';
 
-@dependency(AppPublicRuntimeConfig)
+@dependency(DateFormatterConfiguration)
 export class DateFormatterImpl extends DateFormatter
 {
-    constructor(private config: AppPublicRuntimeConfig)
+    constructor(private config: DateFormatterConfiguration)
     {
         super();
     }

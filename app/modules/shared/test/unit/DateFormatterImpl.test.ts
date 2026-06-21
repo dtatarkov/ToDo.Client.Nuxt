@@ -1,15 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { DateFormatterImpl } from '../../services/dateFormatterImpl';
-import type { AppPublicRuntimeConfig } from '../../interfaces/appPublicRuntimeConfig';
+import type { DateFormatterConfiguration } from '../../services/dateFormatter';
 
 describe('DateFormatterImpl', () =>
 {
-    const config: AppPublicRuntimeConfig = {
-        appTitle: '',
-        apiBaseUrl: '',
-        locale: 'ru',
-        longTaskSpinnerDelay: 500,
-        validatorsCacheSizeMax: 0
+    const config: DateFormatterConfiguration = {
+        locale: 'ru'
     };
 
     const formatter = new DateFormatterImpl(config);

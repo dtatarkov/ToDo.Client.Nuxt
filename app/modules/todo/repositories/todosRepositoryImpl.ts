@@ -1,5 +1,4 @@
-import { AppPublicRuntimeConfig } from '@/modules/shared/interfaces/appPublicRuntimeConfig';
-import { ToDosRepository } from "./todosRepository";
+import { ToDosRepository, ToDosRepositoryConfiguration } from "./todosRepository";
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import type { ToDo } from "../entities/todo";
 import { dependency } from '@/modules/shared/decorators/dependency';
@@ -7,13 +6,13 @@ import type { ToDoGetDto } from '../types/toDoGetDto';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { ssrPayload } from '@/modules/shared/decorators/ssrPayload';
 
-@dependency(AppPublicRuntimeConfig)
 @dependency(ToDoDtoMapper)
+@dependency(ToDosRepositoryConfiguration)
 export class ToDosRepositoryImpl extends ToDosRepository
 {
   constructor(
-    private config: AppPublicRuntimeConfig,
     private todoDtoMapper: ToDoDtoMapper,
+    private config: ToDosRepositoryConfiguration,
   )
   {
     super();
