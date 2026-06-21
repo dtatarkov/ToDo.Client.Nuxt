@@ -1,20 +1,21 @@
 <template>
-  <UApp :locale="locale">
-    <NuxtPage />
+  <VAppWidget>
+    <VHeaderWidget />
 
-    <ClientOnly>
-      <VOverlayWidget />
-    </ClientOnly>
-  </UApp>
+    <VMain>
+      <NuxtPage />
+    </VMain>
+
+    <VFooter />    
+  </VAppWidget>
 </template>
 
 <script setup lang="ts">
-import * as locales from '@nuxt/ui/locale';
-import VOverlayWidget from '@/modules/overlay/widgets/VOverlayWidget.vue';
+import VAppWidget from '@/modules/uikit/components/VAppWidget.vue';
+import VHeaderWidget from '@/modules/uikit/components/VHeaderWidget.vue';
+import VFooter from '@/modules/uikit/components/VFooter.vue';
+import VMain from '@/modules/uikit/components/VMain.vue';
 
 useAppServices();
 useGlobalErrorsHandler();
-
-const config = useRuntimeConfig();
-const locale = (locales as any)[config.public.locale];
 </script>

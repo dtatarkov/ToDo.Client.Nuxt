@@ -46,7 +46,10 @@ export default defineNuxtConfig({
         'UInput',
         'UTextarea',
         'UInputDate',
-        'UInputTime'
+        'UInputTime',
+        'UHeader',
+        'UMain',
+        'UFooter'
       ]
     },
     // Disable safelist colors to reduce CSS size
@@ -65,6 +68,7 @@ export default defineNuxtConfig({
     public: {
       apiBaseUrl: '',
       locale: 'ru',
+      appTitle: 'ToDo',
       longTaskSpinnerDelay: 500, // ms
       validatorsCacheSizeMax: 50
     },

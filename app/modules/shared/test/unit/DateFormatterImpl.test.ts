@@ -5,6 +5,7 @@ import type { AppPublicRuntimeConfig } from '../../interfaces/appPublicRuntimeCo
 describe('DateFormatterImpl', () =>
 {
     const config: AppPublicRuntimeConfig = {
+        appTitle: '',
         apiBaseUrl: '',
         locale: 'ru',
         longTaskSpinnerDelay: 500,
