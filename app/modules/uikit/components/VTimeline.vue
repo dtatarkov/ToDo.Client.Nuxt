@@ -17,7 +17,7 @@ const props = defineProps<Props>();
 
 const timelineItems = computed(() =>
   props.records.map(record => ({
-    label: record.title,
+    title: record.title,
     description: record.description,
     icon: record.icon,
     date: dateFormatter.formatDate(record.date),
