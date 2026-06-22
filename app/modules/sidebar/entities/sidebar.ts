@@ -4,7 +4,7 @@ import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 
 export type SidebarLayers = {
-    notificationsTimeline: SidebarLayer<NotificationsTimeline>;
+    timeline: SidebarLayer<NotificationsTimeline>;
 };
 
 export abstract class Sidebar implements Disposable

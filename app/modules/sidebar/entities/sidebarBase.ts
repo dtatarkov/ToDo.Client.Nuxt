@@ -1,7 +1,7 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
-import { SidebarLayer } from './sidebarLayer';
+import { SidebarLayerNotificationsTimeline } from './sidebarLayerNotificationsTimeline';
 import { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { Action } from '@/modules/shared/types/action';
@@ -21,7 +21,7 @@ export class SidebarBase extends Sidebar
         super();
 
         this.layers = Object.freeze({
-            notificationsTimeline: new SidebarLayer(notificationsTimeline),
+            timeline: new SidebarLayerNotificationsTimeline(notificationsTimeline),
         });
 
         this.setupLayersTracking();

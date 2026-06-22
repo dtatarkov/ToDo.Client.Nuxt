@@ -17,8 +17,8 @@ describe('SidebarBase', () =>
         {
             const sidebar = new SidebarBase(notificationsTimelineMock);
 
-            expect(sidebar.layers.notificationsTimeline).toBeDefined();
-            expect(sidebar.layers.notificationsTimeline.content).toBe(notificationsTimelineMock);
+            expect(sidebar.layers.timeline).toBeDefined();
+            expect(sidebar.layers.timeline.content).toBe(notificationsTimelineMock);
         });
     });
 
@@ -29,7 +29,7 @@ describe('SidebarBase', () =>
             const callback = vi.fn();
 
             sidebar.onLayersChange(callback);
-            sidebar.layers.notificationsTimeline.isActive = true;
+            sidebar.layers.timeline.isActive = true;
 
             expect(callback).toHaveBeenCalledTimes(1);
         });

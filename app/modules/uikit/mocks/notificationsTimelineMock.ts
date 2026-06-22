@@ -6,5 +6,7 @@ export const notificationsTimelineMock = {
     vnode: {} as VNode,
     addRecord: vi.fn(),
     getRecords: vi.fn(),
+    hasRecords: vi.fn(),
+    onRecordsChange: vi.fn(),
     [Symbol.dispose]: vi.fn(),
 } satisfies NotificationsTimeline;
