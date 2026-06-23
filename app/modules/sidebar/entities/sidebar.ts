@@ -1,10 +1,10 @@
 import type { SidebarLayer } from './sidebarLayer';
-import type { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
 import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Timeline } from '@/modules/notifications/entities/timeline';
 
 export type SidebarLayers = {
-    timeline: SidebarLayer<NotificationsTimeline>;
+    timeline: SidebarLayer<Timeline>;
 };
 
 export abstract class Sidebar implements Disposable

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { SidebarBase } from '../../entities/sidebarBase';
-import { notificationsTimelineMock } from '@/modules/uikit/mocks/notificationsTimelineMock';
+import { timelineMock } from '@/modules/uikit/mocks/timelineMock';
 
 describe('SidebarBase', () =>
 {
@@ -8,17 +8,17 @@ describe('SidebarBase', () =>
 
     beforeEach(() =>
     {
-        sidebar = new SidebarBase(notificationsTimelineMock);
+        sidebar = new SidebarBase(timelineMock);
     });
 
     describe('layers', () =>
     {
         it('should create layers with notificationsTimeline key', () =>
         {
-            const sidebar = new SidebarBase(notificationsTimelineMock);
+            const sidebar = new SidebarBase(timelineMock);
 
             expect(sidebar.layers.timeline).toBeDefined();
-            expect(sidebar.layers.timeline.content).toBe(notificationsTimelineMock);
+            expect(sidebar.layers.timeline.content).toBe(timelineMock);
         });
     });
 

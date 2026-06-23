@@ -1,6 +1,6 @@
 import type { Icon } from '@/modules/shared/enums/icons';
 
-export abstract class Notification
+export abstract class AppNotification
 {
     abstract readonly date: Date;
     abstract readonly title: string;

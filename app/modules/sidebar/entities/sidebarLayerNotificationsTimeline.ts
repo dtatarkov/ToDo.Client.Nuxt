@@ -1,15 +1,15 @@
+import type { Timeline } from '@/modules/notifications/entities/timeline';
 import { SidebarLayerBase } from './sidebarLayerBase';
-import type { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
 
-export class SidebarLayerNotificationsTimeline extends SidebarLayerBase<NotificationsTimeline>
+export class SidebarLayerNotificationsTimeline extends SidebarLayerBase<Timeline>
 {
     constructor(
-        notificationsTimeline: NotificationsTimeline,
+        timeline: Timeline,
     )
     {
-        super(notificationsTimeline);
+        super(timeline);
 
-        notificationsTimeline.onRecordsChange(() =>
+        timeline.onNotificationsChange(() =>
         {
             this.availabilityChangeEvent.emit(this.isAvailable());
         });
@@ -17,6 +17,6 @@ export class SidebarLayerNotificationsTimeline extends SidebarLayerBase<Notifica
 
     isAvailable(): boolean
     {
-        return this.content.hasRecords();
+        return this.content.hasNotifications();
     }
 }

@@ -1,9 +1,9 @@
-import { Notification } from './notification';
-import type { NotificationData } from '../types/notificationData';
+import { AppNotification } from './appNotification';
+import type { AppNotificationData } from '../types/appNotificationData';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Icon } from '@/modules/shared/enums/icons';
 
-export class NotificationBase extends Notification
+export class AppNotificationBase extends AppNotification
 {
     readonly date: Date;
     readonly title: string;
@@ -12,7 +12,7 @@ export class NotificationBase extends Notification
 
     constructor(
         private overlay: Overlay,
-        data: NotificationData,
+        data: AppNotificationData,
     )
     {
         super();

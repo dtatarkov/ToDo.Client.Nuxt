@@ -1,6 +1,7 @@
 import type { Icon } from '@/modules/shared/enums/icons';
 
-export type NotificationData = {
+export type AppNotificationData = {
+    groupId?: string;
     date: Date;
     title: string;
     description: string;

@@ -14,7 +14,7 @@ import type { StateTransition } from '@/modules/shared/types/stateTransition';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import type { Form } from '@/modules/forms/entities/form';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
-import type { Notifier } from '@/modules/notifications/entities/notifier';
+import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 
 type ToDoStateTransitionConstraint = {
   isNew: boolean;
@@ -38,15 +38,15 @@ export class ToDoBase extends ToDo
 
   constructor(
     private overlay: Overlay,
-    private notifier: Notifier,
+    private notificationsStore: AppNotificationsStore,
     private formFactory: FormFactory,
     private messagesService: MessagesService,
   )
   {
     super();
 
-    this.newState = new ToDoStateNew(this.overlay, this.notifier, this.formFactory, this.messagesService, this);
-    this.savedState = new ToDoStateSaved(this.overlay, this.notifier, this.formFactory, this.messagesService, this);
+    this.newState = new ToDoStateNew(this.overlay, this.notificationsStore, this.formFactory, this.messagesService, this);
+    this.savedState = new ToDoStateSaved(this.overlay, this.notificationsStore, this.formFactory, this.messagesService, this);
 
     this.state = this.newState;
 
@@ -149,7 +149,7 @@ export class ToDoBase extends ToDo
 
   override clone(): ToDo
   {
-    const todo = new ToDoBase(this.overlay, this.notifier, this.formFactory, this.messagesService);
+    const todo = new ToDoBase(this.overlay, this.notificationsStore, this.formFactory, this.messagesService);
 
     todo.id = this.id;
     todo.title = this.title;

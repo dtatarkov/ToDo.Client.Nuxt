@@ -6,7 +6,7 @@ import { formMock } from '@/modules/forms/mocks/formMock';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { modalMock } from '@/modules/overlay/mocks/modalMock';
 import { messagesServiceMock } from '@/modules/shared/mocks/messagesServiceMock';
-import { notifierMock } from '@/modules/notifications/mocks/notifierMock';
+import { appNotificationsStoreMock } from '@/modules/notifications/mocks/appNotificationsStoreMock';
 
 describe('ToDoImpl', () =>
 {
@@ -21,7 +21,7 @@ describe('ToDoImpl', () =>
 
         todo = new ToDoBase(
             overlayMock,
-            notifierMock,
+            appNotificationsStoreMock,
             formFactoryMock,
             messagesServiceMock);
     });

@@ -6,19 +6,19 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { FormFactory } from '@/modules/forms/factories/formFactory';
 import { MessagesService } from '@/modules/shared/services/messagesService';
-import { Notifier } from '@/modules/notifications/entities/notifier';
+import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 
 @dependency(Overlay)
 @dependency(FormFactory)
 @dependency(MessagesService)
-@dependency(Notifier)
+@dependency(AppNotificationsStore)
 export class ToDoFactoryImpl extends ToDoFactory
 {
     constructor(
         private overlay: Overlay,
         private formFactory: FormFactory,
         private messagesService: MessagesService,
-        private notifier: Notifier,
+        private notificationsStore: AppNotificationsStore,
     )
     {
         super();
@@ -26,7 +26,7 @@ export class ToDoFactoryImpl extends ToDoFactory
 
     create(data?: Partial<ToDoData>): ToDo
     {
-        const todo = new ToDoBase(this.overlay, this.notifier, this.formFactory, this.messagesService);
+        const todo = new ToDoBase(this.overlay, this.notificationsStore, this.formFactory, this.messagesService);
 
         if (data)
         {

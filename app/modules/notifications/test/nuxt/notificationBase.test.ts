@@ -1,25 +1,25 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { NotificationBase } from '../../entities/notificationBase';
+import { AppNotificationBase } from '../../entities/appNotificationBase';
 import { Icon } from '@/modules/shared/enums/icons';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
-import type { NotificationData } from '../../types/notificationData';
+import type { AppNotificationData } from '../../types/appNotificationData';
 
 describe('NotificationBase', () =>
 {
-    const notificationData: NotificationData = {
+    const notificationData: AppNotificationData = {
         date: new Date('2024-01-01'),
         title: 'Test Title',
         description: 'Test Description',
         icon: Icon.exclamationTriangle,
     };
 
-    let notification: NotificationBase;
+    let notification: AppNotificationBase;
 
     beforeEach(() =>
     {
         vi.resetAllMocks();
 
-        notification = new NotificationBase(
+        notification = new AppNotificationBase(
             overlayMock,
             notificationData,
         );

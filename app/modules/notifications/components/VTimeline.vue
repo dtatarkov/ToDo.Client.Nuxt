@@ -4,23 +4,23 @@
 
 <script setup lang="ts">
 import { DateFormatter } from '@/modules/shared/services/dateFormatter';
-import type { TimelineRecord } from '../types/timelineRecord';
 import { useService } from '@/modules/shared/composables/useService';
+import type { AppNotification } from '@/modules/notifications/entities/appNotification';
 
 const dateFormatter = useService(DateFormatter);
 
 type Props = {
-    records: TimelineRecord[];
+    notifications: AppNotification[];
 }
 
 const props = defineProps<Props>();
 
 const timelineItems = computed(() =>
-  props.records.map(record => ({
-    title: record.title,
-    description: record.description,
-    icon: record.icon,
-    date: dateFormatter.formatDate(record.date),
+  props.notifications.map(notification => ({
+    title: notification.title,
+    description: notification.description,
+    icon: notification.icon,
+    date: dateFormatter.formatDate(notification.date),
   }))
 );
 </script>

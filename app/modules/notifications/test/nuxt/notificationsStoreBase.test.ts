@@ -1,26 +1,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { NotificationsStoreBase } from '../../entities/notificationsStoreBase';
+import { AppNotificationsStoreBase } from '../../entities/appNotificationsStoreBase';
 import { Icon } from '@/modules/shared/enums/icons';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { DisposedException } from '@/modules/shared/exceptions/disposedException';
-import type { NotificationData } from '../../types/notificationData';
+import type { AppNotificationData } from '../../types/appNotificationData';
 
 describe('NotificationsStoreBase', () =>
 {
-    let store: NotificationsStoreBase;
+    let store: AppNotificationsStoreBase;
 
     beforeEach(() =>
     {
         vi.resetAllMocks();
 
-        store = new NotificationsStoreBase(overlayMock);
+        store = new AppNotificationsStoreBase(overlayMock);
     });
 
     describe('addNotification', () =>
     {
         it('should create NotificationBase and add to list', () =>
         {
-            const data: NotificationData = {
+            const data: AppNotificationData = {
                 date: new Date('2024-01-01'),
                 title: 'Test',
                 description: 'Description',

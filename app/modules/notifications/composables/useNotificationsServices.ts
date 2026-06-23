@@ -1,8 +1,8 @@
 import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
-import { NotificationsStore } from '../entities/notificationsStore';
-import { NotificationsStoreBase } from '../entities/notificationsStoreBase';
+import { AppNotificationsStore } from '../entities/appNotificationsStore';
+import { AppNotificationsStoreBase } from '../entities/appNotificationsStoreBase';
 
 export function useNotificationsServices(): void
 {
-    useServiceRegistration(NotificationsStore).to(NotificationsStoreBase).asSingleton();
+    useServiceRegistration(AppNotificationsStore).to(AppNotificationsStoreBase).asSingleton();
 }

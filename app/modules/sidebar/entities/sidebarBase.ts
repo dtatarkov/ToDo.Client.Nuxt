@@ -2,12 +2,12 @@ import { dependency } from '@/modules/shared/decorators/dependency';
 import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
 import { SidebarLayerNotificationsTimeline } from './sidebarLayerNotificationsTimeline';
-import { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { Timeline } from '@/modules/notifications/entities/timeline';
 
-@dependency(NotificationsTimeline)
+@dependency(Timeline)
 export class SidebarBase extends Sidebar
 {
     readonly layers: SidebarLayers;
@@ -15,13 +15,13 @@ export class SidebarBase extends Sidebar
     private layersChangeEvent = new EntityEvent();
 
     constructor(
-        notificationsTimeline: NotificationsTimeline,
+        timeline: Timeline,
     )
     {
         super();
 
         this.layers = Object.freeze({
-            timeline: new SidebarLayerNotificationsTimeline(notificationsTimeline),
+            timeline: new SidebarLayerNotificationsTimeline(timeline),
         });
 
         this.setupLayersTracking();
