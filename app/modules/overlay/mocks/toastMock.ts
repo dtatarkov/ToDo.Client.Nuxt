@@ -1,11 +1,11 @@
 import { vi } from 'vitest';
-import type { Notification, NotificationData } from '../entities/notification';
+import type { Toast, ToastData } from '../entities/toast';
 import { Icon } from '@/modules/shared/enums/icons';
 
 
-export function createNotificationMock(data: Partial<NotificationData> = {}): Notification
+export function createToastMock(data: Partial<ToastData> = {}): Toast
 {
-    const defaultData: NotificationData = {
+    const defaultData: ToastData = {
         id: '',
         title: '',
         description: '',
@@ -22,7 +22,7 @@ export function createNotificationMock(data: Partial<NotificationData> = {}): No
         vnode: {} as VNode,
         getData: vi.fn(),
         [Symbol.dispose]: vi.fn(),
-    } satisfies Notification;
+    } satisfies Toast;
 }
 
-export const notificationMock = createNotificationMock();
+export const toastMock = createToastMock();

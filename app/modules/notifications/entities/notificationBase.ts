@@ -25,7 +25,7 @@ export class NotificationBase extends Notification
 
     showToast(): void
     {
-        this.overlay.createNotification({
+        this.overlay.createToast({
             title: this.title,
             description: this.description,
             icon: this.icon,

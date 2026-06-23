@@ -54,9 +54,9 @@ describe('NotificationBase', () =>
         {
             notification.showToast();
 
-            expect(overlayMock.createNotification).toHaveBeenCalledTimes(1);
+            expect(overlayMock.createToast).toHaveBeenCalledTimes(1);
 
-            expect(overlayMock.createNotification).toHaveBeenCalledWith({
+            expect(overlayMock.createToast).toHaveBeenCalledWith({
                 title: notificationData.title,
                 description: notificationData.description,
                 icon: notificationData.icon,

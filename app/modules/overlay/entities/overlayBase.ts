@@ -3,13 +3,13 @@ import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 import { Overlay } from './overlay';
 import { ModalBase } from './modalBase';
-import { NotificationBase } from './notificationBase';
+import { ToastBase } from './toastBase';
 import { ModalsStoreBase } from './modalsStoreBase';
-import { NotificationsStoreBase } from './notificationsStoreBase';
+import { ToastsStoreBase } from './toastsStoreBase';
 import type { OverlayElement } from './overlayElement';
 import type { Modal, ModalConfiguration } from './modal';
-import type { Notification } from './notification';
-import type { NotificationConfiguration } from './notificationConfiguration';
+import type { Toast } from './toast';
+import type { ToastConfiguration } from './toastConfiguration';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { Action } from '@/modules/shared/types/action';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
@@ -20,7 +20,7 @@ import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 export class OverlayBase extends Overlay
 {
     private modalsStore = new ModalsStoreBase();
-    private notificationsStore = new NotificationsStoreBase();
+    private notificationsStore = new ToastsStoreBase();
 
     private elementsChangeEvent = new EntityEvent<OverlayElement[]>({ deferred: true });
 
@@ -63,9 +63,9 @@ export class OverlayBase extends Overlay
         return modal;
     }
 
-    createNotification(configuration: NotificationConfiguration): Notification
+    createToast(configuration: ToastConfiguration): Toast
     {
-        const notification = new NotificationBase(this.notificationsStore, configuration);
+        const notification = new ToastBase(this.notificationsStore, configuration);
         this.notificationsStore.add(notification);
 
         return notification;

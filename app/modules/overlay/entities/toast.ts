@@ -2,7 +2,7 @@ import { OverlayElement } from './overlayElement';
 import type { Color } from '@/modules/uikit/types/color';
 import type { Icon } from '@/modules/shared/enums/icons';
 
-export type NotificationData = {
+export type ToastData = {
     id: string | undefined;
     title: string;
     description: string;
@@ -10,7 +10,7 @@ export type NotificationData = {
     color: Color;
 };
 
-export abstract class Notification extends OverlayElement implements NotificationData
+export abstract class Toast extends OverlayElement implements ToastData
 {
     abstract readonly id: string | undefined;
     abstract readonly title: string;

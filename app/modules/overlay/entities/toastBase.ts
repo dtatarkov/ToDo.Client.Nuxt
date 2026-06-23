@@ -1,25 +1,25 @@
 import { h } from 'vue';
-import type { Notification } from './notification';
-import type { NotificationConfiguration } from './notificationConfiguration';
+import type { Toast } from './toast';
+import type { ToastConfiguration } from './toastConfiguration';
 import VNotification from '../components/VNotification.vue';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { NotificationsStore } from './notificationsStore';
+import type { ToastsStore } from './toastsStore';
 import type { Color } from '@/modules/uikit/types/color';
-import type { NotificationData } from '../types/notificationData';
+import type { ToastData } from '../types/toastData';
 import type { Icon } from '@/modules/shared/enums/icons';
 import { OverlayElementBase } from './overlayElementBase';
 
-export class NotificationBase extends OverlayElementBase<NotificationsStore> implements Notification
+export class ToastBase extends OverlayElementBase<ToastsStore> implements Toast
 {
-    private data: NotificationData;
+    private data: ToastData;
     private onCloseFn = () => this.close();
 
     readonly key = getUniqueId('notification');
 
 
     constructor(
-        store: NotificationsStore,
-        configuration: NotificationConfiguration,
+        store: ToastsStore,
+        configuration: ToastConfiguration,
     )
     {
         super(store);

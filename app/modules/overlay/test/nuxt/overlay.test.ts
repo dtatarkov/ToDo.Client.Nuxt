@@ -57,7 +57,7 @@ describe('OverlayBase', () =>
                 content: createContentMock(),
             });
 
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 title: 'Test Notification',
                 description: '',
                 icon: Icon.questionMarkCircle,
@@ -236,7 +236,7 @@ describe('OverlayBase', () =>
     {
         it('should return data from getData matching configuration', () =>
         {
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 id: 'custom-id',
                 title: 'Test',
                 description: 'Description',
@@ -255,7 +255,7 @@ describe('OverlayBase', () =>
 
         it('should create notification without id and add it to elements', () =>
         {
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 title: 'Test',
                 description: '',
                 icon: Icon.questionMarkCircle,
@@ -269,7 +269,7 @@ describe('OverlayBase', () =>
 
         it('should create notification with new id as standalone notification', () =>
         {
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 id: 'group1',
                 title: 'Standalone',
                 description: '',
@@ -284,14 +284,14 @@ describe('OverlayBase', () =>
 
         it('should close existing notification when creating another with the same id', () =>
         {
-            const first = overlay.createNotification({
+            const first = overlay.createToast({
                 id: 'group1',
                 title: 'First',
                 description: '',
                 icon: Icon.questionMarkCircle,
             });
 
-            const second = overlay.createNotification({
+            const second = overlay.createToast({
                 id: 'group1',
                 title: 'Second',
                 description: '',
@@ -308,21 +308,21 @@ describe('OverlayBase', () =>
 
         it('should close each previous notification when creating multiple with the same id', () =>
         {
-            const first = overlay.createNotification({
+            const first = overlay.createToast({
                 id: 'group1',
                 title: 'First',
                 description: '',
                 icon: Icon.questionMarkCircle,
             });
 
-            const second = overlay.createNotification({
+            const second = overlay.createToast({
                 id: 'group1',
                 title: 'Second',
                 description: '',
                 icon: Icon.questionMarkCircle,
             });
 
-            const third = overlay.createNotification({
+            const third = overlay.createToast({
                 id: 'group1',
                 title: 'Third',
                 description: '',
@@ -399,7 +399,7 @@ describe('OverlayBase', () =>
 
             overlay.onElementsChange(callback);
 
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 title: 'Test',
                 description: '',
                 icon: Icon.questionMarkCircle,
@@ -418,7 +418,7 @@ describe('OverlayBase', () =>
 
         it('should invoke callback after microtask when notification with same id replaces existing one', async () =>
         {
-            overlay.createNotification({
+            overlay.createToast({
                 id: 'group1',
                 title: 'First',
                 description: '',
@@ -428,7 +428,7 @@ describe('OverlayBase', () =>
             const callback = vi.fn();
             overlay.onElementsChange(callback);
 
-            overlay.createNotification({
+            overlay.createToast({
                 id: 'group1',
                 title: 'Second',
                 description: '',
@@ -451,7 +451,7 @@ describe('OverlayBase', () =>
                 content: createContentMock(),
             });
 
-            const notification = overlay.createNotification({
+            const notification = overlay.createToast({
                 title: 'Test',
                 description: '',
                 icon: Icon.questionMarkCircle,

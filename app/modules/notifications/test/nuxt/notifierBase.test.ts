@@ -31,9 +31,9 @@ describe('NotifierBase', () =>
 
             notifier.notify(record);
 
-            expect(overlayMock.createNotification).toHaveBeenCalledTimes(1);
+            expect(overlayMock.createToast).toHaveBeenCalledTimes(1);
 
-            expect(overlayMock.createNotification).toHaveBeenCalledWith({
+            expect(overlayMock.createToast).toHaveBeenCalledWith({
                 id: record.id,
                 title: record.title,
                 description: record.description,
@@ -76,7 +76,7 @@ describe('NotifierBase', () =>
 
             notifier.notify(record);
 
-            expect(overlayMock.createNotification).toHaveBeenCalledWith({
+            expect(overlayMock.createToast).toHaveBeenCalledWith({
                 id: undefined,
                 title: record.title,
                 description: record.description,

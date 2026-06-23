@@ -18,7 +18,7 @@ export class NotifierBase extends Notifier
 
     override notify(record: NotifierRecord): void
     {
-        this.overlay.createNotification({
+        this.overlay.createToast({
             id: record.id,
             title: record.title,
             description: record.description,
