@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import VHeader from '@/modules/uikit/components/VHeader.vue';
-import VSidebarTimelineButtonWidget from '@/modules/layouts/components/VSidebarTimelineButtonWidget.vue';
+import VSidebarTimelineButtonWidget from '@/modules/sidebar/components/VSidebarTimelineButtonWidget.vue';
 
 const config = useRuntimeConfig();
 </script>

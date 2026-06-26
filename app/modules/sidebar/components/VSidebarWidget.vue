@@ -5,22 +5,21 @@ import { Sidebar } from '../entities/sidebar';
 import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
 
 const sidebar = useService(Sidebar);
-const sidebarLayers = Object.values(sidebar.layers);
 
-const activeLayer = useEventDrivenRef({
-    getter: () => sidebarLayers.find(layer => layer.isActive),
-    on: (callback, disposeToken) => sidebar.onLayersChange(callback, disposeToken)
+const content = useEventDrivenRef({
+    getter: () => sidebar.content,
+    on: (callback, disposeToken) => sidebar.onContentChange(callback, disposeToken)
 });
 
-const hasActiveLayer = computed(() => activeLayer.value !== undefined);
+const hasContent = computed(() => content.value !== undefined);
 </script>
 
 <template>
   <USidebar
-    v-if="hasActiveLayer"
+    v-if="hasContent"
     side="right"
     :ui="{ root: 'contain-[paint]', container: 'h-full relative' }"
   >
-    <component :is="activeLayer?.vnode" />
+    <component :is="content?.vnode" />
   </USidebar>
 </template>

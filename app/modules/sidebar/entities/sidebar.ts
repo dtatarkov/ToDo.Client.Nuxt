@@ -1,16 +1,13 @@
-import type { SidebarLayer } from './sidebarLayer';
+import type { SidebarContent } from './sidebarContent';
 import type { Action } from '@/modules/shared/types/action';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Timeline } from '@/modules/notifications/entities/timeline';
-
-export type SidebarLayers = {
-    timeline: SidebarLayer<Timeline>;
-};
 
 export abstract class Sidebar implements Disposable
 {
-    abstract readonly layers: SidebarLayers;
+    abstract readonly content: SidebarContent | undefined;
+    abstract readonly timeline: SidebarContent;
 
-    abstract onLayersChange(callback: Action<[]>, disposeToken?: DisposeToken): void;
+    abstract onContentChange(callback: Action<[SidebarContent | undefined]>, disposeToken?: DisposeToken): void;
+
     abstract [Symbol.dispose](): void;
 }

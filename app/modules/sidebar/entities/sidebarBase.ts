@@ -1,50 +1,75 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { Sidebar } from './sidebar';
-import type { SidebarLayers } from './sidebar';
-import { SidebarLayerNotificationsTimeline } from './sidebarLayerNotificationsTimeline';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { Timeline } from '@/modules/notifications/entities/timeline';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { SidebarContent } from './sidebarContent';
+import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
+import { SidebarContentBase } from './sidebarContentBase';
+import type { SidebarContentActivator } from './sidebarContentActivator';
 
-@dependency(Timeline)
-export class SidebarBase extends Sidebar
+@dependency(AppNotificationsStore)
+export class SidebarBase extends Sidebar implements SidebarContentActivator
 {
-    readonly layers: SidebarLayers;
+    private disposeToken = new DisposeToken();
+    private contentInternal: SidebarContent | undefined;
 
-    private layersChangeEvent = new EntityEvent();
+    private contentChangeEvent = new EntityEvent<SidebarContent | undefined>({ deferred: true });
+
+    readonly timeline: SidebarContent;
 
     constructor(
-        timeline: Timeline,
+        notificationsStore: AppNotificationsStore
     )
     {
         super();
 
-        this.layers = Object.freeze({
-            timeline: new SidebarLayerNotificationsTimeline(timeline),
-        });
+        this.timeline = new SidebarContentBase(
+            this,
+            notificationsStore.createTimeline());
 
-        this.setupLayersTracking();
+        this.disposeToken.onDispose(() =>
+        {
+            this.timeline[Symbol.dispose]();
+            this.contentChangeEvent[Symbol.dispose]();
+        });
     }
 
-    private setupLayersTracking(): void
+    get content()
     {
-        for (const layer of Object.values(this.layers))
+        return this.contentInternal;
+    }
+
+    activateContent(content: SidebarContent): void
+    {
+        if (this.contentInternal != content)
         {
-            layer.onActiveStateChange(() =>
+            if (this.contentInternal != undefined)
             {
-                this.layersChangeEvent.emit();
-            });
+                this.contentInternal.deactivate();
+            }
+
+            this.contentInternal = content;
+            this.contentChangeEvent.emit(content);
         }
     }
 
-    override onLayersChange(callback: Action<[]>, disposeToken?: DisposeToken): void
+    deactivateContent(content: SidebarContent): void
     {
-        this.layersChangeEvent.on(callback, disposeToken);
+        if (this.contentInternal == content)
+        {
+            this.contentInternal = undefined;
+            this.contentChangeEvent.emit(undefined);
+        }
+    }
+
+    override onContentChange(callback: Action<[SidebarContent | undefined]>, disposeToken?: DisposeToken): void
+    {
+        this.contentChangeEvent.on(callback, disposeToken);
     }
 
     override[Symbol.dispose](): void
     {
-        this.layersChangeEvent[Symbol.dispose]();
+        this.disposeToken[Symbol.dispose]();
     }
 }

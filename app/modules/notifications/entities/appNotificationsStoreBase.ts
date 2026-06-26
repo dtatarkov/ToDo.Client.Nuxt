@@ -15,7 +15,8 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 {
     private disposeToken = new DisposeToken();
     private notifications = new Array<AppNotification>();
-    private notificationAddedEvent = new EntityEvent<AppNotification>();
+    private notificationsChangeEvent = new EntityEvent<AppNotification[]>();
+    private emptyStateChangeEvent = new EntityEvent<boolean>();
 
     constructor(private overlay: Overlay)
     {
@@ -23,45 +24,57 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 
         this.disposeToken.onDispose(() =>
         {
-            this.notificationAddedEvent[Symbol.dispose]();
+            this.notificationsChangeEvent[Symbol.dispose]();
+            this.emptyStateChangeEvent[Symbol.dispose]();
         });
     }
 
-    addNotification(data: AppNotificationData): void
+    get isEmpty()
+    {
+        return this.notifications.length === 0;
+    }
+
+    override addNotification(data: AppNotificationData): void
     {
         this.disposeToken.assertNotDisposed();
 
         const notification = new AppNotificationBase(this.overlay, data);
         this.notifications.push(notification);
-        this.notificationAddedEvent.emit(notification);
+        this.notificationsChangeEvent.emit(this.notifications);
+
+        if (this.notifications.length === 1)
+        {
+            this.emptyStateChangeEvent.emit(false);
+        }
+
+        notification.showToast();
     }
 
-    getNotifications(): AppNotification[]
+    override getNotifications(): AppNotification[]
     {
         this.disposeToken.assertNotDisposed();
 
         return this.notifications;
     }
 
-    createTimeline(disposeToken: DisposeToken): Timeline
+    override createTimeline(): Timeline
     {
-        const timeline = new TimelineBase(this.notifications);
-
-        this.onNotificationAdded(notification =>
-        {
-            timeline.addNotification(notification);
-        }, disposeToken);
+        const timeline = new TimelineBase(this);
 
         return timeline;
     }
 
-    onNotificationAdded(callback: Action<[AppNotification]>, disposeToken?: DisposeToken): void
+    override onNotificationsChange(handler: Action<[notifications: AppNotification[]]>, disposeToken?: DisposeToken): void
     {
-        this.disposeToken.assertNotDisposed();
-        this.notificationAddedEvent.on(callback, disposeToken);
+        this.notificationsChangeEvent.on(handler, disposeToken);
     }
 
-    [Symbol.dispose](): void
+    override onEmptyStateChange(handler: Action<[isEmpty: boolean]>, disposeToken?: DisposeToken): void
+    {
+        this.emptyStateChangeEvent.on(handler, disposeToken);
+    }
+
+    override[Symbol.dispose](): void
     {
         this.disposeToken[Symbol.dispose]();
     }

@@ -4,9 +4,7 @@ import { vi } from 'vitest';
 export const timelineMock = {
     key: '',
     vnode: {} as VNode,
-    addNotification: vi.fn(),
-    getNotifications: vi.fn(),
-    hasNotifications: vi.fn(),
-    onNotificationsChange: vi.fn(),
+    isEmpty: false,
+    onEmptyStateChange: vi.fn(),
     [Symbol.dispose]: vi.fn(),
 } satisfies Timeline;

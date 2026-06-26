@@ -1,56 +1,67 @@
 import { h } from 'vue';
 import { Timeline } from './timeline';
 import VTimeline from '../components/VTimeline.vue';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { AppNotification } from './appNotification';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import type { AppNotificationsStore } from './appNotificationsStore';
+import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
 
 export class TimelineBase extends Timeline
 {
-    private notifications;
-    private notificationsChangeEvent = new EntityEvent();
+    private disposeToken = new DisposeToken();
+    private notificationsRef: Ref<AppNotification[]>;
 
     readonly key = getUniqueId('timeline');
 
     constructor(
-        notifications: Array<AppNotification> = []
+        private notificationStore: AppNotificationsStore
     )
     {
         super();
 
-        this.notifications = [...notifications];
+        this.notificationsRef = customRef((track, trigger) =>
+        {
+            notificationStore.onNotificationsChange(() =>
+            {
+                trigger();
+            }, this.disposeToken);
+
+            return {
+                get()
+                {
+                    track();
+                    return [...notificationStore.getNotifications()];
+                },
+
+                set()
+                {
+                    throw new ReadonlyRefValueChangeException();
+                },
+            };
+        });
     }
 
-    override addNotification(notification: AppNotification): void
+    override get isEmpty(): boolean
     {
-        this.notifications.push(notification);
-        this.notificationsChangeEvent.emit();
+        return this.notificationStore.isEmpty;
     }
 
-    override getNotifications(): AppNotification[]
+    override onEmptyStateChange(handler: Action<[isEmpty: boolean]>, disposeToken?: DisposeToken): void
     {
-        return this.notifications;
-    }
-
-    override hasNotifications(): boolean
-    {
-        return this.notifications.length > 0;
-    }
-
-    override onNotificationsChange(callback: Action<[]>, disposeToken?: DisposeToken): void
-    {
-        this.notificationsChangeEvent.on(callback, disposeToken);
+        this.notificationStore.onEmptyStateChange(handler, disposeToken);
     }
 
     override get vnode()
     {
-        return h(VTimeline, { notifications: this.notifications });
+        return h(VTimeline, {
+            notifications: this.notificationsRef.value
+        });
     }
 
     override[Symbol.dispose](): void
     {
-        this.notificationsChangeEvent[Symbol.dispose]();
+        this.disposeToken[Symbol.dispose]();
     }
 }

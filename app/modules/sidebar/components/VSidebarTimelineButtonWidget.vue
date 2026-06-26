@@ -16,21 +16,25 @@ import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 
 const sidebar = useService(Sidebar);
 
-const timelineLayer = sidebar.layers.timeline;
-
 const isTimelineActive = useEventDrivenRef({
-    getter: () => timelineLayer.isActive,
+    getter: () => sidebar.timeline.isActive,
 
-    setter: (value) => {
-      timelineLayer.isActive = value
+    setter: (isActive) => {
+      if(isActive) 
+      {
+        sidebar.timeline.activate();
+      }
+      else 
+      {
+        sidebar.timeline.deactivate();
+      }
     },
 
-    on: (callback, disposeToken) => timelineLayer.onActiveStateChange(callback, disposeToken),
+    on: (callback, disposeToken) => sidebar.timeline.onActiveStateChange(callback, disposeToken),
 });
 
 const isTimelineAvailable = useEventDrivenRef({
-    getter: () => timelineLayer.isAvailable(),
-
-    on: (callback, disposeToken) => timelineLayer.onAvailabilityChange(callback, disposeToken),
+    getter: () => sidebar.timeline.isAvailable,
+    on: (callback, disposeToken) => sidebar.timeline.onAvailabilityChange(callback, disposeToken),
 });
 </script>
