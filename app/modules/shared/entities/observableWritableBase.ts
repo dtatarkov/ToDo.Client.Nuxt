@@ -32,6 +32,11 @@ export class ObservableWritableBase<T> implements ObservableWritable<T>, Disposa
         }
     }
 
+    protected notifySubscribers(): void
+    {
+        this.event.emit(this.valueInternal);
+    }
+
     on(handler: Action<[T]>, disposeToken?: DisposeToken): void
     {
         this.event.on(handler, disposeToken);

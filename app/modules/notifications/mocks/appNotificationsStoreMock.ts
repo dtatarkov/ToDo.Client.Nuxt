@@ -8,9 +8,8 @@ export function createAppNotificationsStoreMock(isEmpty: boolean)
 {
     return {
         isEmpty: createObservableReadonlyMock(isEmpty),
+        notifications: createObservableReadonlyMock<readonly []>([]),
         addNotification: vi.fn(),
-        getNotifications: vi.fn(),
-        onNotificationsChange: vi.fn(),
         createTimeline: vi.fn(),
 
         [Symbol.dispose]: vi.fn(),

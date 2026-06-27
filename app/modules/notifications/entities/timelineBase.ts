@@ -23,7 +23,7 @@ export class TimelineBase extends Timeline
 
         this.notificationsRef = customRef((track, trigger) =>
         {
-            notificationStore.onNotificationsChange(() =>
+            notificationStore.notifications.on(() =>
             {
                 trigger();
             }, this.disposeToken);
@@ -32,7 +32,7 @@ export class TimelineBase extends Timeline
                 get()
                 {
                     track();
-                    return [...notificationStore.getNotifications()];
+                    return [...notificationStore.notifications.value];
                 },
 
                 set()
