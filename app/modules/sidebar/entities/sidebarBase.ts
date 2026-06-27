@@ -3,7 +3,7 @@ import { Sidebar } from './sidebar';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { SidebarContent } from './sidebarContent';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
-import { SidebarContentBase } from './sidebarContentBase';
+import { SidebarTimeline } from './sidebarTimeline';
 import type { SidebarContentActivator } from './sidebarContentActivator';
 import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
 
@@ -21,9 +21,9 @@ export class SidebarBase extends Sidebar implements SidebarContentActivator
     {
         super();
 
-        this.timeline = new SidebarContentBase(
+        this.timeline = new SidebarTimeline(
             this,
-            notificationsStore.createTimeline());
+            notificationsStore);
 
         this.disposeToken.onDispose(() =>
         {

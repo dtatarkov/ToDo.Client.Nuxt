@@ -6,7 +6,6 @@ import type { AppNotification } from './appNotification';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { AppNotificationsStore } from './appNotificationsStore';
 import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
-import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
 
 export class TimelineBase extends Timeline
 {
@@ -16,7 +15,7 @@ export class TimelineBase extends Timeline
     readonly key = getUniqueId('timeline');
 
     constructor(
-        private notificationStore: AppNotificationsStore
+        notificationStore: AppNotificationsStore
     )
     {
         super();
@@ -41,11 +40,6 @@ export class TimelineBase extends Timeline
                 },
             };
         });
-    }
-
-    override get isEmpty(): ObservableReadonly<boolean>
-    {
-        return this.notificationStore.isEmpty;
     }
 
     override get vnode()

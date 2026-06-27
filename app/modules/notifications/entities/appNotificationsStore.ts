@@ -1,13 +1,12 @@
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
 import type { Timeline } from './timeline';
-import type { Emptyable } from '@/modules/shared/interfaces/emptyable';
 import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
 
-export abstract class AppNotificationsStore implements Disposable, Emptyable
+export abstract class AppNotificationsStore implements Disposable
 {
     abstract readonly notifications: ObservableReadonly<readonly AppNotification[]>;
-    abstract readonly isEmpty: ObservableReadonly<boolean>;
+    abstract readonly hasNotifications: ObservableReadonly<boolean>;
 
     abstract addNotification(data: AppNotificationData): void;
 

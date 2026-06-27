@@ -11,6 +11,24 @@ export class DisposeToken implements Disposable
         return this.isDisposedInternal;
     }
 
+    createChildToken(): DisposeToken
+    {
+        const childToken = new DisposeToken();
+
+        this.onDispose(() =>
+        {
+            childToken[Symbol.dispose]();
+        });
+
+        return childToken;
+    }
+
+    reset(): void
+    {
+        this[Symbol.dispose]();
+        this.isDisposedInternal = false;
+    }
+
     onDispose(handler: Action): void
     {
         this.assertNotDisposed();

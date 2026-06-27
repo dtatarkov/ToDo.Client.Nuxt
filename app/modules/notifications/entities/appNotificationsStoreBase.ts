@@ -15,7 +15,7 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 {
     private disposeToken = new DisposeToken();
 
-    readonly isEmpty = new ObservableWritableBase<boolean>(true);
+    readonly hasNotifications = new ObservableWritableBase<boolean>(false);
 
     constructor(private overlay: Overlay)
     {
@@ -24,7 +24,7 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
         this.disposeToken.onDispose(() =>
         {
             this.notifications[Symbol.dispose]();
-            this.isEmpty[Symbol.dispose]();
+            this.hasNotifications[Symbol.dispose]();
         });
     }
 
@@ -39,7 +39,7 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 
         if (this.notifications.value.length === 1)
         {
-            this.isEmpty.value = false;
+            this.hasNotifications.value = true;
         }
 
         notification.showToast();

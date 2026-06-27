@@ -7,7 +7,7 @@ export const appNotificationsStoreMock = createAppNotificationsStoreMock(false);
 export function createAppNotificationsStoreMock(isEmpty: boolean)
 {
     return {
-        isEmpty: createObservableReadonlyMock(isEmpty),
+        hasNotifications: createObservableReadonlyMock(isEmpty),
         notifications: createObservableReadonlyMock<readonly []>([]),
         addNotification: vi.fn(),
         createTimeline: vi.fn(),

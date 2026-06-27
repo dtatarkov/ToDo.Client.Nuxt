@@ -4,8 +4,8 @@ import type { ObservableReadonly } from '@/modules/shared/entities/observableRea
 export abstract class SidebarContent extends UIElement implements Disposable
 {
     abstract isActive: ObservableReadonly<boolean>;
-    abstract isAvailable: ObservableReadonly<boolean>;
+    abstract canActivate: ObservableReadonly<boolean>;
 
-    abstract activate(): void;
-    abstract deactivate(): void;
+    abstract activate(): boolean;
+    abstract deactivate(): boolean;
 }

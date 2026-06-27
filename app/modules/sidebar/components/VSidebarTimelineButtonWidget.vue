@@ -1,10 +1,11 @@
 <template>
   <VToggleIcon
-    v-if="isTimelineAvailable"
-    v-model:is-active="isTimelineActive"
+    v-if="canActivateTimeline"
+    :is-active="isTimelineActive"
     :active-icon="Icon.bellActive"
     :inactive-icon="Icon.bellInactive"
-    @update:is-active="handleTimelineActivityToggleChange"
+    @activated="handleToggleActivation"
+    @deactivated="handleToggleDeactivation"
   />
 </template>
 
@@ -19,17 +20,13 @@ const sidebar = useService(Sidebar);
 const timeline = sidebar.timeline;
 
 const isTimelineActive = useObservableReadonly(timeline.isActive);
-const isTimelineAvailable = useObservableReadonly(timeline.isAvailable);
+const canActivateTimeline = useObservableReadonly(timeline.canActivate);
 
-function handleTimelineActivityToggleChange(isActive: boolean) 
-{
-  if(isActive) 
-  {
-    timeline.activate();
-  }
-  else 
-  {
-    timeline.deactivate();
-  }
+function handleToggleActivation() {
+  timeline.activate()
+}
+
+function handleToggleDeactivation() {
+  timeline.deactivate()
 }
 </script>

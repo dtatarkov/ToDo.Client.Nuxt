@@ -1,23 +1,18 @@
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { SidebarContent } from './sidebarContent';
-import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { SidebarContentActivator } from './sidebarContentActivator';
-import { isEmptyable } from '@/modules/shared/interfaces/emptyable';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
 
-export class SidebarContentBase extends SidebarContent
+export abstract class SidebarContentBase extends SidebarContent
 {
-    private disposeToken = new DisposeToken();
+    protected disposeToken = new DisposeToken();
 
     readonly isActive = new ObservableWritableBase<boolean>(false);
-    readonly isAvailable = new ObservableWritableBase<boolean>(false);
-
     readonly key = getUniqueId('sidebar-content');
 
     constructor(
-        private readonly contentActivator: SidebarContentActivator,
-        private readonly content: UIElement
+        protected readonly contentActivator: SidebarContentActivator
     )
     {
         super();
@@ -25,58 +20,48 @@ export class SidebarContentBase extends SidebarContent
         this.disposeToken.onDispose(() =>
         {
             this.isActive[Symbol.dispose]();
-            this.isAvailable[Symbol.dispose]();
         });
-
-        this.setupContent(content);
     }
 
-    get vnode(): VNode | undefined
+    override activate(): boolean
     {
-        return this.content?.vnode;
-    }
+        if (!this.canActivate.value || this.isActive.value)
+        {
+            return false;
+        }
 
-    override activate(): void
-    {
+        this.handleActivation();
         this.contentActivator.activateContent(this);
         this.isActive.value = true;
+
+        return true;
     }
 
-    override deactivate(): void
+    override deactivate(): boolean
     {
+        if (!this.isActive.value)
+        {
+            return false;
+        }
+
+        this.handleDeactivation();
         this.contentActivator.deactivateContent(this);
         this.isActive.value = false;
+
+        return true;
     }
 
     override[Symbol.dispose](): void
     {
         this.disposeToken[Symbol.dispose]();
     }
-
-    private setAvailability(isAvailable: boolean): void
+    protected handleActivation(): void
     {
-        this.isAvailable.value = isAvailable;
+        // Override in derived classes to provide activation side effects
     }
 
-    private setupContent(content: UIElement)
+    protected handleDeactivation(): void
     {
-        this.disposeToken.onDispose(() =>
-        {
-            content[Symbol.dispose]();
-        });
-
-        if (isEmptyable(content))
-        {
-            this.setAvailability(!content.isEmpty.value);
-
-            content.isEmpty.on(isEmpty =>
-            {
-                this.setAvailability(!isEmpty);
-            });
-        }
-        else
-        {
-            this.setAvailability(true);
-        }
+        // Override in derived classes to provide deactivation side effects
     }
 }

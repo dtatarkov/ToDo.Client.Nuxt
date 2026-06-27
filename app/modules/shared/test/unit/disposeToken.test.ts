@@ -102,4 +102,86 @@ describe('DisposeToken', () =>
             expect(token.isDisposed).toBe(true);
         });
     });
+
+    describe('createChildToken', () =>
+    {
+        it('should create a child token that is not disposed initially', () =>
+        {
+            const parent = new DisposeToken();
+            const child = parent.createChildToken();
+
+            expect(child.isDisposed).toBe(false);
+        });
+
+        it('should dispose child token when parent is disposed', () =>
+        {
+            const parent = new DisposeToken();
+            const child = parent.createChildToken();
+
+            parent[Symbol.dispose]();
+
+            expect(child.isDisposed).toBe(true);
+        });
+
+        it('should not dispose parent when child is disposed', () =>
+        {
+            const parent = new DisposeToken();
+            const child = parent.createChildToken();
+
+            child[Symbol.dispose]();
+
+            expect(parent.isDisposed).toBe(false);
+        });
+
+        it('should execute child dispose handlers when parent is disposed', () =>
+        {
+            const parent = new DisposeToken();
+            const child = parent.createChildToken();
+            const childHandler = vi.fn();
+
+            child.onDispose(childHandler);
+            parent[Symbol.dispose]();
+
+            expect(childHandler).toHaveBeenCalledOnce();
+        });
+
+        it('should create independent child tokens', () =>
+        {
+            const parent = new DisposeToken();
+            const child1 = parent.createChildToken();
+            const child2 = parent.createChildToken();
+
+            child1[Symbol.dispose]();
+
+            expect(child1.isDisposed).toBe(true);
+            expect(child2.isDisposed).toBe(false);
+            expect(parent.isDisposed).toBe(false);
+        });
+    });
+
+    describe('reset', () =>
+    {
+        it('should set isDisposed to false after reset', () =>
+        {
+            const token = new DisposeToken();
+            token[Symbol.dispose]();
+            expect(token.isDisposed).toBe(true);
+
+            token.reset();
+            expect(token.isDisposed).toBe(false);
+        });
+
+        it('should allow registering new handlers after reset', () =>
+        {
+            const token = new DisposeToken();
+            token[Symbol.dispose]();
+
+            token.reset();
+            const handler = vi.fn();
+            token.onDispose(handler);
+            token[Symbol.dispose]();
+
+            expect(handler).toHaveBeenCalledOnce();
+        });
+    });
 });
