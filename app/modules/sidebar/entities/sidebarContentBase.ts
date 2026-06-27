@@ -1,21 +1,17 @@
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
 import { SidebarContent } from './sidebarContent';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { SidebarContentActivator } from './sidebarContentActivator';
 import { isEmptyable } from '@/modules/shared/interfaces/emptyable';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
 
 export class SidebarContentBase extends SidebarContent
 {
     private disposeToken = new DisposeToken();
 
-    private isActiveInternal = false;
-    private isAvailableInternal = false;
-
-    private activeStateChangeEvent = new EntityEvent<boolean>();
-    private availabilityChangeEvent = new EntityEvent<boolean>();
+    readonly isActive = new ObservableWritableBase<boolean>(false);
+    readonly isAvailable = new ObservableWritableBase<boolean>(false);
 
     readonly key = getUniqueId('sidebar-content');
 
@@ -28,7 +24,8 @@ export class SidebarContentBase extends SidebarContent
 
         this.disposeToken.onDispose(() =>
         {
-            this.activeStateChangeEvent[Symbol.dispose]();
+            this.isActive[Symbol.dispose]();
+            this.isAvailable[Symbol.dispose]();
         });
 
         this.setupContent(content);
@@ -39,36 +36,16 @@ export class SidebarContentBase extends SidebarContent
         return this.content?.vnode;
     }
 
-    get isActive(): boolean
-    {
-        return this.isActiveInternal;
-    }
-
-    get isAvailable(): boolean
-    {
-        return this.isAvailableInternal;
-    }
-
     override activate(): void
     {
         this.contentActivator.activateContent(this);
-        this.setActivity(true);
+        this.isActive.value = true;
     }
 
     override deactivate(): void
     {
         this.contentActivator.deactivateContent(this);
-        this.setActivity(false);
-    }
-
-    override onActiveStateChange(callback: Action<[boolean]>, disposeToken?: DisposeToken): void
-    {
-        this.activeStateChangeEvent.on(callback, disposeToken);
-    }
-
-    override onAvailabilityChange(callback: Action<[boolean]>, disposeToken?: DisposeToken): void
-    {
-        this.availabilityChangeEvent.on(callback, disposeToken);
+        this.isActive.value = false;
     }
 
     override[Symbol.dispose](): void
@@ -76,22 +53,9 @@ export class SidebarContentBase extends SidebarContent
         this.disposeToken[Symbol.dispose]();
     }
 
-    private setActivity(isActive: boolean): void
-    {
-        if (this.isActiveInternal !== isActive)
-        {
-            this.isActiveInternal = isActive;
-            this.activeStateChangeEvent.emit(this.isActiveInternal);
-        }
-    }
-
     private setAvailability(isAvailable: boolean): void
     {
-        if (this.isAvailableInternal === isAvailable)
-            return;
-
-        this.isAvailableInternal = isAvailable;
-        this.availabilityChangeEvent.emit(isAvailable);
+        this.isAvailable.value = isAvailable;
     }
 
     private setupContent(content: UIElement)
@@ -103,9 +67,9 @@ export class SidebarContentBase extends SidebarContent
 
         if (isEmptyable(content))
         {
-            this.setAvailability(!content.isEmpty);
+            this.setAvailability(!content.isEmpty.value);
 
-            content.onEmptyStateChange(isEmpty =>
+            content.isEmpty.on(isEmpty =>
             {
                 this.setAvailability(!isEmpty);
             });

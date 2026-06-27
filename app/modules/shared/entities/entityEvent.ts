@@ -1,12 +1,13 @@
 import type { Action } from '../types/action';
 import { DisposeToken } from './disposeToken';
+import type { Subscribable } from '../interfaces/subscribable';
 
 export type EntityEventConfiguration = {
     deferred?: boolean;
     skipEmitOnSameValue?: boolean;
 };
 
-export class EntityEvent<T = void> implements Disposable
+export class EntityEvent<T = void> implements Subscribable<T>, Disposable
 {
     private eventDisposeToken = new DisposeToken();
     private handlers = new Set<Action<[T]>>();

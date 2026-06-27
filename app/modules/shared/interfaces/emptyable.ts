@@ -1,11 +1,9 @@
-import type { Action } from '../types/action';
-import type { DisposeToken } from '../entities/disposeToken';
+import { isObservable } from '../entities/observableReadonly';
+import type { ObservableReadonly } from '../entities/observableReadonly';
 
 export abstract class Emptyable
 {
-    abstract readonly isEmpty: boolean;
-
-    abstract onEmptyStateChange(handler: Action<[isEmpty: boolean]>, disposeToken?: DisposeToken): void;
+    abstract isEmpty: ObservableReadonly<boolean>;
 }
 
 export function isEmptyable(value: unknown): value is Emptyable
@@ -13,7 +11,6 @@ export function isEmptyable(value: unknown): value is Emptyable
     return typeof value === 'object'
         && value !== null
         && 'isEmpty' in value
-        && typeof (value as Emptyable).isEmpty === 'boolean'
-        && 'onEmptyStateChange' in value
-        && typeof (value as Emptyable).onEmptyStateChange === 'function';
+        && isObservable(value.isEmpty)
+        && typeof value.isEmpty.value === 'boolean';
 }

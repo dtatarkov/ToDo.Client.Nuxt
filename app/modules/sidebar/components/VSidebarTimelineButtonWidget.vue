@@ -4,6 +4,7 @@
     v-model:is-active="isTimelineActive"
     :active-icon="Icon.bellActive"
     :inactive-icon="Icon.bellInactive"
+    @update:is-active="handleTimelineActivityToggleChange"
   />
 </template>
 
@@ -11,30 +12,24 @@
 import VToggleIcon from '@/modules/uikit/components/VToggleIcon.vue';
 import { Icon } from '@/modules/shared/enums/icons';
 import { useService } from '@/modules/shared/composables/useService';
-import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
+import { useObservableReadonly } from '@/modules/shared/composables/useObservableReadonly';
 
 const sidebar = useService(Sidebar);
+const timeline = sidebar.timeline;
 
-const isTimelineActive = useEventDrivenRef({
-    getter: () => sidebar.timeline.isActive,
+const isTimelineActive = useObservableReadonly(timeline.isActive);
+const isTimelineAvailable = useObservableReadonly(timeline.isAvailable);
 
-    setter: (isActive) => {
-      if(isActive) 
-      {
-        sidebar.timeline.activate();
-      }
-      else 
-      {
-        sidebar.timeline.deactivate();
-      }
-    },
-
-    on: (callback, disposeToken) => sidebar.timeline.onActiveStateChange(callback, disposeToken),
-});
-
-const isTimelineAvailable = useEventDrivenRef({
-    getter: () => sidebar.timeline.isAvailable,
-    on: (callback, disposeToken) => sidebar.timeline.onAvailabilityChange(callback, disposeToken),
-});
+function handleTimelineActivityToggleChange(isActive: boolean) 
+{
+  if(isActive) 
+  {
+    timeline.activate();
+  }
+  else 
+  {
+    timeline.deactivate();
+  }
+}
 </script>

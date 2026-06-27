@@ -2,15 +2,11 @@
 import { computed } from 'vue';
 import { useService } from '@/modules/shared/composables/useService';
 import { Sidebar } from '../entities/sidebar';
-import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
+import { useObservableReadonly } from '@/modules/shared/composables/useObservableReadonly';
 
 const sidebar = useService(Sidebar);
 
-const content = useEventDrivenRef({
-    getter: () => sidebar.content,
-    on: (callback, disposeToken) => sidebar.onContentChange(callback, disposeToken)
-});
-
+const content = useObservableReadonly(sidebar.content);
 const hasContent = computed(() => content.value !== undefined);
 </script>
 

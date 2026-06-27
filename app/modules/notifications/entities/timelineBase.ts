@@ -1,12 +1,12 @@
 import { h } from 'vue';
 import { Timeline } from './timeline';
 import VTimeline from '../components/VTimeline.vue';
-import type { Action } from '@/modules/shared/types/action';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { AppNotification } from './appNotification';
 import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
 import type { AppNotificationsStore } from './appNotificationsStore';
 import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
+import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
 
 export class TimelineBase extends Timeline
 {
@@ -43,14 +43,9 @@ export class TimelineBase extends Timeline
         });
     }
 
-    override get isEmpty(): boolean
+    override get isEmpty(): ObservableReadonly<boolean>
     {
         return this.notificationStore.isEmpty;
-    }
-
-    override onEmptyStateChange(handler: Action<[isEmpty: boolean]>, disposeToken?: DisposeToken): void
-    {
-        this.notificationStore.onEmptyStateChange(handler, disposeToken);
     }
 
     override get vnode()
