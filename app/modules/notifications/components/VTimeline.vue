@@ -5,15 +5,11 @@
 <script setup lang="ts">
 import { DateFormatter } from '@/modules/shared/services/dateFormatter';
 import { useService } from '@/modules/shared/composables/useService';
-import type { AppNotification } from '@/modules/notifications/entities/appNotification';
+import type { TimelineData } from '@/modules/notifications/types/timelineData';
 
 const dateFormatter = useService(DateFormatter);
 
-type Props = {
-    notifications: AppNotification[];
-}
-
-const props = defineProps<Props>();
+const props = defineProps<TimelineData>();
 
 const timelineItems = computed(() =>
   props.notifications.map(notification => ({
