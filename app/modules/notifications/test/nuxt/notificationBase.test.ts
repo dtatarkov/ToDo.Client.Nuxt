@@ -4,64 +4,85 @@ import { Icon } from '@/modules/shared/enums/icons';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';
 
+class NotificationBaseTestingSuite
+{
+    private data: AppNotificationData;
+    private notification: AppNotificationBase;
+
+    constructor()
+    {
+        this.data = {
+            date: new Date('2024-01-01'),
+            title: 'Test Title',
+            description: 'Test Description',
+            icon: Icon.exclamationTriangle,
+        };
+
+        this.notification = new AppNotificationBase(overlayMock, this.data);
+    }
+
+    createToast()
+    {
+        this.notification.showToast();
+
+        return this;
+    }
+
+    assertNotificationFieldsMatchData()
+    {
+        expect(this.notification.date).toEqual(this.data.date);
+        expect(this.notification.title).toBe(this.data.title);
+        expect(this.notification.description).toBe(this.data.description);
+        expect(this.notification.icon).toBe(this.data.icon);
+
+        return this;
+    }
+
+    assertToastCreated()
+    {
+        expect(overlayMock.createToast).toHaveBeenCalledTimes(1);
+
+        return this;
+    }
+
+    assertToastDataMatchesNotificationData()
+    {
+        expect(overlayMock.createToast).toHaveBeenCalledWith({
+            title: this.data.title,
+            description: this.data.description,
+            icon: this.data.icon,
+            color: 'error',
+        });
+
+        return this;
+    }
+}
+
 describe('NotificationBase', () =>
 {
-    const notificationData: AppNotificationData = {
-        date: new Date('2024-01-01'),
-        title: 'Test Title',
-        description: 'Test Description',
-        icon: Icon.exclamationTriangle,
-    };
-
-    let notification: AppNotificationBase;
+    const suite = new NotificationBaseTestingSuite();
 
     beforeEach(() =>
     {
         vi.resetAllMocks();
-
-        notification = new AppNotificationBase(
-            overlayMock,
-            notificationData,
-        );
     });
 
     describe('properties', () =>
     {
-        it('should return date from constructor data', () =>
+        it('notification properties match provided data', () =>
         {
-            expect(notification.date).toEqual(notificationData.date);
-        });
-
-        it('should return title from constructor data', () =>
-        {
-            expect(notification.title).toBe(notificationData.title);
-        });
-
-        it('should return description from constructor data', () =>
-        {
-            expect(notification.description).toBe(notificationData.description);
-        });
-
-        it('should return icon from constructor data', () =>
-        {
-            expect(notification.icon).toBe(notificationData.icon);
+            suite.assertNotificationFieldsMatchData();
         });
     });
 
     describe('showToast', () =>
     {
-        it('should call overlay.createNotification with correct params', () =>
+        it('should call overlay.createToast with correct params', () =>
         {
-            notification.showToast();
-
-            expect(overlayMock.createToast).toHaveBeenCalledTimes(1);
-
-            expect(overlayMock.createToast).toHaveBeenCalledWith({
-                title: notificationData.title,
-                description: notificationData.description,
-                icon: notificationData.icon,
-                color: 'error',
-            });
+            suite
+                .createToast()
+                .assertToastCreated()
+                .assertToastDataMatchesNotificationData();
         });
     });
 });
