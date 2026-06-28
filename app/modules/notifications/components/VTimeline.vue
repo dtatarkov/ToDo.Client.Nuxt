@@ -1,5 +1,5 @@
 <template>
-  <UTimeline :items="timelineItems">
+  <UTimeline :items="timelineItems" :ui="ui">
     <template #indicator="{ item }">
       <UIcon :name="item.icon" :class="item.iconCssClasses" />
     </template>
@@ -32,4 +32,8 @@ const timelineItems = computed(() =>
     date: dateFormatter.formatDate(notification.date),
   }))
 );
+
+const ui = {
+  description: 'whitespace-pre-wrap'
+}
 </script>
