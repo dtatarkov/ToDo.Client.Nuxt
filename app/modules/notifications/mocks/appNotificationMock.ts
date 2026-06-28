@@ -9,6 +9,7 @@ export function createAppNotificationMock(data: AppNotificationData)
     return {
         ...data,
 
+        getColor: vi.fn(),
         showToast: vi.fn()
     } satisfies AppNotification;
 }

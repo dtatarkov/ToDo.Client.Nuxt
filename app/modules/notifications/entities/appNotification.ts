@@ -1,5 +1,6 @@
 import type { Icon } from '@/modules/shared/enums/icons';
 import type { NotificationType } from '../types/notificationType';
+import type { Color } from '@/modules/uikit/types/color';
 
 export abstract class AppNotification
 {
@@ -9,5 +10,6 @@ export abstract class AppNotification
     abstract readonly icon: Icon;
     abstract readonly type: NotificationType;
 
+    abstract getColor(): Color;
     abstract showToast(): void;
 }

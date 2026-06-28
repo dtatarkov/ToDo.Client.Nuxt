@@ -4,6 +4,7 @@ import { Icon } from '@/modules/shared/enums/icons';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';
+import type { Color } from '@/modules/uikit/types/color';
 
 class NotificationBaseTestingSuite
 {
@@ -59,6 +60,11 @@ class NotificationBaseTestingSuite
 
         return this;
     }
+
+    assertColor(color: Color)
+    {
+        expect(this.notification.getColor()).toBe(color);
+    }
 }
 
 describe('NotificationBase', () =>
@@ -75,6 +81,14 @@ describe('NotificationBase', () =>
         it('notification properties match provided data', () =>
         {
             suite.assertNotificationFieldsMatchData();
+        });
+    });
+
+    describe('getColor', () =>
+    {
+        it('should return error color for Error notification type', () =>
+        {
+            suite.assertColor('error');
         });
     });
 

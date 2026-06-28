@@ -7,6 +7,8 @@ import type { Color } from '@/modules/uikit/types/color';
 
 export class AppNotificationBase extends AppNotification
 {
+    private readonly colorInternal: Color;
+
     readonly date: Date;
     readonly title: string;
     readonly description: string;
@@ -25,17 +27,14 @@ export class AppNotificationBase extends AppNotification
         this.description = data.description;
         this.icon = data.icon;
         this.type = data.type;
+        this.colorInternal = this.calculateColor(data.type);
     }
 
-    private getToastColor(): Color
+
+
+    getColor(): Color
     {
-        switch (this.type)
-        {
-            case NotificationType.Error:
-                return 'error';
-            default:
-                return 'neutral';
-        }
+        return this.colorInternal;
     }
 
     showToast(): void
@@ -44,7 +43,18 @@ export class AppNotificationBase extends AppNotification
             title: this.title,
             description: this.description,
             icon: this.icon,
-            color: this.getToastColor(),
+            color: this.getColor(),
         });
+    }
+
+    private calculateColor(type: NotificationType): Color
+    {
+        switch (type)
+        {
+            case NotificationType.Error:
+                return 'error';
+            default:
+                return 'neutral';
+        }
     }
 }
