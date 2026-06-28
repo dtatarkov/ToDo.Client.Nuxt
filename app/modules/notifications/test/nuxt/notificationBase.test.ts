@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationBase } from '../../entities/appNotificationBase';
 import { Icon } from '@/modules/shared/enums/icons';
+import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';
 
@@ -16,6 +17,7 @@ class NotificationBaseTestingSuite
             title: 'Test Title',
             description: 'Test Description',
             icon: Icon.exclamationTriangle,
+            type: NotificationType.Error,
         };
 
         this.notification = new AppNotificationBase(overlayMock, this.data);
@@ -34,6 +36,7 @@ class NotificationBaseTestingSuite
         expect(this.notification.title).toBe(this.data.title);
         expect(this.notification.description).toBe(this.data.description);
         expect(this.notification.icon).toBe(this.data.icon);
+        expect(this.notification.type).toBe(this.data.type);
 
         return this;
     }

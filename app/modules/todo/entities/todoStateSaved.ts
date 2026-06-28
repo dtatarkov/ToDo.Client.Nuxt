@@ -8,6 +8,7 @@ import type { Form } from '@/modules/forms/entities/form';
 import type { MessagesService } from '@/modules/shared/services/messagesService';
 import { Icon } from '@/modules/shared/enums/icons';
 import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
+import { NotificationType } from '@/modules/notifications/types/notificationType';
 
 export class ToDoStateSaved extends ToDoStateBase
 {
@@ -43,7 +44,7 @@ export class ToDoStateSaved extends ToDoStateBase
                 title: this.messagesService.getMessage('todo.notification.updateError.title'),
                 description: error.toString(),
                 icon: Icon.exclamationTriangle,
-                //color: 'error'
+                type: NotificationType.Error,
             });
         });
 

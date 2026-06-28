@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationsStoreBase } from '../../entities/appNotificationsStoreBase';
 import { Icon } from '@/modules/shared/enums/icons';
+import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { DisposedException } from '@/modules/shared/exceptions/disposedException';
 import type { AppNotificationData } from '../../types/appNotificationData';
@@ -121,6 +122,7 @@ class NotificationsStoreBaseTestingSuite
             title: `Test Title ${this.notificationIndex}`,
             description: `Test Description ${this.notificationIndex}`,
             icon: Icon.bellInactive,
+            type: NotificationType.Error,
         };
 
         return data;
@@ -132,6 +134,7 @@ class NotificationsStoreBaseTestingSuite
         expect(notification.description).toBe(data.description);
         expect(notification.icon).toBe(data.icon);
         expect(notification.date).toEqual(data.date);
+        expect(notification.type).toBe(data.type);
     }
 }
 
