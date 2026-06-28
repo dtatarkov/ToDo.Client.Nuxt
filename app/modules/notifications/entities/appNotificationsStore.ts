@@ -8,7 +8,7 @@ export abstract class AppNotificationsStore implements Disposable
     abstract readonly notifications: ObservableReadonly<readonly AppNotification[]>;
     abstract readonly hasNotifications: ObservableReadonly<boolean>;
 
-    abstract addNotification(data: AppNotificationData): void;
+    abstract addNotification(data: AppNotificationData): AppNotification;
 
     abstract createTimeline(): Timeline;
 

@@ -4,57 +4,176 @@ import { Icon } from '@/modules/shared/enums/icons';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { DisposedException } from '@/modules/shared/exceptions/disposedException';
 import type { AppNotificationData } from '../../types/appNotificationData';
+import type { AppNotification } from '../../entities/appNotification';
 import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
 
-describe('NotificationsStoreBase', () =>
+class NotificationsStoreBaseTestingSuite
 {
-    let store: AppNotificationsStoreBase;
+    private store = this.createStore();
+    private notificationsData = new Map<AppNotification, AppNotificationData>();
+    private notificationsAdded = new Array<AppNotification>();
+    private notificationsChangeHandler = vi.fn();
+    private notificationIndex = 0;
 
-    beforeEach(() =>
+    addNotification(): this
+    {
+        this.notificationIndex++;
+
+        const data = this.createNotificationData();
+        const notification = this.store.addNotification(data);
+
+        this.notificationsData.set(notification, data);
+        this.notificationsAdded.push(notification);
+
+        return this;
+    }
+
+    attachNotificationsChangeHandler(): this
+    {
+        this.store.notifications.on(this.notificationsChangeHandler);
+
+        return this;
+    }
+
+    disposeStore(): this
+    {
+        this.store[Symbol.dispose]();
+
+        return this;
+    }
+
+    reset(): this
     {
         vi.resetAllMocks();
 
-        store = new AppNotificationsStoreBase(overlayMock);
+        this.store = this.createStore();
+        this.notificationsData = new Map();
+        this.notificationsAdded = [];
+        this.notificationIndex = 0;
+
+        return this;
+    }
+
+    assertNotificationsCount(expected: number): this
+    {
+        expect(this.store.notifications.value.length).toBe(expected);
+
+        return this;
+    }
+
+    assertNotificationsMatchesData(): this
+    {
+        for (const [notification, data] of this.notificationsData)
+        {
+            this.assertNotificationMatchesData(notification, data);
+        }
+
+        return this;
+    }
+
+    assertStoreNotificationsMatchesAddedNotifications(): this
+    {
+        const notifications = this.store.notifications.value;
+
+        expect(notifications).toEqual(this.notificationsAdded);
+
+        return this;
+    }
+
+    assertNotificationsChangeHandlerCalledTimes(expected: number): this
+    {
+        expect(this.notificationsChangeHandler).toHaveBeenCalledTimes(expected);
+
+        return this;
+    }
+
+    assertNotificationsChangeHandlerCalledWithAddedNotifications(): this
+    {
+        expect(this.notificationsChangeHandler).toHaveBeenCalledWith(this.notificationsAdded);
+
+        return this;
+    }
+
+    assertPublicAPIThrowsDisposedException(): void
+    {
+        expect(() =>
+        {
+            this.addNotification();
+        }).toThrow(DisposedException);
+
+        expect(() =>
+        {
+            this.attachNotificationsChangeHandler();
+        }).toThrow(DisposedException);
+    }
+
+    private createStore(): AppNotificationsStoreBase
+    {
+        const store = new AppNotificationsStoreBase(overlayMock);
+
+        return store;
+    }
+
+    private createNotificationData(): AppNotificationData
+    {
+        const data: AppNotificationData = {
+            date: new Date(),
+            title: `Test Title ${this.notificationIndex}`,
+            description: `Test Description ${this.notificationIndex}`,
+            icon: Icon.bellInactive,
+        };
+
+        return data;
+    }
+
+    private assertNotificationMatchesData(notification: AppNotification, data: AppNotificationData): void
+    {
+        expect(notification.title).toBe(data.title);
+        expect(notification.description).toBe(data.description);
+        expect(notification.icon).toBe(data.icon);
+        expect(notification.date).toEqual(data.date);
+    }
+}
+
+describe('NotificationsStoreBase', () =>
+{
+    const suite = new NotificationsStoreBaseTestingSuite();
+
+    beforeEach(() =>
+    {
+        suite.reset();
     });
 
     describe('addNotification', () =>
     {
         it('should create NotificationBase and add to list', () =>
         {
-            const data: AppNotificationData = {
-                date: new Date('2024-01-01'),
-                title: 'Test',
-                description: 'Description',
-                icon: Icon.bellInactive,
-            };
-
-            store.addNotification(data);
-
-            const notifications = store.notifications.value;
-
-            expect(notifications.length).toBe(1);
-            expect(notifications[0]?.title).toBe(data.title);
-            expect(notifications[0]?.description).toBe(data.description);
-            expect(notifications[0]?.icon).toBe(data.icon);
-            expect(notifications[0]?.date).toEqual(data.date);
+            suite
+                .addNotification()
+                .assertNotificationsCount(1)
+                .assertNotificationsMatchesData();
         });
 
         it('should emit on notification added', async () =>
         {
-            const callback = vi.fn();
-
-            store.notifications.on(callback);
-
-            store.addNotification({
-                date: new Date(),
-                title: 'Test',
-                description: 'Description',
-                icon: Icon.bellInactive,
-            });
+            suite
+                .attachNotificationsChangeHandler()
+                .addNotification();
 
             await awaitMicrotasks();
 
-            expect(callback).toHaveBeenCalledTimes(1);
+            suite
+                .assertNotificationsChangeHandlerCalledTimes(1)
+                .assertNotificationsChangeHandlerCalledWithAddedNotifications();
+        });
+
+        it('should add multiple notifications', () =>
+        {
+            suite
+                .addNotification()
+                .addNotification()
+                .assertNotificationsCount(2)
+                .assertNotificationsMatchesData();
         });
     });
 
@@ -62,58 +181,26 @@ describe('NotificationsStoreBase', () =>
     {
         it('should return all added notifications', () =>
         {
-            store.addNotification({
-                date: new Date('2024-01-01'),
-                title: 'Test 1',
-                description: 'Description 1',
-                icon: Icon.bellInactive,
-            });
-
-            store.addNotification({
-                date: new Date('2024-01-02'),
-                title: 'Test 2',
-                description: 'Description 2',
-                icon: Icon.check,
-            });
-
-            const notifications = store.notifications.value;
-
-            expect(notifications.length).toBe(2);
-            expect(notifications[0]?.title).toBe('Test 1');
-            expect(notifications[1]?.title).toBe('Test 2');
+            suite
+                .addNotification()
+                .addNotification()
+                .assertNotificationsCount(2)
+                .assertNotificationsMatchesData()
+                .assertStoreNotificationsMatchesAddedNotifications();
         });
 
         it('should return empty array when no notifications added', () =>
         {
-            expect(store.notifications.value).toEqual([]);
+            suite.assertNotificationsCount(0);
         });
     });
 
     describe('[Symbol.dispose]', () =>
     {
-        it('should throw DisposedException when adding notification after disposal', () =>
+        it('should throw DisposedException when calling public API', () =>
         {
-            store[Symbol.dispose]();
-
-            expect(() =>
-            {
-                store.addNotification({
-                    date: new Date(),
-                    title: 'Test',
-                    description: 'Description',
-                    icon: Icon.bellInactive,
-                });
-            }).toThrow(DisposedException);
-        });
-
-        it('should throw DisposedException when subscribing to notifications after disposal', () =>
-        {
-            store[Symbol.dispose]();
-
-            expect(() =>
-            {
-                store.notifications.on(() => { });
-            }).toThrow(DisposedException);
+            suite.disposeStore();
+            suite.assertPublicAPIThrowsDisposedException();
         });
     });
 });

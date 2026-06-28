@@ -30,7 +30,7 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 
     readonly notifications = new ObservableArrayBase<AppNotification>();
 
-    override addNotification(data: AppNotificationData): void
+    override addNotification(data: AppNotificationData): AppNotification
     {
         this.disposeToken.assertNotDisposed();
 
@@ -43,6 +43,8 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
         }
 
         notification.showToast();
+
+        return notification;
     }
 
     override createTimeline(): Timeline
