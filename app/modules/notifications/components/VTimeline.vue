@@ -1,39 +1,21 @@
 <template>
-  <UTimeline :items="timelineItems" :ui="ui">
+  <UTimeline :items="timelineItems">
     <template #indicator="{ item }">
-      <UIcon :name="item.icon" :class="item.iconCssClasses" />
+      <VTimelineIndicator :notification="item.notification" />
+    </template>
+
+    <template #wrapper="{ item }">
+      <VTimelineElement :notification="item.notification" />
     </template>
   </UTimeline>
 </template>
 
 <script setup lang="ts">
-import { DateFormatter } from '@/modules/shared/services/dateFormatter';
-import { useService } from '@/modules/shared/composables/useService';
 import type { TimelineData } from '@/modules/notifications/types/timelineData';
-import type { AppNotification } from '../entities/appNotification';
-
-const dateFormatter = useService(DateFormatter);
+import VTimelineIndicator from './VTimelineIndicator.vue';
+import VTimelineElement from './VTimelineElement.vue';
 
 const props = defineProps<TimelineData>();
 
-function getIconCssClasses(notification: AppNotification) {
-  const color = notification.getColor();
-  const cssClasses = `text-${color}`;
-
-  return cssClasses;
-}
-
-const timelineItems = computed(() =>
-  props.notifications.map(notification => ({
-    title: notification.title,
-    description: notification.description,
-    icon: notification.icon,
-    iconCssClasses: getIconCssClasses(notification),
-    date: dateFormatter.formatDate(notification.date),
-  }))
-);
-
-const ui = {
-  description: 'whitespace-pre-wrap'
-}
+const timelineItems = computed(() => props.notifications.map(n => ({ notification: n})));
 </script>

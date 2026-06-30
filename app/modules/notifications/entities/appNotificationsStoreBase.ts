@@ -1,8 +1,9 @@
 import { dependency } from '@/modules/shared/decorators/dependency';
 import { AppNotificationsStore } from './appNotificationsStore';
-import { AppNotificationBase } from './appNotificationBase';
+import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
+import type { AppRootNotification } from './appRootNotification';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { TimelineBase } from './timelineBase';
@@ -15,6 +16,7 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
 {
     private disposeToken = new DisposeToken();
 
+    readonly notifications = new ObservableArrayBase<AppRootNotification>();
     readonly hasNotifications = new ObservableWritableBase<boolean>(false);
 
     constructor(private overlay: Overlay)
@@ -28,14 +30,16 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
         });
     }
 
-    readonly notifications = new ObservableArrayBase<AppNotification>();
-
     override addNotification(data: AppNotificationData): AppNotification
     {
         this.disposeToken.assertNotDisposed();
 
-        const notification = new AppNotificationBase(this.overlay, data);
-        this.notifications.add(notification);
+        let notification = this.tryAddNotificationToLastRoot(data);
+
+        if (!notification)
+        {
+            notification = this.addRootNotification(data);
+        }
 
         if (this.notifications.value.length === 1)
         {
@@ -45,6 +49,31 @@ export class AppNotificationsStoreBase extends AppNotificationsStore
         notification.showToast();
 
         return notification;
+    }
+
+    private addRootNotification(data: AppNotificationData): AppRootNotification
+    {
+        const rootNotification = new AppRootNotificationBase(this.overlay, data);
+        this.notifications.add(rootNotification);
+
+        return rootNotification;
+    }
+
+    private tryAddNotificationToLastRoot(data: AppNotificationData): AppNotification | undefined
+    {
+        const lastRoot = this.notifications.value[this.notifications.value.length - 1];
+
+        if (lastRoot)
+        {
+            const result = lastRoot.addNotification(data);
+
+            if (result !== false)
+            {
+                return result;
+            }
+        }
+
+        return undefined;
     }
 
     override createTimeline(): Timeline

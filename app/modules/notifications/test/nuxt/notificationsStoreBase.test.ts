@@ -7,99 +7,101 @@ import { DisposedException } from '@/modules/shared/exceptions/disposedException
 import type { AppNotificationData } from '../../types/appNotificationData';
 import type { AppNotification } from '../../entities/appNotification';
 import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
+import type { AppRootNotification } from '../../entities/appRootNotification';
 
 class NotificationsStoreBaseTestingSuite
 {
     private store = this.createStore();
-    private notificationsData = new Map<AppNotification, AppNotificationData>();
-    private notificationsAdded = new Array<AppNotification>();
     private notificationsChangeHandler = vi.fn();
-    private notificationIndex = 0;
 
-    addNotification(): this
+    createNotificationData(dataOverrides?: Partial<AppNotificationData>): AppNotificationData
     {
-        this.notificationIndex++;
+        const data: AppNotificationData = {
+            date: new Date(),
+            title: `Test Title`,
+            description: `Test Description`,
+            icon: Icon.bellInactive,
+            type: NotificationType.Error,
+        };
 
-        const data = this.createNotificationData();
-        const notification = this.store.addNotification(data);
-
-        this.notificationsData.set(notification, data);
-        this.notificationsAdded.push(notification);
-
-        return this;
+        return {
+            ...data,
+            ...dataOverrides,
+        };
     }
 
-    attachNotificationsChangeHandler(): this
+    createNotification(data: AppNotificationData): AppNotification
+    {
+        return this.store.addNotification(data);
+    }
+
+    attachNotificationsChangeHandler(): void
     {
         this.store.notifications.on(this.notificationsChangeHandler);
-
-        return this;
     }
 
-    disposeStore(): this
+    disposeStore(): void
     {
         this.store[Symbol.dispose]();
-
-        return this;
     }
 
-    reset(): this
+    reset(): void
     {
         vi.resetAllMocks();
 
         this.store = this.createStore();
-        this.notificationsData = new Map();
-        this.notificationsAdded = [];
-        this.notificationIndex = 0;
-
-        return this;
     }
 
-    assertNotificationsCount(expected: number): this
+    getNotifications(): readonly AppRootNotification[]
     {
-        expect(this.store.notifications.value.length).toBe(expected);
-
-        return this;
+        return this.store.notifications.value;
     }
 
-    assertNotificationsMatchesData(): this
+    assertNotificationMatchesData(notification: AppNotification, data: AppNotificationData): void
     {
-        for (const [notification, data] of this.notificationsData)
-        {
-            this.assertNotificationMatchesData(notification, data);
-        }
-
-        return this;
+        expect(notification.title).toBe(data.title);
+        expect(notification.description).toBe(data.description);
+        expect(notification.icon).toBe(data.icon);
+        expect(notification.date).toEqual(data.date);
+        expect(notification.type).toBe(data.type);
+        expect(notification.groupId).toBe(data.groupId);
     }
 
-    assertStoreNotificationsMatchesAddedNotifications(): this
+    assertNotificationsCount(expected: number): void
     {
-        const notifications = this.store.notifications.value;
-
-        expect(notifications).toEqual(this.notificationsAdded);
-
-        return this;
+        expect(this.getNotifications().length).toBe(expected);
     }
 
-    assertNotificationsChangeHandlerCalledTimes(expected: number): this
+    assertRootNotificationChildrenCount(notification: AppRootNotification, expected: number): void
+    {
+        expect(notification.children.length).toBe(expected);
+    }
+
+    assertNotificationGroupId(notification: AppNotification, expected: string | undefined): void
+    {
+        expect(notification.groupId).toBe(expected);
+    }
+
+    assertStoreNotificationsEqual(notifications: readonly AppNotification[]): void
+    {
+        expect(this.store.notifications.value).toEqual(notifications);
+    }
+
+    assertNotificationsChangeHandlerCalledTimes(expected: number): void
     {
         expect(this.notificationsChangeHandler).toHaveBeenCalledTimes(expected);
-
-        return this;
     }
 
-    assertNotificationsChangeHandlerCalledWithAddedNotifications(): this
+    assertNotificationsChangeHandlerCalledWith(notifications: readonly AppNotification[]): void
     {
-        expect(this.notificationsChangeHandler).toHaveBeenCalledWith(this.notificationsAdded);
-
-        return this;
+        expect(this.notificationsChangeHandler).toHaveBeenCalledWith(notifications);
     }
 
     assertPublicAPIThrowsDisposedException(): void
     {
         expect(() =>
         {
-            this.addNotification();
+            this.createNotification(this.createNotificationData());
         }).toThrow(DisposedException);
 
         expect(() =>
@@ -113,28 +115,6 @@ class NotificationsStoreBaseTestingSuite
         const store = new AppNotificationsStoreBase(overlayMock);
 
         return store;
-    }
-
-    private createNotificationData(): AppNotificationData
-    {
-        const data: AppNotificationData = {
-            date: new Date(),
-            title: `Test Title ${this.notificationIndex}`,
-            description: `Test Description ${this.notificationIndex}`,
-            icon: Icon.bellInactive,
-            type: NotificationType.Error,
-        };
-
-        return data;
-    }
-
-    private assertNotificationMatchesData(notification: AppNotification, data: AppNotificationData): void
-    {
-        expect(notification.title).toBe(data.title);
-        expect(notification.description).toBe(data.description);
-        expect(notification.icon).toBe(data.icon);
-        expect(notification.date).toEqual(data.date);
-        expect(notification.type).toBe(data.type);
     }
 }
 
@@ -151,50 +131,76 @@ describe('NotificationsStoreBase', () =>
     {
         it('should create NotificationBase and add to list', () =>
         {
-            suite
-                .addNotification()
-                .assertNotificationsCount(1)
-                .assertNotificationsMatchesData();
+            const notificationData = suite.createNotificationData();
+            const notification = suite.createNotification(notificationData);
+
+            suite.assertNotificationsCount(1);
+            suite.assertStoreNotificationsEqual([notification]);
+            suite.assertNotificationMatchesData(notification, notificationData);
         });
 
         it('should emit on notification added', async () =>
         {
-            suite
-                .attachNotificationsChangeHandler()
-                .addNotification();
+            suite.attachNotificationsChangeHandler();
+            const notification = suite.createNotification(suite.createNotificationData());
 
             await awaitMicrotasks();
 
-            suite
-                .assertNotificationsChangeHandlerCalledTimes(1)
-                .assertNotificationsChangeHandlerCalledWithAddedNotifications();
+            suite.assertNotificationsChangeHandlerCalledTimes(1);
+            suite.assertNotificationsChangeHandlerCalledWith([notification]);
         });
 
         it('should add multiple notifications', () =>
         {
-            suite
-                .addNotification()
-                .addNotification()
-                .assertNotificationsCount(2)
-                .assertNotificationsMatchesData();
-        });
-    });
+            const notification1 = suite.createNotification(suite.createNotificationData());
+            const notification2 = suite.createNotification(suite.createNotificationData());
 
-    describe('notifications', () =>
-    {
-        it('should return all added notifications', () =>
-        {
-            suite
-                .addNotification()
-                .addNotification()
-                .assertNotificationsCount(2)
-                .assertNotificationsMatchesData()
-                .assertStoreNotificationsMatchesAddedNotifications();
+            suite.assertNotificationsCount(2);
+            suite.assertStoreNotificationsEqual([notification1, notification2]);
         });
 
-        it('should return empty array when no notifications added', () =>
+        it('should add multiple notifications with same groupId to same root notification', () =>
         {
-            suite.assertNotificationsCount(0);
+            const groupId = 'group-1';
+
+            const notification1 = suite.createNotification(suite.createNotificationData({ groupId }));
+            const notification2 = suite.createNotification(suite.createNotificationData({ groupId }));
+
+            const notification = suite.getNotifications()[0];
+
+            suite.assertNotificationsCount(1);
+            suite.assertStoreNotificationsEqual([notification1]);
+            suite.assertNotificationGroupId(notification1, groupId);
+            suite.assertNotificationGroupId(notification2, groupId);
+            suite.assertRootNotificationChildrenCount(<AppRootNotification>notification, 1);
+        });
+
+        it('should create separate root notifications for different groupIds', () =>
+        {
+            const group1 = 'group-1';
+            const group2 = 'group-2';
+
+            const notification1 = suite.createNotification(suite.createNotificationData({ groupId: group1 }));
+            const notification2 = suite.createNotification(suite.createNotificationData({ groupId: group2 }));
+
+            suite.assertStoreNotificationsEqual([notification1, notification2]);
+            suite.assertNotificationGroupId(notification1, group1);
+            suite.assertNotificationGroupId(notification2, group2);
+            suite.assertNotificationsCount(2);
+        });
+
+        it('should create new root notification with no children when there are no previous notifications with the same groupId', () =>
+        {
+            const groupId = 'group-1';
+
+            suite.createNotification(suite.createNotificationData({ groupId }));
+
+            const notification = suite.getNotifications()[0];
+
+            suite.assertNotificationsCount(1);
+            suite.assertStoreNotificationsEqual([<AppNotification>notification]);
+            suite.assertNotificationGroupId(<AppNotification>notification, groupId);
+            suite.assertRootNotificationChildrenCount(<AppRootNotification>notification, 0);
         });
     });
 

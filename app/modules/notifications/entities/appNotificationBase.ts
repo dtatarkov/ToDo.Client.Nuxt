@@ -14,9 +14,10 @@ export class AppNotificationBase extends AppNotification
     readonly description: string;
     readonly icon: Icon;
     readonly type: NotificationType;
+    readonly groupId?: string;
 
     constructor(
-        private overlay: Overlay,
+        protected overlay: Overlay,
         data: AppNotificationData,
     )
     {
@@ -27,10 +28,9 @@ export class AppNotificationBase extends AppNotification
         this.description = data.description;
         this.icon = data.icon;
         this.type = data.type;
+        this.groupId = data.groupId;
         this.colorInternal = this.calculateColor(data.type);
     }
-
-
 
     getColor(): Color
     {

@@ -1,5 +1,5 @@
-import type { AppNotification } from '../entities/appNotification';
+import type { AppRootNotification } from '../entities/appRootNotification';
 
 export type TimelineData = {
-    notifications: readonly AppNotification[];
+    notifications: readonly AppRootNotification[];
 };

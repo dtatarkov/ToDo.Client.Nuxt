@@ -9,6 +9,7 @@ export abstract class AppNotification
     abstract readonly description: string;
     abstract readonly icon: Icon;
     abstract readonly type: NotificationType;
+    abstract readonly groupId?: string;
 
     abstract getColor(): Color;
     abstract showToast(): void;
