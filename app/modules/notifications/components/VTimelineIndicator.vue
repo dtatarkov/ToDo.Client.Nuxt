@@ -5,12 +5,12 @@
 <script setup lang="ts">
 import type { AppNotification } from '../entities/appNotification';
 
-const props = defineProps<{
+type Props = {
     notification: AppNotification;
-}>();
+}
 
-const iconCssClasses = computed(() => {
-    const color = props.notification.getColor();
-    return `text-${color}`;
-});
+const props = defineProps<Props>();
+
+const color = props.notification.getColor();
+const iconCssClasses =  `text-${color}`;
 </script>

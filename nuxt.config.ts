@@ -51,7 +51,9 @@ export default defineNuxtConfig({
         'UMain',
         'UFooter',
         'USidebar',
-        'UNavigationMenu'
+        'UNavigationMenu',
+        'UCollapsible',
+        'UBadge',
       ]
     },
     // Disable safelist colors to reduce CSS size

@@ -31,6 +31,12 @@ export abstract class MessagesService
     abstract getMessage(key: 'todo.field.completionDatePlanned.label'): string;
 
     /**
+     * Label for showing all notifications in timeline.
+     * @see {@link i18n/locales/ru.json} - key: `timeline.showAllNotifications`
+     */
+    abstract getMessage(key: 'timeline.showAllNotifications'): string;
+
+    /**
      * Label for the completed date in the todo card.
      * @see {@link i18n/locales/ru.json} - key: `todo.card.completed`
      */

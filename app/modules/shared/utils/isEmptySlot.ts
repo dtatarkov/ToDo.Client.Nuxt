@@ -7,7 +7,13 @@ export function isEmptySlot<S extends Slot<any>>(slot?: S): boolean
     return true;
   }
 
-  const slotContent = slot();
+  const slotContent = slot({});
+
+  if (!slotContent)
+  {
+    return true;
+  }
+
   const result = slotContent.length == 0;
 
   return result;

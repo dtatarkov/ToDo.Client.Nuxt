@@ -14,7 +14,7 @@ const hasContent = computed(() => content.value !== undefined);
   <USidebar
     v-if="hasContent"
     side="right"
-    :ui="{ root: 'contain-[paint]', container: 'h-full relative' }"
+    :ui="{ root: 'contain-[paint]', container: 'h-full relative w-[300px]' }"
   >
     <component :is="content?.vnode" />
   </USidebar>
