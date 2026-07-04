@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       include: [
-        "../.storybook/**/*",
+        "../../.storybook/**/*",
       ]
     }
   },

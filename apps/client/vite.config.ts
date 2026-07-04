@@ -7,7 +7,7 @@ export default defineConfig({
       '#styles': path.resolve(__dirname, 'styles'),
       '#components': path.resolve(__dirname, 'app/components'),
       '#composables': path.resolve(__dirname, 'app/composables'),
-      '#storybook': path.resolve(__dirname, '.storybook'),
+      '#storybook': path.resolve(__dirname, '../.storybook'),
       '@': path.resolve(__dirname, 'app'),
       '@@': path.resolve(__dirname, ''),
     },
