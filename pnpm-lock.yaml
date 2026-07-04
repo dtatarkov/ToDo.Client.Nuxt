@@ -93,6 +93,15 @@ importers:
         specifier: 3.2.5
         version: 3.2.5(typescript@5.9.3)
 
+  packages/ssr:
+    dependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.3
+      vue:
+        specifier: ^3.5.0
+        version: 3.5.29(typescript@5.9.3)
+
 packages:
 
   '@adobe/css-tools@4.4.4':

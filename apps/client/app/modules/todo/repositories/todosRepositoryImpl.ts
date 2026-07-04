@@ -4,7 +4,7 @@ import type { ToDo } from "../entities/todo";
 import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoGetDto } from '../types/toDoGetDto';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
-import { ssrPayload } from '@/modules/shared/decorators/ssrPayload';
+import { ssrPayload } from '@packages/ssr';
 
 @dependency(ToDoDtoMapper)
 @dependency(ToDosRepositoryConfiguration)

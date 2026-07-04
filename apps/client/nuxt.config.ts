@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from "nuxt/config";
+import * as path from 'node:path';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -19,6 +20,10 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
+
+  alias: {
+    '@packages/ssr': path.resolve(__dirname, '../../packages/ssr/index.ts'),
+  },
 
   typescript: {
     tsConfig: {
@@ -83,7 +88,7 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    'prepare:types'({ tsConfig })
+    'prepare:types': ({ tsConfig }) =>
     {
       const aliasesToRemoveFromAutocomplete = ['~', '~/*', '~~', '~~/*'];
 

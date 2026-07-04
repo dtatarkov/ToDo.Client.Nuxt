@@ -23,4 +23,5 @@ import VSidebarWidget from '@/modules/sidebar/components/VSidebarWidget.vue';
 
 useAppServices();
 useGlobalErrorsHandler();
+setupSSR();
 </script>

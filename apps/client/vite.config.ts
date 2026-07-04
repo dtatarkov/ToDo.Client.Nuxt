@@ -10,6 +10,7 @@ export default defineConfig({
       '#storybook': path.resolve(__dirname, '../.storybook'),
       '@': path.resolve(__dirname, 'app'),
       '@@': path.resolve(__dirname, ''),
+      '@packages/ssr': path.resolve(__dirname, '../../packages/ssr'),
     },
   },
 });
