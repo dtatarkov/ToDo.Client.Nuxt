@@ -14,7 +14,6 @@ import VToggleIcon from '@/modules/uikit/components/VToggleIcon.vue';
 import { Icon } from '@/modules/shared/enums/icons';
 import { useService } from '@/modules/shared/composables/useService';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
-import { useObservableReadonly } from '@/modules/shared/composables/useObservableReadonly';
 
 const sidebar = useService(Sidebar);
 const timeline = sidebar.timeline;

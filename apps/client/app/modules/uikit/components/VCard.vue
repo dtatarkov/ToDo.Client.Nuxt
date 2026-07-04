@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
 import type { CardData } from '../types/cardData';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 

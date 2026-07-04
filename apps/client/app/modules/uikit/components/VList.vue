@@ -11,8 +11,6 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { isEmptySlot } from '@/modules/shared/utils/isEmptySlot';
-
 type Props<T> = {
   elements: readonly T[];
 }

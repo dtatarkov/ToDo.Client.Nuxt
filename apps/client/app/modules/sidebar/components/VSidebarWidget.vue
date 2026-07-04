@@ -2,7 +2,6 @@
 import { computed } from 'vue';
 import { useService } from '@/modules/shared/composables/useService';
 import { Sidebar } from '../entities/sidebar';
-import { useObservableReadonly } from '@/modules/shared/composables/useObservableReadonly';
 
 const sidebar = useService(Sidebar);
 

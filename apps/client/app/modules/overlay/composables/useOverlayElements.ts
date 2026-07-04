@@ -1,5 +1,4 @@
 import { useService } from '@/modules/shared/composables/useService';
-import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
 import { Overlay } from '../entities/overlay';
 
 export function useOverlayElements()
