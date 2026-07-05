@@ -2,7 +2,7 @@ import { ToDoDtoMapper } from "./todoDtoMapper";
 import type { ToDoGetDto } from "../types/toDoGetDto";
 import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import type { ToDo } from "../entities/todo";
-import { DateParser } from '@packages/shared';
+import { DateParser } from '@packages/datetime';
 import { ToDoFactory } from "../factories/todoFactory";
 import type { ToDoAddDto } from '../types/toDoAddDto';
 import { dependency } from '@packages/di';

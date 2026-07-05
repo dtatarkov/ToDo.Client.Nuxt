@@ -3,8 +3,9 @@ import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
 import VCard from '@/modules/uikit/components/VCard.vue';
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
-import { Icon, isStringEmpty , DateFormatter , MessagesService  } from '@packages/shared';
+import { Icon, isStringEmpty , MessagesService  } from '@packages/shared';
 import type { ToDoCardData } from '../types/todoCardData';
+import { DateFormatter } from '@packages/datetime';
 
 const dateFormatter = useService(DateFormatter);
 const messagesService = useService(MessagesService);

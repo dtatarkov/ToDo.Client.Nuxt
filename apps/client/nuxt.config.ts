@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     '@packages/di': path.resolve(__dirname, '../../packages/di/index.ts'),
     '@packages/storybook': path.resolve(__dirname, '../../packages/storybook/index.ts'),
     '@packages/shared': path.resolve(__dirname, '../../packages/shared/src/index.ts'),
+    '@packages/datetime': path.resolve(__dirname, '../../packages/datetime/src/index.ts'),
   },
 
   typescript: {

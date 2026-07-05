@@ -47,11 +47,6 @@ export { ZonedDateTimeMapperImpl } from './mappers/zonedDateTimeMapperImpl';
 export { messagesServiceMock } from './mocks/messagesServiceMock';
 export { createObservableReadonlyMock } from './mocks/observableReadonlyMock';
 
-// Services
-export { DateFormatter, DateFormatterConfiguration } from './services/dateFormatter';
-export { DateFormatterImpl } from './services/dateFormatterImpl';
-export { DateParser } from './services/dateParser';
-export { DateParserImpl } from './services/dateParserImpl';
 export { LoggingService } from './services/loggingService';
 export { LoggingServiceImpl } from './services/loggingServiceImpl';
 export { MessagesService } from './services/messagesService';

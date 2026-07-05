@@ -14,6 +14,7 @@ export default defineConfig({
       '@packages/di': path.resolve(__dirname, '../../packages/di'),
       '@packages/storybook': path.resolve(__dirname, '../../packages/storybook/src'),
       '@packages/shared': path.resolve(__dirname, '../../packages/shared/src'),
+      '@packages/datetime': path.resolve(__dirname, '../../packages/datetime/src'),
     },
   },
 });

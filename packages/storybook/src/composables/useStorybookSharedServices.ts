@@ -7,5 +7,5 @@ export function useStorybookSharedServices(): void
     const { t } = useI18n();
     const config = useRuntimeConfig();
 
-    registerSharedServices(container, t, config.public.locale);
+    registerSharedServices(container, t);
 }

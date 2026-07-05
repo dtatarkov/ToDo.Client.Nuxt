@@ -5,6 +5,7 @@ import { registerTodoServices } from '@/modules/todo/utils/registerTodoServices'
 import { registerUIKitServices } from '@/modules/uikit/utils/registerUIKitServices';
 import { registerSidebarServices } from '@/modules/sidebar/utils/registerSidebarServices';
 import { registerNotificationsServices } from '@/modules/notifications/utils/registerNotificationsServices';
+import { registerDateTimeServices } from '@packages/datetime';
 import { useServicesContainer } from '@/composables/useServicesContainer';
 import { useRuntimeConfig, useI18n } from '#imports';
 
@@ -14,7 +15,8 @@ export function useAppServices()
     const { t } = useI18n();
     const config = useRuntimeConfig();
 
-    registerSharedServices(container, t, config.public.locale);
+    registerDateTimeServices(container, config.public.locale);
+    registerSharedServices(container, t);
     registerUIKitServices(container);
     registerFormsServices(container);
     registerOverlayServices(container);

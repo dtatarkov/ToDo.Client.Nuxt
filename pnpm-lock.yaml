@@ -93,6 +93,25 @@ importers:
         specifier: 3.2.5
         version: 3.2.5(typescript@5.9.3)
 
+  packages/datetime:
+    dependencies:
+      '@packages/di':
+        specifier: workspace:*
+        version: link:../di
+      '@packages/shared':
+        specifier: workspace:*
+        version: link:../shared
+      luxon:
+        specifier: 3.7.2
+        version: 3.7.2
+    devDependencies:
+      '@types/luxon':
+        specifier: 3.7.1
+        version: 3.7.1
+      vitest:
+        specifier: 3.2.4
+        version: 3.2.4(@types/node@25.3.3)(happy-dom@20.8.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0)
+
   packages/di: {}
 
   packages/shared:
