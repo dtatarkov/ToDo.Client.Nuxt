@@ -72,7 +72,7 @@ UIElement (abstract)
 ### button.ts
 ```typescript
 // BEFORE
-import type { Action } from '@/modules/shared/types/action';
+import type { Action } from '@packages/shared';
 import { Viewmodel } from '../../interfaces/viewmodel';
 
 export abstract class Button extends Viewmodel<string>
@@ -82,7 +82,7 @@ export abstract class Button extends Viewmodel<string>
 }
 
 // AFTER
-import type { Action } from '@/modules/shared/types/action';
+import type { Action } from '@packages/shared';
 import { UIElement } from '../../interfaces/uiElement';
 
 export abstract class Button extends UIElement
@@ -95,13 +95,13 @@ export abstract class Button extends UIElement
 ### buttonGeneralBase.ts
 ```typescript
 // BEFORE
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId } from '@packages/shared';
 import type { ButtonGeneral } from './buttonGeneral';
 import type { Color } from '../../types/color';
 import { ButtonBase } from './buttonBase';
-import { ObservableSource } from '@/modules/shared/entities/observableSource';
+import { ObservableSource } from '@packages/shared';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
-import { useObservable } from '@/modules/shared/composables/useObservable';
+import { useObservable } from '@packages/shared';
 
 export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 {
@@ -129,7 +129,7 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 }
 
 // AFTER
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId } from '@packages/shared';
 import type { ButtonGeneral } from './buttonGeneral';
 import type { Color } from '../../types/color';
 import { ButtonBase } from './buttonBase';
@@ -178,7 +178,7 @@ export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 ### buttonIconBase.ts
 ```typescript
 // AFTER
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId } from '@packages/shared';
 import type { ButtonIcon } from './buttonIcon';
 import { ButtonBase } from './buttonBase';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import VInputDateTime from '../components/VInputDateTime.vue';
-import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
-import { inputIdArgType, inputNameArgType, inputHasAutofocusArgType, inputIsDisabledArgType, storybookColorSelect, inputHighlightArgType } from '@packages/storybook';
+import { useStorybookSharedServices, inputIdArgType, inputNameArgType, inputHasAutofocusArgType, inputIsDisabledArgType, storybookColorSelect, inputHighlightArgType  } from '@packages/storybook';
+
 
 const meta: Meta<typeof VInputDateTime> = {
     title: 'UIKit/InputDateTime',

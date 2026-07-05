@@ -1,4 +1,4 @@
-import type { AbstractConstructor } from '@/modules/shared/types/abstractConstructor';
-import type { Constructor } from '@/modules/shared/types/constructor';
+import type { AbstractConstructor } from '@packages/shared';
+import type { Constructor } from '@packages/shared';
 
 export type Dependency = Constructor<any> | AbstractConstructor<any>;

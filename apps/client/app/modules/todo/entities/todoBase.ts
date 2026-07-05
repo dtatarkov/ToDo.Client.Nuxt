@@ -2,18 +2,18 @@ import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
 import type { ToDosOwner } from './todosOwner';
 import { shallowReactive, type Reactive } from 'vue';
-import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
+import { isStringEmpty, satisfies , updatePropertiesWithData  } from '@packages/shared';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Modal } from '@/modules/overlay/entities/modal';
 import { ToDoStateNew } from './todoStateNew';
 import { ToDoStateSaved } from './todoStateSaved';
-import { satisfies } from '@/modules/shared/utils/satisfies';
+
 import type { ToDoState } from './todoState';
-import type { StateTransition } from '@/modules/shared/types/stateTransition';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
+import type { StateTransition, MessagesService  } from '@packages/shared';
+
 import type { Form } from '@/modules/forms/entities/form';
-import type { MessagesService } from '@/modules/shared/services/messagesService';
+
 import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 
 type ToDoStateTransitionConstraint = {

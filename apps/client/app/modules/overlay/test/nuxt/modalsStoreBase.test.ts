@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ModalsStoreBase } from '../../entities/modalsStoreBase';
 import { createModalMock, modalMock } from '../../mocks/modalMock';
-import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
+import { awaitMicrotasks } from '@packages/shared';
 
 describe('ModalsStoreBase', () =>
 {

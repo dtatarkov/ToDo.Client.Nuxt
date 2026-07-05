@@ -1,4 +1,4 @@
-import { ValidationError } from '@/modules/shared/entities/validationError';
+import { ValidationError } from '@packages/shared';
 
 export class FormElementValidationError extends ValidationError
 {

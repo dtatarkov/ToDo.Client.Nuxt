@@ -63,8 +63,8 @@ VToDosWidget.vue
 - Remove `import type { Reactive } from 'vue'`
 - Add imports:
   ```ts
-  import type { Action } from '@/modules/shared/types/action';
-  import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import type { Action } from '@packages/shared';
+  import type { DisposeToken } from '@packages/shared';
   ```
 - Make class implement `Disposable`:
   ```ts
@@ -87,9 +87,9 @@ VToDosWidget.vue
 - Remove `import { shallowReactive, type Reactive } from 'vue'`
 - Add imports:
   ```ts
-  import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-  import type { Action } from '@/modules/shared/types/action';
+  import { EntityEvent } from '@packages/shared';
+  import { DisposeToken } from '@packages/shared';
+  import type { Action } from '@packages/shared';
   ```
 - Change `todos` field:
   ```ts
@@ -135,10 +135,10 @@ VToDosWidget.vue
 
 ```ts
 import { customRef } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
+import { useService } from '@packages/shared';
 import { ToDosOwner } from '../entities/todosOwner';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
+import { DisposeToken } from '@packages/shared';
+import { ReadonlyRefValueChangeException } from '@packages/shared';
 import type { ToDo } from '../entities/todo';
 import type { Ref } from 'vue';
 
@@ -239,7 +239,7 @@ import { ToDoCardDataMapperImpl } from "../mappers/todoCardDataMapperImpl";
 import { ToDosOwner } from "../entities/todosOwner";
 import { ToDosOwnerBase } from "../entities/todosOwnerBase";
 import { ToDosRepositoryImpl } from "../repositories/todosRepositoryImpl";
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { useServiceRegistration } from '@packages/shared';
 import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
 import { ToDoFactory } from '../factories/todoFactory';
 
@@ -280,7 +280,7 @@ import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import VGrid from '@/modules/uikit/components/VGrid.vue';
 import VToDoCard from './VToDoCard.vue';
 import { useToDosOwner } from '../composables/useToDosOwner';
-import { useService } from '@/modules/shared/composables/useService';
+import { useService } from '@packages/shared';
 import { ToDoCardDataMapper } from '../mappers/todoCardDataMapper';
 
 const { todos, initializeToDosAsync, createToDo, editToDo } = useToDosOwner();
@@ -328,7 +328,7 @@ await initializeToDosAsync();
 - Update test descriptions that mention "observable" to say "array" instead
 - Add `onToDosChange` tests:
   ```ts
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import { DisposeToken } from '@packages/shared';
 
   describe('onToDosChange', () =>
   {

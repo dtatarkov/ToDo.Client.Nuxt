@@ -2,9 +2,9 @@ import { ToDosRepository, ToDosRepositoryConfiguration } from "./todosRepository
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import type { ToDo } from "../entities/todo";
 import type { ToDoGetDto } from '../types/toDoGetDto';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { ssrPayload } from '@packages/ssr';
 import { dependency } from '@packages/di';
+import { updatePropertiesWithData } from '@packages/shared';
 
 @dependency(ToDoDtoMapper)
 @dependency(ToDosRepositoryConfiguration)

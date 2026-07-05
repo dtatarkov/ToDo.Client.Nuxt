@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { DateFormatter } from '@/modules/shared/services/dateFormatter';
+import { DateFormatter } from '@packages/shared';
 import type { AppNotification } from '../entities/appNotification';
 
 const dateFormatter = useService(DateFormatter);

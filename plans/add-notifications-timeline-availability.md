@@ -119,8 +119,8 @@ Add two new abstract members — `hasRecords` as a **method** (not a getter):
 ```typescript
 import { UIElement } from './uiElement';
 import type { TimelineRecord } from '../types/timelineRecord';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 export abstract class Timeline extends UIElement
 {
@@ -147,9 +147,9 @@ import { h } from 'vue';
 import { Timeline } from './timeline';
 import type { TimelineRecord } from '../types/timelineRecord';
 import VTimeline from '../components/VTimeline.vue';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { EntityEvent } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 export abstract class TimelineBase extends Timeline
 {
@@ -202,10 +202,10 @@ Key design:
 
 ```typescript
 import { UIElement } from '@/modules/uikit/entities/uiElement';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { EntityEvent } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
+import { getUniqueId } from '@packages/shared';
 
 // ===== Public abstract interface =====
 
@@ -320,9 +320,9 @@ import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
 import { SidebarLayerNotificationsTimeline } from './sidebarLayerNotificationsTimeline';
 import { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { EntityEvent } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 @dependency(NotificationsTimeline)
 export class SidebarBase extends Sidebar
@@ -376,8 +376,8 @@ No change needed — the type already references the abstract `SidebarLayer` whi
 ```typescript
 import type { SidebarLayer } from './sidebarLayer';
 import type { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 export type SidebarLayers = {
     notificationsTimeline: SidebarLayer<NotificationsTimeline>;
@@ -411,9 +411,9 @@ export abstract class Sidebar implements Disposable
 
 <script setup lang="ts">
 import VToggleIcon from '@/modules/uikit/components/VToggleIcon.vue';
-import { Icon } from '@/modules/shared/enums/icons';
-import { useService } from '@/modules/shared/composables/useService';
-import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
+import { Icon } from '@packages/shared';
+import { useService } from '@packages/shared';
+import { useEventDrivenRef } from '@packages/shared';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 
 const sidebar = useService(Sidebar);

@@ -1,4 +1,4 @@
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { AsyncCommand } from '@packages/shared';
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 
 export abstract class ModalButtonConfirmConfigurator

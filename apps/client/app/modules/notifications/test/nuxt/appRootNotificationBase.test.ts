@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppRootNotificationBase } from '../../entities/appRootNotificationBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';

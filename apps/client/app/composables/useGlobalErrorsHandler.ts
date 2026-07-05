@@ -1,4 +1,4 @@
-import { LoggingService } from '@/modules/shared/services/loggingService';
+import { LoggingService } from '@packages/shared';
 
 export function useGlobalErrorsHandler()
 {

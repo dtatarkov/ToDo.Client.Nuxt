@@ -76,7 +76,7 @@ export class AppRootNotificationBase extends AppNotificationBase implements AppR
 **File**: `app/modules/notifications/entities/appNotification.ts`
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { NotificationType } from '../types/notificationType';
 import type { Color } from '@/modules/uikit/types/color';
 
@@ -102,7 +102,7 @@ import { AppNotification } from './appNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
 import { NotificationType } from '../types/notificationType';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { Color } from '@/modules/uikit/types/color';
 
 export class AppNotificationBase extends AppNotification
@@ -172,7 +172,7 @@ import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
 import type { AppRootNotification } from './appRootNotification';
 import type { Timeline } from './timeline';
-import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
+import type { ObservableReadonly } from '@packages/shared';
 
 export abstract class AppNotificationsStore implements Disposable
 {
@@ -198,12 +198,12 @@ import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
 import type { AppRootNotification } from './appRootNotification';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { DisposeToken } from '@packages/shared';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { TimelineBase } from './timelineBase';
 import type { Timeline } from './timeline';
-import { ObservableArrayBase } from '@/modules/shared/entities/observableArrayBase';
-import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
+import { ObservableArrayBase } from '@packages/shared';
+import { ObservableWritableBase } from '@packages/shared';
 
 @dependency(Overlay)
 export class AppNotificationsStoreBase extends AppNotificationsStore
@@ -285,8 +285,8 @@ export type TimelineData = {
 import { h } from 'vue';
 import { Timeline } from './timeline';
 import VTimeline from '../components/VTimeline.vue';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { DisposeToken } from '@packages/shared';
+import { getUniqueId } from '@packages/shared';
 import type { AppNotificationsStore } from './appNotificationsStore';
 import type { TimelineData } from '../types/timelineData';
 
@@ -362,8 +362,8 @@ const iconCssClasses = computed(() => {
 </template>
 
 <script setup lang="ts">
-import { DateFormatter } from '@/modules/shared/services/dateFormatter';
-import { useService } from '@/modules/shared/composables/useService';
+import { DateFormatter } from '@packages/shared';
+import { useService } from '@packages/shared';
 import type { AppNotification } from '../entities/appNotification';
 
 const dateFormatter = useService(DateFormatter);
@@ -413,7 +413,7 @@ import { vi } from 'vitest';
 import type { AppRootNotification } from '../entities/appRootNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from '../entities/appNotification';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../types/notificationType';
 
 export function createAppRootNotificationMock(
@@ -450,7 +450,7 @@ export const appRootNotificationMock = createAppRootNotificationMock({
 ```typescript
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppRootNotificationBase } from '../../entities/appRootNotificationBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';
@@ -744,7 +744,7 @@ import VTimeline from '../components/VTimeline.vue';
 import type { TimelineData } from '../types/timelineData';
 import { AppRootNotificationBase } from '../entities/appRootNotificationBase';
 import { AppNotificationBase } from '../entities/appNotificationBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 

@@ -1,7 +1,11 @@
-import { registerSharedServices } from '@/modules/shared/utils/registerSharedServices';
+import { registerSharedServices } from '@packages/shared';
+import { useRuntimeConfig, useI18n } from '#imports';
 
 export function useStorybookSharedServices(): void
 {
     const container = useServicesContainer();
-    registerSharedServices(container);
+    const { t } = useI18n();
+    const config = useRuntimeConfig();
+
+    registerSharedServices(container, t, config.public.locale);
 }

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VButtonIcon from '../components/VButtonIcon.vue';
-import { Icon } from '@/modules/shared/enums/icons.js';
+import { Icon } from '@packages/shared';
 import { fn } from 'storybook/test';
-import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
+import { useStorybookSharedServices } from '@packages/storybook';
 
 const meta: Meta<typeof VButtonIcon> = {
     title: 'UIKit/ButtonIcon',

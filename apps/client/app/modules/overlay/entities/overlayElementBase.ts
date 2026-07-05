@@ -1,4 +1,4 @@
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { DisposeToken } from '@packages/shared';
 import { OverlayElement } from './overlayElement';
 import type { OverlayElementsStore } from './overlayElementsStore';
 

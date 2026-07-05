@@ -1,11 +1,11 @@
 import { dependency } from '@packages/di';
 import { Sidebar } from './sidebar';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { DisposeToken, ObservableWritableBase  } from '@packages/shared';
 import type { SidebarContent } from './sidebarContent';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { SidebarTimeline } from './sidebarTimeline';
 import type { SidebarContentActivator } from './sidebarContentActivator';
-import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
+
 
 @dependency(AppNotificationsStore)
 export class SidebarBase extends Sidebar implements SidebarContentActivator

@@ -27,7 +27,7 @@ export enum NotificationType
 Add `type` field:
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { NotificationType } from './notificationType';
 
 export type AppNotificationData = {
@@ -47,7 +47,7 @@ export type AppNotificationData = {
 Add abstract `type` property:
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { NotificationType } from '../types/notificationType';
 
 export abstract class AppNotification
@@ -75,7 +75,7 @@ import { AppNotification } from './appNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { NotificationType } from '../types/notificationType';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { Color } from '@/modules/uikit/types/color';
 
 export class AppNotificationBase extends AppNotification
@@ -133,7 +133,7 @@ Add `type` to the mock data:
 import { vi } from 'vitest';
 import type { AppNotification } from '../entities/appNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../types/notificationType';
 
 export function createAppNotificationMock(data: AppNotificationData)
@@ -164,7 +164,7 @@ export const appNotificationMock = createAppNotificationMock({
 ```typescript
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationBase } from '../../entities/appNotificationBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';

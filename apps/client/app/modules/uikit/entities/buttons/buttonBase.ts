@@ -1,9 +1,9 @@
 import { Button } from './button';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
+import { DisposeToken, InitializationOnlyException , EntityEvent  } from '@packages/shared';
+import type { AsyncCommand, Action  } from '@packages/shared';
+
+
+
 
 export abstract class ButtonBase extends Button implements Disposable
 {

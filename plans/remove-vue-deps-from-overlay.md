@@ -66,7 +66,7 @@ useOverlayElements (composable)
 
 - Add import for `EntityEvent`:
   ```ts
-  import { EntityEvent } from '@/modules/shared/entities/entityEvent';
+  import { EntityEvent } from '@packages/shared';
   ```
 - Add private field:
   ```ts
@@ -79,11 +79,11 @@ useOverlayElements (composable)
 
 - Add import for `DisposeToken`:
   ```ts
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import { DisposeToken } from '@packages/shared';
   ```
 - Add import for `Action`:
   ```ts
-  import type { Action } from '@/modules/shared/types/action';
+  import type { Action } from '@packages/shared';
   ```
 - Add public method:
   ```ts
@@ -125,8 +125,8 @@ useOverlayElements (composable)
 
 - Add imports:
   ```ts
-  import type { Action } from '@/modules/shared/types/action';
-  import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import type { Action } from '@packages/shared';
+  import type { DisposeToken } from '@packages/shared';
   ```
 - Make the class implement `Disposable`:
   ```ts
@@ -147,7 +147,7 @@ useOverlayElements (composable)
 
 - Add import:
   ```ts
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import { DisposeToken } from '@packages/shared';
   ```
 - Add registration:
   ```ts
@@ -162,18 +162,18 @@ useOverlayElements (composable)
 - Add `customRef` import from `vue`
 - Add import for `DisposeToken`:
   ```ts
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import { DisposeToken } from '@packages/shared';
   ```
 - Add import for `useService`:
   ```ts
-  import { useService } from '@/modules/shared/composables/useService';
+  import { useService } from '@packages/shared';
   ```
 - Rewrite the composable to:
   ```ts
   import { customRef } from 'vue';
-  import { useService } from '@/modules/shared/composables/useService';
+  import { useService } from '@packages/shared';
   import { Overlay } from '../entities/overlay';
-  import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+  import { DisposeToken } from '@packages/shared';
   import type { OverlayElement } from '../entities/overlayElement';
   import type { Ref } from 'vue';
 

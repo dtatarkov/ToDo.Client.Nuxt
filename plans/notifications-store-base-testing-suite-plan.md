@@ -177,12 +177,12 @@ The file will be restructured to:
 ```typescript
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationsStoreBase } from '../../entities/appNotificationsStoreBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
-import { DisposedException } from '@/modules/shared/exceptions/disposedException';
+import { DisposedException } from '@packages/shared';
 import type { AppNotificationData } from '../../types/appNotificationData';
 import type { AppNotification } from '../../entities/appNotification';
-import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
+import { awaitMicrotasks } from '@packages/shared';
 ```
 
 ## Implementation Order

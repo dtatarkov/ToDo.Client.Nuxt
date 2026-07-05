@@ -1,9 +1,9 @@
 import { OverlayElementsStore } from './overlayElementsStore';
 import type { OverlayElement } from './overlayElement';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { EntityEvent, removeFromArray  } from '@packages/shared';
+import type { DisposeToken, Action  } from '@packages/shared';
+
+
 import { OverlayElementExceptionNotFound } from '../exceptions/overlayElementExceptionNotFound';
 import { OverlayElementExceptionAlreadyAdded } from '../exceptions/overlayElementExceptionAlreadyAdded';
 

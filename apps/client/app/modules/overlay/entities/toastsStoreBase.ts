@@ -1,7 +1,7 @@
 import type { ToastsStore } from './toastsStore';
 import type { Toast } from './toast';
-import { isStringEmpty } from '../../shared/utils/isStringEmpty';
 import { OverlayElementsStoreBase } from './overlayElementsStoreBase';
+import { isStringEmpty } from '@packages/shared';
 
 export class ToastsStoreBase extends OverlayElementsStoreBase<Toast> implements ToastsStore
 {

@@ -1,9 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ButtonGeneralBase } from '../../entities/buttons/buttonGeneralBase';
-import { DisposedException } from '@/modules/shared/exceptions/disposedException';
-import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
-import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
-import { delay } from '@/modules/shared/utils/delay';
+import { DisposedException, InitializationOnlyException , AsyncCommandBase , delay  } from '@packages/shared';
+
+
+
 
 describe('ButtonGeneralBase', () =>
 {

@@ -1,5 +1,5 @@
-import type { Icon } from '@/modules/shared/enums/icons';
 import type { Color } from '@/modules/uikit/types/color';
+import type { Icon } from '@packages/shared';
 
 export type NotifierRecord = {
     id?: string;

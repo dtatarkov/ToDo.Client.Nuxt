@@ -1,12 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationsStoreBase } from '../../entities/appNotificationsStoreBase';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon, DisposedException , awaitMicrotasks  } from '@packages/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
-import { DisposedException } from '@/modules/shared/exceptions/disposedException';
+
 import type { AppNotificationData } from '../../types/appNotificationData';
 import type { AppNotification } from '../../entities/appNotification';
-import { awaitMicrotasks } from '@/modules/shared/utils/awaitMicrotasks';
+
 import type { AppRootNotification } from '../../entities/appRootNotification';
 
 class NotificationsStoreBaseTestingSuite

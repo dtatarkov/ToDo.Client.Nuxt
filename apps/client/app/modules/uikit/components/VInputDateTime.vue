@@ -23,9 +23,9 @@
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
-import { postfixNotEmptyString } from '@/modules/shared/utils/postfixNotEmptyString';
-import { setTime } from '@/modules/shared/utils/setTime';
-import { getTime } from '@/modules/shared/utils/getTime';
+import { postfixNotEmptyString, setTime , getTime  } from '@packages/shared';
+
+
 
 defineOptions({
   inheritAttrs: false

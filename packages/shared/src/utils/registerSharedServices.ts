@@ -7,22 +7,23 @@ import { TimeMapperImpl } from "../mappers/timeMapperImpl";
 import { ZonedDateTimeMapperImpl } from "../mappers/zonedDateTimeMapperImpl";
 import { ZonedDateTimeMapper } from "../mappers/zonedDateTimeMapper";
 import { TimeMapper } from "../mappers/timeMapper";
-import { useRuntimeConfig, useI18n } from "#imports";
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { MessagesService } from '@/modules/shared/services/messagesService';
-import { MessagesServiceImpl } from '@/modules/shared/services/messagesServiceImpl';
-import { LoggingService } from '@/modules/shared/services/loggingService';
-import { LoggingServiceImpl } from '@/modules/shared/services/loggingServiceImpl';
+import { DisposeToken } from '../entities/disposeToken';
+import { MessagesService } from '../services/messagesService';
+import { MessagesServiceImpl } from '../services/messagesServiceImpl';
+import { LoggingService } from '../services/loggingService';
+import { LoggingServiceImpl } from '../services/loggingServiceImpl';
+import type { Func } from '../types/func';
 
-export function registerSharedServices(container: ServicesContainer): void
+export function registerSharedServices(
+    container: ServicesContainer,
+    t: Func<string, [key: string, params?: Record<string, string | number>]>,
+    locale: string,
+): void
 {
-    const { t } = useI18n();
-    const config = useRuntimeConfig();
-
     container.bind(DateFormatterConfiguration)
         .toDynamicValue((): DateFormatterConfiguration =>
         ({
-            locale: config.public.locale,
+            locale,
         }))
         .asSingleton();
 

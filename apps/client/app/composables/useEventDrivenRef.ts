@@ -1,9 +1,6 @@
+import { type Func, type Action, DisposeToken, ReadonlyRefValueChangeException } from '@packages/shared';
 import { customRef } from 'vue';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
-import type { Action } from '@/modules/shared/types/action';
 import type { Ref } from 'vue';
-import type { Func } from '@/modules/shared/types/func';
 
 export type UseEventDrivenRefConfiguration<T> = {
     getter: Func<T>,

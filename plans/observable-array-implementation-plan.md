@@ -114,7 +114,7 @@ export interface ObservableArray<T> extends ObservableWritable<T[]>
 ```typescript
 import { ObservableWritableBase } from './observableWritableBase';
 import type { ObservableArray } from './observableArray';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { removeFromArray } from '@packages/shared';
 
 export class ObservableArrayBase<T> extends ObservableWritableBase<T[]> implements ObservableArray<T>
 {

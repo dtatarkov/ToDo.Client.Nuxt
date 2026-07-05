@@ -1,7 +1,7 @@
 import { UIElement } from '../uiElement';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import type { AsyncCommand, DisposeToken , Action  } from '@packages/shared';
+
+
 
 export abstract class Button extends UIElement
 {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { UButton } from '#components';
-import { Icon } from '@/modules/shared/enums/icons';
-import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
+import { Icon, isStringEmpty  } from '@packages/shared';
+
 import { computed } from 'vue';
 
 type VButtonIconProps = {

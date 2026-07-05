@@ -1,17 +1,20 @@
 import { registerFormsServices } from '@/modules/forms/utils/registerFormsServices';
 import { registerOverlayServices } from '@/modules/overlay/utils/registerOverlayServices';
-import { registerSharedServices } from '@/modules/shared/utils/registerSharedServices';
+import { registerSharedServices } from '@packages/shared';
 import { registerTodoServices } from '@/modules/todo/utils/registerTodoServices';
 import { registerUIKitServices } from '@/modules/uikit/utils/registerUIKitServices';
 import { registerSidebarServices } from '@/modules/sidebar/utils/registerSidebarServices';
 import { registerNotificationsServices } from '@/modules/notifications/utils/registerNotificationsServices';
 import { useServicesContainer } from '@/composables/useServicesContainer';
+import { useRuntimeConfig, useI18n } from '#imports';
 
 export function useAppServices()
 {
-    const container = useServicesContainer(true);
+    const container = useServicesContainer();
+    const { t } = useI18n();
+    const config = useRuntimeConfig();
 
-    registerSharedServices(container);
+    registerSharedServices(container, t, config.public.locale);
     registerUIKitServices(container);
     registerFormsServices(container);
     registerOverlayServices(container);

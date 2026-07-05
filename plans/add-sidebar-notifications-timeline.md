@@ -215,7 +215,7 @@ bellActive = 'i-heroicons-bell-solid',
 **File:** `app/modules/uikit/entities/timelineRecord.ts`
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 
 export class TimelineRecord
 {
@@ -295,7 +295,7 @@ export abstract class TimelineBase extends Timeline
 
 ```typescript
 import { TimelineBase } from './timelineBase';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId } from '@packages/shared';
 
 export class NotificationsTimeline extends TimelineBase
 {
@@ -346,7 +346,7 @@ const timelineItems = computed(() =>
 ```vue
 <script setup lang="ts">
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
-import { Icon } from '@/modules/shared/enums/icons';
+import { Icon } from '@packages/shared';
 
 type VToggleIconProps = {
   activeIcon: Icon;
@@ -377,10 +377,10 @@ const isActive = defineModel<boolean>('isActive', { default: false });
 
 ```typescript
 import { UIElement } from '@/modules/uikit/entities/uiElement';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { EntityEvent } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
+import { getUniqueId } from '@packages/shared';
 
 export class SidebarLayer<TContent extends UIElement> extends UIElement
 {
@@ -437,8 +437,8 @@ export class SidebarLayer<TContent extends UIElement> extends UIElement
 ```typescript
 import type { SidebarLayer } from './sidebarLayer';
 import type { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 export type SidebarLayers = {
     notificationsTimeline: SidebarLayer<NotificationsTimeline>;
@@ -468,9 +468,9 @@ import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
 import { SidebarLayer } from './sidebarLayer';
 import { NotificationsTimeline } from '@/modules/uikit/entities/notificationsTimeline';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { EntityEvent } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 
 @dependency(NotificationsTimeline)
 export class SidebarBase extends Sidebar
@@ -527,7 +527,7 @@ export class SidebarBase extends Sidebar
 **File:** `app/modules/notifications/entities/notifierRecord.ts`
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { Color } from '@/modules/uikit/types/color';
 
 export type NotifierRecord = {
@@ -650,9 +650,9 @@ defineProps<Props>();
 <script setup lang="ts">
 import VHeader from '@/modules/uikit/components/VHeader.vue';
 import VToggleIcon from '@/modules/uikit/components/VToggleIcon.vue';
-import { Icon } from '@/modules/shared/enums/icons';
-import { useService } from '@/modules/shared/composables/useService';
-import { useEventDrivenRef } from '@/modules/shared/composables/useEventDrivenRef';
+import { Icon } from '@packages/shared';
+import { useService } from '@packages/shared';
+import { useEventDrivenRef } from '@packages/shared';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 
 const config = useRuntimeConfig();
@@ -681,7 +681,7 @@ const isNotificationsTimelineActive = useEventDrivenRef(
 ```vue
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
+import { useService } from '@packages/shared';
 import { Sidebar } from '../entities/sidebar';
 import type { SidebarLayer } from '../entities/sidebarLayer';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
@@ -719,7 +719,7 @@ sidebar.onLayersChange(updateActiveLayer);
 **File:** `app/modules/sidebar/composables/useSidebarServices.ts`
 
 ```typescript
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { useServiceRegistration } from '@packages/shared';
 import { Sidebar } from '../entities/sidebar';
 import { SidebarBase } from '../entities/sidebarBase';
 
@@ -734,7 +734,7 @@ export function useSidebarServices(): void
 **File:** `app/modules/notifications/composables/useNotificationsServices.ts`
 
 ```typescript
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { useServiceRegistration } from '@packages/shared';
 import { Notifier } from '../entities/notifier';
 import { NotifierBase } from '../entities/notifierBase';
 
@@ -760,7 +760,7 @@ export function useLayoutsServices(): void
 **File:** `app/modules/uikit/composables/useUIKitServices.ts`
 
 ```typescript
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { useServiceRegistration } from '@packages/shared';
 import { ButtonsFactory } from '../factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '../factories/buttonsFactoryImpl';
 import { NotificationsTimeline } from '../entities/notificationsTimeline';

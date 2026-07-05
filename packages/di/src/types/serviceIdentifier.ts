@@ -1,4 +1,4 @@
-import type { Constructor } from '@/modules/shared/types/constructor';
-import type { AbstractConstructor } from '@/modules/shared/types/abstractConstructor';
+import type { Constructor } from '@packages/shared';
+import type { AbstractConstructor } from '@packages/shared';
 
 export type ServiceIdentifier<T> = Constructor<T> | AbstractConstructor<T>;

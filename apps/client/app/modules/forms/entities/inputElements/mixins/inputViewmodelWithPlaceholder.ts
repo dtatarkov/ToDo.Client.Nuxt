@@ -1,4 +1,4 @@
-import type { AbstractConstructor } from '@/modules/shared/types/abstractConstructor';
+import type { AbstractConstructor } from '@packages/shared';
 import type { InputElementBase } from '../inputElementBase';
 
 export function InputViewmodelWithPlaceholder<TBase extends AbstractConstructor<InputElementBase<any>>>(Base: TBase)

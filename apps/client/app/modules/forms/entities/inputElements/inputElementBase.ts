@@ -1,10 +1,6 @@
+import { DisposeToken, EntityEvent, getUniqueId, type Action, updatePropertiesWithData } from '@packages/shared';
 import { InputElement } from './inputElement';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import type { Action } from '@/modules/shared/types/action';
 import type { Color } from '@/modules/uikit/types/color';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {

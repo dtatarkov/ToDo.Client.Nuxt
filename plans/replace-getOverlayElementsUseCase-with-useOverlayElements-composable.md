@@ -43,7 +43,7 @@ New composable that:
 
 ```typescript
 import { computed } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
+import { useService } from '@packages/shared';
 import { Overlay } from '../entities/overlay';
 import type { OverlayElement } from '../entities/overlayElement';
 import type { Ref } from 'vue';
@@ -63,7 +63,7 @@ export function useOverlayElements(): { overlayElements: Ref<OverlayElement[]> }
 
 Replace:
 ```typescript
-import { useService } from '@/modules/shared/composables/useService';
+import { useService } from '@packages/shared';
 import { GetOverlayElementsUseCase } from '../usecases/getOverlayElementsUseCase';
 
 const getOverlayElementsUseCase = useService(GetOverlayElementsUseCase);

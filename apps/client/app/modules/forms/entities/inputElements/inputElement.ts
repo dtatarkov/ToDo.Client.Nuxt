@@ -1,6 +1,5 @@
 import { UIElement } from '@/modules/uikit/entities/uiElement';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action, DisposeToken } from '@packages/shared';
 
 export interface InputElementData<V>
 {

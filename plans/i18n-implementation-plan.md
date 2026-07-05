@@ -346,8 +346,8 @@ export class MessagesServiceImpl extends MessagesService
 In `useSharedServices.ts`, add:
 
 ```ts
-import { MessagesService } from '@/modules/shared/services/messagesService';
-import { MessagesServiceImpl } from '@/modules/shared/services/messagesServiceImpl';
+import { MessagesService } from '@packages/shared';
+import { MessagesServiceImpl } from '@packages/shared';
 import { useI18n } from '#imports';
 
 const { t } = useI18n();
@@ -426,7 +426,7 @@ private assertElementIsNotAdded(element: OverlayElement)
 
 ```ts
 import { dependency } from '@packages/di';
-import { MessagesService } from '@/modules/shared/services/messagesService';
+import { MessagesService } from '@packages/shared';
 
 @dependency(MessagesService)
 export abstract class ToDoStateBase extends ToDoState
@@ -468,7 +468,7 @@ export abstract class ToDoStateBase extends ToDoState
 
 ```ts
 import { dependency } from '@packages/di';
-import { MessagesService } from '@/modules/shared/services/messagesService';
+import { MessagesService } from '@packages/shared';
 
 @dependency(MessagesService)
 export class ToDoStateNew extends ToDoStateBase
@@ -508,8 +508,8 @@ export class ToDoStateNew extends ToDoStateBase
 
 ```vue
 <script setup lang="ts">
-import { useService } from '@/modules/shared/composables/useService';
-import { MessagesService } from '@/modules/shared/services/messagesService';
+import { useService } from '@packages/shared';
+import { MessagesService } from '@packages/shared';
 
 const messagesService = useService(MessagesService);
 

@@ -1,4 +1,4 @@
-import { NotFoundException } from '@/modules/shared/exceptions/notFoundException';
+import { NotFoundException } from '@packages/shared';
 
 export class ToDoNotFoundException extends NotFoundException
 {

@@ -1,4 +1,4 @@
-import type { Constructor } from '@/modules/shared/types/constructor';
+import type { Constructor } from '@packages/shared';
 import type { Dependency } from '../types/dependency';
 
 /**

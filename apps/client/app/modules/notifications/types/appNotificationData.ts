@@ -1,4 +1,4 @@
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { NotificationType } from './notificationType';
 
 export type AppNotificationData = {

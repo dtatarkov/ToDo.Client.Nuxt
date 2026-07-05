@@ -1,6 +1,6 @@
 import type { ToDo } from "./todo";
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action, DisposeToken  } from '@packages/shared';
+
 
 export abstract class ToDosOwner implements Disposable
 {

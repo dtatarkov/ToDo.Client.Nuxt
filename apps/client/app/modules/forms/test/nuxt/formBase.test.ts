@@ -3,11 +3,9 @@ import { FormBase } from '../../entities/formBase';
 import type { FormElement } from '../../entities/formElement';
 import { createFormElementMock } from '../../mocks/formElementMock';
 import { createFormElementsFactoryMock } from '../../mocks/formElementsFactoryMock';
-import type { Func } from '@/modules/shared/types/func';
-import type { Action } from '@/modules/shared/types/action';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { FormValidationError } from '../../entities/formValidationError';
 import { FormElementValidationError } from '../../entities/formElementValidationError';
+import { type Func, type Action, DisposeToken } from '@packages/shared';
 
 function createForm(
     elements: FormElement[],

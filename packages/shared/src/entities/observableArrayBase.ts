@@ -1,6 +1,6 @@
 import { ObservableWritableBase } from './observableWritableBase';
 import type { ObservableArray } from './observableArray';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { removeFromArray } from '../utils/removeFromArray';
 
 export class ObservableArrayBase<T> extends ObservableWritableBase<T[]> implements ObservableArray<T>
 {

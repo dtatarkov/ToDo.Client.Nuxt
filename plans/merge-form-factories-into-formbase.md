@@ -60,7 +60,7 @@ This merges the responsibilities of:
 - `EntitySchemeToFormElementsMapper` (mapping `EntityScheme` fields to `FormElementCreateData`)
 
 ```typescript
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
+import type { EntityScheme } from '@packages/shared';
 import type { FormElement } from "../entities/formElement";
 
 export abstract class FormElementsFactory
@@ -83,8 +83,8 @@ import type { InputElement } from '@/modules/forms/entities/inputElements/inputE
 import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
 import type { FormElementsFactory } from './formElementsFactory';
-import type { EntityScheme } from '@/modules/shared/types/entityScheme';
-import { EntityFieldType } from '@/modules/shared/enums/entityFieldType';
+import type { EntityScheme } from '@packages/shared';
+import { EntityFieldType } from '@packages/shared';
 import type { EntityDateTimeFieldScheme, EntityFieldScheme, EntityStringFieldScheme } from '@/modules/shared/types/entityFieldScheme';
 import { EntityValidatorFactory } from '@/modules/validation/factories/entityValidatorFactory';
 import type { EntityValidator } from '@/modules/validation/entities/entityValidator';

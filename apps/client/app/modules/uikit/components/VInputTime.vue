@@ -15,8 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { TimeMapper } from '@/modules/shared/mappers/timeMapper';
-import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
+import { TimeMapper, OptionalValueMapper  } from '@packages/shared';
 import type { InputTimeData } from '@/modules/uikit/types/inputTimeData';
 
 defineOptions({

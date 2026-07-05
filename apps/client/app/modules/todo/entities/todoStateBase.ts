@@ -1,7 +1,7 @@
 import type { ToDoData } from '../types/todoData';
 import { ToDoState } from './todoState';
 import type { ToDoBase } from './todoBase';
-import type { MessagesService } from '@/modules/shared/services/messagesService';
+import type { MessagesService } from '@packages/shared';
 import { EntityScheme } from '@/modules/entitySchemes/entities/entityScheme';
 
 export abstract class ToDoStateBase extends ToDoState

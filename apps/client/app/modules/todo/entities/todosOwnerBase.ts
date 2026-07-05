@@ -4,9 +4,9 @@ import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
 import { dependency } from '@packages/di';
 import { ToDoFactory } from '../factories/todoFactory';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import { EntityEvent } from '@packages/shared';
+import type { DisposeToken, Action  } from '@packages/shared';
+
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)

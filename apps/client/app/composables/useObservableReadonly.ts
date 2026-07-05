@@ -1,8 +1,6 @@
+import { type ObservableReadonly, DisposeToken, ReadonlyRefValueChangeException } from '@packages/shared';
 import { customRef } from 'vue';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
 import type { Ref } from 'vue';
-import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
 
 export function useObservableReadonly<T>(observable: ObservableReadonly<T>): Ref<T>
 {

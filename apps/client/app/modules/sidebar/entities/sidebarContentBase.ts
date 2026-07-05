@@ -1,8 +1,8 @@
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { DisposeToken, getUniqueId , ObservableWritableBase  } from '@packages/shared';
 import { SidebarContent } from './sidebarContent';
 import type { SidebarContentActivator } from './sidebarContentActivator';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
+
+
 
 export abstract class SidebarContentBase extends SidebarContent
 {

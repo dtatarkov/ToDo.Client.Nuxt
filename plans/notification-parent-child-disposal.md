@@ -199,8 +199,8 @@ Interface:
 
 ```typescript
 import type { OverlayElement } from './overlayElement';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@packages/shared';
+import type { Action } from '@packages/shared';
 
 export interface OverlayElementsStore<T extends OverlayElement>
 {
@@ -218,10 +218,10 @@ Implementation:
 ```typescript
 import type { OverlayElementsStore } from './overlayElementsStore';
 import type { OverlayElement } from './overlayElement';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { EntityEvent } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
+import type { Action } from '@packages/shared';
+import { removeFromArray } from '@packages/shared';
 import { OverlayElementNotFoundException } from '../exceptions/overlayElementNotFoundException';
 import { OverlayElementAlreadyAddedException } from '../exceptions/overlayElementAlreadyAddedException';
 
@@ -324,7 +324,7 @@ Concrete implementation — overrides `add()` and `remove()` for parent-child lo
 ```typescript
 import { NotificationsStore } from './notificationsStore';
 import type { Notification } from './notification';
-import { removeFromArray } from '@/modules/shared/utils/removeFromArray';
+import { removeFromArray } from '@packages/shared';
 
 export class NotificationsStoreBase extends NotificationsStore
 {
@@ -403,8 +403,8 @@ import { h } from 'vue';
 import { Notification } from './notification';
 import type { NotificationConfiguration } from './notificationConfiguration';
 import VNotification from '../components/VNotification.vue';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import { getUniqueId } from '@packages/shared';
+import { DisposeToken } from '@packages/shared';
 import type { NotificationsStore } from './notificationsStore';
 import type { Color } from '@/modules/uikit/types/color';
 import type { NotificationData } from '../types/notificationData';
@@ -503,7 +503,7 @@ Accept store in constructor, modify `close()` to call `store.remove(this)`, remo
 import type { ModalsStore } from './modalsStore';
 
 // Remove: import type { Overlay } from './overlay';
-// Remove: import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
+// Remove: import { InitializationOnlyException } from '@packages/shared';
 
 // Change field:
 private store: ModalsStore;
@@ -544,8 +544,8 @@ import type { OverlayElement } from './overlayElement';
 import type { Modal, ModalConfiguration } from './modal';
 import type { Notification } from './notification';
 import type { NotificationConfiguration } from './notificationConfiguration';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
+import type { Action } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 export abstract class Overlay implements Disposable
@@ -565,7 +565,7 @@ Refactored to use `ModalsStoreBase` and `NotificationsStoreBase`. `OverlayBase` 
 ```typescript
 import { dependency } from '@packages/di';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import { MessagesService } from '@/modules/shared/services/messagesService';
+import { MessagesService } from '@packages/shared';
 import { Overlay } from './overlay';
 import { ModalBase } from './modalBase';
 import { NotificationBase } from './notificationBase';
@@ -575,8 +575,8 @@ import type { OverlayElement } from './overlayElement';
 import type { Modal, ModalConfiguration } from './modal';
 import type { Notification } from './notification';
 import type { NotificationConfiguration } from './notificationConfiguration';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@packages/shared';
+import type { Action } from '@packages/shared';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 @dependency(ButtonsFactory)

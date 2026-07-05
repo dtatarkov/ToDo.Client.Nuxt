@@ -3,16 +3,16 @@ import type { Modal, ModalConfiguration } from "./modal";
 import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import { ModalButtonConfirmConfiguratorBase } from './modalButtonConfirmConfiguratorBase';
 import VModal from '../components/VModal.vue';
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId, isDisposable  } from '@packages/shared';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ModalsStore } from './modalsStore';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-import { isDisposable } from '@/modules/shared/utils/isDisposable';
+
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
-import type { Func } from '@/modules/shared/types/func';
+import type { Func, AsyncCommand , MessagesService  } from '@packages/shared';
 import type { ModalData } from '../types/modalData';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import type { MessagesService } from '@/modules/shared/services/messagesService';
+
+
 import { OverlayElementBase } from './overlayElementBase';
 import type { ModalState } from '../types/modalState';
 

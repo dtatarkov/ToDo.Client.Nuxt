@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import type { CardData } from '../types/cardData';
-import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
+import { isStringEmpty } from '@packages/shared';
 
 defineOptions({
   inheritAttrs: false

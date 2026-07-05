@@ -1,10 +1,10 @@
-import { getUniqueId } from '@/modules/shared/utils/getUniqueId';
+import { getUniqueId } from '@packages/shared';
 import type { ButtonGeneral } from './buttonGeneral';
 import type { Color } from '../../types/color';
 import { ButtonBase } from './buttonBase';
 import VButtonGeneral from '@/modules/uikit/components/VButtonGeneral.vue';
 import { shallowReactive, type VNode } from 'vue';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { AsyncCommand } from '@packages/shared';
 
 export class ButtonGeneralBase extends ButtonBase implements ButtonGeneral
 {

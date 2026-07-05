@@ -1,17 +1,11 @@
 import VForm from "../components/VForm.vue";
 import { Form, type FormConfiguration } from "@/modules/forms/entities/form";
-import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import { FormDisabledException } from "../exceptions/formDisabledException";
 import type { FormElement } from './formElement';
 import type { FormElementsFactory } from '../factories/formElementsFactory';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import { AsyncCommandBase } from '@/modules/shared/entities/asyncCommandBase';
-import type { Func } from '@/modules/shared/types/func';
-import type { Action } from '@/modules/shared/types/action';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import { FormValidationError } from './formValidationError';
 import type { FormElementValidationError } from './formElementValidationError';
+import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@packages/shared';
 
 enum FormBaseState
 {

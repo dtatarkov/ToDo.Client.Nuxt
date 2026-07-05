@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { UFormField } from "#components";
-import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
+import { isStringEmpty } from '@packages/shared';
 
 type Props = {
  name?: string;

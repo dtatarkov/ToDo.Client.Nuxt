@@ -1,6 +1,6 @@
 import type { OverlayElement } from './overlayElement';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken, Action  } from '@packages/shared';
+
 
 export abstract class OverlayElementsStore<T extends OverlayElement = OverlayElement> implements Disposable
 {

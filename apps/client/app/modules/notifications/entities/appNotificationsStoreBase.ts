@@ -4,12 +4,10 @@ import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
 import type { AppRootNotification } from './appRootNotification';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { TimelineBase } from './timelineBase';
 import type { Timeline } from './timeline';
-import { ObservableArrayBase } from '@/modules/shared/entities/observableArrayBase';
-import { ObservableWritableBase } from '@/modules/shared/entities/observableWritableBase';
+import { DisposeToken, ObservableArrayBase, ObservableWritableBase } from '@packages/shared';
 
 @dependency(Overlay)
 export class AppNotificationsStoreBase extends AppNotificationsStore

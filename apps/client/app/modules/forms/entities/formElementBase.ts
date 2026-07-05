@@ -1,10 +1,8 @@
 import type { FormFieldBase } from "./formFieldBase";
 import { FormElement } from "./formElement";
-import { getUniqueId } from "@/modules/shared/utils/getUniqueId";
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { ValidationError } from '@/modules/shared/entities/validationError';
 import { FormElementValidationError } from './formElementValidationError';
+import { DisposeToken, getUniqueId, type ValidationError } from '@packages/shared';
 
 export class FormElementBase<V = any> extends FormElement
 {

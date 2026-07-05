@@ -18,7 +18,7 @@ abstract setCommand(command: AsyncCommand): void;
 
 **New import needed:**
 ```typescript
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
+import type { AsyncCommand } from '@packages/shared';
 ```
 
 ---
@@ -59,9 +59,9 @@ protected handleClick(): void
 
 **New imports needed:**
 ```typescript
-import { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { AsyncCommand } from '@/modules/shared/entities/asyncCommand';
-import { InitializationOnlyException } from '@/modules/shared/exceptions/initializationOnlyException';
+import { DisposeToken } from '@packages/shared';
+import type { AsyncCommand } from '@packages/shared';
+import { InitializationOnlyException } from '@packages/shared';
 ```
 
 ---

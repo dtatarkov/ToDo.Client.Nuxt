@@ -1,8 +1,8 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
 import VToDoCard from '../components/VToDoCard.vue';
 import { fn } from 'storybook/test';
 import type { ToDoCardData } from '../types/todoCardData';
+import { useStorybookSharedServices } from '@packages/storybook';
 
 type ToDoCardViewmodelStoryArgs = Partial<ToDoCardData>;
 

@@ -1,4 +1,4 @@
-import type { ValidationError } from '@/modules/shared/entities/validationError';
+import type { ValidationError } from '@packages/shared';
 import type { FormElementType } from '../enums/formElementType';
 
 export type FormElementGenericCreateData<

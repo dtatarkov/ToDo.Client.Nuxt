@@ -13,6 +13,7 @@ export default defineConfig({
       '@packages/ssr': path.resolve(__dirname, '../../packages/ssr'),
       '@packages/di': path.resolve(__dirname, '../../packages/di'),
       '@packages/storybook': path.resolve(__dirname, '../../packages/storybook/src'),
+      '@packages/shared': path.resolve(__dirname, '../../packages/shared/src'),
     },
   },
 });

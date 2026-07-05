@@ -11,7 +11,7 @@ Create new `NotificationData`, `Notification`, `NotificationBase`, `Notification
 **New file:** [`app/modules/notifications/types/notificationData.ts`](app/modules/notifications/types/notificationData.ts)
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 
 export type NotificationData = {
     date: Date;
@@ -30,7 +30,7 @@ export type NotificationData = {
 `Notification` directly exposes all fields from `NotificationData` as properties (no `data` wrapper), and has `showToast` which calls `overlay.createNotification()` with `color: 'error'`.
 
 ```typescript
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 
 export abstract class Notification
@@ -50,7 +50,7 @@ export abstract class Notification
 import type { Notification } from './notification';
 import type { NotificationData } from '../types/notificationData';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
-import type { Icon } from '@/modules/shared/enums/icons';
+import type { Icon } from '@packages/shared';
 
 export class NotificationBase extends Notification
 {
@@ -93,8 +93,8 @@ export class NotificationBase extends Notification
 ```typescript
 import type { NotificationData } from '../types/notificationData';
 import type { Notification } from './notification';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import type { DisposeToken } from '@packages/shared';
+import type { Action } from '@packages/shared';
 
 export abstract class NotificationsStore implements Disposable
 {
@@ -113,9 +113,9 @@ import { NotificationsStore } from './notificationsStore';
 import { NotificationBase } from './notificationBase';
 import type { NotificationData } from '../types/notificationData';
 import type { Notification } from './notification';
-import { EntityEvent } from '@/modules/shared/entities/entityEvent';
-import type { DisposeToken } from '@/modules/shared/entities/disposeToken';
-import type { Action } from '@/modules/shared/types/action';
+import { EntityEvent } from '@packages/shared';
+import type { DisposeToken } from '@packages/shared';
+import type { Action } from '@packages/shared';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 
 @dependency(Overlay)
@@ -162,7 +162,7 @@ export class NotificationsStoreBase extends NotificationsStore
 Replace `Notifier` registration with `NotificationsStore` registration:
 
 ```typescript
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
+import { useServiceRegistration } from '@packages/shared';
 import { NotificationsStore } from '../entities/notificationsStore';
 import { NotificationsStoreBase } from '../entities/notificationsStoreBase';
 

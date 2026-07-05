@@ -230,8 +230,8 @@ Also rename `destroy()` method to `[Symbol.dispose]()` on `ServicesScopeImpl` an
 
 | Line(s) | Current | Replace With |
 |---------|---------|--------------|
-| 7 | `import { Destroyable } from '@/modules/shared/interfaces/destroyable';` | Remove import |
-| 8 | `import { DestroyToken } from '@/modules/shared/entities/destroyToken';` | `import { DisposeToken } from '@/modules/shared/entities/disposeToken';` |
+| 7 | `import { Destroyable } from '@packages/shared';` | Remove import |
+| 8 | `import { DestroyToken } from '@packages/shared';` |
 | 24 | `private destroyToken = new DestroyToken();` | `private disposeToken = new DisposeToken();` |
 | 149 | `this.destroyToken.assertNotDestroyed();` | `this.disposeToken.assertNotDisposed();` |
 | 155 | `this.destroyToken.assertNotDestroyed();` | `this.disposeToken.assertNotDisposed();` |
@@ -249,7 +249,7 @@ Also rename `destroy()` method to `[Symbol.dispose]()` on `ServicesScopeImpl` an
 
 | Line(s) | Current | Replace With |
 |---------|---------|--------------|
-| 2 | `import type { Destroyable } from '@/modules/shared/interfaces/destroyable';` | Remove import |
+| 2 | `import type { Destroyable } from '@packages/shared';` | Remove import |
 | 16 | `extends UIElement implements Destroyable` | `extends UIElement implements Disposable` |
 | 29 | `abstract destroy(): void;` | `abstract [Symbol.dispose](): void;` |
 
