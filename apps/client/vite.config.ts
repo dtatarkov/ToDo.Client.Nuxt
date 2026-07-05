@@ -11,6 +11,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'app'),
       '@@': path.resolve(__dirname, ''),
       '@packages/ssr': path.resolve(__dirname, '../../packages/ssr'),
+      '@packages/di': path.resolve(__dirname, '../../packages/di'),
     },
   },
 });

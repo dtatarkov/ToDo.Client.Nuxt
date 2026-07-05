@@ -78,7 +78,7 @@ Full implementation:
 ```typescript
 import type { FormElement } from '../entities/formElement';
 import { FormElementType } from '../enums/formElementType';
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';

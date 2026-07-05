@@ -315,7 +315,7 @@ export class SidebarLayerNotificationsTimeline extends SidebarLayerBase<Notifica
 - Replace `new SidebarLayer(notificationsTimeline)` with `new SidebarLayerNotificationsTimeline(notificationsTimeline)`
 
 ```typescript
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
 import { SidebarLayerNotificationsTimeline } from './sidebarLayerNotificationsTimeline';

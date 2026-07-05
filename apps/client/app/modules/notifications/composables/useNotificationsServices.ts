@@ -1,4 +1,3 @@
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { AppNotificationsStore } from '../entities/appNotificationsStore';
 import { AppNotificationsStoreBase } from '../entities/appNotificationsStoreBase';
 

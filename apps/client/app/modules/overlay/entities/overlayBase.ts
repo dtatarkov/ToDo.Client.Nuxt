@@ -1,4 +1,4 @@
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 import { Overlay } from './overlay';

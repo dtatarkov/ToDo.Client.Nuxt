@@ -1,4 +1,3 @@
-import { useService } from '@/modules/shared/composables/useService';
 import { Overlay } from '../entities/overlay';
 
 export function useOverlayElements()

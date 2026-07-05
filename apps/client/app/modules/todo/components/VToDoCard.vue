@@ -4,7 +4,6 @@ import VCard from '@/modules/uikit/components/VCard.vue';
 import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
 import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { Icon } from '@/modules/shared/enums/icons';
-import { useService } from '@/modules/shared/composables/useService';
 import type { ToDoCardData } from '../types/todoCardData';
 import { isStringEmpty } from '@/modules/shared/utils/isStringEmpty';
 import { DateFormatter } from '@/modules/shared/services/dateFormatter';

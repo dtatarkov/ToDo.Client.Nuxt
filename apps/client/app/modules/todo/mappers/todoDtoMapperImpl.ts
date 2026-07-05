@@ -4,8 +4,8 @@ import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
 import type { ToDo } from "../entities/todo";
 import { DateParser } from '@/modules/shared/services/dateParser';
 import { ToDoFactory } from "../factories/todoFactory";
-import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoAddDto } from '../types/toDoAddDto';
+import { dependency } from '@packages/di';
 
 @dependency(DateParser)
 @dependency(ToDoFactory)

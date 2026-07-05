@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { useService } from '@/modules/shared/composables/useService';
 import { ZonedDateTimeMapper } from '@/modules/shared/mappers/zonedDateTimeMapper';
 import { OptionalValueMapper } from '@/modules/shared/mappers/optionalValueMapper';
 import type { InputDateData } from '@/modules/uikit/types/inputDateData';

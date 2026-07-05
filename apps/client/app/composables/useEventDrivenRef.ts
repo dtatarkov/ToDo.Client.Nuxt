@@ -1,5 +1,4 @@
 import { customRef } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { ReadonlyRefValueChangeException } from '@/modules/shared/exceptions/readonlyRefValueChangeException';
 import type { Action } from '@/modules/shared/types/action';

@@ -425,7 +425,7 @@ private assertElementIsNotAdded(element: OverlayElement)
 ### Step 9: Update `todoStateBase.ts`
 
 ```ts
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 
 @dependency(MessagesService)
@@ -467,7 +467,7 @@ export abstract class ToDoStateBase extends ToDoState
 ### Step 10: Update `todoStateNew.ts` and `todoStateSaved.ts`
 
 ```ts
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 
 @dependency(MessagesService)

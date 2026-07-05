@@ -1,8 +1,6 @@
+import type { ServicesScope } from '@packages/di';
 import { getCurrentInstance, onUnmounted } from 'vue';
-import { useNuxtApp } from '#app';
 import type { ComponentInternalInstance } from 'vue';
-import type { ServicesScope } from '../entities/servicesContainer';
-import { useServicesContainer } from './useServicesContainer';
 
 /**
  * Symbol key used to store service scopes map in Nuxt app context.

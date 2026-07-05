@@ -7,7 +7,6 @@ import { ZonedDateTimeMapperImpl } from "../mappers/zonedDateTimeMapperImpl";
 import { ZonedDateTimeMapper } from "../mappers/zonedDateTimeMapper";
 import { TimeMapper } from "../mappers/timeMapper";
 import { useRuntimeConfig, useI18n } from "#imports";
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 import { MessagesServiceImpl } from '@/modules/shared/services/messagesServiceImpl';

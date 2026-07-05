@@ -1,5 +1,4 @@
 import { LoggingService } from '@/modules/shared/services/loggingService';
-import { useService } from '@/modules/shared/composables/useService';
 
 export function useGlobalErrorsHandler()
 {

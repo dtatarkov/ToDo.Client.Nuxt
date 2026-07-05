@@ -23,7 +23,6 @@ import VList from '@/modules/uikit/components/VList.vue';
 import VListToggleText from '@/modules/uikit/components/VListToggleText.vue';
 import VCollapsible from '@/modules/uikit/components/VCollapsible.vue';
 import { MessagesService } from '@/modules/shared/services/messagesService';
-import { useService } from '@/modules/shared/composables/useService';
 
 const messagesService = useService(MessagesService);
 

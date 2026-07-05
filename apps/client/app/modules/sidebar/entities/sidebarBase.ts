@@ -1,4 +1,4 @@
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { Sidebar } from './sidebar';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { SidebarContent } from './sidebarContent';

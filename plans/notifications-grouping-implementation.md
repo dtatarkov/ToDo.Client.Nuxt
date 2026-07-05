@@ -191,7 +191,7 @@ export abstract class AppNotificationsStore implements Disposable
 **File**: `app/modules/notifications/entities/appNotificationsStoreBase.ts`
 
 ```typescript
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { AppNotificationsStore } from './appNotificationsStore';
 import { AppNotificationBase } from './appNotificationBase';
 import { AppRootNotificationBase } from './appRootNotificationBase';

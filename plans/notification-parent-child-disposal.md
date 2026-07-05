@@ -563,7 +563,7 @@ export abstract class Overlay implements Disposable
 Refactored to use `ModalsStoreBase` and `NotificationsStoreBase`. `OverlayBase` creates elements directly and passes the store to their constructors. `removeElement` is removed — elements call `this.store.remove(this)` directly in their `close()`:
 
 ```typescript
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { MessagesService } from '@/modules/shared/services/messagesService';
 import { Overlay } from './overlay';

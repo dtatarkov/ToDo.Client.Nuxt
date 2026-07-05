@@ -463,7 +463,7 @@ export abstract class Sidebar implements Disposable
 - Uses `EntityEvent` (immediate) for `onLayersChange`
 
 ```typescript
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { Sidebar } from './sidebar';
 import type { SidebarLayers } from './sidebar';
 import { SidebarLayer } from './sidebarLayer';
@@ -561,7 +561,7 @@ export abstract class Notifier
 - Calls `notificationsTimeline.addRecord(...)` with date/title/description/icon
 
 ```typescript
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { Notifier } from './notifier';
 import type { NotifierRecord } from './notifierRecord';
 import { Overlay } from '@/modules/overlay/entities/overlay';

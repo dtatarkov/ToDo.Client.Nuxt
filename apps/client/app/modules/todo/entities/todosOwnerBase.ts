@@ -2,7 +2,7 @@ import { ToDosOwner } from "./todosOwner";
 import type { ToDo } from "./todo";
 import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { ToDoFactory } from '../factories/todoFactory';
 import { EntityEvent } from '@/modules/shared/entities/entityEvent';
 import type { DisposeToken } from '@/modules/shared/entities/disposeToken';

@@ -1,4 +1,3 @@
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { Sidebar } from '../entities/sidebar';
 import { SidebarBase } from '../entities/sidebarBase';
 

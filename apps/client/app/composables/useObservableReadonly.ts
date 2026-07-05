@@ -1,5 +1,4 @@
 import { customRef } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
 import { DisposeToken } from '@/modules/shared/entities/disposeToken';
 import type { ObservableReadonly } from '@/modules/shared/entities/observableReadonly';
 import type { Ref } from 'vue';

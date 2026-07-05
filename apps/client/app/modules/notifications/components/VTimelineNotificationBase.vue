@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 import { DateFormatter } from '@/modules/shared/services/dateFormatter';
-import { useService } from '@/modules/shared/composables/useService';
 import type { AppNotification } from '../entities/appNotification';
 
 const dateFormatter = useService(DateFormatter);

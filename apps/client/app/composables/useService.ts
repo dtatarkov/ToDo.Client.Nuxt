@@ -1,5 +1,4 @@
-import type { ServiceIdentifier } from '../types/serviceIdentifier';
-import { useServicesScope } from './useServicesScope';
+import type { ServiceIdentifier } from '@packages/di';
 
 export function useService<T>(identifier: ServiceIdentifier<T>): T
 {

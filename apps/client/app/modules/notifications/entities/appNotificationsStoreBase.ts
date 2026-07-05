@@ -1,4 +1,4 @@
-import { dependency } from '@/modules/shared/decorators/dependency';
+import { dependency } from '@packages/di';
 import { AppNotificationsStore } from './appNotificationsStore';
 import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';

@@ -1,4 +1,3 @@
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { ButtonsFactory } from '../factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '../factories/buttonsFactoryImpl';
 import { TimelineBase } from '@/modules/notifications/entities/timelineBase';

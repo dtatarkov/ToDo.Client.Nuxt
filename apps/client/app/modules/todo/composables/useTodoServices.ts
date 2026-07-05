@@ -4,7 +4,6 @@ import { ToDoDtoMapperImpl } from "../mappers/todoDtoMapperImpl";
 import { ToDosOwner } from "../entities/todosOwner";
 import { ToDosOwnerBase } from "../entities/todosOwnerBase";
 import { ToDosRepositoryImpl } from "../repositories/todosRepositoryImpl";
-import { useServiceRegistration } from '@/modules/shared/composables/useServiceRegistration';
 import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
 import { ToDoFactory } from '../factories/todoFactory';
 import { useRuntimeConfig } from "#imports";

@@ -1,5 +1,4 @@
 import { computed, reactive } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
 import { ToDosOwner } from '../entities/todosOwner';
 import type { ToDoCardData } from '../types/todoCardData';
 

@@ -1,12 +1,10 @@
-import type { AbstractConstructor } from '../types/abstractConstructor';
-import type { Constructor } from '../types/constructor';
+import type { Constructor } from '@/modules/shared/types/constructor';
+import type { Dependency } from '../types/dependency';
 
 /**
  * Symbol used as the property key for storing dependencies on a class.
  */
 export const dependenciesSymbol = Symbol('dependencies');
-
-type Dependency = Constructor<any> | AbstractConstructor<any>;
 
 /**
  * Decorator that adds a single dependency to a class.

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useService } from '@/modules/shared/composables/useService';
 import { Sidebar } from '../entities/sidebar';
 
 const sidebar = useService(Sidebar);

@@ -12,7 +12,6 @@
 <script setup lang="ts">
 import VToggleIcon from '@/modules/uikit/components/VToggleIcon.vue';
 import { Icon } from '@/modules/shared/enums/icons';
-import { useService } from '@/modules/shared/composables/useService';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 
 const sidebar = useService(Sidebar);

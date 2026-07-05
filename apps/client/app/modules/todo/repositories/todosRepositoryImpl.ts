@@ -1,10 +1,10 @@
 import { ToDosRepository, ToDosRepositoryConfiguration } from "./todosRepository";
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import type { ToDo } from "../entities/todo";
-import { dependency } from '@/modules/shared/decorators/dependency';
 import type { ToDoGetDto } from '../types/toDoGetDto';
 import { updatePropertiesWithData } from '@/modules/shared/utils/updatePropertiesWithData';
 import { ssrPayload } from '@packages/ssr';
+import { dependency } from '@packages/di';
 
 @dependency(ToDoDtoMapper)
 @dependency(ToDosRepositoryConfiguration)
