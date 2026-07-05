@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   alias: {
     '@packages/ssr': path.resolve(__dirname, '../../packages/ssr/index.ts'),
     '@packages/di': path.resolve(__dirname, '../../packages/di/index.ts'),
+    '@packages/storybook': path.resolve(__dirname, '../../packages/storybook/index.ts'),
   },
 
   typescript: {

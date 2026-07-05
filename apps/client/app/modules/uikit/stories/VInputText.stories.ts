@@ -1,13 +1,7 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import { fn } from 'storybook/test';
 import VInputText from '../components/VInputText.vue';
-import { storybookColorSelect } from '../storybook/storybookColorSelect';
-import { inputIdArgType } from '../storybook/inputIdArgType';
-import { inputNameArgType } from '../storybook/inputNameArgType';
-import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
-import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
-import { inputPlaceholderArgType } from '../storybook/inputPlaceholderArgType';
-import { inputHighlightArgType } from '../storybook/inputHighlightArgType';
+import { inputHasAutofocusArgType, inputHighlightArgType, inputIdArgType, inputIsDisabledArgType, inputNameArgType, inputPlaceholderArgType, storybookColorSelect } from '@packages/storybook';
 
 const meta: Meta<typeof VInputText> = {
     title: 'UIKit/InputText',

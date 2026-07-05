@@ -1,5 +1,5 @@
 import type { InputType } from 'storybook/internal/csf';
 
-export const inputPlaceholderArgType: InputType = {
+export const inputIdArgType: InputType = {
     control: 'text',
 };

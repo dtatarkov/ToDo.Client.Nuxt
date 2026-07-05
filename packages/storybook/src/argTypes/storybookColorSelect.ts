@@ -1,5 +1,5 @@
 import type { InputType } from 'storybook/internal/csf';
-import type { Color } from '../types/color';
+import type { Color } from '@/modules/uikit/types/color';
 
 export const storybookColorSelect: InputType = {
     control: 'select',

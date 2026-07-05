@@ -2,7 +2,7 @@ import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import { fn } from 'storybook/test';
 import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
-import { storybookColorSelect } from '../storybook/storybookColorSelect';
+import { storybookColorSelect } from '@packages/storybook';
 
 const meta: Meta<typeof VButtonGeneral> = {
     title: 'UIKit/ButtonGeneral',

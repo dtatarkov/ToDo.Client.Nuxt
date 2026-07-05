@@ -1,12 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInputDate from '../components/VInputDate.vue';
-import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
-import { storybookColorSelect } from '../storybook/storybookColorSelect';
-import { inputIdArgType } from '../storybook/inputIdArgType';
-import { inputNameArgType } from '../storybook/inputNameArgType';
-import { inputHasAutofocusArgType } from '../storybook/inputHasAutofocusArgType';
-import { inputIsDisabledArgType } from '../storybook/inputIsDisabledArgType';
-import { inputHighlightArgType } from '../storybook/inputHighlightArgType';
+import { inputHasAutofocusArgType, inputHighlightArgType, inputIdArgType, inputIsDisabledArgType, inputNameArgType, storybookColorSelect, useStorybookSharedServices } from '@packages/storybook';
 
 type InputDateStoryArgs = {
     value: Date | undefined;

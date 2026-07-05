@@ -1,5 +1,5 @@
 import type { InputType } from 'storybook/internal/csf';
 
-export const inputHighlightArgType: InputType = {
+export const inputIsDisabledArgType: InputType = {
     control: 'boolean',
 };
