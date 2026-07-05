@@ -1,24 +1,12 @@
-import { getSSRProcessor } from '../entities/ssrProcessor';
-
 /**
- * TypeScript 5 method decorator that caches method results via an SSR processor.
+ * Decorator that caches method results using Nuxt's payload system for SSR.
  * 
- * This decorator is abstract and doesn't know about Nuxt/Vue directly.
- * It delegates to a processor function that handles the actual SSR/hydration/client logic.
+ * On the server: executes the method and stores the result in the payload.
+ * During hydration: returns the cached payload value without executing the method.
+ * On the client: executes the method normally.
  * 
- * Behavior:
- * - Calls the processor function with the payloadKey and a function to execute
- * - The processor handles SSR mode, hydration mode, and client mode
- * 
- * @param payloadKey - The payload key under which the result is stored/retrieved.
- * 
- * @example
- * ```typescript
- * class MyService {
- *   @ssrPayload('data')
- *   async getData(): Promise<Data> { ... }
- * }
- * ```
+ * @param payloadKey - Key used to store/retrieve the result in the payload.
+ * @returns Method decorator that enables SSR payload caching.
  */
 export function ssrPayload<This, Args extends any[], Return>(payloadKey: string)
 {
@@ -34,12 +22,40 @@ export function ssrPayload<This, Args extends any[], Return>(payloadKey: string)
 
         return function (this: This, ...args: Args): Return
         {
-            const processor = getSSRProcessor();
+            const nuxt = useNuxtApp();
 
-            const loader = () => originalMethod.apply(this, args);
-            const result = processor(payloadKey, loader);
+            function setPayload(payload: any)
+            {
+                nuxt.payload[payloadKey] = payload;
+            }
 
-            return result as Return;
+            // SSR — execute and cache the result
+            if (import.meta.server)
+            {
+                const result = originalMethod.apply(this, args);
+
+                // Handle both sync and async (Promise) return values
+                if (result instanceof Promise)
+                {
+                    return result.then((promiseResult) =>
+                    {
+                        setPayload(promiseResult);
+                        return promiseResult;
+                    }) as Return;
+                }
+
+                setPayload(result);
+                return result;
+            }
+
+            // Hydration — return cached payload without calling the original method
+            if (nuxt.isHydrating)
+            {
+                return nuxt.payload[payloadKey] as Return;
+            }
+
+            // Client-side navigation — call the method normally
+            return originalMethod.apply(this, args) as Return;
         };
     };
 }
