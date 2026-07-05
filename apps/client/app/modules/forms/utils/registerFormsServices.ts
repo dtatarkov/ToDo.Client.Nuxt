@@ -1,3 +1,4 @@
+import type { ServicesContainer } from '@packages/di';
 import { FormElementsFactoryImpl } from '../factories/formElementsFactoryImpl';
 import { FormFactoryImpl } from '../factories/formFactoryImpl';
 import { InputElementsFactory } from '../factories/inputElementsFactory';
@@ -5,9 +6,9 @@ import { InputElementsFactoryImpl } from '../factories/inputElementsFactoryImpl'
 import { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormFactory } from '../factories/formFactory';
 
-export function useFormsServices(): void
+export function registerFormsServices(container: ServicesContainer): void
 {
-    useServiceRegistration(FormElementsFactory).to(FormElementsFactoryImpl).asTransient();
-    useServiceRegistration(FormFactory).to(FormFactoryImpl).asTransient();
-    useServiceRegistration(InputElementsFactory).to(InputElementsFactoryImpl).asTransient();
+    container.bind(FormElementsFactory).to(FormElementsFactoryImpl).asTransient();
+    container.bind(FormFactory).to(FormFactoryImpl).asTransient();
+    container.bind(InputElementsFactory).to(InputElementsFactoryImpl).asTransient();
 }

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VCard from '../components/VCard.vue';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
 
 const meta: Meta<typeof VCard> = {
     title: 'UIKit/Card',
@@ -13,7 +13,7 @@ const meta: Meta<typeof VCard> = {
 
             setup()
             {
-                useSharedServices();
+                useStorybookSharedServices();
 
                 return { args };
             },

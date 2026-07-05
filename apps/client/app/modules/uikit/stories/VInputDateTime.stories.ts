@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook';
 import VInputDateTime from '../components/VInputDateTime.vue';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
 import { storybookColorSelect } from '../storybook/storybookColorSelect';
 import { inputIdArgType } from '../storybook/inputIdArgType';
 import { inputNameArgType } from '../storybook/inputNameArgType';
@@ -19,7 +19,7 @@ const meta: Meta<typeof VInputDateTime> = {
 
             setup()
             {
-                useSharedServices();
+                useStorybookSharedServices();
 
                 return { args };
             },

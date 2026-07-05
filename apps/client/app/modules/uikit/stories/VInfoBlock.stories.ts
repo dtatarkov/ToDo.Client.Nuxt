@@ -1,6 +1,6 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInfoBlock from '../components/VInfoBlock.vue';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
 import VInfoRow from '../components/VInfoRow.vue';
 
 type InfoBlockStoryArgs = {
@@ -21,7 +21,7 @@ const meta: Meta<InfoBlockStoryArgs> = {
 
             setup()
             {
-                useSharedServices();
+                useStorybookSharedServices();
 
                 return args;
             },

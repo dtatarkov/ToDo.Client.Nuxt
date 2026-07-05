@@ -1,3 +1,4 @@
+import type { ServicesContainer } from '@packages/di';
 import { ToDosRepository, ToDosRepositoryConfiguration } from "../repositories/todosRepository";
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import { ToDoDtoMapperImpl } from "../mappers/todoDtoMapperImpl";
@@ -8,19 +9,19 @@ import { ToDoFactoryImpl } from '../factories/todoFactoryImpl';
 import { ToDoFactory } from '../factories/todoFactory';
 import { useRuntimeConfig } from "#imports";
 
-export function useTodoServices(): void
+export function registerTodoServices(container: ServicesContainer): void
 {
     const config = useRuntimeConfig();
 
-    useServiceRegistration(ToDosRepositoryConfiguration)
+    container.bind(ToDosRepositoryConfiguration)
         .toDynamicValue((): ToDosRepositoryConfiguration =>
         ({
             apiBaseUrl: config.public.apiBaseUrl,
         }))
         .asSingleton();
 
-    useServiceRegistration(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
-    useServiceRegistration(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
-    useServiceRegistration(ToDosOwner).to(ToDosOwnerBase).asSingleton();
-    useServiceRegistration(ToDoFactory).to(ToDoFactoryImpl).asTransient();
+    container.bind(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
+    container.bind(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
+    container.bind(ToDosOwner).to(ToDosOwnerBase).asSingleton();
+    container.bind(ToDoFactory).to(ToDoFactoryImpl).asTransient();
 }

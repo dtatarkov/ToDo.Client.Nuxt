@@ -1,7 +1,7 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import { fn } from 'storybook/test';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
+import { useStorybookSharedServices } from '@/modules/shared/composables/useStorybookSharedServices.js';
 import { storybookColorSelect } from '../storybook/storybookColorSelect';
 
 const meta: Meta<typeof VButtonGeneral> = {
@@ -31,7 +31,7 @@ const meta: Meta<typeof VButtonGeneral> = {
 
             setup()
             {
-                useSharedServices();
+                useStorybookSharedServices();
 
                 return { args };
             },

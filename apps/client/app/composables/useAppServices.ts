@@ -1,20 +1,21 @@
-import { useFormsServices } from '@/modules/forms/composables/useFormsServices';
-import { useOverlayServices } from '@/modules/overlay/composables/useOverlayServices';
-import { useSharedServices } from '@/modules/shared/composables/useSharedServices';
-import { useTodoServices } from '@/modules/todo/composables/useTodoServices';
-import { useUIKitServices } from '@/modules/uikit/composables/useUIKitServices';
-import { useSidebarServices } from '@/modules/sidebar/composables/useSidebarServices';
-import { useNotificationsServices } from '@/modules/notifications/composables/useNotificationsServices';
+import { registerFormsServices } from '@/modules/forms/utils/registerFormsServices';
+import { registerOverlayServices } from '@/modules/overlay/utils/registerOverlayServices';
+import { registerSharedServices } from '@/modules/shared/utils/registerSharedServices';
+import { registerTodoServices } from '@/modules/todo/utils/registerTodoServices';
+import { registerUIKitServices } from '@/modules/uikit/utils/registerUIKitServices';
+import { registerSidebarServices } from '@/modules/sidebar/utils/registerSidebarServices';
+import { registerNotificationsServices } from '@/modules/notifications/utils/registerNotificationsServices';
+import { useServicesContainer } from '@/composables/useServicesContainer';
 
 export function useAppServices()
 {
-    useServicesContainer(true);
+    const container = useServicesContainer(true);
 
-    useSharedServices();
-    useUIKitServices();
-    useFormsServices();
-    useOverlayServices();
-    useTodoServices();
-    useSidebarServices();
-    useNotificationsServices();
+    registerSharedServices(container);
+    registerUIKitServices(container);
+    registerFormsServices(container);
+    registerOverlayServices(container);
+    registerTodoServices(container);
+    registerSidebarServices(container);
+    registerNotificationsServices(container);
 }

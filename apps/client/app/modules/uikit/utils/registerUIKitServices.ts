@@ -1,10 +1,11 @@
+import type { ServicesContainer } from '@packages/di';
 import { ButtonsFactory } from '../factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '../factories/buttonsFactoryImpl';
 import { TimelineBase } from '@/modules/notifications/entities/timelineBase';
 import { Timeline } from '@/modules/notifications/entities/timeline';
 
-export function useUIKitServices(): void
+export function registerUIKitServices(container: ServicesContainer): void
 {
-    useServiceRegistration(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
-    useServiceRegistration(Timeline).to(TimelineBase).asSingleton();
+    container.bind(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
+    container.bind(Timeline).to(TimelineBase).asSingleton();
 }

@@ -1,3 +1,4 @@
+import type { ServicesContainer } from '@packages/di';
 import { DateParser } from "../services/dateParser";
 import { DateParserImpl } from "../services/dateParserImpl";
 import { DateFormatter, DateFormatterConfiguration } from "../services/dateFormatter";
@@ -13,24 +14,23 @@ import { MessagesServiceImpl } from '@/modules/shared/services/messagesServiceIm
 import { LoggingService } from '@/modules/shared/services/loggingService';
 import { LoggingServiceImpl } from '@/modules/shared/services/loggingServiceImpl';
 
-
-export function useSharedServices(): void
+export function registerSharedServices(container: ServicesContainer): void
 {
     const { t } = useI18n();
     const config = useRuntimeConfig();
 
-    useServiceRegistration(DateFormatterConfiguration)
+    container.bind(DateFormatterConfiguration)
         .toDynamicValue((): DateFormatterConfiguration =>
         ({
             locale: config.public.locale,
         }))
         .asSingleton();
 
-    useServiceRegistration(DisposeToken).to(DisposeToken).asTransient();
-    useServiceRegistration(DateParser).to(DateParserImpl).asTransient();
-    useServiceRegistration(DateFormatter).to(DateFormatterImpl).asTransient();
-    useServiceRegistration(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
-    useServiceRegistration(TimeMapper).to(TimeMapperImpl).asTransient();
-    useServiceRegistration(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
-    useServiceRegistration(LoggingService).to(LoggingServiceImpl).asSingleton();
+    container.bind(DisposeToken).to(DisposeToken).asTransient();
+    container.bind(DateParser).to(DateParserImpl).asTransient();
+    container.bind(DateFormatter).to(DateFormatterImpl).asTransient();
+    container.bind(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
+    container.bind(TimeMapper).to(TimeMapperImpl).asTransient();
+    container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
+    container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
 }
