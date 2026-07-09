@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
 import type { AppNotification } from '../entities/appNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
-import { Icon } from '@packages/shared';
+import { Icon } from '@client/shared';
 import { NotificationType } from '../types/notificationType';
 
 export function createAppNotificationMock(data: AppNotificationData)

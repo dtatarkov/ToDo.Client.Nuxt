@@ -1,4 +1,4 @@
-import { getUniqueId, type ValidationError } from '@packages/shared';
+import { getUniqueId, type ValidationError } from '@client/shared';
 import VFormField from "../components/VFormField.vue";
 import { FormField } from "./formField";
 import type { UIElement } from '@/modules/uikit/entities/uiElement';

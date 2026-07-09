@@ -1,6 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VInfoBlock from '../components/VInfoBlock.vue';
-import { useStorybookSharedServices } from '@packages/storybook';
 import VInfoRow from '../components/VInfoRow.vue';
 
 type InfoBlockStoryArgs = {
@@ -21,7 +20,7 @@ const meta: Meta<InfoBlockStoryArgs> = {
 
             setup()
             {
-                useStorybookSharedServices();
+                useStorybookServices();
 
                 return args;
             },

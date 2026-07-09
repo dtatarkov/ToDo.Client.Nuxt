@@ -1,4 +1,4 @@
-import type { BindingBuilder, ServiceIdentifier } from '@packages/di';
+import type { BindingBuilder, ServiceIdentifier } from '@client/di';
 
 export function useServiceRegistration<T>(
     identifier: ServiceIdentifier<T>

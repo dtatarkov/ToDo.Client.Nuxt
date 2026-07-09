@@ -1,7 +1,7 @@
 import { h } from 'vue';
 import { Timeline } from './timeline';
 import VTimeline from '../components/VTimeline.vue';
-import { DisposeToken, getUniqueId  } from '@packages/shared';
+import { DisposeToken, getUniqueId } from '@client/shared';
 
 import type { AppNotificationsStore } from './appNotificationsStore';
 import type { TimelineData } from '../types/timelineData';

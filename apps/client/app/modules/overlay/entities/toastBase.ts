@@ -2,11 +2,11 @@ import { h } from 'vue';
 import type { Toast } from './toast';
 import type { ToastConfiguration } from './toastConfiguration';
 import VNotification from '../components/VNotification.vue';
-import { getUniqueId } from '@packages/shared';
+import { getUniqueId } from '@client/shared';
 import type { ToastsStore } from './toastsStore';
 import type { Color } from '@/modules/uikit/types/color';
 import type { ToastData } from '../types/toastData';
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 import { OverlayElementBase } from './overlayElementBase';
 
 export class ToastBase extends OverlayElementBase<ToastsStore> implements Toast

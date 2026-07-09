@@ -5,7 +5,7 @@ import type { FormElement } from './formElement';
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from './formValidationError';
 import type { FormElementValidationError } from './formElementValidationError';
-import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@packages/shared';
+import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
 
 enum FormBaseState
 {

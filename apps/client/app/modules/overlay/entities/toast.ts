@@ -1,6 +1,6 @@
 import { OverlayElement } from './overlayElement';
 import type { Color } from '@/modules/uikit/types/color';
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 
 export type ToastData = {
     id: string | undefined;

@@ -1,4 +1,4 @@
-import { getUniqueId, Icon  } from '@packages/shared';
+import { getUniqueId, Icon } from '@client/shared';
 import type { ButtonIcon } from './buttonIcon';
 import { ButtonBase } from './buttonBase';
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';

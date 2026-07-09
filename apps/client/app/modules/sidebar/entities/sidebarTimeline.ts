@@ -2,7 +2,7 @@ import { SidebarContentBase } from './sidebarContentBase';
 import type { SidebarContentActivator } from './sidebarContentActivator';
 import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import type { Timeline } from '@/modules/notifications/entities/timeline';
-import type { ObservableReadonly } from '@packages/shared';
+import type { ObservableReadonly } from '@client/shared';
 
 export class SidebarTimeline extends SidebarContentBase
 {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { UButton } from '#components';
-import { Icon, isStringEmpty  } from '@packages/shared';
+import { Icon, isStringEmpty  } from '@client/shared';
 
 import { computed } from 'vue';
 

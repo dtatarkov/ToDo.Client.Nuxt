@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@packages/di';
+import type { ServicesContainer } from '@client/di';
 import { AppNotificationsStore } from '../entities/appNotificationsStore';
 import { AppNotificationsStoreBase } from '../entities/appNotificationsStoreBase';
 

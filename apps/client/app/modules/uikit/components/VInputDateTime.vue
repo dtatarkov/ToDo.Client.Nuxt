@@ -23,7 +23,7 @@
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
-import { postfixNotEmptyString, setTime , getTime  } from '@packages/shared';
+import { postfixNotEmptyString, setTime , getTime  } from '@client/shared';
 
 
 

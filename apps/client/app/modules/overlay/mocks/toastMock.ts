@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import type { Toast, ToastData } from '../entities/toast';
-import { Icon } from '@packages/shared';
+import { Icon } from '@client/shared';
 
 
 export function createToastMock(data: Partial<ToastData> = {}): Toast

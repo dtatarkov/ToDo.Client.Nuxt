@@ -1,4 +1,4 @@
-import { DisposeToken, getUniqueId , ObservableWritableBase  } from '@packages/shared';
+import { DisposeToken, getUniqueId, ObservableWritableBase } from '@client/shared';
 import { SidebarContent } from './sidebarContent';
 import type { SidebarContentActivator } from './sidebarContentActivator';
 

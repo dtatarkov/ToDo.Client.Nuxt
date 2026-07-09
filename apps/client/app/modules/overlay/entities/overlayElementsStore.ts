@@ -1,5 +1,5 @@
 import type { OverlayElement } from './overlayElement';
-import type { DisposeToken, Action  } from '@packages/shared';
+import type { DisposeToken, Action } from '@client/shared';
 
 
 export abstract class OverlayElementsStore<T extends OverlayElement = OverlayElement> implements Disposable

@@ -1,4 +1,4 @@
-import { type ObservableReadonly, DisposeToken, ReadonlyRefValueChangeException } from '@packages/shared';
+import { type ObservableReadonly, DisposeToken, ReadonlyRefValueChangeException } from '@client/shared';
 import { customRef } from 'vue';
 import type { Ref } from 'vue';
 

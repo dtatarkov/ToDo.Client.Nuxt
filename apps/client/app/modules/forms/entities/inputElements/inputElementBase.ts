@@ -1,4 +1,4 @@
-import { DisposeToken, EntityEvent, getUniqueId, type Action, updatePropertiesWithData } from '@packages/shared';
+import { DisposeToken, EntityEvent, getUniqueId, type Action, updatePropertiesWithData } from '@client/shared';
 import { InputElement } from './inputElement';
 import type { Color } from '@/modules/uikit/types/color';
 

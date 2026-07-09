@@ -3,7 +3,7 @@ import type { AppNotificationData } from '../types/appNotificationData';
 import { NotificationType } from '../types/notificationType';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Color } from '@/modules/uikit/types/color';
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 
 export class AppNotificationBase extends AppNotification
 {

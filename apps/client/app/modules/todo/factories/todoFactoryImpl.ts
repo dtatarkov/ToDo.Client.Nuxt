@@ -4,9 +4,9 @@ import type { ToDo } from '../entities/todo';
 import type { ToDoData } from '../types/todoData';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { FormFactory } from '@/modules/forms/factories/formFactory';
-import { MessagesService } from '@packages/shared';
+import { MessagesService } from '@client/shared';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
-import { dependency } from '@packages/di';
+import { dependency } from '@client/di';
 
 @dependency(Overlay)
 @dependency(FormFactory)

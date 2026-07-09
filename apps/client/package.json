@@ -18,6 +18,12 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@client/di": "workspace:*",
+    "@client/shared": "workspace:*",
+    "@client/storybook": "workspace:*",
+    "@client/ssr": "workspace:*",
+    "@client/datetime": "workspace:*",
+    "@client/eslint": "workspace:*",
     "@internationalized/date": "3.12.1",
     "@nuxt/eslint": "1.15.2",
     "@nuxt/ui": "4.9.0",

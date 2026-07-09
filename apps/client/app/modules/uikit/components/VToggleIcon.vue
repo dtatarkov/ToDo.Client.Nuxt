@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 
 type Props = {
   activeIcon: Icon;

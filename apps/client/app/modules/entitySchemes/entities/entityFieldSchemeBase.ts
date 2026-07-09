@@ -1,6 +1,6 @@
 import type { z } from 'zod';
 import { EntityFieldScheme } from './entityFieldScheme';
-import { ValidationError } from '@packages/shared';
+import { ValidationError } from '@client/shared';
 
 export abstract class EntityFieldSchemeBase<TValue = any> extends EntityFieldScheme<TValue>
 {

@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@packages/di';
+import type { ServicesContainer } from '@client/di';
 import { DateFormatter, DateFormatterConfiguration } from '../services/dateFormatter';
 import { DateFormatterImpl } from '../services/dateFormatterImpl';
 import { DateParserImpl } from '../services/dateParserImpl';

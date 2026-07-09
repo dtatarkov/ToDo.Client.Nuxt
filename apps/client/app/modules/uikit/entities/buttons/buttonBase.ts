@@ -1,6 +1,6 @@
 import { Button } from './button';
-import { DisposeToken, InitializationOnlyException , EntityEvent  } from '@packages/shared';
-import type { AsyncCommand, Action  } from '@packages/shared';
+import { DisposeToken, InitializationOnlyException, EntityEvent } from '@client/shared';
+import type { AsyncCommand, Action } from '@client/shared';
 
 
 

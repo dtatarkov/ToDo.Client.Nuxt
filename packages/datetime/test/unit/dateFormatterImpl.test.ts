@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { DateFormatterImpl } from '../services/dateFormatterImpl';
-import type { DateFormatterConfiguration } from '../services/dateFormatter';
+import { DateFormatterImpl } from '../../src/services/dateFormatterImpl';
+import type { DateFormatterConfiguration } from '../../src/services/dateFormatter';
 
 describe('DateFormatterImpl', () =>
 {

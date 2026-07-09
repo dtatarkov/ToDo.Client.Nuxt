@@ -1,4 +1,4 @@
-import type { ServicesScope } from '@packages/di';
+import type { ServicesScope } from '@client/di';
 import { getCurrentInstance, onUnmounted } from 'vue';
 import type { ComponentInternalInstance } from 'vue';
 

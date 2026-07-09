@@ -15,8 +15,7 @@ export class AsyncCommandBase extends AsyncCommand
 
     constructor(
 
-        // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-        private executeInternal: Func<Promise<boolean | undefined | void>>
+        private executeInternal: Func<Promise<boolean | undefined> | Promise<void>>
     )
     {
         super();
@@ -54,7 +53,7 @@ export class AsyncCommandBase extends AsyncCommand
 
         try
         {
-            const result = await this.executeInternal() ?? true;
+            const result = await (this.executeInternal() as Promise<boolean | undefined>) ?? true;
 
             if (result)
             {

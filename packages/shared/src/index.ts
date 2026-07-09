@@ -76,7 +76,6 @@ export { mapObject } from './utils/mapObject';
 export { mergeDeep } from './utils/mergeDeep';
 export { once } from './utils/once';
 export { postfixNotEmptyString } from './utils/postfixNotEmptyString';
-export { registerSharedServices } from './utils/registerSharedServices';
 export { removeFromArray } from './utils/removeFromArray';
 export { satisfies } from './utils/satisfies';
 export { setTime } from './utils/setTime';

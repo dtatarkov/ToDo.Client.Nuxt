@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@packages/di';
+import type { ServicesContainer } from '@client/di';
 import { ToDosRepository, ToDosRepositoryConfiguration } from "../repositories/todosRepository";
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import { ToDoDtoMapperImpl } from "../mappers/todoDtoMapperImpl";

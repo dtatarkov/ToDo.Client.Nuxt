@@ -1,8 +1,16 @@
 {
-  "name": "@packages/di",
+  "name": "@client/di",
   "type": "module",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "peerDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "@client/shared": "workspace:*"
+  },
+  "scripts": {
+    "test": "echo \"No tests for @client/di\" && exit 0",
+    "lint": "echo \"No lint for @client/di\" && exit 0",
+    "lint:fix": "echo \"No lint:fix for @client/di\" && exit 0",
+    "typecheck": "echo \"No typecheck for @client/di\" && exit 0"
+  }
 }

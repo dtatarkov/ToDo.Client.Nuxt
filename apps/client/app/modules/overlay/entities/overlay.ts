@@ -2,7 +2,7 @@ import type { OverlayElement } from './overlayElement';
 import type { Modal, ModalConfiguration } from './modal';
 import type { Toast } from './toast';
 import type { ToastConfiguration } from './toastConfiguration';
-import type { Action, DisposeToken  } from '@packages/shared';
+import type { Action, DisposeToken } from '@client/shared';
 
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 

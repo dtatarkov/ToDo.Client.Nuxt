@@ -2,7 +2,7 @@ import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
 import type { ToDosOwner } from './todosOwner';
 import { shallowReactive, type Reactive } from 'vue';
-import { isStringEmpty, satisfies , updatePropertiesWithData  } from '@packages/shared';
+import { isStringEmpty, satisfies, updatePropertiesWithData } from '@client/shared';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Modal } from '@/modules/overlay/entities/modal';
@@ -10,7 +10,7 @@ import { ToDoStateNew } from './todoStateNew';
 import { ToDoStateSaved } from './todoStateSaved';
 
 import type { ToDoState } from './todoState';
-import type { StateTransition, MessagesService  } from '@packages/shared';
+import type { StateTransition, MessagesService } from '@client/shared';
 
 import type { Form } from '@/modules/forms/entities/form';
 

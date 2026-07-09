@@ -1,6 +1,6 @@
-import { dependency } from '@packages/di';
+import { dependency } from '@client/di';
 import { Sidebar } from './sidebar';
-import { DisposeToken, ObservableWritableBase  } from '@packages/shared';
+import { DisposeToken, ObservableWritableBase } from '@client/shared';
 import type { SidebarContent } from './sidebarContent';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { SidebarTimeline } from './sidebarTimeline';

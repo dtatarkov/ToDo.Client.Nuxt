@@ -1,4 +1,4 @@
-import { ServicesContainer } from '@packages/di';
+import { ServicesContainer } from '@client/di';
 
 export const containerKey = "$ServicesContainer";
 

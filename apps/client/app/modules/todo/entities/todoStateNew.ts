@@ -5,8 +5,8 @@ import type { Modal } from '@/modules/overlay/entities/modal';
 import type { FormFactory } from '@/modules/forms/factories/formFactory';
 import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Form } from '@/modules/forms/entities/form';
-import type { MessagesService } from '@packages/shared';
-import { Icon } from '@packages/shared';
+import type { MessagesService } from '@client/shared';
+import { Icon } from '@client/shared';
 import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { NotificationType } from '@/modules/notifications/types/notificationType';
 

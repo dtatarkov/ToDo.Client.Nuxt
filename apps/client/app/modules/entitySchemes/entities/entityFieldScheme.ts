@@ -1,5 +1,5 @@
 import type { FormElementCreateData } from '@/modules/forms/types/formElementCreateData';
-import type { ValidationError } from '@packages/shared';
+import type { ValidationError } from '@client/shared';
 
 
 export abstract class EntityFieldScheme<TValue = any>

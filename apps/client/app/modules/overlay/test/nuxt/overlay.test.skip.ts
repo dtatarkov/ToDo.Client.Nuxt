@@ -4,7 +4,7 @@ import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonConfirmConfigurator';
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
-import { messagesServiceMock, awaitMicrotasks , Icon  } from '@packages/shared';
+import { messagesServiceMock, awaitMicrotasks, Icon } from '@client/shared';
 
 
 

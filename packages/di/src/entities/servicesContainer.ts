@@ -1,6 +1,6 @@
 import type { ServiceIdentifier } from "../types/serviceIdentifier";
 import { getDependencies } from "../decorators/dependency";
-import { isDisposable, type Constructor } from '@packages/shared';
+import { isDisposable, type Constructor } from '@client/shared';
 
 enum BindingScope
 {

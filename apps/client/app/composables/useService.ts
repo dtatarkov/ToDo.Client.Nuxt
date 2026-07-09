@@ -1,4 +1,4 @@
-import type { ServiceIdentifier } from '@packages/di';
+import type { ServiceIdentifier } from '@client/di';
 
 export function useService<T>(identifier: ServiceIdentifier<T>): T
 {

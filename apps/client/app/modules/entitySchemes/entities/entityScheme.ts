@@ -3,7 +3,7 @@ import type { EntitySchemeFieldConfigurators } from '../types/entitySchemeFieldC
 import type { EntitySchemeFields } from '../types/entitySchemeFields';
 import { EntitySchemeConfiguratorImpl } from './entitySchemeConfiguratorImpl';
 import type { FormElementsCreateData } from '@/modules/forms/types/formElementsCreateData';
-import { mapObject } from '@packages/shared';
+import { mapObject } from '@client/shared';
 
 export class EntityScheme<TEntity extends Record<string, any>>
 {

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ToastsStoreBase } from '../../entities/toastsStoreBase';
 import { createToastMock, toastMock } from '../../mocks/toastMock';
-import { awaitMicrotasks } from '@packages/shared';
+import { awaitMicrotasks } from '@client/shared';
 
 describe('ToastsStoreBase', () =>
 {

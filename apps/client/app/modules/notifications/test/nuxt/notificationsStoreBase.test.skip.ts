@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AppNotificationsStoreBase } from '../../entities/appNotificationsStoreBase';
-import { Icon, DisposedException , awaitMicrotasks  } from '@packages/shared';
+import { Icon, DisposedException, awaitMicrotasks } from '@client/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 

@@ -1,5 +1,5 @@
 import { UIElement } from '../uiElement';
-import type { AsyncCommand, DisposeToken , Action  } from '@packages/shared';
+import type { AsyncCommand, DisposeToken, Action } from '@client/shared';
 
 
 

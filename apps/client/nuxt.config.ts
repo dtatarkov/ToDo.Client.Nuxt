@@ -1,5 +1,4 @@
 import { defineNuxtConfig } from "nuxt/config";
-import * as path from 'node:path';
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -20,22 +19,6 @@ export default defineNuxtConfig({
       pathPrefix: false,
     },
   ],
-
-  alias: {
-    '@packages/ssr': path.resolve(__dirname, '../../packages/ssr/index.ts'),
-    '@packages/di': path.resolve(__dirname, '../../packages/di/index.ts'),
-    '@packages/storybook': path.resolve(__dirname, '../../packages/storybook/index.ts'),
-    '@packages/shared': path.resolve(__dirname, '../../packages/shared/src/index.ts'),
-    '@packages/datetime': path.resolve(__dirname, '../../packages/datetime/src/index.ts'),
-  },
-
-  typescript: {
-    tsConfig: {
-      include: [
-        "../../.storybook/**/*",
-      ]
-    }
-  },
 
   ui: {
     // @ts-expect-error some typing issue. object configuration with preference key is absolutely valid

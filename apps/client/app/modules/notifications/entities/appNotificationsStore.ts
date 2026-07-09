@@ -1,4 +1,4 @@
-import type { ObservableReadonly } from '@packages/shared';
+import type { ObservableReadonly } from '@client/shared';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from './appNotification';
 import type { AppRootNotification } from './appRootNotification';

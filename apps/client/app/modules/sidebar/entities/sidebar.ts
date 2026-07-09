@@ -1,5 +1,5 @@
 import type { SidebarContent } from './sidebarContent';
-import type { ObservableReadonly } from '@packages/shared';
+import type { ObservableReadonly } from '@client/shared';
 
 export abstract class Sidebar implements Disposable
 {

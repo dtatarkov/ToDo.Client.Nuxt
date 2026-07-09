@@ -1,6 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VGrid from '../components/VGrid.vue';
-import { useStorybookSharedServices } from '@packages/storybook';
 import VCard from '../components/VCard.vue';
 import type { CardData } from '../types/cardData';
 
@@ -19,7 +18,7 @@ const meta: Meta<GridViewmodelStoryArgs> = {
 
             setup()
             {
-                useStorybookSharedServices();
+                useStorybookServices();
 
                 return args;
             },

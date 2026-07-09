@@ -1,4 +1,4 @@
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 import type { NotificationType } from './notificationType';
 
 export type AppNotificationData = {

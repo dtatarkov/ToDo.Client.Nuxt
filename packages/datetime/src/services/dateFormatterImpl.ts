@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { DateFormatter, DateFormatterConfiguration } from './dateFormatter';
-import { dependency } from '@packages/di';
+import { dependency } from '@client/di';
 
 @dependency(DateFormatterConfiguration)
 export class DateFormatterImpl extends DateFormatter

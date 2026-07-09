@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { DateParserImpl } from '../services/dateParserImpl';
+import { DateParserImpl } from '../../src/services/dateParserImpl';
 
 describe('DateParserImpl', () =>
 {

@@ -2,7 +2,7 @@
 import { UButton } from '#components';
 import { computed } from 'vue';
 import type { Color } from '../types/color';
-import { isStringEmpty } from '@packages/shared';
+import { isStringEmpty } from '@client/shared';
 
 type VButtonGeneralProps = {
   title?: string;

@@ -1,4 +1,4 @@
-import { type Func, type Action, DisposeToken, ReadonlyRefValueChangeException } from '@packages/shared';
+import { type Func, type Action, DisposeToken, ReadonlyRefValueChangeException } from '@client/shared';
 import { customRef } from 'vue';
 import type { Ref } from 'vue';
 

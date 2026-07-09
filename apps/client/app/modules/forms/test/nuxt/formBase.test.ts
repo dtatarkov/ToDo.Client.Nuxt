@@ -5,7 +5,7 @@ import { createFormElementMock } from '../../mocks/formElementMock';
 import { createFormElementsFactoryMock } from '../../mocks/formElementsFactoryMock';
 import { FormValidationError } from '../../entities/formValidationError';
 import { FormElementValidationError } from '../../entities/formElementValidationError';
-import { type Func, type Action, DisposeToken } from '@packages/shared';
+import { type Func, type Action, DisposeToken } from '@client/shared';
 
 function createForm(
     elements: FormElement[],

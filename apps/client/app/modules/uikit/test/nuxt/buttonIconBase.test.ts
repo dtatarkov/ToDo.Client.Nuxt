@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ButtonIconBase } from '../../entities/buttons/buttonIconBase';
-import { DisposedException, InitializationOnlyException , AsyncCommandBase , Icon  } from '@packages/shared';
+import { DisposedException, InitializationOnlyException, AsyncCommandBase, Icon } from '@client/shared';
 
 
 

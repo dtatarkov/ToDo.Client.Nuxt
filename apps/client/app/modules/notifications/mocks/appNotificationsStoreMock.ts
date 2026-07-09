@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import type { AppNotificationsStore } from '../entities/appNotificationsStore';
-import { createObservableReadonlyMock } from '@packages/shared';
+import { createObservableReadonlyMock } from '@client/shared';
 
 export const appNotificationsStoreMock = createAppNotificationsStoreMock(false);
 

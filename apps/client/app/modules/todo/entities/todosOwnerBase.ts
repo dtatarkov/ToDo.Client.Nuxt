@@ -2,10 +2,10 @@ import { ToDosOwner } from "./todosOwner";
 import type { ToDo } from "./todo";
 import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
-import { dependency } from '@packages/di';
+import { dependency } from '@client/di';
 import { ToDoFactory } from '../factories/todoFactory';
-import { EntityEvent } from '@packages/shared';
-import type { DisposeToken, Action  } from '@packages/shared';
+import { EntityEvent } from '@client/shared';
+import type { DisposeToken, Action } from '@client/shared';
 
 
 @dependency(ToDosRepository)

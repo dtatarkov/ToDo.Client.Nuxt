@@ -1,4 +1,4 @@
-import type { Icon } from '@packages/shared';
+import type { Icon } from '@client/shared';
 import type { NotificationType } from '../types/notificationType';
 import type { Color } from '@/modules/uikit/types/color';
 

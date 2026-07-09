@@ -1,4 +1,4 @@
-import { dependency } from '@packages/di';
+import { dependency } from '@client/di';
 import { AppNotificationsStore } from './appNotificationsStore';
 import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';
@@ -7,7 +7,7 @@ import type { AppRootNotification } from './appRootNotification';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { TimelineBase } from './timelineBase';
 import type { Timeline } from './timeline';
-import { DisposeToken, ObservableArrayBase, ObservableWritableBase } from '@packages/shared';
+import { DisposeToken, ObservableArrayBase, ObservableWritableBase } from '@client/shared';
 
 @dependency(Overlay)
 export class AppNotificationsStoreBase extends AppNotificationsStore

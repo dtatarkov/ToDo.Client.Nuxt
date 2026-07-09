@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import type { AppRootNotification } from '../entities/appRootNotification';
 import type { AppNotificationData } from '../types/appNotificationData';
 import type { AppNotification } from '../entities/appNotification';
-import { Icon } from '@packages/shared';
+import { Icon } from '@client/shared';
 import { NotificationType } from '../types/notificationType';
 
 export function createAppRootNotificationMock(

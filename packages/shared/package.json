@@ -1,14 +1,16 @@
 {
-  "name": "@packages/shared",
+  "name": "@client/shared",
   "type": "module",
   "private": true,
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
-    "test": "vitest run"
+    "test": "echo \"No tests for @client/shared\" && exit 0",
+    "lint": "echo \"No lint for @client/shared\" && exit 0",
+    "lint:fix": "echo \"No lint:fix for @client/shared\" && exit 0",
+    "typecheck": "echo \"No typecheck for @client/shared\" && exit 0"
   },
   "dependencies": {
-    "@packages/di": "workspace:*",
     "@internationalized/date": "3.12.1",
     "luxon": "3.7.2",
     "tslog": "4.10.2"

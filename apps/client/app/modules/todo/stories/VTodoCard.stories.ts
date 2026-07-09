@@ -2,7 +2,6 @@ import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import VToDoCard from '../components/VToDoCard.vue';
 import { fn } from 'storybook/test';
 import type { ToDoCardData } from '../types/todoCardData';
-import { useStorybookSharedServices } from '@packages/storybook';
 
 type ToDoCardViewmodelStoryArgs = Partial<ToDoCardData>;
 
@@ -21,7 +20,7 @@ const meta: Meta<typeof VToDoCard> = {
 
             setup()
             {
-                useStorybookSharedServices();
+                useStorybookServices();
 
                 return { args };
             },

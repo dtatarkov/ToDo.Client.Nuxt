@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import type { AppNotification } from '../entities/appNotification';
-import { DateFormatter } from '@packages/datetime';
+import { DateFormatter } from '@client/datetime';
 
 const dateFormatter = useService(DateFormatter);
 
