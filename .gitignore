@@ -9,6 +9,10 @@ dist
 # Node dependencies
 node_modules
 
+# TypeScript build info files
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
 # Logs
 logs
 *.log
