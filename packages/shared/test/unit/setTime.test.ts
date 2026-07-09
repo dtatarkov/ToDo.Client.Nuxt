@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { setTime } from '../../utils/setTime';
+import { setTime } from '../../src/utils/setTime';
 
 describe('setTime', () =>
 {

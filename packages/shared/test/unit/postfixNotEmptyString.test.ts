@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { postfixNotEmptyString } from "../../utils/postfixNotEmptyString";
+import { postfixNotEmptyString } from "../../src/utils/postfixNotEmptyString";
 
 describe('postfixNotEmptyString', () =>
 {

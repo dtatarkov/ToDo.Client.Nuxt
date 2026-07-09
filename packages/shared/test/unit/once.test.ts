@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { once } from '../../utils/once';
+import { once } from '../../src/utils/once';
 
 describe('once', () =>
 {

@@ -8,7 +8,7 @@
     "test": "echo \"No tests for @client/shared\" && exit 0",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "echo \"No typecheck for @client/shared\" && exit 0"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@client/eslint": "workspace:*",
@@ -17,6 +17,7 @@
     "tslog": "4.10.2"
   },
   "devDependencies": {
+    "typescript": "5.8.3",
     "vitest": "3.2.4",
     "@types/luxon": "3.7.1"
   }

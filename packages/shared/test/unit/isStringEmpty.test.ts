@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isStringEmpty } from "../../utils/isStringEmpty";
+import { isStringEmpty } from "../../src/utils/isStringEmpty";
 
 describe('isStringEmpty', () =>
 {

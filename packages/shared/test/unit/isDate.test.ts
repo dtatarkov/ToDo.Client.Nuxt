@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isDate } from '../../utils/isDate';
+import { isDate } from '../../src/utils/isDate';
 
 describe('isDate', () =>
 {

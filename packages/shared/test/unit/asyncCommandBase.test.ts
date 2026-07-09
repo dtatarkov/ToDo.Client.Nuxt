@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { AsyncCommandBase } from '../../entities/asyncCommandBase';
-import { DisposedException } from '../../exceptions/disposedException';
-import { delay } from '../../utils/delay';
+import { AsyncCommandBase } from '../../src/entities/asyncCommandBase';
+import { DisposedException } from '../../src/exceptions/disposedException';
+import { delay } from '../../src/utils/delay';
 
 describe('AsyncCommandBase', () =>
 {

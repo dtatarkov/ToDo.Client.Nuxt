@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getTime } from '../../utils/getTime';
+import { getTime } from '../../src/utils/getTime';
 
 describe('getTime', () =>
 {

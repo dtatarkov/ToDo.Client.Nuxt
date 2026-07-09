@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { EntityEvent } from '../../entities/entityEvent';
-import { DisposeToken } from '../../entities/disposeToken';
-import { awaitMicrotasks } from '../../utils/awaitMicrotasks';
+import { EntityEvent } from '../../src/entities/entityEvent';
+import { DisposeToken } from '../../src/entities/disposeToken';
+import { awaitMicrotasks } from '../../src/utils/awaitMicrotasks';
 
 describe('EntityEvent', () =>
 {

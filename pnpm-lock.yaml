@@ -181,6 +181,9 @@ importers:
       '@types/luxon':
         specifier: 3.7.1
         version: 3.7.1
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/node@25.3.3)(happy-dom@20.8.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0)
@@ -6544,6 +6547,11 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
       typescript: '>=4.8.4 <6.1.0'
+
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
 
   typescript@5.9.3:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
@@ -14786,6 +14794,8 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
+
+  typescript@5.8.3: {}
 
   typescript@5.9.3: {}
 

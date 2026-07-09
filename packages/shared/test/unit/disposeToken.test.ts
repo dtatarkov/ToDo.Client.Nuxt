@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { DisposeToken } from '../../entities/disposeToken';
-import { DisposedException } from '../../exceptions/disposedException';
+import { DisposeToken } from '../../src/entities/disposeToken';
+import { DisposedException } from '../../src/exceptions/disposedException';
 
 describe('DisposeToken', () =>
 {

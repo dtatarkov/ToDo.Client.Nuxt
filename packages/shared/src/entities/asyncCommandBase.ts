@@ -15,7 +15,7 @@ export class AsyncCommandBase extends AsyncCommand
 
     constructor(
 
-        private executeInternal: Func<Promise<boolean | undefined> | Promise<void>>
+        private executeInternal: Func<Promise<boolean | undefined | void>>
     )
     {
         super();
