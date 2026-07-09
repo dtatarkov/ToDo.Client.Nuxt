@@ -6,11 +6,12 @@
   "types": "./src/index.ts",
   "scripts": {
     "test": "echo \"No tests for @client/shared\" && exit 0",
-    "lint": "echo \"No lint for @client/shared\" && exit 0",
-    "lint:fix": "echo \"No lint:fix for @client/shared\" && exit 0",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "echo \"No typecheck for @client/shared\" && exit 0"
   },
   "dependencies": {
+    "@client/eslint": "workspace:*",
     "@internationalized/date": "3.12.1",
     "luxon": "3.7.2",
     "tslog": "4.10.2"

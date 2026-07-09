@@ -165,6 +165,9 @@ importers:
 
   packages/shared:
     dependencies:
+      '@client/eslint':
+        specifier: workspace:*
+        version: link:../eslint
       '@internationalized/date':
         specifier: 3.12.1
         version: 3.12.1
@@ -6963,6 +6966,9 @@ packages:
   vue-component-type-helpers@3.3.6:
     resolution: {integrity: sha512-FkljacAwJ9BUoSUdpFe3VDy0sGigNlTH9+2zcXUWmZOjN8swiCkl3t48wOJun0OsUd2cEIda1l04tsxMiKIIrQ==}
 
+  vue-component-type-helpers@3.3.7:
+    resolution: {integrity: sha512-Skkhw9agYSgsWqv7bxSOGJZa9SaiJbZVGdXuFWnrzKaQYHnw9qbjD630rw6RyMqDbp54nfLCLw5SZA55if7JLg==}
+
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
     engines: {node: '>=12'}
@@ -9718,7 +9724,7 @@ snapshots:
       storybook: 10.2.17(@testing-library/dom@10.4.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       type-fest: 2.19.0
       vue: 3.5.29(typescript@5.9.3)
-      vue-component-type-helpers: 3.3.6
+      vue-component-type-helpers: 3.3.7
 
   '@stylistic/eslint-plugin@5.10.0(eslint@10.3.0(jiti@2.7.0))':
     dependencies:
@@ -15238,6 +15244,8 @@ snapshots:
   vue-component-type-helpers@2.2.12: {}
 
   vue-component-type-helpers@3.3.6: {}
+
+  vue-component-type-helpers@3.3.7: {}
 
   vue-demi@0.14.10(vue@3.5.29(typescript@5.9.3)):
     dependencies:
