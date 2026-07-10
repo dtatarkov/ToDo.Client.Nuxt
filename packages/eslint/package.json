@@ -7,7 +7,6 @@
   "scripts": {
     "test": "echo \"No tests required\"",
     "lint": "echo \"No linting required\"",
-    "lint:fix": "echo \"No linting required\"",
     "typecheck": "echo \"No typechecking required\""
   },
   "dependencies": {

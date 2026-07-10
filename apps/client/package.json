@@ -12,8 +12,6 @@
     "build-storybook": "storybook build",
     "test": "vitest run",
     "typecheck": "nuxt typecheck",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "precommit": "pnpm typecheck && pnpm lint:fix && pnpm test",
     "prepare": "husky"
   },

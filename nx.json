@@ -34,6 +34,14 @@
 
         "build": false
       }
+    },
+
+    {
+      "plugin": "@nx/eslint/plugin",
+      
+      "options": {
+        "targetName": "lint"
+      }
     }
   ],
 

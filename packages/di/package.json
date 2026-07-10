@@ -10,7 +10,6 @@
   "scripts": {
     "test": "echo \"No tests for @client/di\" && exit 0",
     "lint": "echo \"No lint for @client/di\" && exit 0",
-    "lint:fix": "echo \"No lint:fix for @client/di\" && exit 0",
     "typecheck": "echo \"No typecheck for @client/di\" && exit 0"
   }
 }
