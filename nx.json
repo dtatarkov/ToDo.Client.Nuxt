@@ -42,7 +42,7 @@
       "options": {
         "targetName": "lint"
       }
-    },
+    },    
 
     {
       "plugin": "@nx/nuxt/plugin",
@@ -53,6 +53,16 @@
         "serveTargetName": "serve",
         "buildStaticTargetName": "nuxt-build-static",
         "serveStaticTargetName": "nuxt-serve-static"
+      }
+    },
+    
+    {
+      "plugin": "@nx/vitest",
+      "exclude": ["client.nuxt"],
+
+      "options": {        
+        "testTargetName": "test",
+        "testMode": "run"
       }
     }
   ],

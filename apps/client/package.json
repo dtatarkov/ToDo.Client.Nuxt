@@ -6,11 +6,10 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "nuxt preview",
+    "preview": "nuxt preview",    
     "postinstall": "nuxt prepare",
     "storybook": "set NUXT_ALLOW_COLOR_MODE=false && storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "test": "vitest run",
     "typecheck": "nuxt typecheck",
     "precommit": "pnpm typecheck && pnpm lint:fix && pnpm test",
     "prepare": "husky"
@@ -27,7 +26,6 @@
     "@nuxt/ui": "4.9.0",
     "@nuxtjs/i18n": "10.4.0",
     "luxon": "3.7.2",
-    "nuxt": "4.3.1",
     "tailwindcss": "4.2.1",
     "tslog": "4.10.2",
     "vite": "7.3.1",
@@ -37,7 +35,6 @@
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
   "devDependencies": {
-    "@nuxt/test-utils": "3.23.0",
     "@nuxtjs/storybook": "9.0.1",
     "@storybook/addon-a11y": "10.2.17",
     "@storybook/addon-docs": "10.2.17",
