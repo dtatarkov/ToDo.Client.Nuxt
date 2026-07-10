@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ServicesContainer } from '../../entities/servicesContainer';
+import { ServicesContainer } from '../../src/entities/servicesContainer';
 
 // Test interfaces
 abstract class ServiceA { }
