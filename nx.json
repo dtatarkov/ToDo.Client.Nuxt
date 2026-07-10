@@ -42,6 +42,18 @@
       "options": {
         "targetName": "lint"
       }
+    },
+
+    {
+      "plugin": "@nx/nuxt/plugin",
+
+      "options": {
+        "buildTargetName": "build",
+        "testTargetName": "test",
+        "serveTargetName": "serve",
+        "buildStaticTargetName": "nuxt-build-static",
+        "serveStaticTargetName": "nuxt-serve-static"
+      }
     }
   ],
 
