@@ -1,0 +1,30 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  
+  "targetDefaults": {
+    "test": {
+      "cache": true
+    },
+    "typecheck": {
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "lint:fix": {
+      "cache": true
+    }
+  },
+
+  "plugins": [],
+
+  "pluginsConfig": {
+    "@nx/workspace": {
+      "enforceModuleBoundary": {
+        "enabled": false
+      }
+    }
+  },
+
+  "analytics": false
+}
