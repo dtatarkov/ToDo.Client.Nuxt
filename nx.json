@@ -5,18 +5,37 @@
     "test": {
       "cache": true
     },
-    "typecheck": {
-      "cache": true
-    },
+
     "lint": {
       "cache": true
     },
+
     "lint:fix": {
       "cache": true
     }
   },
 
-  "plugins": [],
+  "sync": {
+    "disabledTaskSyncGenerators": ["@nx/js:typescript-sync"]
+  },
+
+  "tui": {
+    "autoExit": true
+  },
+
+  "plugins": [
+    {
+      "plugin": "@nx/js/typescript",
+
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+
+        "build": false
+      }
+    }
+  ],
 
   "pluginsConfig": {
     "@nx/workspace": {
