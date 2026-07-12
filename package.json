@@ -15,7 +15,7 @@
     "test": "nx run-many -t test",
     "typecheck": "nx run-many -t typecheck",
     "lint": "nx run-many -t lint",
-    "precommit": "nx run-many --targets=typecheck,lint:fix,test",
+    "precommit": "nx run-many --targets=typecheck,lint,test",
     "prepare": "pnpm --filter client.nuxt prepare"
   },  
 

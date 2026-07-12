@@ -10,7 +10,7 @@
       "cache": true
     },
 
-    "lint:fix": {
+    "typecheck": {
       "cache": true
     }
   },
