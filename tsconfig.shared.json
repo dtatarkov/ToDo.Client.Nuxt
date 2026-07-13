@@ -5,7 +5,5 @@
     "module": "esnext",
     "skipLibCheck": true,
     "composite": true,
-    "outDir": ".output",
-    "outFile": "output.d.ts"
   },
 }
