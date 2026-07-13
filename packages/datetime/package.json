@@ -5,6 +5,10 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
 
+  "scripts": {
+    "typecheck": "tsc"
+  },
+
   "dependencies": {
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",

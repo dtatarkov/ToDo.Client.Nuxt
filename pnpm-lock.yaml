@@ -18,9 +18,6 @@ importers:
       '@nx/eslint':
         specifier: 23.0.1
         version: 23.0.1(@babel/traverse@7.29.7)(@zkochan/js-yaml@0.0.7)(eslint@9.29.0(jiti@2.7.0))(nx@23.0.1)
-      '@nx/js':
-        specifier: 23.0.1
-        version: 23.0.1(@babel/traverse@7.29.7)(nx@23.0.1)
       '@nx/nuxt':
         specifier: 23.0.1
         version: 23.0.1(2944dc94fc751e84984cb74af99a0b02)

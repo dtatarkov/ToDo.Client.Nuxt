@@ -4,6 +4,6 @@
     "moduleResolution": "bundler",
     "module": "esnext",
     "skipLibCheck": true,
-    "composite": true,
+    "noEmit": true,
   },
 }

@@ -3,7 +3,11 @@
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "peerDependencies": {},
+
+  "scripts": {
+    "typecheck": "tsc"
+  },
+
   "dependencies": {
     "@client/shared": "workspace:*",
     "@client/eslint": "workspace:*"

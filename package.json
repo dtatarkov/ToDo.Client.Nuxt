@@ -26,7 +26,6 @@
 
   "devDependencies": {
     "@nx/eslint": "23.0.1",
-    "@nx/js": "23.0.1",
     "@nx/nuxt": "23.0.1",
     "@nx/vitest": "23.0.1",
     "eslint": "9.29.0",
