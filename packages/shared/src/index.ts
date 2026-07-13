@@ -1,7 +1,3 @@
-// Composables
-// useStorybookSharedServices is in the app, not in the shared package
-// It depends on app-level composables like useServicesContainer
-
 // Constants
 export { secondInMilliseconds, minuteInMilliseconds, hourInMilliseconds, dayInMilliseconds } from './constants/dateConstants';
 
@@ -42,10 +38,6 @@ export { TimeMapper } from './mappers/timeMapper';
 export { TimeMapperImpl } from './mappers/timeMapperImpl';
 export { ZonedDateTimeMapper } from './mappers/zonedDateTimeMapper';
 export { ZonedDateTimeMapperImpl } from './mappers/zonedDateTimeMapperImpl';
-
-// Mocks
-export { messagesServiceMock } from './mocks/messagesServiceMock';
-export { createObservableReadonlyMock } from './mocks/observableReadonlyMock';
 
 export { LoggingService } from './services/loggingService';
 export { LoggingServiceImpl } from './services/loggingServiceImpl';

@@ -268,6 +268,22 @@ declare module "src/mappers/zonedDateTimeMapperImpl" {
         mapReverse(datetime: ZonedDateTime): Date;
     }
 }
+declare module "src/services/loggingService" {
+    export abstract class LoggingService {
+        abstract logError(error: unknown): void;
+    }
+}
+declare module "src/utils/isString" {
+    export function isString(value: unknown): value is string;
+}
+declare module "src/services/loggingServiceImpl" {
+    import { LoggingService } from "src/services/loggingService";
+    export class LoggingServiceImpl extends LoggingService {
+        private logger;
+        logError(error: unknown): void;
+        private createLogger;
+    }
+}
 declare module "src/services/messagesService" {
     export abstract class MessagesService {
         /**
@@ -351,34 +367,6 @@ declare module "src/services/messagesService" {
          * @param params - Optional interpolation parameters
          */
         abstract getMessage(key: string, params?: Record<string, string | number>): string;
-    }
-}
-declare module "src/mocks/messagesServiceMock" {
-    export const messagesServiceMock: {
-        getMessage: import("vitest").Mock<(...args: any[]) => any>;
-    };
-}
-declare module "src/mocks/observableReadonlyMock" {
-    export function createObservableReadonlyMock<T>(value: T): {
-        readonly value: T;
-        on: import("vitest").Mock<(...args: any[]) => any>;
-        [Symbol.dispose]: import("vitest").Mock<(...args: any[]) => any>;
-    };
-}
-declare module "src/services/loggingService" {
-    export abstract class LoggingService {
-        abstract logError(error: unknown): void;
-    }
-}
-declare module "src/utils/isString" {
-    export function isString(value: unknown): value is string;
-}
-declare module "src/services/loggingServiceImpl" {
-    import { LoggingService } from "src/services/loggingService";
-    export class LoggingServiceImpl extends LoggingService {
-        private logger;
-        logError(error: unknown): void;
-        private createLogger;
     }
 }
 declare module "src/services/messagesServiceImpl" {
@@ -499,8 +487,6 @@ declare module "src/index" {
     export { TimeMapperImpl } from "src/mappers/timeMapperImpl";
     export { ZonedDateTimeMapper } from "src/mappers/zonedDateTimeMapper";
     export { ZonedDateTimeMapperImpl } from "src/mappers/zonedDateTimeMapperImpl";
-    export { messagesServiceMock } from "src/mocks/messagesServiceMock";
-    export { createObservableReadonlyMock } from "src/mocks/observableReadonlyMock";
     export { LoggingService } from "src/services/loggingService";
     export { LoggingServiceImpl } from "src/services/loggingServiceImpl";
     export { MessagesService } from "src/services/messagesService";
@@ -530,6 +516,22 @@ declare module "src/index" {
     export { satisfies } from "src/utils/satisfies";
     export { setTime } from "src/utils/setTime";
     export { updatePropertiesWithData } from "src/utils/updatePropertiesWithData";
+}
+declare module "src/mocks/messagesServiceMock" {
+    export const messagesServiceMock: {
+        getMessage: import("vitest").Mock<(...args: any[]) => any>;
+    };
+}
+declare module "src/mocks/observableReadonlyMock" {
+    export function createObservableReadonlyMock<T>(value: T): {
+        readonly value: T;
+        on: import("vitest").Mock<(...args: any[]) => any>;
+        [Symbol.dispose]: import("vitest").Mock<(...args: any[]) => any>;
+    };
+}
+declare module "src/mocks/index" {
+    export { messagesServiceMock } from "src/mocks/messagesServiceMock";
+    export { createObservableReadonlyMock } from "src/mocks/observableReadonlyMock";
 }
 declare module "src/test/unit/asyncCommandBase.test" { }
 declare module "src/test/unit/disposeToken.test" { }

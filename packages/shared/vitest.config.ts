@@ -2,8 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    name: '@client/shared',
-    include: ['test/**/*.{test,spec}.ts'],
+    include: ['test/**/*.test.ts'],
     environment: 'node',
     globals: true,
   },

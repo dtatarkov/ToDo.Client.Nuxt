@@ -5,7 +5,7 @@ import { formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
 import { formMock } from '@/modules/forms/mocks/formMock';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import { modalMock } from '@/modules/overlay/mocks/modalMock';
-import { messagesServiceMock } from '@client/shared';
+import { messagesServiceMock } from '@client/shared/mocks';
 import { appNotificationsStoreMock } from '@/modules/notifications/mocks/appNotificationsStoreMock';
 
 describe('ToDoImpl', () =>

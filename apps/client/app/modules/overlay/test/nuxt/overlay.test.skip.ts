@@ -4,9 +4,8 @@ import { buttonsFactoryMock } from '@/modules/uikit/mocks/buttonsFactoryMock';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 import type { ModalButtonConfirmConfigurator } from '../../entities/modalButtonConfirmConfigurator';
 import { createButtonGeneralMock } from '@/modules/uikit/mocks/buttonGeneralMock';
-import { messagesServiceMock, awaitMicrotasks, Icon } from '@client/shared';
-
-
+import { awaitMicrotasks, Icon } from '@client/shared';
+import { messagesServiceMock } from '@client/shared/mocks';
 
 const testModalTitle = 'Test Modal';
 const testModalDescription = 'Test Description';
