@@ -7,12 +7,14 @@ import { registerNotificationsServices } from '@/modules/notifications/utils/reg
 import { registerDateTimeServices } from '@client/datetime';
 import { useServicesContainer } from '@/composables/useServicesContainer';
 import { useRuntimeConfig } from '#imports';
+import { SSRLoader } from '@client/ssr';
 import { DisposeToken, ZonedDateTimeMapper, ZonedDateTimeMapperImpl, TimeMapper, TimeMapperImpl, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
 
 export function useAppServices()
 {
     const container = useServicesContainer();
     const config = useRuntimeConfig();
+    const ssrLoader = useSSRLoader();
     const { t } = useI18n();
 
     container.bind(DisposeToken).to(DisposeToken).asTransient();
@@ -20,6 +22,7 @@ export function useAppServices()
     container.bind(TimeMapper).to(TimeMapperImpl).asTransient();
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
     container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
+    container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();
 
     registerDateTimeServices(container, config.public.locale);
     registerUIKitServices(container);

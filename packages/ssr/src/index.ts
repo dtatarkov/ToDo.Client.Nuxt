@@ -1,1 +1,1 @@
-export { ssrPayload } from './decorators/ssrPayload';
+export { SSRLoader } from './services/ssrLoader';

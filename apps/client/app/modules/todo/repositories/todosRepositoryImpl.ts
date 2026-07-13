@@ -2,17 +2,19 @@ import { ToDosRepository, ToDosRepositoryConfiguration } from "./todosRepository
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import type { ToDo } from "../entities/todo";
 import type { ToDoGetDto } from '../types/toDoGetDto';
-import { ssrPayload } from '@client/ssr';
+import { SSRLoader } from '@client/ssr';
 import { dependency } from '@client/di';
 import { updatePropertiesWithData } from '@client/shared';
 
 @dependency(ToDoDtoMapper)
 @dependency(ToDosRepositoryConfiguration)
+@dependency(SSRLoader)
 export class ToDosRepositoryImpl extends ToDosRepository
 {
   constructor(
     private todoDtoMapper: ToDoDtoMapper,
     private config: ToDosRepositoryConfiguration,
+    private ssrLoader: SSRLoader,
   )
   {
     super();
@@ -20,7 +22,13 @@ export class ToDosRepositoryImpl extends ToDosRepository
 
   override async getAllToDosAsync(): Promise<ToDo[]>
   {
-    const dtos = await this.fetchToDos();
+    const dtos = await this.ssrLoader.load('todos', () =>
+      $fetch<ToDoGetDto[]>(`${this.config.apiBaseUrl}/todos`, {
+        method: 'GET',
+        credentials: 'include'
+      })
+    );
+
     const todos = dtos.map(dto => this.todoDtoMapper.mapToEntity(dto));
 
     return todos;
@@ -57,14 +65,5 @@ export class ToDosRepositoryImpl extends ToDosRepository
 
     const updatedTodo = this.todoDtoMapper.mapToEntity(dto);
     updatePropertiesWithData(todo, updatedTodo.getData());
-  }
-
-  @ssrPayload('todos')
-  private fetchToDos(): Promise<ToDoGetDto[]>
-  {
-    return $fetch(`${this.config.apiBaseUrl}/todos`, {
-      method: 'GET',
-      credentials: 'include'
-    });
   }
 }
