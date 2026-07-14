@@ -13,10 +13,10 @@
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/eslint": "workspace:*",
-    "luxon": "3.7.2"
+    "luxon": "catalog:"
   },
   
   "devDependencies": {
-    "@types/luxon": "3.7.1"
+    "@types/luxon": "catalog:"
   }
 }

@@ -22,12 +22,12 @@
   
   "dependencies": {
     "@client/eslint": "workspace:*",
-    "@internationalized/date": "3.12.1",
-    "luxon": "3.7.2",
-    "tslog": "4.10.2"
+    "@internationalized/date": "catalog:",
+    "luxon": "catalog:",
+    "tslog": "catalog:"
   },
   
   "devDependencies": {
-    "@types/luxon": "3.7.1"
+    "@types/luxon": "catalog:"
   }
 }

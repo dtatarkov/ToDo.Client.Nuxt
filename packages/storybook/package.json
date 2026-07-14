@@ -2,12 +2,12 @@
   "name": "@client/storybook",
   "type": "module",
   "main": "./src/index.ts",
-  "types": "./src/index.ts",  
+  "types": "./src/index.ts",
   "dependencies": {
     "@client/shared": "workspace:*"
   },
   "peerDependencies": {
-    "@nuxtjs/storybook": "^9.0.0",
-    "storybook": "^10.0.0"
+    "@nuxtjs/storybook": "catalog:",
+    "storybook": "catalog:"
   }
 }

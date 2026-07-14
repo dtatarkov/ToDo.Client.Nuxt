@@ -18,19 +18,18 @@
     "precommit": "nx run-many --targets=typecheck,lint,test",
     "prepare": "pnpm --filter client.nuxt prepare"
   },  
-
   "dependencies": {
-    "nuxt": "4.3.1",
-    "@nuxt/test-utils": "3.23.0"
+    "nuxt": "catalog:",
+    "@nuxt/test-utils": "catalog:"
   },
 
   "devDependencies": {
-    "@nx/eslint": "23.0.1",
-    "@nx/nuxt": "23.0.1",
-    "@nx/vitest": "23.0.1",
-    "eslint": "9.29.0",
-    "nx": "23.0.1",
-    "typescript": "5.9.3",
-    "vitest": "3.2.4"
+    "@nx/eslint": "catalog:",
+    "@nx/nuxt": "catalog:",
+    "@nx/vitest": "catalog:",
+    "eslint": "catalog:",
+    "nx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }
