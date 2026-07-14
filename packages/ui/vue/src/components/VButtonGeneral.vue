@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { UButton } from '#components';
 import { computed } from 'vue';
 import type { Color } from '../types/color';
 import { isStringEmpty } from '@client/shared';

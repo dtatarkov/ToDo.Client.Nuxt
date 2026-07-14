@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import VCard from '../components/VCard.vue';
+import { VCard } from '@client/ui-vue';
 
 const meta: Meta<typeof VCard> = {
     title: 'UIKit/Card',

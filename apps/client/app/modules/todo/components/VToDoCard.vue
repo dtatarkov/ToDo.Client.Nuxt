@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import VButtonIcon from '@/modules/uikit/components/VButtonIcon.vue';
-import VCard from '@/modules/uikit/components/VCard.vue';
-import VInfoBlock from '@/modules/uikit/components/VInfoBlock.vue';
-import VInfoRow from '@/modules/uikit/components/VInfoRow.vue';
 import { Icon, isStringEmpty , MessagesService  } from '@client/shared';
 import type { ToDoCardData } from '../types/todoCardData';
 import { DateFormatter } from '@client/datetime';
+import { VCard, VButtonIcon, VInfoBlock, VInfoRow } from '@client/ui-vue';
 
 const dateFormatter = useService(DateFormatter);
 const messagesService = useService(MessagesService);
@@ -19,8 +16,6 @@ type Emits = {
 
 const props = defineProps<ToDoCardData>();
 const emits = defineEmits<Emits>();
-
-
 
 const formattedCompletionDateActual = computed(() => dateFormatter.formatDateOptional(props.completionDateActual));
 const formattedCompletionDatePlanned = computed(() => dateFormatter.formatDateOptional(props.completionDatePlanned));

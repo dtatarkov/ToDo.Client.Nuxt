@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { isEmptySlot } from '@client/ui-vue';
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
+import { isEmptySlot } from '../utils/isEmptySlot';
 
 const cardUIOptions = {
   root  : 'rounded-sm',

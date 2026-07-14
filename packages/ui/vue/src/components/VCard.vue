@@ -11,7 +11,7 @@
     <template #default>
       <div class="todo-card__description">{{ props.description }}</div>
     </template>    
-
+    
     <template v-if="$slots.footer" #footer>
       <slot name="footer" />
     </template>
@@ -21,6 +21,8 @@
 <script setup lang="ts">
 import type { CardData } from '../types/cardData';
 import { isStringEmpty } from '@client/shared';
+import { isEmptySlot } from '../utils/isEmptySlot';
+import { computed, useSlots } from 'vue';
 
 defineOptions({
   inheritAttrs: false

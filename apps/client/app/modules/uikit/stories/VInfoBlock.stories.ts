@@ -1,6 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import VInfoBlock from '../components/VInfoBlock.vue';
-import VInfoRow from '../components/VInfoRow.vue';
+import { VInfoBlock, VInfoRow } from '@client/ui-vue';
 
 type InfoBlockStoryArgs = {
     rows: Array<{

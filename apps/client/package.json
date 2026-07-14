@@ -15,6 +15,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@client/ui-vue": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/storybook": "workspace:*",

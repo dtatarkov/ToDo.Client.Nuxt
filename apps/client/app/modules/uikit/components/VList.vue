@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts" generic="T">
+import { isEmptySlot } from '@client/ui-vue';
+
 type Props<T> = {
   elements: readonly T[];
 }
