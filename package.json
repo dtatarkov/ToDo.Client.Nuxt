@@ -5,18 +5,18 @@
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
 
   "scripts": {
-    "dev": "nx run client.nuxt:dev",
-    "build": "nx run client.nuxt:build",
-    "generate": "nx run client.nuxt:generate",
-    "preview": "nx run client.nuxt:preview",
-    "postinstall": "nx run-many --target=postinstall --projects=client.nuxt,@client/app-storybook",
+    "dev": "nx run @client/app-nuxt:dev",
+    "build": "nx run @client/app-nuxt:build",
+    "generate": "nx run @client/app-nuxt:generate",
+    "preview": "nx run @client/app-nuxt:preview",
+    "postinstall": "nx run-many --target=postinstall --projects=@client/app-nuxt,@client/app-storybook",
     "storybook": "nx run @client/app-storybook:storybook",
     "build-storybook": "nx run @client/app-storybook:build-storybook",
     "test": "nx run-many -t test",
     "typecheck": "nx run-many -t typecheck",
     "lint": "nx run-many -t lint",
     "precommit": "nx run-many --targets=typecheck,lint,test",
-    "prepare": "pnpm --filter client.nuxt prepare"
+    "prepare": "pnpm --filter @client/app-nuxt prepare"
   },  
   "dependencies": {
     "nuxt": "catalog:",

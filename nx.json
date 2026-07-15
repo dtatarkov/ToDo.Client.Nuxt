@@ -42,7 +42,7 @@
     
     {
       "plugin": "@nx/vitest",
-      "exclude": ["client.nuxt"],
+      "exclude": ["@client/app-nuxt"],
 
       "options": {        
         "testTargetName": "test",

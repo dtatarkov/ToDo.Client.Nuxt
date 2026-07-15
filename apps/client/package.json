@@ -1,5 +1,5 @@
 {
-  "name": "client.nuxt",
+  "name": "@client/app-nuxt",
   "type": "module",
   "private": true,
   "scripts": {
