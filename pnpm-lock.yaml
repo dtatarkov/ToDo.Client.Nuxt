@@ -22,8 +22,8 @@ catalogs:
       specifier: 4.9.0
       version: 4.9.0
     '@nuxtjs/i18n':
-      specifier: 10.4.0
-      version: 10.4.0
+      specifier: 10.4.1
+      version: 10.4.1
     '@nuxtjs/storybook':
       specifier: 9.0.1
       version: 9.0.1
@@ -156,6 +156,9 @@ importers:
       '@client/eslint':
         specifier: workspace:*
         version: link:../../packages/eslint
+      '@client/infrastructure-i18n':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/i18n
       '@client/infrastructure-nuxt-utils':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-utils
@@ -182,7 +185,7 @@ importers:
         version: 4.9.0(1c4b23a8380c54629c3caacdbe8cf073)
       '@nuxtjs/i18n':
         specifier: 'catalog:'
-        version: 10.4.0(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))
+        version: 10.4.1(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))
       luxon:
         specifier: 'catalog:'
         version: 3.7.2
@@ -264,7 +267,7 @@ importers:
         version: 4.9.0(b62e5df2e9ac564f7c7051e83f9c6ced)
       '@nuxtjs/i18n':
         specifier: 'catalog:'
-        version: 10.4.0(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))
+        version: 10.4.1(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))
       '@nuxtjs/storybook':
         specifier: 'catalog:'
         version: 9.0.1(@types/node@25.3.3)(eslint@10.3.0(jiti@2.7.0))(lightningcss@1.32.0)(magicast@0.5.2)(nuxt@4.3.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@parcel/watcher@2.5.6)(@types/node@25.3.3)(@vue/compiler-sfc@3.5.29)(cac@6.7.14)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(lightningcss@1.32.0)(magicast@0.5.2)(optionator@0.9.4)(rollup@4.59.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue-tsc@3.2.5(typescript@5.9.3))(yaml@2.9.0))(optionator@0.9.4)(rollup@4.59.0)(sass-embedded@1.97.3)(sass@1.97.3)(storybook@10.5.0(@types/react@19.2.14)(react@19.2.4))(terser@5.46.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue-tsc@3.2.5(typescript@5.9.3))(vue@3.5.29(typescript@5.9.3))(yaml@2.9.0)
@@ -333,6 +336,8 @@ importers:
       typescript-eslint:
         specifier: 'catalog:'
         version: 8.62.1(eslint@10.3.0(jiti@2.7.0))(typescript@5.9.3)
+
+  packages/infrastructure/i18n: {}
 
   packages/infrastructure/nuxt-utils:
     dependencies:
@@ -1653,12 +1658,6 @@ packages:
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
 
-  '@napi-rs/wasm-runtime@1.1.5':
-    resolution: {integrity: sha512-AWPoBRJ9tsnVhor4sjO7rkni+7p+2IAEFj6cx06UgP10jkQHqay/36uRV/bFkgrh18D9vb4cr8Q0Pthskgzy+Q==}
-    peerDependencies:
-      '@emnapi/core': ^1.7.1
-      '@emnapi/runtime': ^1.7.1
-
   '@napi-rs/wasm-runtime@1.1.6':
     resolution: {integrity: sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg==}
     peerDependencies:
@@ -1905,8 +1904,8 @@ packages:
   '@nuxtjs/color-mode@4.0.1':
     resolution: {integrity: sha512-eiA7hWXi5zNHaYKyJFCGF6i0wFZtuvR7KDXZ6jiSvwxjCpRFwphrw0MOSmNfArTSSsT1wpW+/2H92cejeVfUlg==}
 
-  '@nuxtjs/i18n@10.4.0':
-    resolution: {integrity: sha512-GK/3YA/CQ2eZTYopHyxYfXYi2svZALvg01VFmUNJt2l3IMk/m+dDRtI+RQtafz0be0Pq+NSgoBb/oZNcfu0CUg==}
+  '@nuxtjs/i18n@10.4.1':
+    resolution: {integrity: sha512-4fQWCNKF8+3s4+5OjBZqD20FkO2UpWhMWg43BO3d9FWlFcUKtb065lj1gPK1VjTm6omvKw+6W3d91i1OpbYrBw==}
     engines: {node: '>=20.11.1'}
 
   '@nuxtjs/storybook@9.0.1':
@@ -9927,11 +9926,11 @@ snapshots:
       '@emnapi/runtime': 1.10.0
       '@tybys/wasm-util': 0.9.0
 
-  '@napi-rs/wasm-runtime@1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
+  '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)':
     dependencies:
       '@emnapi/core': 1.10.0
       '@emnapi/runtime': 1.10.0
-      '@tybys/wasm-util': 0.10.2
+      '@tybys/wasm-util': 0.10.3
     optional: true
 
   '@napi-rs/wasm-runtime@1.1.6(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)':
@@ -11127,7 +11126,7 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
-  '@nuxtjs/i18n@10.4.0(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))':
+  '@nuxtjs/i18n@10.4.1(@vue/compiler-dom@3.5.29)(db0@0.3.4)(eslint@10.3.0(jiti@2.7.0))(ioredis@5.10.0)(magicast@0.5.2)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue@3.5.29(typescript@5.9.3))':
     dependencies:
       '@intlify/core': 11.4.5
       '@intlify/h3': 0.7.4
@@ -11710,7 +11709,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.10.0
       '@emnapi/runtime': 1.10.0
-      '@napi-rs/wasm-runtime': 1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@napi-rs/wasm-runtime': 1.1.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     optional: true
 
   '@oxc-parser/binding-win32-arm64-msvc@0.112.0':
@@ -11915,7 +11914,7 @@ snapshots:
     dependencies:
       '@emnapi/core': 1.10.0
       '@emnapi/runtime': 1.10.0
-      '@napi-rs/wasm-runtime': 1.1.5(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
+      '@napi-rs/wasm-runtime': 1.1.6(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)
     optional: true
 
   '@oxc-transform/binding-win32-arm64-msvc@0.112.0':
