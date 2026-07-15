@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@nuxtjs/storybook';
 
 const config: StorybookConfig = {
   stories: [
-    "../app/modules/*/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"
+    "../app/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"
   ],
 
   addons: [
@@ -12,4 +12,5 @@ const config: StorybookConfig = {
 
   framework: "@storybook-vue/nuxt",
 };
+
 export default config;

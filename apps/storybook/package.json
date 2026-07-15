@@ -1,16 +1,12 @@
 {
-  "name": "client.nuxt",
+  "name": "@client/app-storybook",
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
+    "storybook": "nuxt storybook",
+    "build-storybook": "nuxt build-storybook",
     "typecheck": "nuxt typecheck",
-    "precommit": "pnpm typecheck && pnpm lint:fix && pnpm test",
-    "prepare": "husky"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@client/ui-vue": "workspace:*",
@@ -19,27 +15,19 @@
     "@client/ssr": "workspace:*",
     "@client/datetime": "workspace:*",
     "@client/eslint": "workspace:*",
-    "@internationalized/date": "catalog:",
+    "@nuxtjs/storybook": "catalog:",
+    "storybook": "catalog:",
+    "@storybook/addon-a11y": "catalog:",
+    "@storybook/addon-docs": "catalog:",
     "@nuxt/eslint": "catalog:",
     "@nuxt/ui": "catalog:",
     "@nuxtjs/i18n": "catalog:",
-    "luxon": "catalog:",
-    "tailwindcss": "catalog:",
-    "tslog": "catalog:",
-    "vite": "catalog:",
-    "vue": "catalog:",
-    "vue-router": "catalog:",
-    "zod": "catalog:"
+    "nuxt": "catalog:",
+    "vue": "catalog:"
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
   "devDependencies": {
-    "@types/luxon": "catalog:",
-    "@vue/test-utils": "catalog:",
-    "happy-dom": "catalog:",
-    "husky": "catalog:",
-    "sass-embedded": "catalog:",
     "typescript": "catalog:",
-    "vite-tsconfig-paths": "catalog:",
     "vue-tsc": "catalog:"
   }
 }

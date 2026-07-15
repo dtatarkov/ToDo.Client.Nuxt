@@ -1,7 +1,7 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import { VButtonGeneral } from '@client/ui-vue';
 import { fn } from 'storybook/test';
-import { storybookColorSelect } from '@client/storybook';
+import { storybookColorSelect } from '../argTypes/storybookColorSelect';
 
 
 const meta: Meta<typeof VButtonGeneral> = {
