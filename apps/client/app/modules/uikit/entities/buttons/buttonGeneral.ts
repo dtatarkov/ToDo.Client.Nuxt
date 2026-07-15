@@ -1,4 +1,4 @@
-import type { Color } from '../../types/color';
+import type { Color } from '@client/ui-core';
 import { Button } from './button';
 
 export abstract class ButtonGeneral extends Button

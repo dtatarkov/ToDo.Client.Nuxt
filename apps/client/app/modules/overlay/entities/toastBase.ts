@@ -4,7 +4,7 @@ import type { ToastConfiguration } from './toastConfiguration';
 import VNotification from '../components/VNotification.vue';
 import { getUniqueId } from '@client/shared';
 import type { ToastsStore } from './toastsStore';
-import type { Color } from '@/modules/uikit/types/color';
+import type { Color } from '@client/ui-core';
 import type { ToastData } from '../types/toastData';
 import type { Icon } from '@client/shared';
 import { OverlayElementBase } from './overlayElementBase';

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Color } from '../types/color';
+import type { Color } from '@client/ui-core';
 import { isStringEmpty } from '@client/shared';
 
 type VButtonGeneralProps = {

@@ -1,6 +1,5 @@
 // Types
 export type { CardData } from './types/cardData';
-export type { Color } from './types/color';
 
 // Utils
 export { isEmptySlot } from './utils/isEmptySlot';

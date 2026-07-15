@@ -4,7 +4,7 @@ import { Icon } from '@client/shared';
 import { NotificationType } from '../../types/notificationType';
 import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
 import type { AppNotificationData } from '../../types/appNotificationData';
-import type { Color } from '@/modules/uikit/types/color';
+import type { Color } from '@client/ui-core';
 
 class NotificationBaseTestingSuite
 {

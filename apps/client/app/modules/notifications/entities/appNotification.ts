@@ -1,6 +1,6 @@
 import type { Icon } from '@client/shared';
 import type { NotificationType } from '../types/notificationType';
-import type { Color } from '@/modules/uikit/types/color';
+import type { Color } from '@client/ui-core';
 
 export abstract class AppNotification
 {

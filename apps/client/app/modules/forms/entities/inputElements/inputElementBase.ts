@@ -1,6 +1,6 @@
 import { DisposeToken, EntityEvent, getUniqueId, type Action, updatePropertiesWithData } from '@client/shared';
 import { InputElement } from './inputElement';
-import type { Color } from '@/modules/uikit/types/color';
+import type { Color } from '@client/ui-core';
 
 export abstract class InputElementBase<V> extends InputElement<V>
 {

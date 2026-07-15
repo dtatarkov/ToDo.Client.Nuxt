@@ -1,5 +1,5 @@
 
-import type { Color } from '@/modules/uikit/types/color';
+import type { Color } from '@client/ui-core';
 
 export type InputData<V = unknown> = {
     id?: string;

@@ -162,6 +162,9 @@ importers:
       '@client/ssr':
         specifier: workspace:*
         version: link:../../packages/ssr
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../../packages/ui/core
       '@client/ui-nuxt':
         specifier: workspace:*
         version: link:../../packages/ui/nuxt
@@ -241,6 +244,9 @@ importers:
       '@client/ssr':
         specifier: workspace:*
         version: link:../../packages/ssr
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../../packages/ui/core
       '@client/ui-nuxt':
         specifier: workspace:*
         version: link:../../packages/ui/nuxt
@@ -347,6 +353,12 @@ importers:
         specifier: workspace:*
         version: link:../shared
 
+  packages/ui/core:
+    dependencies:
+      '@client/eslint':
+        specifier: workspace:*
+        version: link:../../eslint
+
   packages/ui/nuxt:
     dependencies:
       '@client/datetime':
@@ -358,6 +370,9 @@ importers:
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../core
       '@nuxt/ui':
         specifier: 'catalog:'
         version: 4.9.0(8810ff551b6a74879c7d13d3e89b1bed)
