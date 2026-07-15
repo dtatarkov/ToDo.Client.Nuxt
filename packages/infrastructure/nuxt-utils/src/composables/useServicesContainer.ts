@@ -1,4 +1,5 @@
 import { ServicesContainer } from '@client/di';
+import { useNuxtApp } from 'nuxt/app';
 
 export const containerKey = "$ServicesContainer";
 

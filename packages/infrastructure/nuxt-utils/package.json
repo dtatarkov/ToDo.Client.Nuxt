@@ -1,0 +1,17 @@
+{
+  "name": "@client/infrastructure-nuxt-utils",
+  "type": "module",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+
+  "scripts": {
+    "typecheck": "tsc"
+  },
+
+  "dependencies": {
+    "nuxt": "catalog:",
+    "@client/di": "workspace:*",
+    "@client/eslint": "workspace:*"
+  }
+}

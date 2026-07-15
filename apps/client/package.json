@@ -15,6 +15,7 @@
   "dependencies": {
     "@client/ui-core": "workspace:*",
     "@client/ui-nuxt": "workspace:*",
+    "@client/infrastructure-nuxt-utils": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/ssr": "workspace:*",

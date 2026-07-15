@@ -1,6 +1,6 @@
 import { registerDateTimeServices } from '@client/datetime';
 import { LoggingService, LoggingServiceImpl } from '@client/shared';
-import { useServicesContainer } from '@/composables/useServicesContainer';
+import { useServicesContainer } from '@client/infrastructure-nuxt-utils';
 
 export function useStorybookServices(): void
 {

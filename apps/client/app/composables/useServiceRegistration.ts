@@ -1,4 +1,5 @@
 import type { BindingBuilder, ServiceIdentifier } from '@client/di';
+import { useServicesContainer } from '@client/infrastructure-nuxt-utils';
 
 export function useServiceRegistration<T>(
     identifier: ServiceIdentifier<T>
