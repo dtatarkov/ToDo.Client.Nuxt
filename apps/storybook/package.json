@@ -9,7 +9,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@client/ui-vue": "workspace:*",
+    "@client/ui-nuxt": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/ssr": "workspace:*",

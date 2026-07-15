@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { VGrid, VCard, type CardData } from '@client/ui-vue';
+import { VGrid, VCard, type CardData } from '@client/ui-nuxt';
 
 type VGridStoryArgs = {
     cards: CardData[];

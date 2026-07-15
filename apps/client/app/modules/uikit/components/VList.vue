@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { isEmptySlot } from '@client/ui-vue';
+import { isEmptySlot } from '@client/ui-nuxt';
 
 type Props<T> = {
   elements: readonly T[];

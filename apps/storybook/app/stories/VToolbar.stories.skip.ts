@@ -1,6 +1,6 @@
 // import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 // import VToolbar from '../components/VToolbar.vue';
-// import { VButtonGeneral } from '@client/ui-vue';
+// import { VButtonGeneral } from '@client/ui-nuxt';
 
 // type ToolbarViewmodelStoryArgs = {
 //     buttons: Array<{

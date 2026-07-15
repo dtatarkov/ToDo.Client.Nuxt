@@ -2,7 +2,7 @@ import { getUniqueId, Icon } from '@client/shared';
 import type { ButtonIcon } from './buttonIcon';
 import { ButtonBase } from './buttonBase';
 import { shallowReactive, type VNode } from 'vue';
-import { VButtonIcon } from '@client/ui-vue';
+import { VButtonIcon } from '@client/ui-nuxt';
 export class ButtonIconBase extends ButtonBase implements ButtonIcon
 {
     private data = shallowReactive({

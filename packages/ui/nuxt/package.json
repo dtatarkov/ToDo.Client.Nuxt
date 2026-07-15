@@ -1,5 +1,5 @@
 {
-  "name": "@client/ui-vue",
+  "name": "@client/ui-nuxt",
   "type": "module",
   "private": true,
   "main": "./src/index.ts",

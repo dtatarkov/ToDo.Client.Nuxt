@@ -162,9 +162,9 @@ importers:
       '@client/ssr':
         specifier: workspace:*
         version: link:../../packages/ssr
-      '@client/ui-vue':
+      '@client/ui-nuxt':
         specifier: workspace:*
-        version: link:../../packages/ui/vue
+        version: link:../../packages/ui/nuxt
       '@internationalized/date':
         specifier: 'catalog:'
         version: 3.12.1
@@ -241,9 +241,9 @@ importers:
       '@client/ssr':
         specifier: workspace:*
         version: link:../../packages/ssr
-      '@client/ui-vue':
+      '@client/ui-nuxt':
         specifier: workspace:*
-        version: link:../../packages/ui/vue
+        version: link:../../packages/ui/nuxt
       '@nuxt/eslint':
         specifier: 'catalog:'
         version: 1.15.2(@typescript-eslint/utils@8.62.1(eslint@10.3.0(jiti@2.7.0))(typescript@5.9.3))(@vue/compiler-sfc@3.5.29)(eslint-import-resolver-node@0.3.10)(eslint@10.3.0(jiti@2.7.0))(magicast@0.5.2)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))
@@ -347,7 +347,7 @@ importers:
         specifier: workspace:*
         version: link:../shared
 
-  packages/ui/vue:
+  packages/ui/nuxt:
     dependencies:
       '@client/datetime':
         specifier: workspace:*

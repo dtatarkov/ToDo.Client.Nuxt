@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { isEmptySlot } from '@client/ui-vue';
+import { isEmptySlot } from '@client/ui-nuxt';
 import { computed } from 'vue';
 
 const cardUIOptions = {

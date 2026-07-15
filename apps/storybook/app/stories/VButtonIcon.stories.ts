@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { VButtonIcon } from '@client/ui-vue';
+import { VButtonIcon } from '@client/ui-nuxt';
 import { Icon } from '@client/shared';
 import { fn } from 'storybook/test';
 
