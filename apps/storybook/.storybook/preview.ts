@@ -1,5 +1,5 @@
 import type { Preview } from '@nuxtjs/storybook';
-import '../app/assets/css/main.css';
+import '@client/ui-vue/css';
 import './preview.css';
 
 const preview: Preview = {

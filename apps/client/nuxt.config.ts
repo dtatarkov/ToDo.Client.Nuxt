@@ -3,7 +3,6 @@ import { defineNuxtConfig } from "nuxt/config";
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  ssr: false,
 
   modules: [
     '@nuxt/test-utils/module',
@@ -12,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
-  css: ['@/assets/css/main.css'],
+  css: ['@client/ui-vue/css'],
 
   components: [
     {
@@ -23,9 +22,10 @@ export default defineNuxtConfig({
 
   ui: {
     // @ts-expect-error some typing issue. object configuration with preference key is absolutely valid
-    colorMode: process.env.NUXT_ALLOW_COLOR_MODE === 'true' ? {
+    colorMode: {
       preference: 'dark'
-    } : false,
+    },
+
     // Only include the components we actually use
     components: {
       include: [
