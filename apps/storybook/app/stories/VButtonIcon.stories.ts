@@ -32,23 +32,7 @@ const meta: Meta<typeof VButtonIcon> = {
         isDisabled: {
             control: 'boolean',
         },
-    },
-
-    render: (args) =>
-    {
-        return {
-            components: { VButtonIcon },
-
-            setup()
-            {
-                useStorybookServices();
-
-                return { args };
-            },
-
-            template: `<VButtonIcon v-bind="args" />`,
-        };
-    },
+    }
 };
 
 export default meta;

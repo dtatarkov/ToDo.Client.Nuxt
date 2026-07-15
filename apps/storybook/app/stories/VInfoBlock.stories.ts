@@ -16,7 +16,6 @@ const meta: Meta<InfoBlockStoryArgs> = {
     {
         return {
             components: { VInfoBlock, VInfoRow },
-
             setup()
             {
                 useStorybookServices();

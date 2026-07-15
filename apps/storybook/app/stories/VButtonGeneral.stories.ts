@@ -22,23 +22,7 @@ const meta: Meta<typeof VButtonGeneral> = {
         isLoading: {
             control: 'boolean',
         },
-    },
-
-    render: (args) =>
-    {
-        return {
-            components: { VButtonGeneral },
-
-            setup()
-            {
-                useStorybookServices();
-
-                return { args };
-            },
-
-            template: `<VButtonGeneral v-bind="args" />`,
-        };
-    },
+    }
 };
 
 export default meta;

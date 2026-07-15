@@ -2,17 +2,14 @@ import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
-  ssr: false,
 
   modules: [
     '@nuxt/test-utils/module',
     '@nuxt/ui',
     '@nuxt/eslint',
-    '@nuxtjs/i18n'
   ],
 
-  css: ['@/assets/css/main.css'],
+  css: ['@client/ui-vue/css'],
 
   components: [
     {
@@ -47,15 +44,8 @@ export default defineNuxtConfig({
         'UBadge',
       ]
     },
-    safelistColors: false
-  },
 
-  i18n: {
-    locales: [
-      { code: 'ru', iso: 'ru-RU', file: 'ru.json' },
-    ],
-    defaultLocale: 'ru',
-    langDir: 'locales',
+    safelistColors: false
   },
 
   runtimeConfig: {

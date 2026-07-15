@@ -3,8 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "storybook": "nuxt storybook",
-    "build-storybook": "nuxt build-storybook",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build",
     "typecheck": "nuxt typecheck",
     "postinstall": "nuxt prepare"
   },

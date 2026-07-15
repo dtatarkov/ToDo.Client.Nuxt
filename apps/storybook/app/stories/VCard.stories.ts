@@ -4,22 +4,6 @@ import { VCard } from '@client/ui-vue';
 const meta: Meta<typeof VCard> = {
     title: 'UIKit/Card',
     component: VCard,
-
-    render: (args) =>
-    {
-        return {
-            components: { VCard },
-
-            setup()
-            {
-                useStorybookServices();
-
-                return { args };
-            },
-
-            template: `<VCard v-bind="args" />`
-        };
-    }
 };
 
 export default meta;

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
 import { VGrid, VCard, type CardData } from '@client/ui-vue';
 
-type GridViewmodelStoryArgs = {
+type VGridStoryArgs = {
     cards: CardData[];
 };
 
-const meta: Meta<GridViewmodelStoryArgs> = {
+const meta: Meta<VGridStoryArgs> = {
     title: 'UIKit/Grid',
     component: VGrid,
 
@@ -13,11 +13,8 @@ const meta: Meta<GridViewmodelStoryArgs> = {
     {
         return {
             components: { VGrid, VCard },
-
             setup()
             {
-                useStorybookServices();
-
                 return args;
             },
 
@@ -29,7 +26,7 @@ const meta: Meta<GridViewmodelStoryArgs> = {
 };
 
 export default meta;
-type Story = StoryObj<GridViewmodelStoryArgs>;
+type Story = StoryObj<VGridStoryArgs>;
 
 export const Default: Story = {
     args: {
