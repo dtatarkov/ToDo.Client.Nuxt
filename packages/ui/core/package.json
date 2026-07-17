@@ -9,7 +9,7 @@
     "typecheck": "tsc"
   },
   
-  "dependencies": {
-    "@client/eslint": "workspace:*"
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

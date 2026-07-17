@@ -11,12 +11,12 @@
 
   "dependencies": {
     "@client/di": "workspace:*",
-    "@client/shared": "workspace:*",
-    "@client/eslint": "workspace:*",
+    "@client/shared": "workspace:*",    
     "luxon": "catalog:"
   },
   
   "devDependencies": {
-    "@types/luxon": "catalog:"
+    "@types/luxon": "catalog:",
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

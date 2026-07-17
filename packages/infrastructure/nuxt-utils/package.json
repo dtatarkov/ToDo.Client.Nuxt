@@ -11,7 +11,10 @@
 
   "dependencies": {
     "nuxt": "catalog:",
-    "@client/di": "workspace:*",
-    "@client/eslint": "workspace:*"
+    "@client/di": "workspace:*"    
+  },
+
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

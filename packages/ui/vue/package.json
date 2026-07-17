@@ -17,11 +17,14 @@
   },
   "dependencies": {
     "@client/ui-core": "workspace:*",
-    "@client/shared": "workspace:*",
-    "@client/eslint": "workspace:*",
+    "@client/shared": "workspace:*",    
     "@client/datetime": "workspace:*",
     "vue": "catalog:",
     "@nuxt/ui": "catalog:",
     "tailwindcss": "catalog:"
+  },
+
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

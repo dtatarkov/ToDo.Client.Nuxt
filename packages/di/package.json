@@ -9,7 +9,10 @@
   },
 
   "dependencies": {
-    "@client/shared": "workspace:*",
-    "@client/eslint": "workspace:*"
+    "@client/shared": "workspace:*"
+  },
+  
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

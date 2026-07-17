@@ -1,4 +1,4 @@
-import { configs } from '@client/eslint';
+import { configs } from '@client/infrastructure-eslint';
 import withNuxt from './.nuxt/eslint.config.mjs'
 
 export default withNuxt([

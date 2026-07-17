@@ -1,5 +1,5 @@
 {
-  "name": "@client/eslint",
+  "name": "@client/infrastructure-eslint",
   "type": "module",
   "private": true,
   "main": "./src/index.ts",

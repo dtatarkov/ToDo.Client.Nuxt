@@ -156,9 +156,6 @@ importers:
       '@client/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../../packages/eslint
       '@client/infrastructure-i18n':
         specifier: workspace:*
         version: link:../../packages/infrastructure/i18n
@@ -214,6 +211,9 @@ importers:
         specifier: 'catalog:'
         version: 4.4.3
     devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/eslint
       '@types/luxon':
         specifier: 'catalog:'
         version: 3.7.1
@@ -247,9 +247,6 @@ importers:
       '@client/di':
         specifier: workspace:*
         version: link:../../packages/di
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../../packages/eslint
       '@client/infrastructure-nuxt-ui':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-ui
@@ -287,6 +284,9 @@ importers:
         specifier: 'catalog:'
         version: 3.5.29(typescript@5.9.3)
     devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/eslint
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -299,9 +299,6 @@ importers:
       '@client/di':
         specifier: workspace:*
         version: link:../di
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../eslint
       '@client/shared':
         specifier: workspace:*
         version: link:../shared
@@ -309,20 +306,24 @@ importers:
         specifier: 'catalog:'
         version: 3.7.2
     devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../infrastructure/eslint
       '@types/luxon':
         specifier: 'catalog:'
         version: 3.7.1
 
   packages/di:
     dependencies:
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../eslint
       '@client/shared':
         specifier: workspace:*
         version: link:../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../infrastructure/eslint
 
-  packages/eslint:
+  packages/infrastructure/eslint:
     dependencies:
       '@eslint/js':
         specifier: 'catalog:'
@@ -340,28 +341,26 @@ importers:
   packages/infrastructure/i18n: {}
 
   packages/infrastructure/nuxt-ui:
-    dependencies:
-      '@client/eslint':
+    devDependencies:
+      '@client/infrastructure-eslint':
         specifier: workspace:*
-        version: link:../../eslint
+        version: link:../eslint
 
   packages/infrastructure/nuxt-utils:
     dependencies:
       '@client/di':
         specifier: workspace:*
         version: link:../../di
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../../eslint
       nuxt:
         specifier: 'catalog:'
         version: 4.3.1(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(@parcel/watcher@2.5.6)(@types/node@25.3.3)(@vue/compiler-sfc@3.5.29)(cac@6.7.14)(db0@0.3.4)(eslint@9.29.0(jiti@2.7.0))(ioredis@5.10.0)(lightningcss@1.32.0)(magicast@0.5.2)(optionator@0.9.4)(rollup@4.59.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0))(vue-tsc@3.2.5(typescript@5.9.3))(yaml@2.9.0)
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
 
   packages/shared:
     dependencies:
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../eslint
       '@internationalized/date':
         specifier: 'catalog:'
         version: 3.12.1
@@ -372,6 +371,9 @@ importers:
         specifier: 'catalog:'
         version: 4.10.2
     devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../infrastructure/eslint
       '@types/luxon':
         specifier: 'catalog:'
         version: 3.7.1
@@ -383,19 +385,16 @@ importers:
         version: link:../shared
 
   packages/ui/core:
-    dependencies:
-      '@client/eslint':
+    devDependencies:
+      '@client/infrastructure-eslint':
         specifier: workspace:*
-        version: link:../../eslint
+        version: link:../../infrastructure/eslint
 
   packages/ui/vue:
     dependencies:
       '@client/datetime':
         specifier: workspace:*
         version: link:../../datetime
-      '@client/eslint':
-        specifier: workspace:*
-        version: link:../../eslint
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -411,6 +410,10 @@ importers:
       vue:
         specifier: 'catalog:'
         version: 3.5.29(typescript@5.9.3)
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
 
 packages:
 

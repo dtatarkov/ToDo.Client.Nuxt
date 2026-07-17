@@ -20,14 +20,14 @@
     }
   },
   
-  "dependencies": {
-    "@client/eslint": "workspace:*",
+  "dependencies": {    
     "@internationalized/date": "catalog:",
     "luxon": "catalog:",
     "tslog": "catalog:"
   },
   
   "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*",
     "@types/luxon": "catalog:"
   }
 }
