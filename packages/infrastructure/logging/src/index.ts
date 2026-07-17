@@ -1,5 +1,3 @@
 // Services
 export { LoggingService } from './services/loggingService';
-
-// Utils
-export { registerLoggingServices } from './utils/registerLoggingServices';
+export { LoggingServiceImpl } from './services/loggingServiceImpl';
