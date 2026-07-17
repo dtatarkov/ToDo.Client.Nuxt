@@ -1,5 +1,5 @@
 {
-  "name": "@client/ssr",
+  "name": "@client/infrastructure-ssr",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -10,5 +10,9 @@
 
   "dependencies": {
     "@client/shared": "workspace:*"
+  },
+
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
   }
 }

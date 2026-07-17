@@ -1,4 +1,4 @@
-import type { SSRLoader } from '@client/ssr';
+import type { SSRLoader } from '@client/infrastructure-ssr';
 import type { Func } from '@client/shared';
 
 /**

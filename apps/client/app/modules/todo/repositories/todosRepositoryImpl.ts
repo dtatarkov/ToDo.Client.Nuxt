@@ -2,7 +2,7 @@ import { ToDosRepository, ToDosRepositoryConfiguration } from "./todosRepository
 import { ToDoDtoMapper } from "../mappers/todoDtoMapper";
 import type { ToDo } from "../entities/todo";
 import type { ToDoGetDto } from '../types/toDoGetDto';
-import { SSRLoader } from '@client/ssr';
+import { SSRLoader } from '@client/infrastructure-ssr';
 import { dependency } from '@client/infrastructure-di';
 import { updatePropertiesWithData } from '@client/shared';
 

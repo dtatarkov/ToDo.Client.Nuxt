@@ -19,7 +19,7 @@
     "@client/infrastructure-i18n": "workspace:*",
     "@client/infrastructure-di": "workspace:*",
     "@client/shared": "workspace:*",
-    "@client/ssr": "workspace:*",
+    "@client/infrastructure-ssr": "workspace:*",
     "@client/infrastructure-datetime": "workspace:*",    
     "@internationalized/date": "catalog:",
     "nuxt": "catalog:",

@@ -6,7 +6,7 @@ import { registerSidebarServices } from '@/modules/sidebar/utils/registerSidebar
 import { registerNotificationsServices } from '@/modules/notifications/utils/registerNotificationsServices';
 import { registerDateTimeServices } from '@client/infrastructure-datetime';
 import { useRuntimeConfig } from '#imports';
-import { SSRLoader } from '@client/ssr';
+import { SSRLoader } from '@client/infrastructure-ssr';
 import { DisposeToken, ZonedDateTimeMapper, ZonedDateTimeMapperImpl, TimeMapper, TimeMapperImpl, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
 
 export function useAppServices()

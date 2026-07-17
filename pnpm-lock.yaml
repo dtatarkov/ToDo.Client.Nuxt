@@ -162,12 +162,12 @@ importers:
       '@client/infrastructure-nuxt-ui':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-ui
+      '@client/infrastructure-ssr':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/ssr
       '@client/shared':
         specifier: workspace:*
         version: link:../../packages/shared
-      '@client/ssr':
-        specifier: workspace:*
-        version: link:../../packages/ssr
       '@client/ui-core':
         specifier: workspace:*
         version: link:../../packages/ui/core
@@ -343,6 +343,16 @@ importers:
         specifier: workspace:*
         version: link:../eslint
 
+  packages/infrastructure/ssr:
+    dependencies:
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
+
   packages/shared:
     dependencies:
       '@internationalized/date':
@@ -361,12 +371,6 @@ importers:
       '@types/luxon':
         specifier: 'catalog:'
         version: 3.7.1
-
-  packages/ssr:
-    dependencies:
-      '@client/shared':
-        specifier: workspace:*
-        version: link:../shared
 
   packages/ui/core:
     devDependencies:
