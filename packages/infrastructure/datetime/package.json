@@ -1,5 +1,5 @@
 {
-  "name": "@client/datetime",
+  "name": "@client/infrastructure-datetime",
   "type": "module",
   "private": true,
   "main": "./src/index.ts",

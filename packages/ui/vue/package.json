@@ -18,7 +18,7 @@
   "dependencies": {
     "@client/ui-core": "workspace:*",
     "@client/shared": "workspace:*",    
-    "@client/datetime": "workspace:*",
+    "@client/infrastructure-datetime": "workspace:*",
     "vue": "catalog:",
     "@nuxt/ui": "catalog:",
     "tailwindcss": "catalog:"

@@ -14,7 +14,7 @@
     "@client/infrastructure-nuxt-ui": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
-    "@client/datetime": "workspace:*",    
+    "@client/infrastructure-datetime": "workspace:*",    
     "storybook": "catalog:",
     "@storybook/addon-a11y": "catalog:",
     "@storybook/addon-docs": "catalog:",

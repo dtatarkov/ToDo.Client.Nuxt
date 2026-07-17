@@ -21,7 +21,7 @@
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/ssr": "workspace:*",
-    "@client/datetime": "workspace:*",    
+    "@client/infrastructure-datetime": "workspace:*",    
     "@internationalized/date": "catalog:",
     "nuxt": "catalog:",
     "@nuxt/eslint": "catalog:",

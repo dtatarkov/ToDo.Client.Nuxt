@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Icon, isStringEmpty , MessagesService  } from '@client/shared';
 import type { ToDoCardData } from '../types/todoCardData';
-import { DateFormatter } from '@client/datetime';
+import { DateFormatter } from '@client/infrastructure-datetime';
 import { VCard, VButtonIcon, VInfoBlock, VInfoRow } from '@client/ui-vue';
 
 const dateFormatter = useService(DateFormatter);
