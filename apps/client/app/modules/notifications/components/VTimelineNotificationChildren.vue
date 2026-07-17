@@ -22,7 +22,7 @@ import VTimelineNotificationBase from './VTimelineNotificationBase.vue';
 import VList from '@/modules/uikit/components/VList.vue';
 import VListToggleText from '@/modules/uikit/components/VListToggleText.vue';
 import VCollapsible from '@/modules/uikit/components/VCollapsible.vue';
-import { MessagesService } from '@client/shared';
+import { MessagesService } from '@client/infrastructure-messages';
 
 const messagesService = useService(MessagesService);
 

@@ -32,10 +32,6 @@ export { ValueMapper } from './interfaces/valueMapper';
 // Mappers
 export { OptionalValueMapper } from './mappers/optionalValueMapper';
 
-export { MessagesService } from './services/messagesService';
-export { MessagesServiceImpl } from './services/messagesServiceImpl';
-
-// Types
 export type { AbstractConstructor } from './types/abstractConstructor';
 export type { Action } from './types/action';
 export type { Constructor } from './types/constructor';

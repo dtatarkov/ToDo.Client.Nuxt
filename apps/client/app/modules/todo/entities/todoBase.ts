@@ -8,13 +8,11 @@ import type { Overlay } from '@/modules/overlay/entities/overlay';
 import type { Modal } from '@/modules/overlay/entities/modal';
 import { ToDoStateNew } from './todoStateNew';
 import { ToDoStateSaved } from './todoStateSaved';
-
 import type { ToDoState } from './todoState';
-import type { StateTransition, MessagesService } from '@client/shared';
-
+import type { StateTransition } from '@client/shared';
 import type { Form } from '@/modules/forms/entities/form';
-
 import type { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
+import type { MessagesService } from '@client/infrastructure-messages';
 
 type ToDoStateTransitionConstraint = {
   isNew: boolean;

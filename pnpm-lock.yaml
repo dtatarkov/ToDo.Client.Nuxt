@@ -162,6 +162,9 @@ importers:
       '@client/infrastructure-logging':
         specifier: workspace:*
         version: link:../../packages/infrastructure/logging
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/messages
       '@client/infrastructure-nuxt-ui':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-ui
@@ -358,6 +361,22 @@ importers:
       '@client/infrastructure-eslint':
         specifier: workspace:*
         version: link:../eslint
+
+  packages/infrastructure/messages:
+    dependencies:
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../di
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
+      vitest:
+        specifier: 'catalog:'
+        version: 3.2.4(@types/node@25.3.3)(happy-dom@20.8.3)(jiti@2.7.0)(lightningcss@1.32.0)(sass-embedded@1.97.3)(sass@1.97.3)(terser@5.46.0)(yaml@2.9.0)
 
   packages/infrastructure/nuxt-ui:
     devDependencies:

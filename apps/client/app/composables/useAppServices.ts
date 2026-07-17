@@ -1,7 +1,7 @@
 import { DateFormatter, DateFormatterConfiguration, DateFormatterImpl, DateParser, DateParserImpl, TimeMapper, TimeMapperImpl, ZonedDateTimeMapper, ZonedDateTimeMapperImpl } from '@client/infrastructure-datetime';
 import { useRuntimeConfig } from '#imports';
 import { SSRLoader } from '@client/infrastructure-ssr';
-import { DisposeToken, MessagesService, MessagesServiceImpl } from '@client/shared';
+import { DisposeToken } from '@client/shared';
 import { LoggingService, LoggingServiceImpl } from '@client/infrastructure-logging';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
@@ -27,6 +27,7 @@ import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 import { SidebarBase } from '@/modules/sidebar/entities/sidebarBase';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { AppNotificationsStoreBase } from '@/modules/notifications/entities/appNotificationsStoreBase';
+import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
 
 export function useAppServices()
 {

@@ -1,6 +1,6 @@
 import { dependency } from '@client/infrastructure-di';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
-import { MessagesService, EntityEvent } from '@client/shared';
+import { EntityEvent } from '@client/shared';
 import { Overlay } from './overlay';
 import { ModalBase } from './modalBase';
 import { ToastBase } from './toastBase';
@@ -13,7 +13,7 @@ import type { ToastConfiguration } from './toastConfiguration';
 import type { DisposeToken, Action } from '@client/shared';
 
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-
+import { MessagesService } from '@client/infrastructure-messages';
 
 @dependency(ButtonsFactory)
 @dependency(MessagesService)

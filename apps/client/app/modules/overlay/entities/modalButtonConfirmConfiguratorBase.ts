@@ -1,8 +1,7 @@
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
-import type { AsyncCommand, MessagesService } from '@client/shared';
-
-
+import type { AsyncCommand } from '@client/shared';
+import type { MessagesService } from '@client/infrastructure-messages';
 
 export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfigurator
 {

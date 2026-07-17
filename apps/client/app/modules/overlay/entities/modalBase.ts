@@ -9,12 +9,13 @@ import type { ModalsStore } from './modalsStore';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
 
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
-import type { Func, AsyncCommand, MessagesService } from '@client/shared';
+import type { Func, AsyncCommand } from '@client/shared';
 import type { ModalData } from '../types/modalData';
 
 
 import { OverlayElementBase } from './overlayElementBase';
 import type { ModalState } from '../types/modalState';
+import type { MessagesService } from '@client/infrastructure-messages';
 
 export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {

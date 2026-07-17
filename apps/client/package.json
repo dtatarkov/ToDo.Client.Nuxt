@@ -22,6 +22,7 @@
     "@client/infrastructure-ssr": "workspace:*",
     "@client/infrastructure-datetime": "workspace:*",
     "@client/infrastructure-logging": "workspace:*",
+    "@client/infrastructure-messages": "workspace:*",
     "@internationalized/date": "catalog:",
     "nuxt": "catalog:",
     "@nuxt/eslint": "catalog:",

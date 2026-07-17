@@ -1,4 +1,4 @@
-import type { Func } from '../types/func';
+import type { Func } from '@client/shared';
 import { MessagesService } from './messagesService';
 
 export class MessagesServiceImpl extends MessagesService
