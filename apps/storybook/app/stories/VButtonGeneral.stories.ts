@@ -1,4 +1,4 @@
-import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { VButtonGeneral } from '@client/ui-vue';
 import { fn } from 'storybook/test';
 import { storybookColorSelect } from '../argTypes/storybookColorSelect';

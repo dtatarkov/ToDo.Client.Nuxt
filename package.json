@@ -9,7 +9,7 @@
     "build": "nx run @client/app-nuxt:build",
     "generate": "nx run @client/app-nuxt:generate",
     "preview": "nx run @client/app-nuxt:preview",
-    "postinstall": "nx run-many --target=postinstall --projects=@client/app-nuxt,@client/app-storybook",
+    "postinstall": "nx run @client/app-nuxt:postinstall",
     "storybook": "nx run @client/app-storybook:storybook",
     "build-storybook": "nx run @client/app-storybook:build-storybook",
     "test": "nx run-many -t test",

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { VButtonIcon } from '@client/ui-vue';
 import { Icon } from '@client/shared';
 import { fn } from 'storybook/test';

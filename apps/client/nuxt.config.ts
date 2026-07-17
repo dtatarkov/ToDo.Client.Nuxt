@@ -25,32 +25,6 @@ export default defineNuxtConfig({
     colorMode: {
       preference: 'dark'
     },
-
-    // Only include the components we actually use
-    components: {
-      include: [
-        'UApp',
-        'UModal',
-        'UToast',
-        'UForm',
-        'UFormField',
-        'UCard',
-        'UButton',
-        'UInput',
-        'UTextarea',
-        'UInputDate',
-        'UInputTime',
-        'UHeader',
-        'UMain',
-        'UFooter',
-        'USidebar',
-        'UNavigationMenu',
-        'UCollapsible',
-        'UBadge',
-      ]
-    },
-    // Disable safelist colors to reduce CSS size
-    safelistColors: false
   },
 
   i18n: {

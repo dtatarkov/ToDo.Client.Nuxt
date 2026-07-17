@@ -5,27 +5,25 @@
   "scripts": {
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "typecheck": "nuxt typecheck",
-    "postinstall": "nuxt prepare"
+    "typecheck": "vue-tsc",
+    "test": "echo \"no tests\""
   },
   "dependencies": {
     "@client/ui-core": "workspace:*",
     "@client/ui-vue": "workspace:*",
-    "@client/infrastructure-nuxt-utils": "workspace:*",
+    "@client/infrastructure-nuxt-ui": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",
-    "@client/ssr": "workspace:*",
     "@client/datetime": "workspace:*",
     "@client/eslint": "workspace:*",
-    "@nuxtjs/storybook": "catalog:",
     "storybook": "catalog:",
     "@storybook/addon-a11y": "catalog:",
     "@storybook/addon-docs": "catalog:",
-    "@nuxt/eslint": "catalog:",
-    "@nuxt/ui": "catalog:",
-    "@nuxtjs/i18n": "catalog:",
-    "nuxt": "catalog:",
-    "vue": "catalog:"
+    "@storybook/vue3-vite": "catalog:",
+    "vue": "catalog:",
+    "vite": "catalog:",
+    "@vitejs/plugin-vue": "catalog:",
+    "@nuxt/ui": "catalog:"
   },
   "packageManager": "pnpm@10.30.3+sha512.c961d1e0a2d8e354ecaa5166b822516668b7f44cb5bd95122d590dd81922f606f5473b6d23ec4a5be05e7fcd18e8488d47d978bbe981872f1145d06e9a740017",
   "devDependencies": {

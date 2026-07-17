@@ -1,4 +1,4 @@
-import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { VCard } from '@client/ui-vue';
 
 const meta: Meta<typeof VCard> = {

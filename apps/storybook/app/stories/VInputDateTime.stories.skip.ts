@@ -1,4 +1,4 @@
-// import type { Meta, StoryObj } from '@nuxtjs/storybook';
+// import type { Meta, StoryObj } from '@storybook/vue3-vite';
 // import VInputDateTime from '../components/VInputDateTime.vue';
 // import { inputIdArgType, inputNameArgType, inputHasAutofocusArgType, inputIsDisabledArgType, storybookColorSelect, inputHighlightArgType } from '@client/storybook';
 

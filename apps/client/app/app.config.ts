@@ -1,10 +1,5 @@
+import nuxtUIConfig from '@client/infrastructure-nuxt-ui/config';
+
 export default defineAppConfig({
-  ui: {
-    colorMode: false,
-    
-    colors: {
-      primary: 'blue',
-      neutral: 'zinc'
-    }
-  }
-})
+  ui: nuxtUIConfig
+});

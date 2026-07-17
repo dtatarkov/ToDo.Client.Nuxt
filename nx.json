@@ -42,7 +42,6 @@
     
     {
       "plugin": "@nx/vitest",
-      "exclude": ["@client/app-nuxt"],
 
       "options": {        
         "testTargetName": "test",

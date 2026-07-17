@@ -1,4 +1,4 @@
-// import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+// import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 // import VToDoCard from '../components/VToDoCard.vue';
 // import { fn } from 'storybook/test';
 // import type { ToDoCardData } from '../../../client/app/modules/todo/types/todoCardData.js';

@@ -1,4 +1,4 @@
-// import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+// import type { Meta, StoryObj, } from '@storybook/vue3-viteite';
 // import VInputTextarea from '../components/VInputTextarea.vue';
 // import { inputPlaceholderArgType, inputIdArgType, inputNameArgType, inputHasAutofocusArgType, inputIsDisabledArgType, storybookColorSelect, inputHighlightArgType } from '@client/storybook';
 

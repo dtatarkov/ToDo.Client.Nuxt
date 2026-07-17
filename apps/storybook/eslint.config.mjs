@@ -1,12 +1,11 @@
 import { configs } from '@client/eslint';
-import withNuxt from './.nuxt/eslint.config.mjs'
 
-export default withNuxt([
-  ...configs.base,
+export default [
+  ...configs.library,
 
   {
     rules: {
-      // Nuxt-specific overrides can be added here if needed
+      // Vue-specific overrides can be added here if needed
     },
   },
-])
+]

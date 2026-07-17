@@ -1,4 +1,4 @@
-// import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+// import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 // import VToolbar from '../components/VToolbar.vue';
 // import { VButtonGeneral } from '@client/ui-vue';
 

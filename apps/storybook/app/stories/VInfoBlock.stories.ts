@@ -1,4 +1,4 @@
-import type { Meta, StoryObj, } from '@nuxtjs/storybook';
+import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { VInfoBlock, VInfoRow } from '@client/ui-vue';
 
 type InfoBlockStoryArgs = {
@@ -12,14 +12,12 @@ const meta: Meta<InfoBlockStoryArgs> = {
     title: 'UIKit/InfoBlock',
     component: VInfoBlock,
 
-    render: (args) =>
+    render: args =>
     {
         return {
             components: { VInfoBlock, VInfoRow },
             setup()
             {
-                useStorybookServices();
-
                 return args;
             },
 
