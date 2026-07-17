@@ -14,8 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import { ZonedDateTimeMapper, OptionalValueMapper  } from '@client/shared';
+import { OptionalValueMapper  } from '@client/shared';
 import type { InputDateData } from '@/modules/uikit/types/inputDateData';
+import { ZonedDateTimeMapper } from '@client/infrastructure-datetime';
 
 defineOptions({
   inheritAttrs: false

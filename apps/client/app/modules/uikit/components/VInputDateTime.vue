@@ -20,10 +20,11 @@
 </template>
 
 <script setup lang="ts">
+import { getTime, setTime } from '@client/infrastructure-datetime';
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
-import { postfixNotEmptyString, setTime , getTime  } from '@client/shared';
+import { postfixNotEmptyString } from '@client/shared';
 
 
 

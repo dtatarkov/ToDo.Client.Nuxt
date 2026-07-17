@@ -12,6 +12,7 @@
   "dependencies": {
     "@client/infrastructure-di": "workspace:*",
     "@client/shared": "workspace:*",    
+    "@internationalized/date": "catalog:",
     "luxon": "catalog:"
   },
   

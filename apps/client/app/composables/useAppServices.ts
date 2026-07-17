@@ -7,7 +7,7 @@ import { registerNotificationsServices } from '@/modules/notifications/utils/reg
 import { registerDateTimeServices } from '@client/infrastructure-datetime';
 import { useRuntimeConfig } from '#imports';
 import { SSRLoader } from '@client/infrastructure-ssr';
-import { DisposeToken, ZonedDateTimeMapper, ZonedDateTimeMapperImpl, TimeMapper, TimeMapperImpl, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
+import { DisposeToken, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
 
 export function useAppServices()
 {
@@ -17,8 +17,6 @@ export function useAppServices()
     const { t } = useI18n();
 
     container.bind(DisposeToken).to(DisposeToken).asTransient();
-    container.bind(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
-    container.bind(TimeMapper).to(TimeMapperImpl).asTransient();
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
     container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
     container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();

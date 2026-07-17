@@ -1,8 +1,8 @@
 import { Time } from "@internationalized/date";
-import { ValueMapper } from '../interfaces/valueMapper';
 import { hourInMilliseconds, minuteInMilliseconds, secondInMilliseconds } from '../constants/dateConstants';
+import { TimeMapper } from './timeMapper';
 
-export class TimeMapperImpl extends ValueMapper<number, Time>
+export class TimeMapperImpl extends TimeMapper
 {
   map(value: number): Time
   {
