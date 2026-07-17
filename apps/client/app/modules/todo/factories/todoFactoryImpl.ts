@@ -6,7 +6,7 @@ import { Overlay } from '@/modules/overlay/entities/overlay';
 import { FormFactory } from '@/modules/forms/factories/formFactory';
 import { MessagesService } from '@client/shared';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 
 @dependency(Overlay)
 @dependency(FormFactory)

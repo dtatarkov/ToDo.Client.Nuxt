@@ -1,4 +1,4 @@
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 import { Sidebar } from './sidebar';
 import { DisposeToken, ObservableWritableBase } from '@client/shared';
 import type { SidebarContent } from './sidebarContent';

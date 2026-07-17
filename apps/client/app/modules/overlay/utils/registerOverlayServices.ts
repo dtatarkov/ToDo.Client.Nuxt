@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@client/di';
+import type { ServicesContainer } from '@client/infrastructure-di';
 import { Overlay } from '../entities/overlay';
 import { OverlayBase } from '../entities/overlayBase';
 

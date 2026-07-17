@@ -12,7 +12,7 @@
     "@client/ui-core": "workspace:*",
     "@client/ui-vue": "workspace:*",
     "@client/infrastructure-nuxt-ui": "workspace:*",
-    "@client/di": "workspace:*",
+    "@client/infrastructure-di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/infrastructure-datetime": "workspace:*",    
     "storybook": "catalog:",

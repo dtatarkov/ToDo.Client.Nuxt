@@ -150,12 +150,12 @@ importers:
 
   apps/client:
     dependencies:
-      '@client/di':
-        specifier: workspace:*
-        version: link:../../packages/di
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../packages/infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/di
       '@client/infrastructure-i18n':
         specifier: workspace:*
         version: link:../../packages/infrastructure/i18n
@@ -238,12 +238,12 @@ importers:
 
   apps/storybook:
     dependencies:
-      '@client/di':
-        specifier: workspace:*
-        version: link:../../packages/di
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../packages/infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/di
       '@client/infrastructure-nuxt-ui':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-ui
@@ -291,21 +291,11 @@ importers:
         specifier: 'catalog:'
         version: 3.2.5(typescript@5.9.3)
 
-  packages/di:
-    dependencies:
-      '@client/shared':
-        specifier: workspace:*
-        version: link:../shared
-    devDependencies:
-      '@client/infrastructure-eslint':
-        specifier: workspace:*
-        version: link:../infrastructure/eslint
-
   packages/infrastructure/datetime:
     dependencies:
-      '@client/di':
+      '@client/infrastructure-di':
         specifier: workspace:*
-        version: link:../../di
+        version: link:../di
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared
@@ -319,6 +309,16 @@ importers:
       '@types/luxon':
         specifier: 'catalog:'
         version: 3.7.1
+
+  packages/infrastructure/di:
+    dependencies:
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
 
   packages/infrastructure/eslint:
     dependencies:

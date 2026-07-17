@@ -10,7 +10,7 @@
   },
 
   "dependencies": {
-    "@client/di": "workspace:*",
+    "@client/infrastructure-di": "workspace:*",
     "@client/shared": "workspace:*",    
     "luxon": "catalog:"
   },

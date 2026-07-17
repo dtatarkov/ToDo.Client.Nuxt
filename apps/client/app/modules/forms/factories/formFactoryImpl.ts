@@ -2,7 +2,7 @@ import type { Form, FormConfiguration } from "../entities/form";
 import type { FormFactory } from './formFactory';
 import { FormBase } from '../entities/formBase';
 import { FormElementsFactory } from './formElementsFactory';
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 
 @dependency(FormElementsFactory)
 export class FormFactoryImpl implements FormFactory

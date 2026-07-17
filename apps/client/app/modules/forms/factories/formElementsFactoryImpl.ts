@@ -1,5 +1,5 @@
 import type { FormElement } from '../entities/formElement';
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 import type { InputElement } from '@/modules/forms/entities/inputElements/inputElement';
 import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';

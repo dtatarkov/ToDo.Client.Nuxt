@@ -17,7 +17,7 @@
     "@client/ui-vue": "workspace:*",
     "@client/infrastructure-nuxt-ui": "workspace:*",
     "@client/infrastructure-i18n": "workspace:*",
-    "@client/di": "workspace:*",
+    "@client/infrastructure-di": "workspace:*",
     "@client/shared": "workspace:*",
     "@client/ssr": "workspace:*",
     "@client/infrastructure-datetime": "workspace:*",    

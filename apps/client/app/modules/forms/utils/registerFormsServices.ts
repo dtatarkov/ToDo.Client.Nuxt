@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@client/di';
+import type { ServicesContainer } from '@client/infrastructure-di';
 import { FormElementsFactoryImpl } from '../factories/formElementsFactoryImpl';
 import { FormFactoryImpl } from '../factories/formFactoryImpl';
 import { InputElementsFactory } from '../factories/inputElementsFactory';

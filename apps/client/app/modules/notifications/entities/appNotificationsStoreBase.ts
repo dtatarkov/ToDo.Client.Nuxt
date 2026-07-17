@@ -1,4 +1,4 @@
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 import { AppNotificationsStore } from './appNotificationsStore';
 import { AppRootNotificationBase } from './appRootNotificationBase';
 import type { AppNotificationData } from '../types/appNotificationData';

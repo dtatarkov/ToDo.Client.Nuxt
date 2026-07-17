@@ -1,4 +1,4 @@
-import { dependency } from '@client/di';
+import { dependency } from '@client/infrastructure-di';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { MessagesService, EntityEvent } from '@client/shared';
 import { Overlay } from './overlay';

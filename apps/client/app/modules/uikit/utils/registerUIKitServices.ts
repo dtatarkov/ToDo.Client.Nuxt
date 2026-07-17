@@ -1,4 +1,4 @@
-import type { ServicesContainer } from '@client/di';
+import type { ServicesContainer } from '@client/infrastructure-di';
 import { ButtonsFactory } from '../factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '../factories/buttonsFactoryImpl';
 import { TimelineBase } from '@/modules/notifications/entities/timelineBase';
