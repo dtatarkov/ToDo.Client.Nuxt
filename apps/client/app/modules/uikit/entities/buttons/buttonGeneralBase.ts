@@ -2,7 +2,7 @@ import { getUniqueId } from '@client/shared';
 import type { ButtonGeneral } from './buttonGeneral';
 import type { Color } from '@client/ui-core';
 import { ButtonBase } from './buttonBase';
-import { VButtonGeneral } from '@client/ui-nuxt';
+import { VButtonGeneral } from '@client/ui-vue';
 import { shallowReactive, type VNode } from 'vue';
 import type { AsyncCommand } from '@client/shared';
 

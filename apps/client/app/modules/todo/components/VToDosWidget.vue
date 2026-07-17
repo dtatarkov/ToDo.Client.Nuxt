@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import VToolbar from '@/modules/uikit/components/VToolbar.vue';
-import { VButtonGeneral, VGrid } from '@client/ui-nuxt';
+import { VButtonGeneral, VGrid } from '@client/ui-vue';
 import VToDoCard from './VToDoCard.vue';
 import { useToDoCards } from '../composables/useToDoCards';
 

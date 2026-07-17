@@ -2,7 +2,7 @@
 import { Icon, isStringEmpty , MessagesService  } from '@client/shared';
 import type { ToDoCardData } from '../types/todoCardData';
 import { DateFormatter } from '@client/datetime';
-import { VCard, VButtonIcon, VInfoBlock, VInfoRow } from '@client/ui-nuxt';
+import { VCard, VButtonIcon, VInfoBlock, VInfoRow } from '@client/ui-vue';
 
 const dateFormatter = useService(DateFormatter);
 const messagesService = useService(MessagesService);

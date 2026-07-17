@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
   ],
 
-  css: ['@client/ui-nuxt/css'],
+  css: ['@client/ui-vue/css'],
 
   components: [
     {

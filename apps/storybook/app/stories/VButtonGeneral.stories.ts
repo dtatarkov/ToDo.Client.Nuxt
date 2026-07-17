@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, } from '@nuxtjs/storybook';
-import { VButtonGeneral } from '@client/ui-nuxt';
+import { VButtonGeneral } from '@client/ui-vue';
 import { fn } from 'storybook/test';
 import { storybookColorSelect } from '../argTypes/storybookColorSelect';
 

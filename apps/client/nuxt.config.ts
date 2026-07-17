@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n'
   ],
 
-  css: ['@client/ui-nuxt/css'],
+  css: ['@client/ui-vue/css'],
 
   components: [
     {
