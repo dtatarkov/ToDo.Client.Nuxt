@@ -7,7 +7,8 @@ import { registerNotificationsServices } from '@/modules/notifications/utils/reg
 import { registerDateTimeServices } from '@client/infrastructure-datetime';
 import { useRuntimeConfig } from '#imports';
 import { SSRLoader } from '@client/infrastructure-ssr';
-import { DisposeToken, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
+import { DisposeToken, MessagesService, MessagesServiceImpl } from '@client/shared';
+import { registerLoggingServices } from '@client/infrastructure-logging';
 
 export function useAppServices()
 {
@@ -18,9 +19,9 @@ export function useAppServices()
 
     container.bind(DisposeToken).to(DisposeToken).asTransient();
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
-    container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
     container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();
 
+    registerLoggingServices(container);
     registerDateTimeServices(container, config.public.locale);
     registerUIKitServices(container);
     registerFormsServices(container);

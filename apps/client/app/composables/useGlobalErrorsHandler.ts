@@ -1,4 +1,4 @@
-import { LoggingService } from '@client/shared';
+import { LoggingService } from '@client/infrastructure-logging';
 
 export function useGlobalErrorsHandler()
 {

@@ -32,8 +32,6 @@ export { ValueMapper } from './interfaces/valueMapper';
 // Mappers
 export { OptionalValueMapper } from './mappers/optionalValueMapper';
 
-export { LoggingService } from './services/loggingService';
-export { LoggingServiceImpl } from './services/loggingServiceImpl';
 export { MessagesService } from './services/messagesService';
 export { MessagesServiceImpl } from './services/messagesServiceImpl';
 

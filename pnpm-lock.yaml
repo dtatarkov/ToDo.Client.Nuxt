@@ -159,6 +159,9 @@ importers:
       '@client/infrastructure-i18n':
         specifier: workspace:*
         version: link:../../packages/infrastructure/i18n
+      '@client/infrastructure-logging':
+        specifier: workspace:*
+        version: link:../../packages/infrastructure/logging
       '@client/infrastructure-nuxt-ui':
         specifier: workspace:*
         version: link:../../packages/infrastructure/nuxt-ui
@@ -339,6 +342,22 @@ importers:
         version: 8.62.1(eslint@10.3.0(jiti@2.7.0))(typescript@5.9.3)
 
   packages/infrastructure/i18n: {}
+
+  packages/infrastructure/logging:
+    dependencies:
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../di
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      tslog:
+        specifier: 'catalog:'
+        version: 4.10.2
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
 
   packages/infrastructure/nuxt-ui:
     devDependencies:
