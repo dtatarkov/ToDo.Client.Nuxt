@@ -16,7 +16,6 @@
     "@client/ui-core": "workspace:*",
     "@client/ui-vue": "workspace:*",
     "@client/infrastructure-nuxt-ui": "workspace:*",
-    "@client/infrastructure-nuxt-utils": "workspace:*",
     "@client/infrastructure-i18n": "workspace:*",
     "@client/di": "workspace:*",
     "@client/shared": "workspace:*",

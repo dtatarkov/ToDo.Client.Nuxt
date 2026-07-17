@@ -5,7 +5,6 @@ import { registerUIKitServices } from '@/modules/uikit/utils/registerUIKitServic
 import { registerSidebarServices } from '@/modules/sidebar/utils/registerSidebarServices';
 import { registerNotificationsServices } from '@/modules/notifications/utils/registerNotificationsServices';
 import { registerDateTimeServices } from '@client/infrastructure-datetime';
-import { useServicesContainer } from '@client/infrastructure-nuxt-utils';
 import { useRuntimeConfig } from '#imports';
 import { SSRLoader } from '@client/ssr';
 import { DisposeToken, ZonedDateTimeMapper, ZonedDateTimeMapperImpl, TimeMapper, TimeMapperImpl, MessagesService, MessagesServiceImpl, LoggingService, LoggingServiceImpl } from '@client/shared';
