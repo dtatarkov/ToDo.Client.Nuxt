@@ -6,8 +6,3 @@ export abstract class ToDosRepository
   abstract addToDoAsync(todo: ToDo): Promise<void>;
   abstract updateToDoAsync(todo: ToDo): Promise<void>;
 }
-
-export abstract class ToDosRepositoryConfiguration
-{
-  abstract apiBaseUrl: string;
-}

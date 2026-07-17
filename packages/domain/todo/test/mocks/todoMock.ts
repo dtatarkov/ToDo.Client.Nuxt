@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
-import type { ToDoData } from '../types/todoData';
-import type { ToDosOwner } from '../entities/todosOwner';
-import type { ToDo } from '../entities/todo';
+import type { ToDo } from '../../src';
+import type { ToDosOwner } from '../../src/entities/todosOwner';
+import type { ToDoData } from '../../src/types/todoData';
 
 const defaultToDoData: ToDoData = {
     id: '',
@@ -26,6 +26,5 @@ export function createToDoMock(data?: Partial<ToDoData>, owner?: ToDosOwner)
         setData: vi.fn(),
         clone: vi.fn(),
         saveAsync: vi.fn(),
-        showForm: vi.fn(),
     } satisfies ToDo;
 };

@@ -1,7 +1,7 @@
 import { ToDosOwner } from "./todosOwner";
 import type { ToDo } from "./todo";
 import { ToDosRepository } from "../repositories/todosRepository";
-import { ToDoNotFoundException } from "../exceptions/toDoNotFoundException";
+import { ToDoNotFoundException } from "../exceptions/todoNotFoundException";
 import { dependency } from '@client/infrastructure-di';
 import { ToDoFactory } from '../factories/todoFactory';
 import { EntityEvent } from '@client/shared';

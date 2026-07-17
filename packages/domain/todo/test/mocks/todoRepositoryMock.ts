@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ToDosRepository } from '../repositories/todosRepository';
+import type { ToDosRepository } from '../../src/repositories/todosRepository';
 
 export const todoRepositoryMock = {
     getAllToDosAsync: vi.fn(),

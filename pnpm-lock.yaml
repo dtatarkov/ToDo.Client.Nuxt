@@ -150,6 +150,9 @@ importers:
 
   apps/client:
     dependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../packages/domain/todo
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../packages/infrastructure/datetime
@@ -296,6 +299,25 @@ importers:
       vue-tsc:
         specifier: 'catalog:'
         version: 3.2.5(typescript@5.9.3)
+
+  packages/domain/todo:
+    dependencies:
+      '@client/infrastructure-datetime':
+        specifier: workspace:*
+        version: link:../../infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
+      '@client/infrastructure-ssr':
+        specifier: workspace:*
+        version: link:../../infrastructure/ssr
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
 
   packages/infrastructure/datetime:
     dependencies:

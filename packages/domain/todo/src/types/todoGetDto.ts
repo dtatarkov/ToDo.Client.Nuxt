@@ -1,4 +1,4 @@
-import type { ToDoStateType } from "../enums/toDoStateType";
+import type { ToDoStateType } from "../enums/todoStateType";
 
 export type ToDoGetDto = {
   id: string;
@@ -6,5 +6,5 @@ export type ToDoGetDto = {
   description: string;
   completionDatePlanned?: string;
   completionDateActual?: string;
-  state: ToDoStateType
-}
+  state: ToDoStateType;
+};

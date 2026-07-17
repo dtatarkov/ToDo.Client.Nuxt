@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ToDosOwner } from '../entities/todosOwner';
+import type { ToDosOwner } from '../../src/entities/todosOwner';
 
 export const todosOwnerMock = {
     getAllToDos: vi.fn(),

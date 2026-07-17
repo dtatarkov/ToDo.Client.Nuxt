@@ -15,19 +15,12 @@ import { FormFactoryImpl } from '@/modules/forms/factories/formFactoryImpl';
 import { FormElementsFactoryImpl } from '@/modules/forms/factories/formElementsFactoryImpl';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { OverlayBase } from '@/modules/overlay/entities/overlayBase';
-import { ToDosRepository, ToDosRepositoryConfiguration } from '@/modules/todo/repositories/todosRepository';
-import { ToDoDtoMapper } from '@/modules/todo/mappers/todoDtoMapper';
-import { ToDosOwner } from '@/modules/todo/entities/todosOwner';
-import { ToDoFactory } from '@/modules/todo/factories/todoFactory';
-import { ToDoFactoryImpl } from '@/modules/todo/factories/todoFactoryImpl';
-import { ToDosOwnerBase } from '@/modules/todo/entities/todosOwnerBase';
-import { ToDoDtoMapperImpl } from '@/modules/todo/mappers/todoDtoMapperImpl';
-import { ToDosRepositoryImpl } from '@/modules/todo/repositories/todosRepositoryImpl';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 import { SidebarBase } from '@/modules/sidebar/entities/sidebarBase';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { AppNotificationsStoreBase } from '@/modules/notifications/entities/appNotificationsStoreBase';
 import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
+import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosOwner, ToDosOwnerBase, ToDosRepository } from '@client/domain-todo';
 
 export function useAppServices()
 {
@@ -36,7 +29,7 @@ export function useAppServices()
     const ssrLoader = useSSRLoader();
     const { t } = useI18n();
 
-    container.bind(ToDosRepository).to(ToDosRepositoryImpl).asTransient();
+    container.bind(ToDosRepository).toDynamicValue(() => useToDosRepository()).asTransient();
     container.bind(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
     container.bind(ToDosOwner).to(ToDosOwnerBase).asSingleton();
     container.bind(ToDoFactory).to(ToDoFactoryImpl).asTransient();
@@ -60,13 +53,6 @@ export function useAppServices()
     container.bind(ZonedDateTimeMapper).to(ZonedDateTimeMapperImpl).asTransient();
     container.bind(TimeMapper).to(TimeMapperImpl).asTransient();
     container.bind(DisposeToken).to(DisposeToken).asTransient();
-
-    container.bind(ToDosRepositoryConfiguration)
-        .toDynamicValue((): ToDosRepositoryConfiguration =>
-        ({
-            apiBaseUrl: config.public.apiBaseUrl,
-        }))
-        .asSingleton();
 
     container.bind(DateFormatterConfiguration)
         .toDynamicValue((): DateFormatterConfiguration => ({

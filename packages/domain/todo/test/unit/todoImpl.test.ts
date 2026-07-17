@@ -1,12 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ToDoBase } from '../../entities/todoBase';
-import { todosOwnerMock } from '../../mocks/todoOwnerMock';
-import { formFactoryMock } from '@/modules/forms/mocks/formFactoryMock';
-import { formMock } from '@/modules/forms/mocks/formMock';
-import { overlayMock } from '@/modules/overlay/mocks/overlayMock';
-import { modalMock } from '@/modules/overlay/mocks/modalMock';
-import { appNotificationsStoreMock } from '@/modules/notifications/mocks/appNotificationsStoreMock';
-import { messagesServiceMock } from '@client/infrastructure-messages/mocks';
+import { ToDoBase } from '../../src/entities/todoBase';
+import { todosOwnerMock } from '../mocks/todoOwnerMock';
 
 describe('ToDoImpl', () =>
 {
@@ -16,14 +10,7 @@ describe('ToDoImpl', () =>
     {
         vi.resetAllMocks();
 
-        formFactoryMock.create.mockReturnValue(formMock);
-        overlayMock.createModal.mockReturnValue(modalMock);
-
-        todo = new ToDoBase(
-            overlayMock,
-            appNotificationsStoreMock,
-            formFactoryMock,
-            messagesServiceMock);
+        todo = new ToDoBase();
     });
 
     describe('properties', () =>
@@ -119,31 +106,6 @@ describe('ToDoImpl', () =>
         {
             todo.owner = undefined;
             await expect(todo.saveAsync()).rejects.toThrow();
-        });
-    });
-
-    describe('showForm', () =>
-    {
-        it('should create form and set data from todo', () =>
-        {
-            todo.id = '123';
-            todo.title = 'Test';
-
-            todo.showForm();
-
-            expect(formFactoryMock.create).toHaveBeenCalledTimes(1);
-            expect(formMock.setData).toHaveBeenCalledTimes(1);
-            expect(formMock.setData).toHaveBeenCalledWith(todo.getData());
-        });
-
-        it('should create modal via overlay', () =>
-        {
-            todo.id = '';
-
-            const result = todo.showForm();
-
-            expect(overlayMock.createModal).toHaveBeenCalledTimes(1);
-            expect(result).toBe(modalMock);
         });
     });
 

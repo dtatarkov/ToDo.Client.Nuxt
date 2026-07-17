@@ -1,6 +1,7 @@
 packages:
   - 'apps/*'
   - 'packages/*'
+  - 'packages/domain/*'
   - 'packages/ui/*'
   - 'packages/infrastructure/*'
 

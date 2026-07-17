@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { ToDosOwnerBase } from '../../entities/todosOwnerBase';
-import { ToDoNotFoundException } from '../../exceptions/toDoNotFoundException';
-import { createToDoMock } from '../../mocks/todoMock';
-import { todoRepositoryMock } from '../../mocks/todoRepositoryMock';
-import { todoFactoryMock } from '../../mocks/todoFactoryMock';
+import { createToDoMock } from '../mocks/todoMock';
+import { todoRepositoryMock } from '../mocks/todoRepositoryMock';
+import { todoFactoryMock } from '../mocks/todoFactoryMock';
+import { ToDosOwnerBase } from '../../src/entities/todosOwnerBase';
+import { ToDoNotFoundException } from '../../src/exceptions/todoNotFoundException';
 
 describe('ToDosOwnerBase', () =>
 {

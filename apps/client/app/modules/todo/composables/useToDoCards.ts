@@ -1,5 +1,5 @@
+import { ToDosOwner } from '@client/domain-todo';
 import { computed, reactive } from 'vue';
-import { ToDosOwner } from '../entities/todosOwner';
 import type { ToDoCardData } from '../types/todoCardData';
 
 export function useToDoCards()
@@ -26,18 +26,20 @@ export function useToDoCards()
 
     function createToDo(): void
     {
-        const todo = todosOwner.createToDo();
-        todo.showForm();
+        // const todo = todosOwner.createToDo();
+        // todo.showForm();
     }
 
     async function editToDo(id: string): Promise<void>
     {
-        const todo = await todosOwner.getToDoByIdAsync(id);
+        console.log('editToDo:id', id);
 
-        if (todo)
-        {
-            todo.showForm();
-        }
+        // const todo = await todosOwner.getToDoByIdAsync(id);
+
+        // if (todo)
+        // {
+        //     todo.showForm();
+        // }
     }
 
     return { todoCards, initializeToDosAsync, createToDo, editToDo };

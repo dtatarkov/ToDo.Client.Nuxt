@@ -1,10 +1,10 @@
 import { ToDoDtoMapper } from "./todoDtoMapper";
-import type { ToDoGetDto } from "../types/toDoGetDto";
-import type { ToDoUpdateDto } from "../types/toDoUpdateDto";
+import type { ToDoGetDto } from "../types/todoGetDto";
+import type { ToDoUpdateDto } from "../types/todoUpdateDto";
 import type { ToDo } from "../entities/todo";
 import { DateParser } from '@client/infrastructure-datetime';
 import { ToDoFactory } from "../factories/todoFactory";
-import type { ToDoAddDto } from '../types/toDoAddDto';
+import type { ToDoAddDto } from '../types/todoAddDto';
 import { dependency } from '@client/infrastructure-di';
 
 @dependency(DateParser)
