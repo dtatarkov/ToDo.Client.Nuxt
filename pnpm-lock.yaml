@@ -440,6 +440,9 @@ importers:
       '@client/infrastructure-di':
         specifier: workspace:*
         version: link:../../infrastructure/di
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../infrastructure/messages
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared

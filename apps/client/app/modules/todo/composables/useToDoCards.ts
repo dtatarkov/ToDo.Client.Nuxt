@@ -1,6 +1,6 @@
 import { ToDosOwner } from '@client/domain-todo';
 import { computed, reactive } from 'vue';
-import type { ToDoCardData } from '../types/todoCardData';
+import type { ToDoCardData } from '@client/ui-core';
 
 export function useToDoCards()
 {

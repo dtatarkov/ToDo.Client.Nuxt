@@ -12,8 +12,7 @@
 
 <script setup lang="ts">
 import VToolbar from '@/modules/uikit/components/VToolbar.vue';
-import { VButtonGeneral, VGrid } from '@client/ui-vue';
-import VToDoCard from './VToDoCard.vue';
+import { VButtonGeneral, VGrid, VToDoCard } from '@client/ui-vue';
 import { useToDoCards } from '../composables/useToDoCards';
 
 const { todoCards, initializeToDosAsync, createToDo, editToDo } = useToDoCards();
