@@ -10,6 +10,8 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     private disposeToken = new DisposeToken();
     private initializationToken = new InitializationToken();
 
+    readonly addToDoButtonLabelKey = 'todos.toolbar.buttons.add';
+
     state = new ObservableWritableBase<ToDosWidgetViewmodelState>({
         cards: []
     });

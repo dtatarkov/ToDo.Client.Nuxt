@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 flex flex-col gap-4">
     <VToolbar>
-      <VButtonGeneral title="Добавить задание" @click="viewmodel.createToDo()" />
+      <VButtonGeneral :title="messages.getMessage(viewmodel.addToDoButtonLabelKey)" @click="viewmodel.createToDo()" />
     </VToolbar>
 
     <VGrid>
@@ -18,6 +18,9 @@ import VToDoCard from '../components/VToDoCard.vue';
 import { ToDosWidgetViewmodel } from '@client/ui-core';
 import { useService } from '../composables/useService';
 import { useViewmodel } from '../composables/useViewmodel';
+import { MessagesService } from '@client/infrastructure-messages';
+
+const messages = useService(MessagesService);
 
 const viewmodel = useService(ToDosWidgetViewmodel);
 const state = useViewmodel(viewmodel);

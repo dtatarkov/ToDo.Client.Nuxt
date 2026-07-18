@@ -91,6 +91,12 @@ export abstract class MessagesService
     abstract getMessage(key: 'button.cancel'): string;
 
     /**
+     * Label for the add button in the todos toolbar.
+     * @see {@link i18n/locales/ru.json} - key: `todos.toolbar.buttons.add`
+     */
+    abstract getMessage(key: 'todos.toolbar.buttons.add'): string;
+
+    /**
      * Fallback overload for dynamic keys (used internally by the implementation).
      * @param key - The message key
      * @param params - Optional interpolation parameters

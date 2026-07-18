@@ -1,4 +1,12 @@
 {
+  "todos": {
+    "toolbar": {
+      "buttons": {
+        "add": "Добавить задание"
+      }
+    }
+  },
+
   "todo": {
     "field": {
       "title": {

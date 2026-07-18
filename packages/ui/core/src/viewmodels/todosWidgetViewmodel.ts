@@ -7,6 +7,8 @@ export type ToDosWidgetViewmodelState = {
 
 export abstract class ToDosWidgetViewmodel extends Viewmodel<ToDosWidgetViewmodelState> implements Disposable
 {
+    abstract readonly addToDoButtonLabelKey: string;
+
     abstract createToDo(): void;
     abstract editToDo(id: string): void;
     abstract initializeAsync(): Promise<void>;
