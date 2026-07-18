@@ -2,16 +2,12 @@ import { ToDosOwner } from '@client/domain-todo';
 import { computed, reactive } from 'vue';
 import type { ToDoCardData } from '@client/ui-core';
 import { useService } from './useService';
-import { useEventDrivenRef } from './useEventDrivenRef';
+import { useObservableReadonly } from './useObservableReadonly';
 
 export function useToDoCards()
 {
     const todosOwner = useService(ToDosOwner);
-
-    const todos = useEventDrivenRef({
-        getter: () => todosOwner.getAllToDos(),
-        on: (callback, disposeToken) => todosOwner.onToDosChange(callback, disposeToken)
-    });
+    const todos = useObservableReadonly(todosOwner.todos);
 
     const todoCards = computed(() => todos.value.map<ToDoCardData>(todo => reactive({
         id: computed(() => todo.id),

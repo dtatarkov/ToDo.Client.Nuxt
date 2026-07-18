@@ -137,37 +137,4 @@ describe('ToDosOwnerBase', () =>
             expect(todo2.owner).toBe(owner);
         });
     });
-
-    describe('onToDosChange', () =>
-    {
-        it('should invoke callback when todo is added', async () =>
-        {
-            const newTodo = createToDoMock();
-            todoRepositoryMock.getAllToDosAsync.mockResolvedValue([]);
-
-            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
-            await owner.initializeToDosAsync();
-
-            const callback = vi.fn();
-
-            owner.onToDosChange(callback);
-            await owner.saveToDoAsync(newTodo);
-
-            expect(callback).toHaveBeenCalledTimes(1);
-        });
-
-        it('should invoke callback when todos are updated', async () =>
-        {
-            const mockTodos = [createToDoMock({ id: '1' })];
-            todoRepositoryMock.getAllToDosAsync.mockResolvedValue(mockTodos);
-
-            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
-            const callback = vi.fn();
-
-            owner.onToDosChange(callback);
-            await owner.initializeToDosAsync();
-
-            expect(callback).toHaveBeenCalledTimes(1);
-        });
-    });
 });

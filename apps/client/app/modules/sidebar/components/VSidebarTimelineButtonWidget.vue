@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { VToggleIcon } from '@client/ui-vue';
+import { useObservableReadonly, VToggleIcon } from '@client/ui-vue';
 import { Icon } from '@client/shared';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 

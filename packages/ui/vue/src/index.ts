@@ -5,6 +5,7 @@ export type { CardData } from './types/cardData';
 export { provideServicesContainer } from './composables/provideServicesContainer';
 export { useService } from './composables/useService';
 export { useEventDrivenRef } from './composables/useEventDrivenRef';
+export { useObservableReadonly } from './composables/useObservableReadonly';
 
 // Utils
 export { isEmptySlot } from './utils/isEmptySlot';

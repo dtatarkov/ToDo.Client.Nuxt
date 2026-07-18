@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Sidebar } from '../entities/sidebar';
+import { useObservableReadonly } from '@client/ui-vue';
 
 const sidebar = useService(Sidebar);
 

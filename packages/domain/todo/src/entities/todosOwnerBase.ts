@@ -4,8 +4,7 @@ import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/todoNotFoundException";
 import { dependency } from '@client/infrastructure-di';
 import { ToDoFactory } from '../factories/todoFactory';
-import { EntityEvent } from '@client/shared';
-import type { DisposeToken, Action } from '@client/shared';
+import { EntityEvent, ObservableArrayBase } from '@client/shared';
 
 
 @dependency(ToDosRepository)
@@ -13,8 +12,9 @@ import type { DisposeToken, Action } from '@client/shared';
 export class ToDosOwnerBase extends ToDosOwner
 {
   private initializationPromise: Promise<void> | undefined;
-  private todos = new Array<ToDo>();
   private todosChangeEvent = new EntityEvent<ToDo[]>();
+
+  todos = new ObservableArrayBase<ToDo>();
 
   constructor(
     private todosRepository: ToDosRepository,
@@ -26,19 +26,14 @@ export class ToDosOwnerBase extends ToDosOwner
 
   override getAllToDos(): ToDo[]
   {
-    return this.todos;
-  }
-
-  override onToDosChange(callback: Action<[ToDo[]]>, disposeToken?: DisposeToken): void
-  {
-    this.todosChangeEvent.on(callback, disposeToken);
+    return this.todos.value;
   }
 
   override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
   {
     await this.initializeToDosAsync();
 
-    return this.todos.find(todo => todo.id === id);
+    return this.todos.value.find(todo => todo.id === id);
   }
 
   override initializeToDosAsync(): Promise<void>
@@ -72,7 +67,7 @@ export class ToDosOwnerBase extends ToDosOwner
     if (todo.isNew)
     {
       this.todosRepository.addToDoAsync(todo);
-      this.addToDo(todo);
+      this.todos.add(todo);
     }
     else
     {
@@ -90,24 +85,18 @@ export class ToDosOwnerBase extends ToDosOwner
 
   override[Symbol.dispose](): void
   {
-    this.todosChangeEvent[Symbol.dispose]();
+    this.todos[Symbol.dispose]();
   }
 
   private assertNewOrExistingToDo(todo: ToDo): void
   {
     if (!todo.isNew)
     {
-      if (!this.todos.some(t => t.id === todo.id))
+      if (!this.todos.value.some(t => t.id === todo.id))
       {
         throw new ToDoNotFoundException(todo.id);
       }
     }
-  }
-
-  private addToDo(todo: ToDo)
-  {
-    this.todos.push(todo);
-    this.todosChangeEvent.emit(this.todos);
   }
 
   private async updateToDosInternalAsync(): Promise<void>
@@ -119,7 +108,6 @@ export class ToDosOwnerBase extends ToDosOwner
       todo.owner = this;
     }
 
-    this.todos = todos;
-    this.todosChangeEvent.emit(this.todos);
+    this.todos.value = todos;
   }
 }
