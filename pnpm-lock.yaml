@@ -428,9 +428,18 @@ importers:
 
   packages/ui/core:
     devDependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../domain/todo
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
       '@client/infrastructure-eslint':
         specifier: workspace:*
         version: link:../../infrastructure/eslint
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
 
   packages/ui/vue:
     dependencies:

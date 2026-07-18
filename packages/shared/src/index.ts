@@ -32,6 +32,7 @@ export { ValueMapper } from './interfaces/valueMapper';
 // Mappers
 export { OptionalValueMapper } from './mappers/optionalValueMapper';
 
+// Types
 export type { AbstractConstructor } from './types/abstractConstructor';
 export type { Action } from './types/action';
 export type { Constructor } from './types/constructor';

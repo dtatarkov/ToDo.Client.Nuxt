@@ -1,11 +1,11 @@
 <template>
   <div class="p-4 flex flex-col gap-4">
     <VToolbar>
-      <VButtonGeneral title="Добавить задание" @click="handleAddToDoButtonClick" />
+      <VButtonGeneral title="Добавить задание" @click="viewmodel.createToDo()" />
     </VToolbar>
 
     <VGrid>
-      <VToDoCard v-for="card in todoCards" v-bind="card" :key="card.id" @edit="handleEditToDoRequest(card.id)" />
+      <VToDoCard v-for="card in state.cards" v-bind="card" :key="card.id" @edit="viewmodel.editToDo(card.id)" />
     </VGrid>
   </div>
 </template>
@@ -14,17 +14,13 @@
 import VToolbar from '../components/VToolbar.vue';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import VGrid from '../components/VGrid.vue';
-import { useToDoCards } from '../composables/useToDoCards';
+import VToDoCard from '../components/VToDoCard.vue';
+import { ToDosWidgetViewmodel } from '@client/ui-core';
+import { useService } from '../composables/useService';
+import { useViewmodel } from '../composables/useViewmodel';
 
-const { todoCards, initializeToDosAsync, createToDo, editToDo } = useToDoCards();
+const viewmodel = useService(ToDosWidgetViewmodel);
+const state = useViewmodel(viewmodel);
 
-function handleAddToDoButtonClick() {
-  createToDo();
-}
-
-function handleEditToDoRequest(id: string) {
-  editToDo(id);
-}
-
-await initializeToDosAsync();
+await viewmodel.initializeAsync();
 </script>
