@@ -1,4 +1,4 @@
-import { ToDosOwner } from "./todosOwner";
+import { ToDosStore } from "./todosStore";
 import type { ToDo } from "./todo";
 import { ToDosRepository } from "../repositories/todosRepository";
 import { ToDoNotFoundException } from "../exceptions/todoNotFoundException";
@@ -9,7 +9,7 @@ import { EntityEvent, ObservableArrayBase } from '@client/shared';
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)
-export class ToDosOwnerBase extends ToDosOwner
+export class ToDosStoreBase extends ToDosStore
 {
   private initializationPromise: Promise<void> | undefined;
   private todosChangeEvent = new EntityEvent<ToDo[]>();

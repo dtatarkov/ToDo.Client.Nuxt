@@ -1,4 +1,4 @@
-import type { ToDosOwner } from './todosOwner';
+import type { ToDosStore } from './todosStore';
 import type { ToDoData } from '../types/todoData';
 
 export abstract class ToDo
@@ -8,7 +8,7 @@ export abstract class ToDo
   abstract description: string;
   abstract completionDatePlanned: Date | undefined;
   abstract completionDateActual: Date | undefined;
-  abstract owner: ToDosOwner | undefined;
+  abstract owner: ToDosStore | undefined;
 
   abstract get isNew(): boolean;
   abstract getData(): ToDoData;

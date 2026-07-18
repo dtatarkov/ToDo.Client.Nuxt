@@ -2,7 +2,7 @@ import type { ToDo } from "./todo";
 import type { ObservableReadonly } from '@client/shared';
 
 
-export abstract class ToDosOwner implements Disposable
+export abstract class ToDosStore implements Disposable
 {
   abstract todos: ObservableReadonly<ToDo[]>;
 

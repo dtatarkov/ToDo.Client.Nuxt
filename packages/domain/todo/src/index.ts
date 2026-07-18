@@ -4,8 +4,8 @@ export type { ToDoUpdateDto } from './types/todoUpdateDto';
 export type { ToDoData } from './types/todoData';
 
 export { ToDo } from './entities/todo';
-export { ToDosOwner } from './entities/todosOwner';
-export { ToDosOwnerBase } from './entities/todosOwnerBase';
+export { ToDosStore as ToDosOwner } from './entities/todosStore';
+export { ToDosStoreBase as ToDosOwnerBase } from './entities/todosStoreBase';
 
 export { ToDoDtoMapper } from './mappers/todoDtoMapper';
 export { ToDoDtoMapperImpl } from './mappers/todoDtoMapperImpl';

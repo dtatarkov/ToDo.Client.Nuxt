@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ToDosOwner } from '../../src/entities/todosOwner';
+import type { ToDosStore } from '../../src/entities/todosStore';
 import type { ToDo } from '../../src/entities/todo';
 import { createObservableReadonlyMock } from '@client/shared/mocks';
 
@@ -13,4 +13,4 @@ export const todosOwnerMock = {
     createToDo: vi.fn(),
 
     [Symbol.dispose]: vi.fn(),
-} satisfies ToDosOwner;
+} satisfies ToDosStore;
