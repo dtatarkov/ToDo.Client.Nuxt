@@ -437,6 +437,9 @@ importers:
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared

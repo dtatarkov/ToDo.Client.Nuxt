@@ -19,6 +19,7 @@
     "@client/ui-core": "workspace:*",
     "@client/shared": "workspace:*",    
     "@client/infrastructure-datetime": "workspace:*",
+    "@client/infrastructure-di": "workspace:*",
     "vue": "catalog:",
     "@nuxt/ui": "catalog:",
     "tailwindcss": "catalog:"

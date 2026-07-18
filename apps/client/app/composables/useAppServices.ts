@@ -21,10 +21,12 @@ import { AppNotificationsStore } from '@/modules/notifications/entities/appNotif
 import { AppNotificationsStoreBase } from '@/modules/notifications/entities/appNotificationsStoreBase';
 import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosOwner, ToDosOwnerBase, ToDosRepository } from '@client/domain-todo';
+import { provideServicesContainer } from '@client/ui-vue';
+import { ServicesContainer } from '@client/infrastructure-di';
 
 export function useAppServices()
 {
-    const container = useServicesContainer();
+    const container = new ServicesContainer();
     const config = useRuntimeConfig();
     const ssrLoader = useSSRLoader();
     const { t } = useI18n();
@@ -59,4 +61,6 @@ export function useAppServices()
             locale: config.public.locale,
         }))
         .asSingleton();
+
+    provideServicesContainer(container);
 }

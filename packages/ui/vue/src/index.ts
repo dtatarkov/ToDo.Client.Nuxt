@@ -1,6 +1,10 @@
 // Types
 export type { CardData } from './types/cardData';
 
+// Composables
+export { provideServicesContainer } from './composables/provideServicesContainer';
+export { useService } from './composables/useService';
+
 // Utils
 export { isEmptySlot } from './utils/isEmptySlot';
 
