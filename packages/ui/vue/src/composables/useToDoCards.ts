@@ -1,4 +1,4 @@
-import { ToDosOwner } from '@client/domain-todo';
+import { ToDosStore } from '@client/domain-todo';
 import { computed, reactive } from 'vue';
 import type { ToDoCardData } from '@client/ui-core';
 import { useService } from './useService';
@@ -6,7 +6,7 @@ import { useObservableReadonly } from './useObservableReadonly';
 
 export function useToDoCards()
 {
-    const todosOwner = useService(ToDosOwner);
+    const todosOwner = useService(ToDosStore);
     const todos = useObservableReadonly(todosOwner.todos);
 
     const todoCards = computed(() => todos.value.map<ToDoCardData>(todo => reactive({

@@ -5,7 +5,7 @@ import { todoFactoryMock } from '../mocks/todoFactoryMock';
 import { ToDosStoreBase } from '../../src/entities/todosStoreBase';
 import { ToDoNotFoundException } from '../../src/exceptions/todoNotFoundException';
 
-describe('ToDosOwnerBase', () =>
+describe('ToDosStoreBase', () =>
 {
     beforeEach(() =>
     {

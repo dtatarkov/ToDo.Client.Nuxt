@@ -20,7 +20,7 @@ import { SidebarBase } from '@/modules/sidebar/entities/sidebarBase';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
 import { AppNotificationsStoreBase } from '@/modules/notifications/entities/appNotificationsStoreBase';
 import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
-import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosOwner, ToDosOwnerBase, ToDosRepository } from '@client/domain-todo';
+import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
 
@@ -33,7 +33,7 @@ export function useAppServices()
 
     container.bind(ToDosRepository).toDynamicValue(() => useToDosRepository()).asTransient();
     container.bind(ToDoDtoMapper).to(ToDoDtoMapperImpl).asTransient();
-    container.bind(ToDosOwner).to(ToDosOwnerBase).asSingleton();
+    container.bind(ToDosStore).to(ToDosStoreBase).asSingleton();
     container.bind(ToDoFactory).to(ToDoFactoryImpl).asTransient();
 
     container.bind(Overlay).to(OverlayBase).asSingleton();
