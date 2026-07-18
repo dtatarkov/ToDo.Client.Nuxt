@@ -12,22 +12,6 @@ describe('ToDosOwnerBase', () =>
         vi.resetAllMocks();
     });
 
-    describe('getAllToDos', () =>
-    {
-        it('should return array with todos', async () =>
-        {
-            const mockTodos = [createToDoMock({ id: '1' }), createToDoMock({ id: '2' })];
-            todoRepositoryMock.getAllToDosAsync.mockReturnValue(mockTodos);
-
-            const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
-            await owner.initializeToDosAsync();
-            const todos = owner.getAllToDos();
-
-            expect(todos).toEqual(mockTodos);
-            expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(1);
-        });
-    });
-
     describe('updateToDosAsync', () =>
     {
         it('should update todos', async () =>
@@ -43,7 +27,7 @@ describe('ToDosOwnerBase', () =>
             await owner.initializeToDosAsync();
             await owner.updateToDosAsync();
 
-            const todos = owner.getAllToDos();
+            const todos = owner.todos.value;
             expect(todos).toEqual(updatedTodos);
             expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(2);
         });
@@ -56,7 +40,7 @@ describe('ToDosOwnerBase', () =>
             const owner = new ToDosOwnerBase(todoRepositoryMock, todoFactoryMock);
             await owner.updateToDosAsync();
 
-            const todos = owner.getAllToDos();
+            const todos = owner.todos.value;
             expect(todos).toEqual(mockTodos);
             expect(todoRepositoryMock.getAllToDosAsync).toHaveBeenCalledTimes(1);
         });
@@ -88,7 +72,7 @@ describe('ToDosOwnerBase', () =>
 
             expect(todoRepositoryMock.addToDoAsync).toHaveBeenCalledWith(newTodo);
             // Verify that the todo is added to the internal list
-            const todos = owner.getAllToDos();
+            const todos = owner.todos.value;
             expect(todos).toContain(newTodo);
         });
 

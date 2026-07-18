@@ -24,11 +24,6 @@ export class ToDosOwnerBase extends ToDosOwner
     super();
   }
 
-  override getAllToDos(): ToDo[]
-  {
-    return this.todos.value;
-  }
-
   override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
   {
     await this.initializeToDosAsync();

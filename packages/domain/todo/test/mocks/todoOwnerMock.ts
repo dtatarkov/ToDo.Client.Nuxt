@@ -1,12 +1,11 @@
 import { vi } from 'vitest';
 import type { ToDosOwner } from '../../src/entities/todosOwner';
 import type { ToDo } from '../../src/entities/todo';
-import { createObservableArrayMock } from '@client/shared/mocks';
+import { createObservableReadonlyMock } from '@client/shared/mocks';
 
 export const todosOwnerMock = {
-    todos: createObservableArrayMock<ToDo>(),
+    todos: createObservableReadonlyMock(new Array<ToDo>()),
 
-    getAllToDos: vi.fn(),
     getToDoByIdAsync: vi.fn(),
     updateToDosAsync: vi.fn(),
     initializeToDosAsync: vi.fn(),

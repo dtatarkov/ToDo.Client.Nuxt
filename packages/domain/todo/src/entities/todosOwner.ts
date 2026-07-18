@@ -1,12 +1,11 @@
 import type { ToDo } from "./todo";
-import type { ObservableArray } from '@client/shared';
+import type { ObservableReadonly } from '@client/shared';
 
 
 export abstract class ToDosOwner implements Disposable
 {
-  abstract todos: ObservableArray<ToDo>;
+  abstract todos: ObservableReadonly<ToDo[]>;
 
-  abstract getAllToDos(): ToDo[];
   abstract getToDoByIdAsync(id: string): Promise<ToDo | undefined>;
   abstract updateToDosAsync(): Promise<void>;
   abstract initializeToDosAsync(): Promise<void>;
