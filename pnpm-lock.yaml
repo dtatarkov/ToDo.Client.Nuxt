@@ -434,6 +434,9 @@ importers:
 
   packages/ui/vue:
     dependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../domain/todo
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../infrastructure/datetime

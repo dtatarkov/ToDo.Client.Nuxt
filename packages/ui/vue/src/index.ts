@@ -4,6 +4,7 @@ export type { CardData } from './types/cardData';
 // Composables
 export { provideServicesContainer } from './composables/provideServicesContainer';
 export { useService } from './composables/useService';
+export { useEventDrivenRef } from './composables/useEventDrivenRef';
 
 // Utils
 export { isEmptySlot } from './utils/isEmptySlot';
@@ -18,3 +19,6 @@ export { default as VInfoBlock } from './components/VInfoBlock.vue';
 export { default as VInfoRow } from './components/VInfoRow.vue';
 export { default as VToolbar } from './components/VToolbar.vue';
 export { default as VToDoCard } from './components/VToDoCard.vue';
+
+//Widgets
+export { default as VToDosWidget } from './widgets/VToDosWidget.vue';

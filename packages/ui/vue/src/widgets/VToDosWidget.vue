@@ -11,8 +11,9 @@
 </template>
 
 <script setup lang="ts">
-import VToolbar from '@/modules/uikit/components/VToolbar.vue';
-import { VButtonGeneral, VGrid, VToDoCard } from '@client/ui-vue';
+import VToolbar from '../components/VToolbar.vue';
+import VButtonGeneral from '../components/VButtonGeneral.vue';
+import VGrid from '../components/VGrid.vue';
 import { useToDoCards } from '../composables/useToDoCards';
 
 const { todoCards, initializeToDosAsync, createToDo, editToDo } = useToDoCards();

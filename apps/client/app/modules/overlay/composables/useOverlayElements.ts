@@ -1,3 +1,4 @@
+import { useEventDrivenRef } from '@client/ui-vue';
 import { Overlay } from '../entities/overlay';
 
 export function useOverlayElements()

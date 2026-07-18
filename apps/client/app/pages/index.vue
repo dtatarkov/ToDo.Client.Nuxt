@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import VToDosWidget from '@/modules/todo/components/VToDosWidget.vue';
+import { VToDosWidget } from '@client/ui-vue';
 </script>

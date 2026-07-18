@@ -16,6 +16,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@client/domain-todo": "workspace:*",
     "@client/ui-core": "workspace:*",
     "@client/shared": "workspace:*",    
     "@client/infrastructure-datetime": "workspace:*",
