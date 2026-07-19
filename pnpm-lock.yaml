@@ -330,6 +330,19 @@ importers:
         specifier: 'catalog:'
         version: 3.2.5(typescript@5.9.3)
 
+  packages/domain/entitySchemes:
+    dependencies:
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
+
   packages/domain/todo:
     dependencies:
       '@client/infrastructure-datetime':
