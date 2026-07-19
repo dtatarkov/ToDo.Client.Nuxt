@@ -7,12 +7,6 @@ import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
 import { Timeline } from '@/modules/notifications/entities/timeline';
 import { TimelineBase } from '@/modules/notifications/entities/timelineBase';
-import { FormElementsFactory } from '@/modules/forms/factories/formElementsFactory';
-import { FormFactory } from '@/modules/forms/factories/formFactory';
-import { InputElementsFactory } from '@/modules/forms/factories/inputElementsFactory';
-import { InputElementsFactoryImpl } from '@/modules/forms/factories/inputElementsFactoryImpl';
-import { FormFactoryImpl } from '@/modules/forms/factories/formFactoryImpl';
-import { FormElementsFactoryImpl } from '@/modules/forms/factories/formElementsFactoryImpl';
 import { Overlay } from '@/modules/overlay/entities/overlay';
 import { OverlayBase } from '@/modules/overlay/entities/overlayBase';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
@@ -23,7 +17,7 @@ import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-mes
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
-import { InfoBlockViewmodel, InfoBlockViewmodelImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
+import { FormElementsFactory, FormElementsFactoryImpl, FormFactory, FormFactoryImpl, InfoBlockViewmodel, InfoBlockViewmodelImpl, InputElementsFactory, InputElementsFactoryImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
 
 export function useAppServices()
 {

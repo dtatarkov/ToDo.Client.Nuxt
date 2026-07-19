@@ -28,7 +28,7 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
 
   private children = {
     content: () => this.content?.vnode,
-    controls: () => this.buttons.map(control => control.vnode)
+    controls: () => undefined,
   };
 
   private onCloseFn = () => this.close();

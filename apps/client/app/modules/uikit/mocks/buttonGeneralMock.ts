@@ -1,17 +1,13 @@
 import { vi } from 'vitest';
 import type { ButtonGeneral } from '../entities/buttons/buttonGeneral';
-import type { VNode } from 'vue';
 
 export function createButtonGeneralMock()
 {
     return {
-        key: '',
         title: '',
         color: 'neutral',
         isDisabled: false,
         isLoading: false,
-
-        vnode: {} as VNode,
 
         getCommand: vi.fn(),
         setCommand: vi.fn(),

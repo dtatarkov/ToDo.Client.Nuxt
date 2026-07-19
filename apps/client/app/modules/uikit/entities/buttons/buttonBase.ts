@@ -5,7 +5,7 @@ import type { AsyncCommand, Action } from '@client/shared';
 
 
 
-export abstract class ButtonBase extends Button implements Disposable
+export abstract class ButtonBase extends Button
 {
     protected onClickEvent = new EntityEvent();
     protected disposeToken = new DisposeToken();
