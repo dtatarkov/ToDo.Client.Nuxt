@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDoBase } from '../../src/entities/todoBase';
-import { todosOwnerMock } from '../mocks/todoOwnerMock';
+import { todosStoreMock } from '../mocks/todosStoreMock';
 
 describe('ToDoImpl', () =>
 {
@@ -70,7 +70,7 @@ describe('ToDoImpl', () =>
             todo.title = 'Original';
             todo.description = 'Desc';
             todo.completionDatePlanned = new Date('2025-01-01');
-            todo.owner = todosOwnerMock;
+            todo.owner = todosStoreMock;
 
             const clone = todo.clone();
 
@@ -79,7 +79,7 @@ describe('ToDoImpl', () =>
             expect(clone.title).toBe('Original');
             expect(clone.description).toBe('Desc');
             expect(clone.completionDatePlanned).toEqual(new Date('2025-01-01'));
-            expect(clone.owner).toBe(todosOwnerMock);
+            expect(clone.owner).toBe(todosStoreMock);
         });
 
         it('should not share internal data references', () =>
@@ -95,11 +95,11 @@ describe('ToDoImpl', () =>
     {
         it('should call owner.saveToDoAsync with itself', async () =>
         {
-            todo.owner = todosOwnerMock;
+            todo.owner = todosStoreMock;
 
             await todo.saveAsync();
-            expect(todosOwnerMock.saveToDoAsync).toHaveBeenCalledTimes(1);
-            expect(todosOwnerMock.saveToDoAsync).toHaveBeenCalledWith(todo);
+            expect(todosStoreMock.saveToDoAsync).toHaveBeenCalledTimes(1);
+            expect(todosStoreMock.saveToDoAsync).toHaveBeenCalledWith(todo);
         });
 
         it('should throw if owner is undefined', async () =>

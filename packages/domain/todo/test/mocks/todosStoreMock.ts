@@ -3,7 +3,7 @@ import type { ToDosStore } from '../../src/entities/todosStore';
 import type { ToDo } from '../../src/entities/todo';
 import { createObservableReadonlyMock } from '@client/shared/mocks';
 
-export const todosOwnerMock = {
+export const todosStoreMock = {
     todos: createObservableReadonlyMock(new Array<ToDo>()),
 
     getToDoByIdAsync: vi.fn(),
