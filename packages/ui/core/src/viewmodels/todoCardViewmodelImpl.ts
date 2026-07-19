@@ -23,13 +23,13 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
         this.disposeToken.registerDisposable(this.infoBlock);
     }
 
-    setData(data: ToDoCardViewmodelData)
+    override setData(data: ToDoCardViewmodelData)
     {
         this.updateInfoBlock(data);
         this.state.value = this.createState();
     }
 
-    [Symbol.dispose]()
+    override[Symbol.dispose]()
     {
         this.state[Symbol.dispose]();
     }

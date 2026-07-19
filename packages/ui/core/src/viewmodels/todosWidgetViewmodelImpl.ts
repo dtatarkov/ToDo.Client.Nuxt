@@ -23,7 +23,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         super();
     }
 
-    createToDo(): void
+    override createToDo(): void
     {
         console.log('createToDo');
 
@@ -31,7 +31,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         // todo.showForm();
     }
 
-    editToDo(id: string): void
+    override editToDo(id: string): void
     {
         console.log('editToDo:id', id);
 
@@ -43,7 +43,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         // }
     }
 
-    async initializeAsync()
+    override async initializeAsync()
     {
         if (this.initializationToken.isInitialized)
         {
@@ -61,7 +61,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         await this.todosStore.initializeToDosAsync();
     }
 
-    [Symbol.dispose]()
+    override[Symbol.dispose]()
     {
         this.disposeToken[Symbol.dispose]();
     }

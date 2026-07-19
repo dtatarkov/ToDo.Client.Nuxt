@@ -15,19 +15,19 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
         super();
     }
 
-    addRow(labelKey: string, content: string): void
+    override addRow(labelKey: string, content: string): void
     {
         this.rows.push({ labelKey, content });
         this.updateState();
     }
 
-    clear(): void
+    override clear(): void
     {
         this.rows = [];
         this.updateState();
     }
 
-    [Symbol.dispose]()
+    override[Symbol.dispose]()
     {
         this.state[Symbol.dispose]();
     }
