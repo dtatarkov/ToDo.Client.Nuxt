@@ -18,6 +18,7 @@ declare module 'vue' {
     UInput: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
     UInputDate: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/InputDate.vue')['default']
     UInputTime: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/InputTime.vue')['default']
+    UModal: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Modal.vue')['default']
     UTextarea: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Textarea.vue')['default']
   }
 }

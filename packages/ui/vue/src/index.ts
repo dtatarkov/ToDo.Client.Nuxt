@@ -1,5 +1,7 @@
 // Types
 export type { CardData } from './types/cardData';
+export type { ModalData } from './types/modalData';
+export type { ModalState } from './types/modalState';
 
 // Composables
 export { provideServicesContainer } from './composables/provideServicesContainer';
@@ -25,6 +27,7 @@ export { default as VInputDateTime } from './components/VInputDateTime.vue';
 export { default as VInputText } from './components/VInputText.vue';
 export { default as VInputTextarea } from './components/VInputTextarea.vue';
 export { default as VInputTime } from './components/VInputTime.vue';
+export { default as VModal } from './components/VModal.vue';
 
 //Widgets
 export { default as VToDosWidget } from './widgets/VToDosWidget.vue';

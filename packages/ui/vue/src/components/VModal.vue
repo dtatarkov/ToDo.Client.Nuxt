@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import type { ModalData } from '../types/modalData';
 import type { ModalState } from '../types/modalState';
 

@@ -2,20 +2,15 @@ import { h, shallowReactive } from 'vue';
 import type { Modal, ModalConfiguration } from "./modal";
 import type { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import { ModalButtonConfirmConfiguratorBase } from './modalButtonConfirmConfiguratorBase';
-import VModal from '../components/VModal.vue';
 import { getUniqueId, isDisposable } from '@client/shared';
 import type { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import type { ModalsStore } from './modalsStore';
 import type { UIElement } from '@/modules/uikit/entities/uiElement';
-
 import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGeneral';
 import type { Func, AsyncCommand } from '@client/shared';
-import type { ModalData } from '../types/modalData';
-
-
 import { OverlayElementBase } from './overlayElementBase';
-import type { ModalState } from '../types/modalState';
 import type { MessagesService } from '@client/infrastructure-messages';
+import { VModal, type ModalData, type ModalState } from '@client/ui-vue';
 
 export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {
