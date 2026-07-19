@@ -13,6 +13,7 @@
     "@client/domain-todo": "workspace:*",
     "@client/infrastructure-eslint": "workspace:*",
     "@client/infrastructure-di": "workspace:*",
+    "@client/infrastructure-datetime": "workspace:*",
     "@client/shared": "workspace:*"
   }
 }

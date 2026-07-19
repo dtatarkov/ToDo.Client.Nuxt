@@ -23,3 +23,6 @@ export { default as VToDoCard } from './components/VToDoCard.vue';
 
 //Widgets
 export { default as VToDosWidget } from './widgets/VToDosWidget.vue';
+
+// Viewmodels
+export { ToDoCardViewmodel } from '@client/ui-core';

@@ -2,6 +2,8 @@ import { type Preview, setup } from '@storybook/vue3-vite';
 import ui from '@nuxt/ui/vue-plugin';
 import '@client/ui-vue/css';
 import './preview.css';
+import { useStorybookServices } from '../app/composables/useStorybookServices';
+import './i18n-plugin';
 
 setup(app =>
 {
@@ -17,6 +19,17 @@ const preview: Preview = {
       },
     },
   },
+
+  decorators: [
+    () =>
+    {
+      useStorybookServices();
+
+      return {
+        template: `<story/>`
+      };
+    }
+  ],
 
   tags: ['autodocs'],
 };

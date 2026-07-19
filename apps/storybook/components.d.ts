@@ -11,6 +11,8 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     UButton: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
     UCard: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
   }

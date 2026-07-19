@@ -23,7 +23,7 @@ import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-mes
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
-import { ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
+import { InfoBlockViewmodel, InfoBlockViewmodelImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
 
 export function useAppServices()
 {
@@ -52,6 +52,8 @@ export function useAppServices()
     container.bind(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
 
     container.bind(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
+    container.bind(ToDoCardViewmodel).to(ToDoCardViewmodelImpl).asTransient();
+    container.bind(InfoBlockViewmodel).to(InfoBlockViewmodelImpl).asTransient();
 
     container.bind(DateParser).to(DateParserImpl).asTransient();
     container.bind(DateFormatter).to(DateFormatterImpl).asTransient();

@@ -35,6 +35,16 @@ export class DisposeToken implements Disposable
         this.disposeHandlers.add(handler);
     }
 
+    registerDisposable(disposable: Disposable)
+    {
+        this.assertNotDisposed();
+
+        this.disposeHandlers.add(() =>
+        {
+            disposable[Symbol.dispose]();
+        });
+    }
+
     assertNotDisposed(): void
     {
         if (this.isDisposedInternal)
