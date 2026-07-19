@@ -16,8 +16,10 @@
 
 <script setup lang="ts">
 import { OptionalValueMapper  } from '@client/shared';
-import type { InputTimeData } from '@/modules/uikit/types/inputTimeData';
 import { TimeMapper } from '@client/infrastructure-datetime';
+import type { InputTimeData } from '../types/inputTimeData';
+import { computed } from 'vue';
+import { useService } from '../composables/useService';
 
 defineOptions({
   inheritAttrs: false

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InputTextareaData } from '@/modules/uikit/types/inputTextareaData';
+import type { InputTextareaData } from '../types/inputTextareaData';
 
 defineOptions({
   inheritAttrs: false

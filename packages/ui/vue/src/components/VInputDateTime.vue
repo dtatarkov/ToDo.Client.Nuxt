@@ -23,8 +23,9 @@
 import { getTime, setTime } from '@client/infrastructure-datetime';
 import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
-import type { InputDateTimeData } from '@/modules/uikit/types/inputDateTimeData';
 import { postfixNotEmptyString } from '@client/shared';
+import type { InputDateTimeData } from '../types/inputDateTimeData.js';
+import { computed, shallowRef, watchEffect } from 'vue';
 
 
 

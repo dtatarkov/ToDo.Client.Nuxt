@@ -20,6 +20,11 @@ export { default as VInfoBlock } from './components/VInfoBlock.vue';
 export { default as VInfoRow } from './components/VInfoRow.vue';
 export { default as VToolbar } from './components/VToolbar.vue';
 export { default as VToDoCard } from './components/VToDoCard.vue';
+export { default as VInputDate } from './components/VInputDate.vue';
+export { default as VInputDateTime } from './components/VInputDateTime.vue';
+export { default as VInputText } from './components/VInputText.vue';
+export { default as VInputTextarea } from './components/VInputTextarea.vue';
+export { default as VInputTime } from './components/VInputTime.vue';
 
 //Widgets
 export { default as VToDosWidget } from './widgets/VToDosWidget.vue';
