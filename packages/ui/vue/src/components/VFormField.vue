@@ -1,12 +1,20 @@
 <script setup lang="ts">
 import { isStringEmpty } from '@client/shared';
 import { computed } from 'vue';
+import { useMessages } from '../composables/useMessages';
+import type { MessageKey } from '@client/infrastructure-messages';
+
+defineOptions({
+  inheritAttrs : false,
+});
 
 type Props = {
  name?: string;
- label?: string;
+ labelKey?: MessageKey;
  help?: string;
 }
+
+const { getMessage } = useMessages();
 
 const props = defineProps<Props>();  
 const hasHelp = computed(() => !isStringEmpty(props.help));
@@ -19,7 +27,7 @@ const uiModifiers = computed(() => ({
 </script>
 
 <template>
-  <UFormField :name="props.name" :label="props.label" :help="props.help" :ui="uiModifiers">
+  <UFormField :name="props.name" :label="getMessage(props.labelKey)" :help="props.help" :ui="uiModifiers">
     <slot />
   </UFormField>
 </template>

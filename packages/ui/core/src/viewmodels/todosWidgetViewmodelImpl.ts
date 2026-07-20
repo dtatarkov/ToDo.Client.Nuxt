@@ -3,6 +3,7 @@ import { ToDosWidgetViewmodel, type ToDosWidgetViewmodelState } from './todosWid
 import { ToDosStore, type ToDo } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
 import type { ToDoCardData } from '../types/todoCardData';
+import type { MessageKey } from '@client/infrastructure-messages';
 
 @dependency(ToDosStore)
 export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
@@ -10,7 +11,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
     private disposeToken = new DisposeToken();
     private initializationToken = new InitializationToken();
 
-    readonly addToDoButtonLabelKey = 'todos.toolbar.buttons.add';
+    readonly addToDoButtonLabelKey: MessageKey = 'todos.toolbar.buttons.add';
 
     state = new ObservableWritableBase<ToDosWidgetViewmodelState>({
         cards: []

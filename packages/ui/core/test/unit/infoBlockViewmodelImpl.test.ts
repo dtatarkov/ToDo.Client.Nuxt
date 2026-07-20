@@ -25,12 +25,12 @@ describe('InfoBlockViewmodelImpl', () =>
     {
         it('should add a row with labelKey and content', () =>
         {
-            viewmodel.addRow('key1', 'Content 1');
+            viewmodel.addRow('todo.card.completeBy', 'Content 1');
 
             expect(viewmodel.state.value.rows).toHaveLength(1);
 
             expect(viewmodel.state.value.rows[0]).toEqual({
-                labelKey: 'key1',
+                labelKey: 'todo.card.completeBy',
                 content: 'Content 1',
             });
 
@@ -39,14 +39,12 @@ describe('InfoBlockViewmodelImpl', () =>
 
         it('should add multiple rows in order', () =>
         {
-            viewmodel.addRow('key1', 'Content 1');
-            viewmodel.addRow('key2', 'Content 2');
-            viewmodel.addRow('key3', 'Content 3');
+            viewmodel.addRow('todo.card.completeBy', 'Content 1');
+            viewmodel.addRow('todo.card.completed', 'Content 2');
 
-            expect(viewmodel.state.value.rows).toHaveLength(3);
-            expect(viewmodel.state.value.rows[0]).toEqual({ labelKey: 'key1', content: 'Content 1' });
-            expect(viewmodel.state.value.rows[1]).toEqual({ labelKey: 'key2', content: 'Content 2' });
-            expect(viewmodel.state.value.rows[2]).toEqual({ labelKey: 'key3', content: 'Content 3' });
+            expect(viewmodel.state.value.rows).toHaveLength(2);
+            expect(viewmodel.state.value.rows[0]).toEqual({ labelKey: 'todo.card.completeBy', content: 'Content 1' });
+            expect(viewmodel.state.value.rows[1]).toEqual({ labelKey: 'todo.card.completed', content: 'Content 2' });
             expect(viewmodel.state.value.hasRows).toBe(true);
         });
 
@@ -54,7 +52,7 @@ describe('InfoBlockViewmodelImpl', () =>
         {
             expect(viewmodel.state.value.hasRows).toBe(false);
 
-            viewmodel.addRow('key1', 'Content 1');
+            viewmodel.addRow('todo.card.completeBy', 'Content 1');
             expect(viewmodel.state.value.hasRows).toBe(true);
         });
     });
@@ -63,11 +61,10 @@ describe('InfoBlockViewmodelImpl', () =>
     {
         it('should clear all rows', () =>
         {
-            viewmodel.addRow('key1', 'Content 1');
-            viewmodel.addRow('key2', 'Content 2');
-            viewmodel.addRow('key3', 'Content 3');
+            viewmodel.addRow('todo.card.completeBy', 'Content 1');
+            viewmodel.addRow('todo.card.completed', 'Content 2');
 
-            expect(viewmodel.state.value.rows).toHaveLength(3);
+            expect(viewmodel.state.value.rows).toHaveLength(2);
 
             viewmodel.clear();
 

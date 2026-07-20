@@ -1,3 +1,5 @@
+import type { MessageKey } from '../types/messageKey';
+
 export abstract class MessagesService
 {
     /**
@@ -101,5 +103,5 @@ export abstract class MessagesService
      * @param key - The message key
      * @param params - Optional interpolation parameters
      */
-    abstract getMessage(key: string, params?: Record<string, string | number>): string;
+    abstract getMessage(key?: MessageKey, params?: Record<string, string | number>): string;
 }

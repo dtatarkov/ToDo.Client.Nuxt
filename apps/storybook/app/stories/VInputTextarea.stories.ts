@@ -5,7 +5,6 @@ import { inputHighlightArgType } from '../argTypes/inputHighlightArgType';
 import { inputIdArgType } from '../argTypes/inputIdArgType';
 import { inputIsDisabledArgType } from '../argTypes/inputIsDisabledArgType';
 import { inputNameArgType } from '../argTypes/inputNameArgType';
-import { inputPlaceholderArgType } from '../argTypes/inputPlaceholderArgType';
 import { storybookColorSelect } from '../argTypes/storybookColorSelect';
 
 const meta: Meta<typeof VInputTextarea> = {
@@ -16,7 +15,7 @@ const meta: Meta<typeof VInputTextarea> = {
         value: {
             control: 'text',
         },
-        placeholder: inputPlaceholderArgType,
+        //placeholder: inputPlaceholderArgType,
         id: inputIdArgType,
         name: inputNameArgType,
         hasAutofocus: inputHasAutofocusArgType,
@@ -34,7 +33,7 @@ export const Default: Story = {};
 export const Autofocus: Story = {
     args: {
         value: '',
-        placeholder: 'Autofocused textarea',
+        //placeholder: 'Autofocused textarea',
         id: 'input-textarea-3',
         name: 'inputTextarea',
         hasAutofocus: true,
@@ -45,7 +44,7 @@ export const Autofocus: Story = {
 export const Empty: Story = {
     args: {
         value: '',
-        placeholder: 'Type something',
+        //placeholder: 'Type something',
         id: 'input-textarea-2',
         name: 'inputTextarea',
         hasAutofocus: false,
@@ -56,7 +55,7 @@ export const Empty: Story = {
 export const Disabled: Story = {
     args: {
         value: 'Disabled content',
-        placeholder: 'Cannot edit',
+        //placeholder: 'Cannot edit',
         id: 'input-textarea-5',
         name: 'inputTextarea',
         hasAutofocus: false,
@@ -67,7 +66,7 @@ export const Disabled: Story = {
 export const Error: Story = {
     args: {
         value: 'Invalid content',
-        placeholder: 'Error state',
+        //placeholder: 'Error state',
         id: 'input-textarea-6',
         name: 'inputTextarea',
         hasAutofocus: false,

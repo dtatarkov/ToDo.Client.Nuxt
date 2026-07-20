@@ -1,11 +1,8 @@
-import { InputElement, type InputElementData } from './inputElement';
-
-export interface InputElementTextData extends InputElementData<string>
-{
-    placeholder: string;
-};
+import type { MessageKey } from '@client/infrastructure-messages';
+import { InputElement } from './inputElement';
+import type { InputElementTextData } from '../../types/inputElementTextData';
 
 export abstract class InputElementText extends InputElement<string> implements InputElementTextData
 {
-    abstract placeholder: string;
+    abstract placeholderKey: MessageKey | undefined;
 }

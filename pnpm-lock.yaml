@@ -483,6 +483,9 @@ importers:
       '@client/infrastructure-eslint':
         specifier: workspace:*
         version: link:../../infrastructure/eslint
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../infrastructure/messages
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared

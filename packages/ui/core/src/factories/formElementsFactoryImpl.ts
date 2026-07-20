@@ -73,7 +73,7 @@ export class FormElementsFactoryImpl implements FormElementsFactory
                 inputElement = this.inputElementsFactory.createInputText();
                 break;
 
-            case FormElementType.textarea:
+            case FormElementType.inputTextarea:
                 inputElement = this.inputElementsFactory.createTextarea();
                 break;
 

@@ -1,4 +1,4 @@
-import type { InputElementDate } from './InputElementDate';
+import type { InputElementDate } from './inputElementDate';
 import { InputElementBase } from './inputElementBase';
 
 export class InputElementDateBase extends InputElementBase<Date | undefined> implements InputElementDate

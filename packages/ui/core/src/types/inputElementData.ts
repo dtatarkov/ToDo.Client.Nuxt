@@ -1,12 +1,12 @@
+import type { Color } from './color';
 
-import type { Color } from '@client/ui-core';
-
-export type InputData<V = unknown> = {
+export interface InputElementData<V>
+{
     id?: string;
     name?: string;
+    value?: V;
     hasAutofocus?: boolean;
     isDisabled?: boolean;
-    value?: V;
     color?: Color;
     highlight?: boolean;
-};
+}

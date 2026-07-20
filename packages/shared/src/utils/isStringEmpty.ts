@@ -1,4 +1,4 @@
-export function isStringEmpty(str: string | null | undefined): boolean
+export function isStringEmpty(str: string | null | undefined): str is '' | null | undefined
 {
     if (!str)
     {

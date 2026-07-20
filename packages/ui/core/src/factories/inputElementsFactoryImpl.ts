@@ -1,4 +1,4 @@
-import type { InputElementDate } from '../entities/inputElements/InputElementDate';
+import type { InputElementDate } from '../entities/inputElements/inputElementDate';
 import { InputElementDateBase } from '../entities/inputElements/inputElementDateBase';
 import type { InputElementDateTime } from '../entities/inputElements/inputElementDateTime';
 import { InputElementDateTimeBase } from '../entities/inputElements/inputElementDateTimeBase';

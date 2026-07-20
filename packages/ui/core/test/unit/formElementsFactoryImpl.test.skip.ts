@@ -5,7 +5,7 @@ import { createInputElementTextareaMock } from '../mocks/inputElementTextareaMoc
 import { createInputElementDateTimeMock } from '../mocks/inputElementDateTimeMock';
 import { inputElementsFactoryMock } from '../mocks/inputElementsFactoryMock';
 import { FormElementType } from '../../src/enums/formElementType';
-import type { FormElementsCreateData } from '../../src/types/formElementsCreateData';
+import type { FormElementData } from '../../src/types/formElementData';
 
 describe('FormElementsFactoryImpl', () =>
 {
@@ -22,7 +22,7 @@ describe('FormElementsFactoryImpl', () =>
     {
         it('should return empty array for empty data', () =>
         {
-            const data: FormElementsCreateData = {};
+            const data: Record<string, FormElementData> = {};
 
             const elements = factory.createElements(data);
 
@@ -36,7 +36,7 @@ describe('FormElementsFactoryImpl', () =>
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     title: {
                         type: FormElementType.inputText,
                     }
@@ -56,11 +56,11 @@ describe('FormElementsFactoryImpl', () =>
                 const inputText = createInputElementTextMock();
                 inputElementsFactoryMock.createInputText.mockReturnValue(inputText);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     title: {
                         type: FormElementType.inputText,
-                        label: 'Title',
-                        placeholder: 'Enter title',
+                        labelKey: 'todo.field.title.label',
+                        placeholderKey: 'todo.field.description.placeholder',
                     }
                 };
 
@@ -82,16 +82,16 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputText1)
                     .mockReturnValueOnce(inputText2);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     title: {
                         type: FormElementType.inputText,
-                        label: 'Title',
-                        placeholder: 'Enter title',
+                        labelKey: 'todo.field.title.label',
+                        placeholderKey: 'todo.field.title.placeholder',
                     },
                     description: {
                         type: FormElementType.inputText,
-                        label: 'Description',
-                        placeholder: 'Enter description',
+                        labelKey: 'todo.field.description.label',
+                        placeholderKey: 'todo.field.description.placeholder',
                     }
                 };
 
@@ -115,9 +115,9 @@ describe('FormElementsFactoryImpl', () =>
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     description: {
-                        type: FormElementType.textarea,
+                        type: FormElementType.inputTextarea
                     }
                 };
 
@@ -135,11 +135,11 @@ describe('FormElementsFactoryImpl', () =>
                 const textarea = createInputElementTextareaMock();
                 inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     description: {
-                        type: FormElementType.textarea,
-                        label: 'Description',
-                        placeholder: 'Enter description',
+                        type: FormElementType.inputTextarea,
+                        labelKey: 'todo.field.description.label',
+                        placeholderKey: 'todo.field.description.placeholder',
                     }
                 };
 
@@ -160,16 +160,16 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(textarea1)
                     .mockReturnValueOnce(textarea2);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     description: {
-                        type: FormElementType.textarea,
-                        label: 'Description',
-                        placeholder: 'Enter description',
+                        type: FormElementType.inputTextarea,
+                        labelKey: 'todo.field.description.label',
+                        placeholderKey: 'todo.field.description.placeholder',
                     },
                     notes: {
-                        type: FormElementType.textarea,
-                        label: 'Notes',
-                        placeholder: 'Enter notes',
+                        type: FormElementType.inputTextarea,
+                        labelKey: 'todo.field.title.label',
+                        placeholderKey: 'todo.field.title.placeholder',
                     }
                 };
 
@@ -193,7 +193,7 @@ describe('FormElementsFactoryImpl', () =>
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     createdAt: {
                         type: FormElementType.inputDateTime,
                     }
@@ -212,10 +212,10 @@ describe('FormElementsFactoryImpl', () =>
                 const inputDateTime = createInputElementDateTimeMock();
                 inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     createdAt: {
                         type: FormElementType.inputDateTime,
-                        label: 'Created At',
+                        labelKey: 'todo.field.completionDatePlanned.label',
                     }
                 };
 
@@ -235,14 +235,14 @@ describe('FormElementsFactoryImpl', () =>
                     .mockReturnValueOnce(inputDateTime1)
                     .mockReturnValueOnce(inputDateTime2);
 
-                const data: FormElementsCreateData = {
+                const data: Record<string, FormElementData> = {
                     createdAt: {
                         type: FormElementType.inputDateTime,
-                        label: 'Created At',
+                        labelKey: 'todo.field.completionDatePlanned.label',
                     },
                     updatedAt: {
                         type: FormElementType.inputDateTime,
-                        label: 'Updated At',
+                        labelKey: 'todo.field.completionDatePlanned.label',
                     }
                 };
 
@@ -266,20 +266,20 @@ describe('FormElementsFactoryImpl', () =>
             inputElementsFactoryMock.createTextarea.mockReturnValue(textarea);
             inputElementsFactoryMock.createInputDateTime.mockReturnValue(inputDateTime);
 
-            const data: FormElementsCreateData = {
+            const data: Record<string, FormElementData> = {
                 title: {
                     type: FormElementType.inputText,
-                    label: 'Title',
-                    placeholder: 'Enter title',
+                    labelKey: 'todo.field.title.label',
+                    placeholderKey: 'todo.field.title.placeholder',
                 },
                 description: {
-                    type: FormElementType.textarea,
-                    label: 'Description',
-                    placeholder: 'Enter description',
+                    type: FormElementType.inputTextarea,
+                    labelKey: 'todo.field.description.label',
+                    placeholderKey: 'todo.field.description.placeholder',
                 },
                 createdAt: {
                     type: FormElementType.inputDateTime,
-                    label: 'Created At',
+                    labelKey: 'todo.field.completionDatePlanned.label',
                 },
             };
 

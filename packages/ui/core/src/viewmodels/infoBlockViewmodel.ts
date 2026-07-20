@@ -1,3 +1,4 @@
+import type { MessageKey } from '@client/infrastructure-messages';
 import { Viewmodel } from './viewmodel';
 
 export type InfoBlockViewmodelState = {
@@ -6,7 +7,7 @@ export type InfoBlockViewmodelState = {
 };
 
 export type InfoBlockViewmodelStateRow = {
-    labelKey: string;
+    labelKey: MessageKey;
     content: string;
 };
 

@@ -1,7 +1,8 @@
-export enum FormElementType {
+export enum FormElementType
+{
   inputText = 'text',
   inputDate = 'date',
   inputTime = 'time',
   inputDateTime = 'datetime',
-  textarea = 'textarea'
+  inputTextarea = 'textarea'
 }

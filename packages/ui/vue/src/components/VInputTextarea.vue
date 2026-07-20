@@ -4,7 +4,7 @@
     v-model="valueModel"
     :name="props.name"
     :autofocus="props.hasAutofocus"
-    :placeholder="props.placeholder"
+    :placeholder="getMessage(props.placeholderKey)"
     :disabled="props.isDisabled"
     :color="props.color"
     :highlight="props.highlight"
@@ -13,12 +13,15 @@
 </template>
 
 <script setup lang="ts">
-import type { InputTextareaData } from '../types/inputTextareaData';
+import { useMessages } from '../composables/useMessages';
+import type { InputElementTextareaData } from '@client/ui-core';
 
 defineOptions({
   inheritAttrs: false
 });
 
-const props = defineProps<InputTextareaData>();
+const { getMessage } = useMessages();
+
+const props = defineProps<InputElementTextareaData>();
 const valueModel = defineModel<string>('value', { default: '' });
 </script>

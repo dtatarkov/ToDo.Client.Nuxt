@@ -17,9 +17,9 @@
 <script setup lang="ts">
 import { OptionalValueMapper  } from '@client/shared';
 import { TimeMapper } from '@client/infrastructure-datetime';
-import type { InputTimeData } from '../types/inputTimeData';
 import { computed } from 'vue';
 import { useService } from '../composables/useService';
+import type { InputElementTimeData } from '@client/ui-core';
 
 defineOptions({
   inheritAttrs: false
@@ -28,7 +28,7 @@ defineOptions({
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);
 
-const props = defineProps<InputTimeData>();
+const props = defineProps<InputElementTimeData>();
 const valueModel = defineModel<number>('value');
 
 const time = computed({

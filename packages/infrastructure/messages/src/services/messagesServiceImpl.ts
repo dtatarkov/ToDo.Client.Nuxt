@@ -1,4 +1,4 @@
-import type { Func } from '@client/shared';
+import { isStringEmpty, type Func } from '@client/shared';
 import { MessagesService } from './messagesService';
 
 export class MessagesServiceImpl extends MessagesService
@@ -10,8 +10,13 @@ export class MessagesServiceImpl extends MessagesService
         super();
     }
 
-    override getMessage(key: string, params?: Record<string, string | number>): string
+    override getMessage(key?: string, params?: Record<string, string | number>): string
     {
+        if (isStringEmpty(key))
+        {
+            return '';
+        }
+
         return this.t(key, params as Record<string, string | number>);
     }
 }

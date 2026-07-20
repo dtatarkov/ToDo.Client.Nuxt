@@ -3,6 +3,7 @@ import { dateFormatterMock } from '@client/infrastructure-datetime/mocks';
 import type { ToDoCardViewmodelData } from '../../src/viewmodels/todoCardViewmodel';
 import { infoBlockViewmodelMock } from '../mocks/infoBlockViewmodelMock';
 import { ToDoCardViewmodelImpl } from '../../src/viewmodels/todoCardViewmodelImpl';
+import type { InfoBlockViewmodelState } from '../../src/viewmodels/infoBlockViewmodel';
 
 describe('ToDoCardViewmodelImpl', () =>
 {
@@ -53,7 +54,7 @@ describe('ToDoCardViewmodelImpl', () =>
                 completionDateActual: mockDate
             };
 
-            const infoBlockState = {
+            const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
                     { labelKey: 'todo.card.completed', content: formattedDate }
                 ],
@@ -82,7 +83,7 @@ describe('ToDoCardViewmodelImpl', () =>
                 completionDatePlanned: mockDate
             };
 
-            const infoBlockState = {
+            const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
                     { labelKey: 'todo.card.completeBy', content: formattedDate }
                 ],
@@ -114,7 +115,7 @@ describe('ToDoCardViewmodelImpl', () =>
                 completionDatePlanned: mockDate2,
             };
 
-            const infoBlockState = {
+            const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
                     { labelKey: 'todo.card.completeBy', content: formattedDate },
                     { labelKey: 'todo.card.completed', content: formattedDate },

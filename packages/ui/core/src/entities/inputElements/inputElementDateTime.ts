@@ -1,8 +1,5 @@
-import { InputElement, type InputElementData } from './inputElement';
-
-export interface InputElementDateTimeData extends InputElementData<Date | undefined>
-{
-};
+import { InputElement } from './inputElement';
+import type { InputElementDateTimeData } from '../../types/inputElementDateTimeData';
 
 export abstract class InputElementDateTime extends InputElement<Date | undefined> implements InputElementDateTimeData
 {

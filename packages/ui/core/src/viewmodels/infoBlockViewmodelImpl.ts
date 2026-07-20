@@ -1,5 +1,6 @@
 import { ObservableWritableBase } from '@client/shared';
 import { InfoBlockViewmodel, type InfoBlockViewmodelState, type InfoBlockViewmodelStateRow } from './infoBlockViewmodel';
+import type { MessageKey } from '@client/infrastructure-messages';
 
 export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
 {
@@ -15,7 +16,7 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
         super();
     }
 
-    override addRow(labelKey: string, content: string): void
+    override addRow(labelKey: MessageKey, content: string): void
     {
         this.rows.push({ labelKey, content });
         this.updateState();

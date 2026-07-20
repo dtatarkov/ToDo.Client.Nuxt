@@ -1,13 +1,5 @@
 import type { Action, DisposeToken } from '@client/shared';
-
-export interface InputElementData<V>
-{
-  id: string | undefined;
-  name: string | undefined;
-  value: V;
-  hasAutofocus: boolean;
-  isDisabled: boolean;
-};
+import type { InputElementData } from '../../types/inputElementData';
 
 export abstract class InputElement<V = any> implements InputElementData<V>
 {

@@ -1,8 +1,5 @@
-import { InputElement, type InputElementData } from './inputElement';
-
-export interface InputElementTimeData extends InputElementData<number | undefined>
-{
-};
+import { InputElement } from './inputElement';
+import type { InputElementTimeData } from '../../types/inputElementTimeData';
 
 export abstract class InputElementTime extends InputElement<number | undefined> implements InputElementTimeData
 {
