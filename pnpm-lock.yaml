@@ -259,6 +259,9 @@ importers:
 
   apps/storybook:
     dependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../packages/domain/todo
       '@client/infrastructure-datetime':
         specifier: workspace:*
         version: link:../../packages/infrastructure/datetime
