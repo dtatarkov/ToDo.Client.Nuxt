@@ -31,7 +31,7 @@ const meta: Meta<typeof VInputDate> = {
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
         color: storybookColorSelect,
-        highlight: inputHighlightArgType,
+        shouldHighlight: inputHighlightArgType,
     },
 };
 

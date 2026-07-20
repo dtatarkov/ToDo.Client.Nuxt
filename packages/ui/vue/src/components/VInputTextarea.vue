@@ -7,7 +7,7 @@
     :placeholder="getMessage(props.placeholderKey)"
     :disabled="props.isDisabled"
     :color="props.color"
-    :highlight="props.highlight"
+    :highlight="props.shouldHighlight"
     v-bind="$attrs"
   />
 </template>

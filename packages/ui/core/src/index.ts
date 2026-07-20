@@ -1,6 +1,7 @@
 export type { Color } from './types/color';
 export type { ToDoCardData } from './types/todoCardData';
 export type { FormElementData } from './types/formElementData';
+export type { InputElementData } from './types/inputElementData';
 export type { InputElementTextData } from './types/inputElementTextData';
 export type { InputElementTextareaData } from './types/inputElementTextareaData';
 export type { InputElementTimeData } from './types/inputElementTimeData';

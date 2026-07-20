@@ -2,21 +2,15 @@
 import { isStringEmpty } from '@client/shared';
 import { computed } from 'vue';
 import { useMessages } from '../composables/useMessages';
-import type { MessageKey } from '@client/infrastructure-messages';
+import type { FormFieldProps } from '../types/formFieldProps';
 
 defineOptions({
   inheritAttrs : false,
 });
 
-type Props = {
- name?: string;
- labelKey?: MessageKey;
- help?: string;
-}
-
 const { getMessage } = useMessages();
 
-const props = defineProps<Props>();  
+const props = defineProps<FormFieldProps>();  
 const hasHelp = computed(() => !isStringEmpty(props.help));
 
 const uiModifiers = computed(() => ({

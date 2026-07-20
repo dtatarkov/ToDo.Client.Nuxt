@@ -28,3 +28,13 @@ export const Filled: Story = {
         }
     }
 };
+
+export const WithErrors: Story = {
+    args: {
+        elements: todoFormConfig.elements,
+
+        errors: {
+            title: 'todo.field.title.errors.empty'
+        }
+    }
+};

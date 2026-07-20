@@ -1,5 +1,6 @@
 export type MessageKey = 'todo.field.title.label' |
     'todo.field.title.placeholder' |
+    'todo.field.title.errors.empty' |
     'todo.field.description.label' |
     'todo.field.description.placeholder' |
     'todo.field.completionDatePlanned.label' |

@@ -11,16 +11,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    UButton: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
-    UCard: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
-    UForm: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Form.vue')['default']
-    UFormField: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/FormField.vue')['default']
-    UInput: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
-    UInputDate: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/InputDate.vue')['default']
-    UInputTime: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/InputTime.vue')['default']
-    UModal: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Modal.vue')['default']
-    UTextarea: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_b62e5df2e9ac564f7c7051e83f9c6ced/node_modules/@nuxt/ui/dist/runtime/components/Textarea.vue')['default']
+    UButton: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Button.vue')['default']
+    UCard: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Card.vue')['default']
+    UForm: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Form.vue')['default']
+    UFormField: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/FormField.vue')['default']
+    UInput: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Input.vue')['default']
+    UInputDate: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/InputDate.vue')['default']
+    UInputTime: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/InputTime.vue')['default']
+    UModal: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Modal.vue')['default']
+    UTextarea: typeof import('./../../node_modules/.pnpm/@nuxt+ui@4.9.0_a63e16831100c5a26a6d0d8d83127a44/node_modules/@nuxt/ui/dist/runtime/components/Textarea.vue')['default']
   }
 }

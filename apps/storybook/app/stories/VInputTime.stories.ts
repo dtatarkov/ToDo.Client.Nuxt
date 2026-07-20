@@ -21,7 +21,7 @@ const meta: Meta<typeof VInputTime> = {
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
         color: storybookColorSelect,
-        highlight: inputHighlightArgType,
+        shouldHighlight: inputHighlightArgType,
     }
 };
 
@@ -68,6 +68,6 @@ export const Error: Story = {
         hasAutofocus: false,
         isDisabled: false,
         color: 'error',
-        highlight: true,
+        shouldHighlight: true,
     },
 };

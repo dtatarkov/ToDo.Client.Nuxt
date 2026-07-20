@@ -15,6 +15,12 @@ export abstract class MessagesService
     abstract getMessage(key: 'todo.field.title.placeholder'): string;
 
     /**
+     * Validation error message for empty todo title.
+     * @see {@link i18n/locales/ru.json} - key: 'todo.field.title.errors.empty'
+     */
+    abstract getMessage(key: 'todo.field.title.errors.empty'): string;
+
+    /**
      * Label for the task description input field.
      * @see {@link i18n/locales/ru.json} - key: `todo.field.description.label`
      */

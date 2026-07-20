@@ -8,5 +8,5 @@ export interface InputElementData<V>
     hasAutofocus?: boolean;
     isDisabled?: boolean;
     color?: Color;
-    highlight?: boolean;
+    shouldHighlight?: boolean;
 }
