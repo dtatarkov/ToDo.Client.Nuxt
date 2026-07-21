@@ -15,8 +15,9 @@ function createForm(
     const factory = createFormElementsFactoryMock(elements);
 
     const form = new FormBase(factory, {
-        submit: submitHandler,
         elements: {},
+    }, {
+        submit: submitHandler,
     });
 
     return form;

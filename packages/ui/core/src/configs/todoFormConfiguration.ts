@@ -1,8 +1,8 @@
 import type { ToDoData } from '@client/domain-todo';
-import type { FormConfig } from '../types/formConfig';
+import type { FormConfiguration } from '../types/formConfiguration';
 import { FormElementType } from '../enums/formElementType';
 
-export const todoFormConfig: FormConfig<Omit<ToDoData, 'id' | 'completionDateActual'>> = {
+export const todoFormConfiguration: FormConfiguration<Omit<ToDoData, 'id' | 'completionDateActual'>> = {
     elements: {
         title: {
             type: FormElementType.inputText,

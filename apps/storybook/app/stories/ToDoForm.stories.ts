@@ -1,6 +1,6 @@
 import { VForm, type FormProps } from '@client/ui-vue';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { todoFormConfig } from '@client/ui-core';
+import { todoFormConfiguration } from '@client/ui-core';
 
 const meta: Meta<typeof VForm> = {
     title: 'ToDo/ToDoForm',
@@ -10,17 +10,17 @@ const meta: Meta<typeof VForm> = {
 };
 
 export default meta;
-type Story = StoryObj<FormProps<keyof typeof todoFormConfig.elements>>;
+type Story = StoryObj<FormProps<keyof typeof todoFormConfiguration.elements>>;
 
 export const Empty: Story = {
     args: {
-        elements: todoFormConfig.elements,
-    } satisfies FormProps<keyof typeof todoFormConfig.elements>,
+        elements: todoFormConfiguration.elements,
+    } satisfies FormProps<keyof typeof todoFormConfiguration.elements>,
 };
 
 export const Filled: Story = {
     args: {
-        elements: todoFormConfig.elements,
+        elements: todoFormConfiguration.elements,
         data: {
             title: 'Test ToDo',
             description: "This is a test description",
@@ -31,7 +31,7 @@ export const Filled: Story = {
 
 export const WithErrors: Story = {
     args: {
-        elements: todoFormConfig.elements,
+        elements: todoFormConfiguration.elements,
 
         errors: {
             title: 'todo.field.title.errors.empty'

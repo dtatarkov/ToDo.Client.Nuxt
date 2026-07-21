@@ -1,12 +1,6 @@
 import type { FormElement } from './formElement';
 import type { FormValidationError } from './formValidationError';
-import type { FormElementsCreateData } from '../types/formElementsCreateData';
-import type { Action, AsyncCommand, DisposeToken, Func } from '@client/shared';
-
-export type FormConfiguration<TEntity extends Record<string, any>> = {
-  submit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
-  elements: FormElementsCreateData;
-};
+import type { Action, AsyncCommand, DisposeToken } from '@client/shared';
 
 export abstract class Form<TEntity extends Record<string, any> = Record<string, any>> implements Disposable
 {

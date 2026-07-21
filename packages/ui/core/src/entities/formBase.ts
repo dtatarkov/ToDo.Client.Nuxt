@@ -4,7 +4,9 @@ import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from './formValidationError';
 import type { FormElementValidationError } from './formElementValidationError';
 import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
-import { Form, type FormConfiguration } from './form';
+import { Form } from './form';
+import type { FormConfiguration } from '../types/formConfiguration';
+import type { FormHandlers } from '../types/formHandlers';
 
 enum FormBaseState
 {
@@ -16,8 +18,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 {
   private elements = new Array<FormElement>();
   private state = FormBaseState.initial;
-  private submitCommand = this.createSubmitCommand();
-  private handleSubmit: Func<Promise<void>, [Record<keyof TEntity, any>]>;
+  private submitCommand: AsyncCommand;
   private validationErrorEvent = new EntityEvent<FormValidationError>();
 
   readonly key = getUniqueId('form');
@@ -25,12 +26,13 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   constructor(
     private formElementsFactory: FormElementsFactory,
     configuration: FormConfiguration<TEntity>,
+    handlers: FormHandlers<TEntity>,
   )
   {
     super();
 
-    this.handleSubmit = configuration.submit;
     this.elements = this.formElementsFactory.createElements(configuration.elements);
+    this.submitCommand = this.createSubmitCommand(handlers.submit);
   }
 
   override getElements(): FormElement[]
@@ -132,7 +134,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
     }
   }
 
-  private createSubmitCommand()
+  private createSubmitCommand(submitFn: Func<Promise<void>, [Record<keyof TEntity, any>]>)
   {
     const command = new AsyncCommandBase(async () =>
     {
@@ -151,7 +153,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
       try
       {
         const data = this.getData();
-        await this.handleSubmit(data);
+        await submitFn(data);
 
         return true;
       }
