@@ -3,6 +3,7 @@ import { ValidationError } from '@client/shared';
 export class FormElementValidationError extends ValidationError
 {
     constructor(
+        public readonly formElementName: string,
         public readonly formElementLabel: string,
         message: string,
     )

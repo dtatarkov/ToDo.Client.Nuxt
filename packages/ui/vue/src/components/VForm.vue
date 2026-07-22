@@ -60,7 +60,7 @@ function getFormElementInput(elementName: K, elementData: FormElementData)
 <template>
   <UForm class="flex flex-col gap-2" :disabled="props.isDisabled" @submit="emits('submit')">
     <VFormField 
-      v-for="(elementData, elementName) of elements as Record<string, FormElementData>" 
+      v-for="(elementData, elementName) of elementsData as Record<string, FormElementData>" 
       v-bind="elementData" 
       :help="getFormElementError(elementName as K)"
     >

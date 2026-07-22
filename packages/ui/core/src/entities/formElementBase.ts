@@ -73,7 +73,7 @@ export class FormElementBase<V = any> extends FormElement
     const error = this.validateFn?.(this.value);
 
     this.validationError = error
-      ? new FormElementValidationError(this.label, error.message)
+      ? new FormElementValidationError(this.name, this.label, error.message)
       : undefined;
 
     this.handleValidationError(this.validationError);

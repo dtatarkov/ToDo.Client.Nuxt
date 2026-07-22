@@ -10,17 +10,18 @@ const meta: Meta<typeof VForm> = {
 };
 
 export default meta;
-type Story = StoryObj<FormProps<keyof typeof todoFormConfiguration.elements>>;
+type Story = StoryObj<FormProps<keyof typeof todoFormConfiguration.elementsData>>;
 
 export const Empty: Story = {
     args: {
-        elements: todoFormConfiguration.elements,
-    } satisfies FormProps<keyof typeof todoFormConfiguration.elements>,
+        elementsData: todoFormConfiguration.elementsData,
+    } satisfies FormProps<keyof typeof todoFormConfiguration.elementsData>,
 };
 
 export const Filled: Story = {
     args: {
-        elements: todoFormConfiguration.elements,
+        elementsData: todoFormConfiguration.elementsData,
+
         data: {
             title: 'Test ToDo',
             description: "This is a test description",
@@ -31,7 +32,7 @@ export const Filled: Story = {
 
 export const WithErrors: Story = {
     args: {
-        elements: todoFormConfiguration.elements,
+        elementsData: todoFormConfiguration.elementsData,
 
         errors: {
             title: 'todo.field.title.errors.empty'

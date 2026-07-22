@@ -3,6 +3,7 @@ export type { ToDoCardData } from './types/todoCardData';
 export type { FormElementData } from './types/formElementData';
 export type { FormConfiguration } from './types/formConfiguration';
 export type { FormHandlers } from './types/formHandlers';
+export type { FormViewmodelState } from './types/formViewmodelState';
 export type { InputElementData } from './types/inputElementData';
 export type { InputElementTextData } from './types/inputElementTextData';
 export type { InputElementTextareaData } from './types/inputElementTextareaData';
@@ -17,6 +18,8 @@ export { ToDoCardViewmodel } from './viewmodels/todoCardViewmodel';
 export { ToDoCardViewmodelImpl } from './viewmodels/todoCardViewmodelImpl';
 export { InfoBlockViewmodel } from './viewmodels/infoBlockViewmodel';
 export { InfoBlockViewmodelImpl } from './viewmodels/infoBlockViewmodelImpl';
+export { FormViewmodel } from './viewmodels/formViewmodel';
+export { FormViewmodelImpl } from './viewmodels/formViewmodelImpl';
 
 export type { Form } from './entities/form';
 // export { FormElement } from './entities/formElement';

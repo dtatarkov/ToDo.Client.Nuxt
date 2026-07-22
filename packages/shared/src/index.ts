@@ -41,6 +41,7 @@ export type { StateTransition } from './types/stateTransition';
 
 // Utils
 export { awaitMicrotasks } from './utils/awaitMicrotasks';
+export { getPromiseResolverAsync } from './utils/getPromiseResolverAsync';
 export { clearArray } from './utils/clearArray';
 export { delay } from './utils/delay';
 export { getUniqueId } from './utils/getUniqueId';
@@ -51,6 +52,7 @@ export { isObject } from './utils/isObject';
 export { isString } from './utils/isString';
 export { isStringEmpty } from './utils/isStringEmpty';
 export { mapObject } from './utils/mapObject';
+export { toObject } from './utils/toObject';
 export { mergeDeep } from './utils/mergeDeep';
 export { once } from './utils/once';
 export { postfixNotEmptyString } from './utils/postfixNotEmptyString';
