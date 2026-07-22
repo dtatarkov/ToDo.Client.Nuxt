@@ -1,6 +1,3 @@
 import type { InputElementData } from './inputElementData';
 
-
-export interface InputElementDateData extends InputElementData<Date | undefined>
-{
-}
+export type InputElementDateData = InputElementData<Date | undefined>;

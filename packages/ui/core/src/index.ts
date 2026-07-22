@@ -20,6 +20,8 @@ export { InfoBlockViewmodel } from './viewmodels/infoBlockViewmodel';
 export { InfoBlockViewmodelImpl } from './viewmodels/infoBlockViewmodelImpl';
 export { FormViewmodel } from './viewmodels/formViewmodel';
 export { FormViewmodelImpl } from './viewmodels/formViewmodelImpl';
+export { InputTextViewmodel } from './viewmodels/inputTextViewmodel';
+export { InputTextViewmodelImpl } from './viewmodels/inputTextViewmodelImpl';
 
 export type { Form } from './entities/form';
 // export { FormElement } from './entities/formElement';

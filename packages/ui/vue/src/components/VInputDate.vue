@@ -18,7 +18,7 @@ import { OptionalValueMapper  } from '@client/shared';
 import { ZonedDateTimeMapper } from '@client/infrastructure-datetime';
 import { useService } from '../composables/useService';
 import { computed } from 'vue';
-import type { InputElementDateData } from '@client/ui-core';
+import type { VInputDateProps } from '../types/vInputDateProps';
 
 defineOptions({
   inheritAttrs: false
@@ -27,7 +27,7 @@ defineOptions({
 const dateMapper = useService(ZonedDateTimeMapper);
 const optionalDateMapper = new OptionalValueMapper(dateMapper);
 
-const props = defineProps<InputElementDateData>();
+const props = defineProps<VInputDateProps>();
 const valueModel = defineModel<Date>('value');
 
 const date = computed({

@@ -25,13 +25,13 @@ import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { postfixNotEmptyString } from '@client/shared';
 import { computed, shallowRef, watchEffect } from 'vue';
-import type { InputElementDateTimeData } from '@client/ui-core';
+import type { VInputDateTimeProps } from '../types/vInputDateTimeProps';
 
 defineOptions({
   inheritAttrs: false
 });
 
-const props = defineProps<InputElementDateTimeData>();
+const props = defineProps<VInputDateTimeProps>();
 const valueModel = defineModel<Date>('value');
 
 const date = shallowRef<Date>();

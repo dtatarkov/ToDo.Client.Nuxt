@@ -19,7 +19,7 @@ import { OptionalValueMapper  } from '@client/shared';
 import { TimeMapper } from '@client/infrastructure-datetime';
 import { computed } from 'vue';
 import { useService } from '../composables/useService';
-import type { InputElementTimeData } from '@client/ui-core';
+import type { VInputTimeProps } from '../types/vInputTimeProps';
 
 defineOptions({
   inheritAttrs: false
@@ -28,7 +28,7 @@ defineOptions({
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);
 
-const props = defineProps<InputElementTimeData>();
+const props = defineProps<VInputTimeProps>();
 const valueModel = defineModel<number>('value');
 
 const time = computed({

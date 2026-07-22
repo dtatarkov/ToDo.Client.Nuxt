@@ -10,6 +10,7 @@ import { UnknownFormElementTypeException } from '../exceptions/unknownFormElemen
 import type { FormProps } from '../types/formProps';
 import { isStringEmpty } from '@client/shared';
 import { useMessages } from '../composables/useMessages';
+import type { VInputAllProps } from '../types/vInputAllProps';
 
 type Emits = {
   (e: 'submit'): void;
@@ -37,13 +38,13 @@ function getFormElementInput(elementName: K, elementData: FormElementData)
   const color: Color | undefined = hasError ? 'error' : undefined;
   const shouldHighlight = hasError;
 
-  const inputProps: InputElementData<any> = {
+  const inputProps = {
     ...elementData,
 
     value,
     color,
     shouldHighlight
-  }
+  } satisfies VInputAllProps
 
   switch (elementData.type) {
     case FormElementType.inputText: return h(VInputText, inputProps);

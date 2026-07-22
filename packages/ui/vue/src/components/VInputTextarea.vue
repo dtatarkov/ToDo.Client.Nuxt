@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useMessages } from '../composables/useMessages';
-import type { InputElementTextareaData } from '@client/ui-core';
+import type { VInputTextareaProps } from '../types/vInputTextareaProps';
 
 defineOptions({
   inheritAttrs: false
@@ -22,6 +22,6 @@ defineOptions({
 
 const { getMessage } = useMessages();
 
-const props = defineProps<InputElementTextareaData>();
+const props = defineProps<VInputTextareaProps>();
 const valueModel = defineModel<string>('value', { default: '' });
 </script>

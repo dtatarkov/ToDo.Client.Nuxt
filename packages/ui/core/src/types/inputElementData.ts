@@ -1,12 +1,7 @@
-import type { Color } from './color';
-
-export interface InputElementData<V>
-{
+export type InputElementData<V> = {
     id?: string;
     name?: string;
     value?: V;
     hasAutofocus?: boolean;
     isDisabled?: boolean;
-    color?: Color;
-    shouldHighlight?: boolean;
-}
+};

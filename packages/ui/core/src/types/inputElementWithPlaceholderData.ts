@@ -1,7 +1,5 @@
 import type { MessageKey } from '@client/infrastructure-messages';
 
-
-export interface InputElementWithPlaceholderData
-{
+export type InputElementWithPlaceholderData = {
     placeholderKey?: MessageKey;
-}
+};

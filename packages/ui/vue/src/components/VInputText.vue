@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useMessages } from '../composables/useMessages';
-import type { InputElementTextData } from '@client/ui-core';
+import type { VInputTextProps } from '../types/vInputTextProps';
 
 defineOptions({
   inheritAttrs: false
@@ -22,6 +22,6 @@ defineOptions({
 
 const { getMessage } = useMessages();
 
-const props = defineProps<InputElementTextData>();
+const props = defineProps<VInputTextProps>();
 const valueModel = defineModel<string>('value', { default: '' });
 </script>
