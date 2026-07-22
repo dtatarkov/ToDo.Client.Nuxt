@@ -1,8 +1,8 @@
 import type { ObservableReadonly } from '@client/shared';
 
 
-export abstract class Viewmodel<T> implements Disposable
+export abstract class Viewmodel<TState extends Record<string, any>> implements Disposable
 {
-    abstract state: ObservableReadonly<T>;
+    abstract state: ObservableReadonly<TState>;
     abstract [Symbol.dispose](): void;
 }

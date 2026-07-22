@@ -4,9 +4,10 @@ import { ToDosStore, type ToDo } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
 import type { ToDoCardData } from '../types/todoCardData';
 import type { MessageKey } from '@client/infrastructure-messages';
+import { ViewmodelBase } from './viewmodelBase';
 
 @dependency(ToDosStore)
-export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
+export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetViewmodelState> implements ToDosWidgetViewmodel
 {
     private disposeToken = new DisposeToken();
     private initializationToken = new InitializationToken();
@@ -24,7 +25,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         super();
     }
 
-    override createToDo(): void
+    createToDo(): void
     {
         console.log('createToDo');
 
@@ -32,7 +33,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         // todo.showForm();
     }
 
-    override editToDo(id: string): void
+    editToDo(id: string): void
     {
         console.log('editToDo:id', id);
 
@@ -44,7 +45,7 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
         // }
     }
 
-    override async initializeAsync()
+    async initializeAsync()
     {
         if (this.initializationToken.isInitialized)
         {
@@ -64,21 +65,28 @@ export class ToDosWidgetViewmodelImpl extends ToDosWidgetViewmodel
 
     override[Symbol.dispose]()
     {
+        super[Symbol.dispose]();
+
         this.disposeToken[Symbol.dispose]();
     }
 
     private updateCards(todos: ToDo[])
     {
-        this.state.value = {
-            ...this.state.value,
+        const cards = this.createToDoCardsData(todos);
 
-            cards: todos.map(todo => <ToDoCardData>{
-                id: todo.id,
-                title: todo.title,
-                description: todo.description,
-                completionDateActual: todo.completionDateActual,
-                completionDatePlanned: todo.completionDatePlanned,
-            })
-        };
+        this.updateState({ cards });
+    }
+
+    private createToDoCardsData(todos: ToDo[]): ToDoCardData[]
+    {
+        const data = todos.map(todo => <ToDoCardData>{
+            id: todo.id,
+            title: todo.title,
+            description: todo.description,
+            completionDateActual: todo.completionDateActual,
+            completionDatePlanned: todo.completionDatePlanned,
+        });
+
+        return data;
     }
 }

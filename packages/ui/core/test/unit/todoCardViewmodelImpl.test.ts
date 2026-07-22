@@ -70,7 +70,7 @@ describe('ToDoCardViewmodelImpl', () =>
             expect(dateFormatterMock.formatDateOptional).toHaveBeenCalledWith(mockDate);
             expect(infoBlockViewmodelMock.addRow).toBeCalledTimes(1);
             expect(infoBlockViewmodelMock.addRow).toBeCalledWith(infoBlockState.rows[0]?.labelKey, infoBlockState.rows[0]?.content);
-            expect(viewmodel.state.value.infoBlock).toBe(infoBlockState);
+            expect(viewmodel.state.value.infoBlock).toEqual(infoBlockState);
             expect(viewmodel.state.value.hasFooter).toBe(true);
         });
 
@@ -99,7 +99,7 @@ describe('ToDoCardViewmodelImpl', () =>
             expect(dateFormatterMock.formatDateOptional).toHaveBeenCalledWith(mockDate);
             expect(infoBlockViewmodelMock.addRow).toBeCalledTimes(1);
             expect(infoBlockViewmodelMock.addRow).toBeCalledWith(infoBlockState.rows[0]?.labelKey, infoBlockState.rows[0]?.content);
-            expect(viewmodel.state.value.infoBlock).toBe(infoBlockState);
+            expect(viewmodel.state.value.infoBlock).toEqual(infoBlockState);
             expect(viewmodel.state.value.hasFooter).toBe(true);
         });
 
@@ -132,7 +132,7 @@ describe('ToDoCardViewmodelImpl', () =>
             expect(infoBlockViewmodelMock.addRow).toBeCalledTimes(2);
             expect(infoBlockViewmodelMock.addRow).toBeCalledWith(infoBlockState.rows[0]?.labelKey, infoBlockState.rows[0]?.content);
             expect(infoBlockViewmodelMock.addRow).toBeCalledWith(infoBlockState.rows[1]?.labelKey, infoBlockState.rows[1]?.content);
-            expect(viewmodel.state.value.infoBlock).toBe(infoBlockState);
+            expect(viewmodel.state.value.infoBlock).toEqual(infoBlockState);
             expect(viewmodel.state.value.hasFooter).toBe(true);
         });
 

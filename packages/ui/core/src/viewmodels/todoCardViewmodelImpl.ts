@@ -3,10 +3,11 @@ import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelSt
 import { DateFormatter } from '@client/infrastructure-datetime';
 import { InfoBlockViewmodel } from './infoBlockViewmodel';
 import { dependency } from '@client/infrastructure-di';
+import { ViewmodelBase } from './viewmodelBase';
 
 @dependency(DateFormatter)
 @dependency(InfoBlockViewmodel)
-export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
+export class ToDoCardViewmodelImpl extends ViewmodelBase<ToDoCardViewmodelState> implements ToDoCardViewmodel
 {
     private disposeToken = new DisposeToken();
 
@@ -19,19 +20,22 @@ export class ToDoCardViewmodelImpl extends ToDoCardViewmodel
     {
         super();
 
-        this.state = new ObservableWritableBase(this.createState());
+        const initialState = this.createState();
+
+        this.state = new ObservableWritableBase(initialState);
         this.disposeToken.registerDisposable(this.infoBlock);
     }
 
-    override setData(data: ToDoCardViewmodelData)
+    setData(data: ToDoCardViewmodelData)
     {
         this.updateInfoBlock(data);
-        this.state.value = this.createState();
+        this.syncState();
     }
 
-    override[Symbol.dispose]()
+    private syncState()
     {
-        this.state[Symbol.dispose]();
+        const newState = this.createState();
+        this.updateState(newState);
     }
 
     private createState(): ToDoCardViewmodelState

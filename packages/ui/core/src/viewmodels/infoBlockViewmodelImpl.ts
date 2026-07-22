@@ -1,8 +1,9 @@
 import { ObservableWritableBase } from '@client/shared';
 import { InfoBlockViewmodel, type InfoBlockViewmodelState, type InfoBlockViewmodelStateRow } from './infoBlockViewmodel';
 import type { MessageKey } from '@client/infrastructure-messages';
+import { ViewmodelBase } from './viewmodelBase';
 
-export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
+export class InfoBlockViewmodelImpl extends ViewmodelBase<InfoBlockViewmodelState> implements InfoBlockViewmodel
 {
     private rows = new Array<InfoBlockViewmodelStateRow>();
 
@@ -11,40 +12,23 @@ export class InfoBlockViewmodelImpl extends InfoBlockViewmodel
         hasRows: false,
     });
 
-    constructor()
-    {
-        super();
-    }
-
-    override addRow(labelKey: MessageKey, content: string): void
+    addRow(labelKey: MessageKey, content: string): void
     {
         this.rows.push({ labelKey, content });
-        this.updateState();
+        this.syncState();
     }
 
-    override clear(): void
+    clear(): void
     {
         this.rows = [];
-        this.updateState();
+        this.syncState();
     }
 
-    override[Symbol.dispose]()
+    private syncState()
     {
-        this.state[Symbol.dispose]();
-    }
-
-    private updateState()
-    {
-        this.state.value = this.createState();
-    }
-
-    private createState(): InfoBlockViewmodelState
-    {
-        const state: InfoBlockViewmodelState = {
+        this.updateState({
             rows: [...this.rows],
             hasRows: this.rows.length > 0,
-        };
-
-        return state;
+        });
     }
 }

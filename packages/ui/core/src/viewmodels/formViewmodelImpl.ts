@@ -3,18 +3,19 @@ import type { FormElement } from '../entities/formElement';
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from '../entities/formValidationError';
 import type { FormElementValidationError } from '../entities/formElementValidationError';
-import { type Func, EntityEvent, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase, mergeDeep, toObject } from '@client/shared';
+import { type Func, EntityEvent, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase, toObject } from '@client/shared';
 import { ObservableWritableBase } from '@client/shared';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../types/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
+import { ViewmodelBase } from './viewmodelBase';
 
-export class FormViewmodelImpl<TEntity extends Record<string, any>> extends FormViewmodel<TEntity>
+export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormViewmodelState<TEntity>> implements FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
-    private validationErrorEvent = new EntityEvent<FormValidationError>();
 
+    private validationErrorEvent = new EntityEvent<FormValidationError>();
     private elements = new Array<FormElement>();
 
     state: ObservableWritableBase<FormViewmodelState<TEntity>>;
@@ -38,7 +39,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         this.submitCommand = this.createSubmitCommand(handlers.submit);
     }
 
-    override getData(): Record<keyof TEntity, any>
+    getData(): Record<keyof TEntity, any>
     {
         const data: Record<string, any> = {};
 
@@ -50,7 +51,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         return data as Record<keyof TEntity, any>;
     }
 
-    override setData(changeData: Partial<Record<keyof TEntity, any>>)
+    setData(changeData: Partial<Record<keyof TEntity, any>>)
     {
         this.assertNotDisabled();
         this.setElementsValue(changeData);
@@ -60,26 +61,26 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         this.updateState({ data: newData });
     }
 
-    override getSubmitCommand(): AsyncCommand
+    getSubmitCommand(): AsyncCommand
     {
         return this.submitCommand;
     }
 
-    override onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
+    onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
     {
         this.validationErrorEvent.on(handler, token);
     }
 
     override[Symbol.dispose](): void
     {
+        super[Symbol.dispose]();
+
         this.validationErrorEvent[Symbol.dispose]();
 
         this.elements.forEach(element =>
             element[Symbol.dispose]());
 
         this.elements = [];
-
-        this.state[Symbol.dispose]();
     }
 
     private setElementsValue(data: Partial<Record<keyof TEntity, any>>)
@@ -227,10 +228,5 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         {
             this.validationErrorEvent.emit(formValidationError);
         }
-    }
-
-    private updateState(change: Partial<FormViewmodelState<TEntity>>): void
-    {
-        this.state.value = mergeDeep(this.state.value, change);
     }
 }
