@@ -2,7 +2,7 @@ import type { FormFactory } from './formFactory';
 import { FormViewmodelImpl } from '../viewmodels/formViewmodelImpl';
 import { FormElementsFactory } from './formElementsFactory';
 import { dependency } from '@client/infrastructure-di';
-import type { FormConfiguration } from '../types/formConfiguration';
+import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import type { FormViewmodel } from '../viewmodels/formViewmodel';
 

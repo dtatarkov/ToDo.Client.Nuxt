@@ -6,7 +6,7 @@ import type { FormElementValidationError } from '../entities/formElementValidati
 import { type Func, EntityEvent, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase, toObject } from '@client/shared';
 import { ObservableWritableBase } from '@client/shared';
 import type { FormViewmodelState } from '../types/formViewmodelState';
-import type { FormConfiguration } from '../types/formConfiguration';
+import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
 import { ViewmodelBase } from './viewmodelBase';

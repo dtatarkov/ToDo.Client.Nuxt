@@ -1,6 +1,6 @@
 import { VForm, type FormProps } from '@client/ui-vue';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { extendFormConfigurationWithData, extendFormConfigurationWithErrors, todoFormConfiguration } from '@client/ui-core';
+import { todoFormConfiguration } from '@client/ui-core';
 
 const meta: Meta<typeof VForm> = {
     title: 'ToDo/ToDoForm',
@@ -20,7 +20,7 @@ export const Empty: Story = {
 
 export const Filled: Story = {
     args: {
-        elements: extendFormConfigurationWithData(todoFormConfiguration, {
+        elements: todoFormConfiguration.withData({
             title: 'Test ToDo',
             description: "This is a test description",
             completionDatePlanned: new Date('07/20/2026'),
@@ -30,7 +30,7 @@ export const Filled: Story = {
 
 export const WithErrors: Story = {
     args: {
-        elements: extendFormConfigurationWithErrors(todoFormConfiguration, {
+        elements: todoFormConfiguration.withErrors({
             title: 'todo.field.title.errors.empty'
         }).elements
     }

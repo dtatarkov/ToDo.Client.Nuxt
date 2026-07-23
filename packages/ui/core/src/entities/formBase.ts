@@ -5,7 +5,7 @@ import { FormValidationError } from './formValidationError';
 import type { FormElementValidationError } from './formElementValidationError';
 import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
 import { Form } from './form';
-import type { FormConfiguration } from '../types/formConfiguration';
+import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 
 enum FormBaseState

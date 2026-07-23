@@ -8,6 +8,7 @@ import type { FormViewmodel } from '../../src/viewmodels/formViewmodel';
 import { FormElementValidationError } from '../../src/entities/formElementValidationError';
 import type { FormElementData } from '../../src/types/formElementData';
 import { FormElementType } from '../../src/enums/formElementType';
+import { FormConfiguration } from '../../src/configuration/formConfiguration';
 
 const submitHandler = vi.fn();
 const validationErrorHandler = vi.fn();
@@ -27,7 +28,7 @@ function setupViewmodel(elements: FormElement[]): FormViewmodel<any>
 {
     formElementsFactoryMock.createElements.mockReturnValue(elements);
 
-    const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elements: {} }, { submit: submitHandler });
+    const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, new FormConfiguration({}), { submit: submitHandler });
 
     return viewmodel;
 }
@@ -63,7 +64,7 @@ describe('FormViewmodelImpl', () =>
             const titleElement = createFormElementMock('title', '');
             formElementsFactoryMock.createElements.mockReturnValue([titleElement]);
 
-            const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elements: elementsData }, { submit: submitHandler });
+            const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, new FormConfiguration(elementsData), { submit: submitHandler });
 
             expect(viewmodel.state.value.elements).toEqual(elementsData);
             expect(viewmodel.state.value.data).toEqual({ title: '' });

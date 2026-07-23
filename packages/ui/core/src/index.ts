@@ -1,7 +1,6 @@
 export type { Color } from './types/color';
 export type { ToDoCardData } from './types/todoCardData';
 export type { FormElementData } from './types/formElementData';
-export type { FormConfiguration } from './types/formConfiguration';
 export type { FormHandlers } from './types/formHandlers';
 export type { FormViewmodelState } from './types/formViewmodelState';
 export type { InputData } from './types/inputData';
@@ -16,6 +15,8 @@ export type { InputDatetimeState } from './types/InputDatetimeState';
 export type { InputTextState } from './types/InputTextState';
 export type { InputTimeState } from './types/InputTimeState';
 export type { InputTextareaState } from './types/InputTextareaState';
+
+export { FormConfiguration } from './configuration/formConfiguration';
 
 export { Viewmodel } from './viewmodels/viewmodel';
 export { ToDosWidgetViewmodel } from './viewmodels/todosWidgetViewmodel';
@@ -59,9 +60,7 @@ export { FormElementType } from './enums/formElementType';
 // export { InputElementDateTimeBase } from './entities/inputElements/inputElementDateTimeBase';
 // export { InputElementTextareaBase } from './entities/inputElements/inputElementTextareaBase';
 
-export { todoFormConfiguration } from './configs/todoFormConfiguration';
-export { extendFormConfigurationWithData } from './utils/extendFormConfigurationWithData';
-export { extendFormConfigurationWithErrors } from './utils/extendFormConfigurationWithErrors';
+export { todoFormConfiguration } from './configuration/todoFormConfiguration';
 
 export { FormFactory } from './factories/formFactory';
 export { FormFactoryImpl } from './factories/formFactoryImpl';
