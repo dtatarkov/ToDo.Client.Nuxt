@@ -1,9 +1,10 @@
 import { ObservableWritableBase } from '@client/shared';
-import { InputBaseViewmodel, type InputBaseViewmodelState } from './inputBaseViewmodel';
+import { InputViewmodel } from './inputViewmodel';
 import { ViewmodelBase } from './viewmodelBase';
-import type { InputElementData } from '../types/inputElementData';
+import type { InputData } from '../types/inputData';
+import type { InputState } from '../types/InputState';
 
-export abstract class InputBaseViewmodelImpl<V, TData extends InputElementData<V>, TState extends InputBaseViewmodelState<TData, V>> extends ViewmodelBase<TState> implements InputBaseViewmodel<V, TData, TState>
+export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState extends InputState<V, TData>> extends ViewmodelBase<TState> implements InputViewmodel<V, TData, TState>
 {
     state = new ObservableWritableBase<TState>(this.getInitialState());
 

@@ -1,10 +1,11 @@
-import { InputTimeViewmodel, type InputTimeViewmodelState } from './inputTimeViewmodel';
-import type { InputElementTimeData } from '../types/inputElementTimeData';
-import { InputBaseViewmodelImpl } from './inputBaseViewmodelImpl';
+import { InputTimeViewmodel } from './inputTimeViewmodel';
+import type { InputTimeData } from '../types/inputTimeData';
+import type { InputTimeState } from '../types/InputTimeState';
+import { InputViewmodelImpl } from './inputViewmodelImpl';
 
-export class InputTimeViewmodelImpl extends InputBaseViewmodelImpl<number | undefined, InputElementTimeData, InputTimeViewmodelState> implements InputTimeViewmodel
+export class InputTimeViewmodelImpl extends InputViewmodelImpl<number | undefined, InputTimeData, InputTimeState> implements InputTimeViewmodel
 {
-    protected getInitialState(): InputTimeViewmodelState
+    protected getInitialState(): InputTimeState
     {
         return {
             name: '',

@@ -1,22 +1,10 @@
 import type { Meta, StoryObj, } from '@storybook/vue3-vite';
-import type { Color } from '@client/ui-core';
 import { VInputDate } from '@client/ui-vue';
 import { inputHasAutofocusArgType } from '../argTypes/inputHasAutofocusArgType';
-import { inputHighlightArgType } from '../argTypes/inputHighlightArgType';
 import { inputIdArgType } from '../argTypes/inputIdArgType';
 import { inputIsDisabledArgType } from '../argTypes/inputIsDisabledArgType';
 import { inputNameArgType } from '../argTypes/inputNameArgType';
-import { storybookColorSelect } from '../argTypes/storybookColorSelect';
-
-type InputDateStoryArgs = {
-    value: Date | undefined;
-    id: string;
-    name: string;
-    hasAutofocus: boolean;
-    isDisabled: boolean;
-    color?: Color;
-    highlight?: boolean;
-};
+import { booleanArgType } from '../argTypes/booleanArgType';
 
 const meta: Meta<typeof VInputDate> = {
     title: 'UIKit/InputDate',
@@ -30,23 +18,21 @@ const meta: Meta<typeof VInputDate> = {
         name: inputNameArgType,
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
-        color: storybookColorSelect,
-        shouldHighlight: inputHighlightArgType,
+        hasError: booleanArgType
     },
 };
 
 export default meta;
-type Story = StoryObj<InputDateStoryArgs>;
+type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
 export const Autofocus: Story = {
     args: {
         value: new Date('2026-02-20'),
-        id: 'input-date-3',
-        name: 'inputDate',
+        id: 'input-date-1',
+        name: 'input-date-1',
         hasAutofocus: true,
-        isDisabled: false,
     },
 };
 
@@ -54,18 +40,15 @@ export const Empty: Story = {
     args: {
         value: undefined,
         id: 'input-date-2',
-        name: 'inputDate',
-        hasAutofocus: false,
-        isDisabled: false,
+        name: 'input-date-2',
     },
 };
 
 export const Disabled: Story = {
     args: {
         value: new Date('2026-03-10'),
-        id: 'input-date-4',
-        name: 'inputDate',
-        hasAutofocus: false,
+        id: 'input-date-3',
+        name: 'input-date-3',
         isDisabled: true,
     },
 };
@@ -73,11 +56,8 @@ export const Disabled: Story = {
 export const Error: Story = {
     args: {
         value: new Date('2026-04-01'),
-        id: 'input-date-5',
-        name: 'inputDate',
-        hasAutofocus: false,
-        isDisabled: false,
-        color: 'error',
-        highlight: true,
+        id: 'input-date-4',
+        name: 'input-date-4',
+        hasError: true,
     },
 };

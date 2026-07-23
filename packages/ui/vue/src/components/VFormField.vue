@@ -11,7 +11,7 @@ defineOptions({
 const { getMessage } = useMessages();
 
 const props = defineProps<FormFieldProps>();  
-const hasHelp = computed(() => !isStringEmpty(props.help));
+const hasHelp = computed(() => !isStringEmpty(props.errorKey));
 
 const uiModifiers = computed(() => ({
   root: 'flex flex-col gap-1',
@@ -21,7 +21,7 @@ const uiModifiers = computed(() => ({
 </script>
 
 <template>
-  <UFormField :name="props.name" :label="getMessage(props.labelKey)" :help="props.help" :ui="uiModifiers">
+  <UFormField :name="props.name" :label="getMessage(props.labelKey)" :help="getMessage(props.errorKey)" :ui="uiModifiers">
     <slot />
   </UFormField>
 </template>

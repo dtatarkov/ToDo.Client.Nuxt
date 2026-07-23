@@ -1,11 +1,10 @@
 import { VInputTextarea } from '@client/ui-vue';
 import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { inputHasAutofocusArgType } from '../argTypes/inputHasAutofocusArgType';
-import { inputHighlightArgType } from '../argTypes/inputHighlightArgType';
 import { inputIdArgType } from '../argTypes/inputIdArgType';
 import { inputIsDisabledArgType } from '../argTypes/inputIsDisabledArgType';
 import { inputNameArgType } from '../argTypes/inputNameArgType';
-import { storybookColorSelect } from '../argTypes/storybookColorSelect';
+import { booleanArgType } from '../argTypes/booleanArgType';
 
 const meta: Meta<typeof VInputTextarea> = {
     title: 'UIKit/InputTextarea',
@@ -20,8 +19,7 @@ const meta: Meta<typeof VInputTextarea> = {
         name: inputNameArgType,
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
-        color: storybookColorSelect,
-        shouldHighlight: inputHighlightArgType,
+        hasError: booleanArgType,
     },
 };
 
@@ -34,10 +32,9 @@ export const Autofocus: Story = {
     args: {
         value: '',
         //placeholder: 'Autofocused textarea',
-        id: 'input-textarea-3',
-        name: 'inputTextarea',
+        id: 'input-textarea-1',
+        name: 'input-textarea-1',
         hasAutofocus: true,
-        isDisabled: false,
     },
 };
 
@@ -46,9 +43,7 @@ export const Empty: Story = {
         value: '',
         //placeholder: 'Type something',
         id: 'input-textarea-2',
-        name: 'inputTextarea',
-        hasAutofocus: false,
-        isDisabled: false,
+        name: 'input-textarea-2',
     },
 };
 
@@ -56,10 +51,8 @@ export const Disabled: Story = {
     args: {
         value: 'Disabled content',
         //placeholder: 'Cannot edit',
-        id: 'input-textarea-5',
-        name: 'inputTextarea',
-        hasAutofocus: false,
-        isDisabled: true,
+        id: 'input-textarea-3',
+        name: 'input-textarea-3',
     },
 };
 
@@ -67,11 +60,8 @@ export const Error: Story = {
     args: {
         value: 'Invalid content',
         //placeholder: 'Error state',
-        id: 'input-textarea-6',
-        name: 'inputTextarea',
-        hasAutofocus: false,
-        isDisabled: false,
-        color: 'error',
-        shouldHighlight: true,
+        id: 'input-textarea-4',
+        name: 'input-textarea-4',
+        hasError: true,
     },
 };

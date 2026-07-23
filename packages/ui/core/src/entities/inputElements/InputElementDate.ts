@@ -1,6 +1,6 @@
 import { InputElement } from './inputElement';
-import type { InputElementDateData } from '../../types/inputElementDateData';
+import type { InputDateData } from '../../types/inputDateData';
 
-export abstract class InputElementDate extends InputElement<Date | undefined> implements InputElementDateData
+export abstract class InputElementDate extends InputElement<Date | undefined> implements InputDateData
 {
 }

@@ -1,6 +1,6 @@
 import { InputElement } from './inputElement';
-import type { InputElementTimeData } from '../../types/inputElementTimeData';
+import type { InputTimeData } from '../../types/inputTimeData';
 
-export abstract class InputElementTime extends InputElement<number | undefined> implements InputElementTimeData
+export abstract class InputElementTime extends InputElement<number | undefined> implements InputTimeData
 {
 }

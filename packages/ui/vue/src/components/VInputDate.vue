@@ -5,8 +5,8 @@
     :name="props.name"
     :autofocus="props.hasAutofocus"
     :disabled="props.isDisabled"
-    :color="props.color"
-    :highlight="props.shouldHighlight"
+    :color="color"
+    :highlight="shouldHighlight"
     :hide-time-zone="true"
     granularity="day"
     v-bind="$attrs"
@@ -17,8 +17,9 @@
 import { OptionalValueMapper  } from '@client/shared';
 import { ZonedDateTimeMapper } from '@client/infrastructure-datetime';
 import { useService } from '../composables/useService';
+import { useInputData } from '../composables/useInputData';
 import { computed } from 'vue';
-import type { VInputDateProps } from '../types/vInputDateProps';
+import type { InputDateData } from '@client/ui-core';
 
 defineOptions({
   inheritAttrs: false
@@ -27,8 +28,10 @@ defineOptions({
 const dateMapper = useService(ZonedDateTimeMapper);
 const optionalDateMapper = new OptionalValueMapper(dateMapper);
 
-const props = defineProps<VInputDateProps>();
+const props = defineProps<InputDateData>();
 const valueModel = defineModel<Date>('value');
+
+const { color, shouldHighlight } = useInputData(props);
 
 const date = computed({
   get() {

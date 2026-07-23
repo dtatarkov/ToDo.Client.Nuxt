@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { VInputDateTime } from '@client/ui-vue';
 import { inputHasAutofocusArgType } from '../argTypes/inputHasAutofocusArgType';
-import { inputHighlightArgType } from '../argTypes/inputHighlightArgType';
 import { inputIdArgType } from '../argTypes/inputIdArgType';
 import { inputIsDisabledArgType } from '../argTypes/inputIsDisabledArgType';
 import { inputNameArgType } from '../argTypes/inputNameArgType';
-import { storybookColorSelect } from '../argTypes/storybookColorSelect';
+import { booleanArgType } from '../argTypes/booleanArgType';
 
 
 const meta: Meta<typeof VInputDateTime> = {
@@ -20,8 +19,7 @@ const meta: Meta<typeof VInputDateTime> = {
         name: inputNameArgType,
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
-        color: storybookColorSelect,
-        shouldHighlight: inputHighlightArgType,
+        hasError: booleanArgType,
     },
 };
 
@@ -33,10 +31,9 @@ export const Default: Story = {};
 export const Autofocus: Story = {
     args: {
         value: new Date('2026-06-15T09:45:00'),
-        id: 'input-datetime-3',
-        name: 'inputDateTime',
+        id: 'input-datetime-1',
+        name: 'input-datetime-1',
         hasAutofocus: true,
-        isDisabled: false,
     },
 };
 
@@ -44,18 +41,15 @@ export const Empty: Story = {
     args: {
         value: undefined,
         id: 'input-datetime-2',
-        name: 'inputDateTime',
-        hasAutofocus: false,
-        isDisabled: false,
+        name: 'input-datetime-2',
     },
 };
 
 export const Disabled: Story = {
     args: {
         value: new Date('2026-07-20T18:20:00'),
-        id: 'input-datetime-4',
-        name: 'inputDateTime',
-        hasAutofocus: false,
+        id: 'input-datetime-3',
+        name: 'input-datetime-3',
         isDisabled: true,
     },
 };
@@ -63,11 +57,8 @@ export const Disabled: Story = {
 export const Error: Story = {
     args: {
         value: new Date('2026-05-01T12:00:00'),
-        id: 'input-datetime-5',
-        name: 'inputDateTime',
-        hasAutofocus: false,
-        isDisabled: false,
-        color: 'error',
-        shouldHighlight: true,
+        id: 'input-datetime-4',
+        name: 'input-datetime-4',
+        hasError: true,
     },
 };

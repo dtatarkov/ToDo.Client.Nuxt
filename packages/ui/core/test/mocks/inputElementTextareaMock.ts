@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
 import type { InputElementTextarea } from '../../src/entities/inputElements/inputElementTextarea';
-import type { InputElementTextareaData } from '../../src/types/inputElementTextareaData';
+import type { InputTextareaData } from '../../src/types/inputTextareaData';
 
-export function createInputElementTextareaMock(data?: Partial<InputElementTextareaData>): InputElementTextarea
+export function createInputElementTextareaMock(data?: Partial<InputTextareaData>): InputElementTextarea
 {
     return {
         name: data?.name ?? undefined,

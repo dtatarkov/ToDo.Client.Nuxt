@@ -5,13 +5,14 @@ import { InputDateViewmodelImpl } from '../../src/viewmodels/inputDateViewmodelI
 import { InputTimeViewmodelImpl } from '../../src/viewmodels/inputTimeViewmodelImpl';
 import { InputDatetimeViewmodelImpl } from '../../src/viewmodels/inputDatetimeViewmodelImpl';
 import type { Constructor } from '@client/shared';
-import type { InputBaseViewmodel, InputBaseViewmodelState } from '../../src/viewmodels/inputBaseViewmodel';
-import type { InputElementData } from '../../src/types/inputElementData';
+import type { InputViewmodel } from '../../src/viewmodels/inputViewmodel';
+import type { InputData } from '../../src/types/inputData';
+import type { InputState } from '../../src/types/InputState';
 
 interface TestParams
 {
     label: string;
-    ViewmodelClass: Constructor<InputBaseViewmodel<any, InputElementData<any>, InputBaseViewmodelState<InputElementData<any>, any>>>;
+    ViewmodelClass: Constructor<InputViewmodel<any, InputData, InputState>>;
     testData: { initialValue: any; newValue: any; };
 }
 
@@ -69,7 +70,7 @@ const testCases: TestParams[] = [
 
 describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 {
-    let viewmodel: InputBaseViewmodel<any, InputElementData<any>, InputBaseViewmodelState<InputElementData<any>, any>>;
+    let viewmodel: InputViewmodel<any, InputData, InputState>;
 
     beforeEach(() =>
     {
@@ -93,7 +94,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
     {
         it('should update state with provided data', () =>
         {
-            const data: InputElementData<any> = {
+            const data: InputData = {
                 name: 'test-input',
             };
 
@@ -109,7 +110,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
         {
             viewmodel.value = testData.initialValue;
 
-            const data: InputElementData<any> = {
+            const data: InputData = {
                 name: 'test-input',
             };
 
@@ -121,7 +122,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 
         it('should update name property in state', () =>
         {
-            const data: InputElementData<any> = {
+            const data: InputData = {
                 name: 'new-name',
             };
 
@@ -142,7 +143,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 
         it('should preserve data when setting value', () =>
         {
-            const data: InputElementData<any> = {
+            const data: InputData = {
                 name: 'test-input',
             };
 
@@ -158,7 +159,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
     {
         it('should match state name', () =>
         {
-            const data: InputElementData<any> = {
+            const data: InputData = {
                 name: 'matched-name',
             };
 

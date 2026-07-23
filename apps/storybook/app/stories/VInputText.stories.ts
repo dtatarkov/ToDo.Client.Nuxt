@@ -2,11 +2,10 @@ import { VInputText } from '@client/ui-vue';
 import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { fn } from 'storybook/test';
 import { inputHasAutofocusArgType } from '../argTypes/inputHasAutofocusArgType';
-import { inputHighlightArgType } from '../argTypes/inputHighlightArgType';
 import { inputIdArgType } from '../argTypes/inputIdArgType';
 import { inputIsDisabledArgType } from '../argTypes/inputIsDisabledArgType';
 import { inputNameArgType } from '../argTypes/inputNameArgType';
-import { storybookColorSelect } from '../argTypes/storybookColorSelect';
+import { booleanArgType } from '../argTypes/booleanArgType';
 
 const meta: Meta<typeof VInputText> = {
     title: 'UIKit/InputText',
@@ -25,8 +24,7 @@ const meta: Meta<typeof VInputText> = {
         name: inputNameArgType,
         hasAutofocus: inputHasAutofocusArgType,
         isDisabled: inputIsDisabledArgType,
-        color: storybookColorSelect,
-        shouldHighlight: inputHighlightArgType,
+        hasError: booleanArgType,
     },
 };
 
@@ -39,10 +37,9 @@ export const Autofocus: Story = {
     args: {
         value: '',
         //placeholder: 'Autofocused input',
-        id: 'input-text-5',
-        name: 'inputText',
+        id: 'input-text-1',
+        name: 'input-text-1',
         hasAutofocus: true,
-        isDisabled: false,
     },
 };
 
@@ -51,9 +48,7 @@ export const Empty: Story = {
         value: '',
         //placeholder: 'Type something',
         id: 'input-text-2',
-        name: 'inputText',
-        hasAutofocus: false,
-        isDisabled: false,
+        name: 'input-text-2',
     },
 };
 
@@ -61,9 +56,8 @@ export const Disabled: Story = {
     args: {
         value: 'Disabled text',
         //placeholder: 'Cannot edit',
-        id: 'input-text-4',
-        name: 'inputText',
-        hasAutofocus: false,
+        id: 'input-text-3',
+        name: 'input-text-3',
         isDisabled: true,
     },
 };
@@ -72,11 +66,10 @@ export const Error: Story = {
     args: {
         value: 'Invalid input',
         //placeholder: 'Error state',
-        id: 'input-text-6',
-        name: 'inputText',
+        id: 'input-text-4',
+        name: 'input-text-4',
         hasAutofocus: false,
         isDisabled: false,
-        color: 'error',
-        shouldHighlight: true,
+        hasError: true,
     },
 };

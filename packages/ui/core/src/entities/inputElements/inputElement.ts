@@ -1,7 +1,7 @@
 import type { Action, DisposeToken } from '@client/shared';
-import type { InputElementData } from '../../types/inputElementData';
+import type { InputData } from '../../types/inputData';
 
-export abstract class InputElement<V = any> implements InputElementData<V>
+export abstract class InputElement<V = any> implements InputData<V>
 {
   abstract id: string | undefined;
   abstract name: string | undefined;
@@ -16,7 +16,7 @@ export abstract class InputElement<V = any> implements InputElementData<V>
   abstract toDefaultMode(): void;
 
   abstract setDefaultValue(): void;
-  abstract setData(data: Partial<InputElementData<V>>): void;
+  abstract setData(data: Partial<InputData<V>>): void;
 
   abstract onValueChange(handler: Action<[value: V]>, disposeToken?: DisposeToken): void;
 

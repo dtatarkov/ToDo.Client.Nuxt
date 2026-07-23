@@ -1,9 +1,8 @@
-import { InputBaseViewmodel, type InputBaseViewmodelState } from './inputBaseViewmodel';
-import type { InputElementTextData } from '../types/inputElementTextData';
+import { InputViewmodel } from './inputViewmodel';
+import type { InputTextData } from '../types/inputTextData';
+import type { InputTextState } from '../types/InputTextState';
 
-export type InputTextViewmodelState = InputBaseViewmodelState<InputElementTextData, string>;
-
-export abstract class InputTextViewmodel extends InputBaseViewmodel<string, InputElementTextData, InputTextViewmodelState>
+export abstract class InputTextViewmodel extends InputViewmodel<string, InputTextData, InputTextState>
 {
 
 }

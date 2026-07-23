@@ -1,10 +1,11 @@
-import { InputTextareaViewmodel, type InputTextareaViewmodelState } from './inputTextareaViewmodel';
-import type { InputElementTextareaData } from '../types/inputElementTextareaData';
-import { InputBaseViewmodelImpl } from './inputBaseViewmodelImpl';
+import { InputTextareaViewmodel } from './inputTextareaViewmodel';
+import type { InputTextareaData } from '../types/inputTextareaData';
+import type { InputTextareaState } from '../types/InputTextareaState';
+import { InputViewmodelImpl } from './inputViewmodelImpl';
 
-export class InputTextareaViewmodelImpl extends InputBaseViewmodelImpl<string, InputElementTextareaData, InputTextareaViewmodelState> implements InputTextareaViewmodel
+export class InputTextareaViewmodelImpl extends InputViewmodelImpl<string, InputTextareaData, InputTextareaState> implements InputTextareaViewmodel
 {
-    protected getInitialState(): InputTextareaViewmodelState
+    protected getInitialState(): InputTextareaState
     {
         return {
             name: '',

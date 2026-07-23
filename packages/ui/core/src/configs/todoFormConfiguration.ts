@@ -3,7 +3,7 @@ import type { FormConfiguration } from '../types/formConfiguration';
 import { FormElementType } from '../enums/formElementType';
 
 export const todoFormConfiguration: FormConfiguration<Omit<ToDoData, 'id' | 'completionDateActual'>> = {
-    elementsData: {
+    elements: {
         title: {
             type: FormElementType.inputText,
             labelKey: 'todo.field.title.label',

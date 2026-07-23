@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
 import type { InputElementText } from '../../src/entities/inputElements/inputElementText';
-import type { InputElementTextData } from '../../src/types/inputElementTextData';
+import type { InputTextData } from '../../src/types/inputTextData';
 
-export function createInputElementTextMock(data?: Partial<InputElementTextData>): InputElementText
+export function createInputElementTextMock(data?: Partial<InputTextData>): InputElementText
 {
     return {
         name: data?.name ?? undefined,

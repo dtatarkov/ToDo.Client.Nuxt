@@ -31,7 +31,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
   {
     super();
 
-    this.elements = this.formElementsFactory.createElements(configuration.elementsData);
+    this.elements = this.formElementsFactory.createElements(configuration.elements);
     this.submitCommand = this.createSubmitCommand(handlers.submit);
   }
 

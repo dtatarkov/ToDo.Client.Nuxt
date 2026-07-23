@@ -28,10 +28,10 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
     {
         super();
 
-        this.elements = this.formElementsFactory.createElements(configuration.elementsData);
+        this.elements = this.formElementsFactory.createElements(configuration.elements);
 
         this.state = new ObservableWritableBase<FormViewmodelState<TEntity>>({
-            elementsData: configuration.elementsData,
+            elements: configuration.elements,
             data: this.getData(),
             isDisabled: false,
         });

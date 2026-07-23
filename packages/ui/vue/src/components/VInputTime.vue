@@ -5,8 +5,8 @@
     :name="props.name"
     :autofocus="props.hasAutofocus"
     :disabled="props.isDisabled"
-    :color="props.color"
-    :highlight="props.shouldHighlight"
+    :color="color"
+    :highlight="shouldHighlight"
     :hide-time-zone="true"
     :hour-cycle="24"
     granularity="minute"
@@ -17,9 +17,10 @@
 <script setup lang="ts">
 import { OptionalValueMapper  } from '@client/shared';
 import { TimeMapper } from '@client/infrastructure-datetime';
+import { useInputData } from '../composables/useInputData';
 import { computed } from 'vue';
 import { useService } from '../composables/useService';
-import type { VInputTimeProps } from '../types/vInputTimeProps';
+import type { InputTimeData } from '@client/ui-core';
 
 defineOptions({
   inheritAttrs: false
@@ -28,8 +29,10 @@ defineOptions({
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);
 
-const props = defineProps<VInputTimeProps>();
+const props = defineProps<InputTimeData>();
 const valueModel = defineModel<number>('value');
+
+const { color, shouldHighlight } = useInputData(props);
 
 const time = computed({
   get() {

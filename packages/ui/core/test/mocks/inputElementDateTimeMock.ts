@@ -1,8 +1,8 @@
 import { vi } from 'vitest';
 import type { InputElementDateTime } from '../../src/entities/inputElements/inputElementDateTime';
-import type { InputElementDateTimeData } from '../../src/types/inputElementDateTimeData';
+import type { InputDateTimeData } from '../../src/types/inputDateTimeData';
 
-export function createInputElementDateTimeMock(data?: Partial<InputElementDateTimeData>): InputElementDateTime
+export function createInputElementDateTimeMock(data?: Partial<InputDateTimeData>): InputElementDateTime
 {
     return {
         name: data?.name ?? undefined,

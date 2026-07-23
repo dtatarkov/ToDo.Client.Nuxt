@@ -1,8 +1,8 @@
 import type { MessageKey } from '@client/infrastructure-messages';
 import { InputElement } from './inputElement';
-import type { InputElementTextareaData } from '../../types/inputElementTextareaData';
+import type { InputTextareaData } from '../../types/inputTextareaData';
 
-export abstract class InputElementTextarea extends InputElement<string> implements InputElementTextareaData
+export abstract class InputElementTextarea extends InputElement<string> implements InputTextareaData
 {
     abstract placeholderKey: MessageKey | undefined;
 }

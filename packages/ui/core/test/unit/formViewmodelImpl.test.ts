@@ -27,7 +27,7 @@ function setupViewmodel(elements: FormElement[]): FormViewmodel<any>
 {
     formElementsFactoryMock.createElements.mockReturnValue(elements);
 
-    const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elementsData: {} }, { submit: submitHandler });
+    const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elements: {} }, { submit: submitHandler });
 
     return viewmodel;
 }
@@ -63,9 +63,9 @@ describe('FormViewmodelImpl', () =>
             const titleElement = createFormElementMock('title', '');
             formElementsFactoryMock.createElements.mockReturnValue([titleElement]);
 
-            const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elementsData }, { submit: submitHandler });
+            const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, { elements: elementsData }, { submit: submitHandler });
 
-            expect(viewmodel.state.value.elementsData).toEqual(elementsData);
+            expect(viewmodel.state.value.elements).toEqual(elementsData);
             expect(viewmodel.state.value.data).toEqual({ title: '' });
             expect(viewmodel.state.value.isDisabled).toBe(false);
         });

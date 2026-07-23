@@ -1,9 +1,8 @@
-import { InputBaseViewmodel, type InputBaseViewmodelState } from './inputBaseViewmodel';
-import type { InputElementDateData } from '../types/inputElementDateData';
+import { InputViewmodel } from './inputViewmodel';
+import type { InputDateData } from '../types/inputDateData';
+import type { InputDateState } from '../types/InputDateState';
 
-export type InputDateViewmodelState = InputBaseViewmodelState<InputElementDateData, Date | undefined>;
-
-export abstract class InputDateViewmodel extends InputBaseViewmodel<Date | undefined, InputElementDateData, InputDateViewmodelState>
+export abstract class InputDateViewmodel extends InputViewmodel<Date | undefined, InputDateData, InputDateState>
 {
 
 }

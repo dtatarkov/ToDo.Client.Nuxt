@@ -6,15 +6,16 @@
     :autofocus="props.hasAutofocus"
     :placeholder="getMessage(props.placeholderKey)"
     :disabled="props.isDisabled"
-    :color="props.color"
-    :highlight="props.shouldHighlight"
+    :color="color"
+    :highlight="shouldHighlight"
     v-bind="$attrs"
   />
 </template>
 
 <script setup lang="ts">
 import { useMessages } from '../composables/useMessages';
-import type { VInputTextareaProps } from '../types/vInputTextareaProps';
+import { useInputData } from '../composables/useInputData';
+import type { InputTextareaData } from '@client/ui-core';
 
 defineOptions({
   inheritAttrs: false
@@ -22,6 +23,8 @@ defineOptions({
 
 const { getMessage } = useMessages();
 
-const props = defineProps<VInputTextareaProps>();
+const props = defineProps<InputTextareaData>();
 const valueModel = defineModel<string>('value', { default: '' });
+
+const { color, shouldHighlight } = useInputData(props);
 </script>

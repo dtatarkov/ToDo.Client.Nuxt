@@ -4,12 +4,18 @@ export type { FormElementData } from './types/formElementData';
 export type { FormConfiguration } from './types/formConfiguration';
 export type { FormHandlers } from './types/formHandlers';
 export type { FormViewmodelState } from './types/formViewmodelState';
-export type { InputElementData } from './types/inputElementData';
-export type { InputElementTextData } from './types/inputElementTextData';
-export type { InputElementTextareaData } from './types/inputElementTextareaData';
-export type { InputElementTimeData } from './types/inputElementTimeData';
-export type { InputElementDateData } from './types/inputElementDateData';
-export type { InputElementDateTimeData } from './types/inputElementDateTimeData';
+export type { InputData } from './types/inputData';
+export type { InputTextData } from './types/inputTextData';
+export type { InputTextareaData } from './types/inputTextareaData';
+export type { InputTimeData } from './types/inputTimeData';
+export type { InputDateData } from './types/inputDateData';
+export type { InputDateTimeData } from './types/inputDateTimeData';
+export type { InputState } from './types/InputState';
+export type { InputDateState } from './types/InputDateState';
+export type { InputDatetimeState } from './types/InputDatetimeState';
+export type { InputTextState } from './types/InputTextState';
+export type { InputTimeState } from './types/InputTimeState';
+export type { InputTextareaState } from './types/InputTextareaState';
 
 export { Viewmodel } from './viewmodels/viewmodel';
 export { ToDosWidgetViewmodel } from './viewmodels/todosWidgetViewmodel';
@@ -22,6 +28,14 @@ export { FormViewmodel } from './viewmodels/formViewmodel';
 export { FormViewmodelImpl } from './viewmodels/formViewmodelImpl';
 export { InputTextViewmodel } from './viewmodels/inputTextViewmodel';
 export { InputTextViewmodelImpl } from './viewmodels/inputTextViewmodelImpl';
+export { InputDateViewmodel } from './viewmodels/inputDateViewmodel';
+export { InputDateViewmodelImpl } from './viewmodels/inputDateViewmodelImpl';
+export { InputDatetimeViewmodel } from './viewmodels/inputDatetimeViewmodel';
+export { InputDatetimeViewmodelImpl } from './viewmodels/inputDatetimeViewmodelImpl';
+export { InputTimeViewmodel } from './viewmodels/inputTimeViewmodel';
+export { InputTimeViewmodelImpl } from './viewmodels/inputTimeViewmodelImpl';
+export { InputTextareaViewmodel } from './viewmodels/inputTextareaViewmodel';
+export { InputTextareaViewmodelImpl } from './viewmodels/inputTextareaViewmodelImpl';
 
 export type { Form } from './entities/form';
 // export { FormElement } from './entities/formElement';
@@ -46,6 +60,8 @@ export { FormElementType } from './enums/formElementType';
 // export { InputElementTextareaBase } from './entities/inputElements/inputElementTextareaBase';
 
 export { todoFormConfiguration } from './configs/todoFormConfiguration';
+export { extendFormConfigurationWithData } from './utils/extendFormConfigurationWithData';
+export { extendFormConfigurationWithErrors } from './utils/extendFormConfigurationWithErrors';
 
 export { FormFactory } from './factories/formFactory';
 export { FormFactoryImpl } from './factories/formFactoryImpl';
