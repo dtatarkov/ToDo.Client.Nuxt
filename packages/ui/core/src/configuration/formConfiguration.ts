@@ -1,3 +1,4 @@
+import type { MessageKey } from '@client/infrastructure-messages';
 import type { FormElementData } from '../types/formElementData';
 import { mapObject } from '@client/shared';
 
@@ -18,14 +19,21 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
     }
 
     withErrors(
-        errors: Partial<Record<keyof TEntity, string>>
+        errors: Partial<Record<keyof TEntity, MessageKey>>
     ): FormConfiguration<TEntity>
     {
-        const newElements = mapObject(this.elements, (elementData, elementName) => (<FormElementData>{
-            ...elementData,
+        const newElements = mapObject(this.elements, (elementData, elementName) =>
+        {
+            const errorKey = errors[elementName] ?? elementData.errorKey;
+            const hasError = errorKey !== undefined;
 
-            errorKey: errors[elementName] ?? elementData.value
-        }));
+            return (<FormElementData>{
+                ...elementData,
+
+                errorKey,
+                hasError,
+            });
+        });
 
         return new FormConfiguration(newElements);
     }
