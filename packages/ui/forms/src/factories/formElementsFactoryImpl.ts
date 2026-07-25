@@ -1,13 +1,12 @@
 import type { FormElement } from '../entities/formElement';
 import { dependency } from '@client/infrastructure-di';
-import { InputElementsFactory } from './inputElementsFactory';
 import { FormElementBase } from '../entities/formElementBase';
 import { FormFieldBase } from '../entities/formFieldBase';
 import type { FormElementsFactory } from './formElementsFactory';
 import type { FormElementsCreateData } from '../types/formElementsCreateData';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import { FormElementType } from '../enums/formElementType';
-import type { InputElement } from '../entities/inputElements/inputElement';
+import { InputElementsFactory, type InputElement } from '@client/ui-core';
 
 @dependency(InputElementsFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory

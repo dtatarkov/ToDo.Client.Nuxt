@@ -1,4 +1,4 @@
-import type { FormElementType } from '@client/ui-core';
+import type { FormElementType } from '@client/ui-forms';
 
 export class UnknownFormElementTypeException extends Error
 {

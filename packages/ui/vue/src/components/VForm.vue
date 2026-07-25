@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="K extends string = string">
-import { FormElementType, type FormElementData } from '@client/ui-core';
+import { FormElementType, type FormElementData } from '@client/ui-forms';
 import VFormField from './VFormField.vue';
 import { h } from 'vue';
 import VInputText from './VInputText.vue';

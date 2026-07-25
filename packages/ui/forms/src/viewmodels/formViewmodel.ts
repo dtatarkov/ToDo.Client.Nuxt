@@ -1,7 +1,7 @@
 import type { FormValidationError } from '../entities/formValidationError';
 import type { Action, AsyncCommand, DisposeToken } from '@client/shared';
 import type { FormViewmodelState } from '../types/formViewmodelState';
-import { Viewmodel } from './viewmodel';
+import { Viewmodel } from '@client/ui-core';
 
 export abstract class FormViewmodel<TEntity extends Record<string, any> = Record<string, any>> extends Viewmodel<FormViewmodelState<TEntity>>
 {

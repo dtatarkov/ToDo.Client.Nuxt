@@ -18,6 +18,7 @@
   "dependencies": {
     "@client/domain-todo": "workspace:*",
     "@client/ui-core": "workspace:*",
+    "@client/ui-forms": "workspace:*",
     "@client/shared": "workspace:*",    
     "@client/infrastructure-datetime": "workspace:*",
     "@client/infrastructure-messages": "workspace:*",

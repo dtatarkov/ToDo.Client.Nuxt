@@ -17,8 +17,8 @@ import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-mes
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
-import { FormElementsFactory, FormElementsFactoryImpl, FormFactory, FormFactoryImpl, InfoBlockViewmodel, InfoBlockViewmodelImpl, InputElementsFactory, InputElementsFactoryImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
-
+import { InfoBlockViewmodel, InfoBlockViewmodelImpl, InputElementsFactory, InputElementsFactoryImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
+import { FormElementsFactory, FormElementsFactoryImpl, FormFactory, FormFactoryImpl } from '@client/ui-forms';
 export function useAppServices()
 {
     const container = new ServicesContainer();

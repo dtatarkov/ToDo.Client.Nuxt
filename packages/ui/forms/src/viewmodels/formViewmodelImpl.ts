@@ -9,7 +9,7 @@ import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
-import { ViewmodelBase } from './viewmodelBase';
+import { ViewmodelBase } from '@client/ui-core';
 
 export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormViewmodelState<TEntity>> implements FormViewmodel<TEntity>
 {
