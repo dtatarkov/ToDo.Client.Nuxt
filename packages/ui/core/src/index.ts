@@ -15,6 +15,8 @@ export type { InputTextareaState } from './types/InputTextareaState';
 
 export { Viewmodel } from './viewmodels/viewmodel';
 export { ViewmodelBase } from './viewmodels/viewmodelBase';
+export { ObservableViewmodelState } from './entities/observableViewmodelState';
+export { ObservableViewmodelStateBase } from './entities/observableViewmodelStateBase';
 export { ToDosWidgetViewmodel } from './viewmodels/todosWidgetViewmodel';
 export { ToDosWidgetViewmodelImpl } from './viewmodels/todosWidgetViewmodelImpl';
 export { ToDoCardViewmodel } from './viewmodels/todoCardViewmodel';

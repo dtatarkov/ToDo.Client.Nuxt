@@ -1,24 +1,26 @@
-import { FormDisabledException } from '../exceptions/formDisabledException';
-import type { FormElement } from '../entities/formElement';
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from '../entities/formValidationError';
-import type { FormElementValidationError } from '../entities/formElementValidationError';
-import { type Func, EntityEvent, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase, toObject } from '@client/shared';
-import { ObservableWritableBase } from '@client/shared';
+import { type Func, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
+import { ObservableViewmodelState, ObservableViewmodelStateBase } from '@client/ui-core';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
-import { ViewmodelBase } from '@client/ui-core';
+import { FormDataContext } from '../entities/formDataContext';
+import { FormLock } from '../entities/formLock';
+import { FormValidator } from '../entities/formValidator';
+import { FormEvents } from '../entities/formEvents';
 
-export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormViewmodelState<TEntity>> implements FormViewmodel<TEntity>
+export class FormViewmodelImpl<TEntity extends Record<string, any>> extends FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
 
-    private validationErrorEvent = new EntityEvent<FormValidationError>();
-    private elements = new Array<FormElement>();
+    private formDataContext: FormDataContext<TEntity>;
+    private formLock: FormLock<TEntity>;
+    private formValidator: FormValidator;
+    private formEvents: FormEvents;
 
-    state: ObservableWritableBase<FormViewmodelState<TEntity>>;
+    state: ObservableViewmodelState<FormViewmodelState<TEntity>>;
 
     constructor(
         private formElementsFactory: FormElementsFactory,
@@ -28,205 +30,82 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
     {
         super();
 
-        this.elements = this.formElementsFactory.createElements(configuration.elements);
+        const elements = this.formElementsFactory.createElements(configuration.elements);
 
-        this.state = new ObservableWritableBase<FormViewmodelState<TEntity>>({
+        this.state = new ObservableViewmodelStateBase<FormViewmodelState<TEntity>>({
             elements: configuration.elements,
-            data: this.getData(),
             isDisabled: false,
         });
 
+
+        this.formDataContext = new FormDataContext(elements, this.state);
+        this.formLock = new FormLock(elements, this.state);
+        this.formValidator = new FormValidator(elements, this.state);
+        this.formEvents = new FormEvents();
+
         this.submitCommand = this.createSubmitCommand(handlers.submit);
+
+        this.state.update({
+            data: this.getData()
+        });
     }
 
-    getData(): Record<keyof TEntity, any>
+    override getData(): Record<keyof TEntity, any>
     {
-        const data: Record<string, any> = {};
-
-        for (const element of this.elements)
-        {
-            data[element.name] = element.value;
-        }
-
-        return data as Record<keyof TEntity, any>;
+        return this.formDataContext.getData();
     }
 
-    setData(changeData: Partial<Record<keyof TEntity, any>>)
+    override setData(changeData: Partial<Record<keyof TEntity, any>>)
     {
-        this.assertNotDisabled();
-        this.setElementsValue(changeData);
-
-        const newData = this.getData();
-
-        this.updateState({ data: newData });
+        this.formLock.assertNotDisabled();
+        this.formDataContext.setData(changeData);
     }
 
-    getSubmitCommand(): AsyncCommand
+    override getSubmitCommand(): AsyncCommand
     {
         return this.submitCommand;
     }
 
-    onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
+    override onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
     {
-        this.validationErrorEvent.on(handler, token);
+        this.formEvents.formValidationErrorEvent.on(handler, token);
     }
 
     override[Symbol.dispose](): void
     {
         super[Symbol.dispose]();
 
-        this.validationErrorEvent[Symbol.dispose]();
-
-        this.elements.forEach(element =>
-            element[Symbol.dispose]());
-
-        this.elements = [];
-    }
-
-    private setElementsValue(data: Partial<Record<keyof TEntity, any>>)
-    {
-        for (const element of this.elements)
-        {
-            if (element.name in data)
-            {
-                element.value = data[element.name];
-            }
-
-            else
-            {
-                element.setDefaultValue();
-            }
-        }
-    }
-
-    private validate(): void
-    {
-        this.elements.forEach(element =>
-            element.validate());
-
-        const elementValidationErrors = this.getElementValidationErrors();
-        const errors = toObject(elementValidationErrors, error => error.formElementName as keyof TEntity);
-
-        this.updateState({
-            errors
-        });
-    }
-
-    private isValid(): boolean
-    {
-        const isValid = this.elements.every(element => element.isValid());
-
-        return isValid;
-    }
-
-    private isDisabled(): boolean
-    {
-        return this.state.value.isDisabled;
-    }
-
-    private disable(): void
-    {
-        this.assertNotDisabled();
-
-        this.elements.forEach(element =>
-            element.disable());
-
-        this.updateState({
-            isDisabled: true
-        });
-    }
-
-    private enable(): void
-    {
-        if (!this.isDisabled())
-        {
-            return;
-        }
-
-        this.elements.forEach(element =>
-            element.enable());
-
-        this.updateState({
-            isDisabled: false
-        });
-    }
-
-    private assertNotDisabled(): void
-    {
-        if (this.isDisabled())
-        {
-            throw new FormDisabledException();
-        }
+        this.formEvents.formValidationErrorEvent[Symbol.dispose]();
     }
 
     private createSubmitCommand(submitFn: Func<Promise<void>, [Record<keyof TEntity, any>]>)
     {
         const command = new AsyncCommandBase(async () =>
         {
-            this.assertNotDisabled();
-            this.validate();
+            this.formLock.assertNotDisabled();
+            this.formValidator.validate();
 
-            if (!this.isValid())
+            if (!this.formValidator.isValid() && this.formValidator.validationError)
             {
-                this.emitFormValidationError();
-
+                this.formEvents.formValidationErrorEvent.emit(this.formValidator.validationError);
                 return false;
             }
 
-            this.disable();
+            this.formLock.disable();
 
             try
             {
-                const data = this.getData();
+                const data = this.formDataContext.getData();
                 await submitFn(data);
 
                 return true;
             }
             finally
             {
-                this.enable();
+                this.formLock.enable();
             }
         });
 
         return command;
-    }
-
-    private getFormValidationError(): FormValidationError | undefined
-    {
-        const elementValidationErrors = this.getElementValidationErrors();
-
-        if (elementValidationErrors.length === 0)
-        {
-            return undefined;
-        }
-
-        const formValidationError = new FormValidationError(elementValidationErrors);
-
-        return formValidationError;
-    }
-
-    private getElementValidationErrors()
-    {
-        return this.elements.reduce((result, element) =>
-        {
-            const error = element.getError();
-
-            if (error)
-            {
-                result.push(error);
-            }
-
-            return result;
-        }, new Array<FormElementValidationError>());
-    }
-
-    private emitFormValidationError(): void
-    {
-        const formValidationError = this.getFormValidationError();
-
-        if (formValidationError)
-        {
-            this.validationErrorEvent.emit(formValidationError);
-        }
     }
 }
