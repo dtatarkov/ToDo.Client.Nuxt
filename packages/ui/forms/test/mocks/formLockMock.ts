@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { IFormLock } from '../../src/entities/formLock';
+import type { FormLock } from '../../src/entities/formLock';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
 
 export const formLockMock = {
@@ -7,7 +7,7 @@ export const formLockMock = {
     enable: vi.fn(),
     disable: vi.fn(),
     assertNotDisabled: vi.fn(),
-} satisfies IFormLock;
+} satisfies FormLock;
 
 export function markFormLockMockAsDisabled()
 {

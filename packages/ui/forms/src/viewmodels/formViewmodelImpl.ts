@@ -6,18 +6,22 @@ import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
-import { FormDataContext } from '../entities/formDataContext';
-import { FormLock } from '../entities/formLock';
-import { FormValidator } from '../entities/formValidator';
-import { FormEvents } from '../entities/formEvents';
+import { FormDataContextBase } from '../entities/formDataContextBase';
+import { FormLockBase } from '../entities/formLockBase';
+import { FormValidatorBase } from '../entities/formValidatorBase';
+import { FormEventsBase } from '../entities/formEventsBase';
 import { AsyncCommandFormSubmit } from '../commands/asyncCommandFormSubmit';
+import type { FormEvents } from '../entities/formEvents';
+import type { FormDataContext } from '../entities/formDataContext';
+import type { FormLock } from '../entities/formLock';
+import type { FormValidator } from '../entities/formValidator';
 
 export class FormViewmodelImpl<TEntity extends Record<string, any>> extends FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
 
     private formDataContext: FormDataContext<TEntity>;
-    private formLock: FormLock<TEntity>;
+    private formLock: FormLock;
     private formValidator: FormValidator;
     private formEvents: FormEvents;
 
@@ -39,10 +43,10 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         });
 
 
-        this.formDataContext = new FormDataContext(elements, this.state);
-        this.formLock = new FormLock(elements, this.state);
-        this.formValidator = new FormValidator(elements, this.state);
-        this.formEvents = new FormEvents();
+        this.formDataContext = new FormDataContextBase(elements, this.state);
+        this.formLock = new FormLockBase(elements, this.state);
+        this.formValidator = new FormValidatorBase(elements, this.state);
+        this.formEvents = new FormEventsBase();
 
         this.submitCommand = new AsyncCommandFormSubmit(
             this.formDataContext,

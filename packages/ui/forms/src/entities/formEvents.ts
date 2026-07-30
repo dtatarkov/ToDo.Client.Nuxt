@@ -1,13 +1,7 @@
-import { EntityEvent } from '@client/shared';
 import type { FormValidationError } from '../entities/formValidationError';
 import type { IEntityEvent } from '@client/shared';
 
-export interface IFormEvents
+export abstract class FormEvents
 {
-    formValidationErrorEvent: IEntityEvent<FormValidationError>;
-}
-
-export class FormEvents implements IFormEvents
-{
-    formValidationErrorEvent = new EntityEvent<FormValidationError>();
+    abstract formValidationErrorEvent: IEntityEvent<FormValidationError>;
 }

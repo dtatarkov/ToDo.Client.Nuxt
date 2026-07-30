@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { FormValidator } from '../../src/entities/formValidator';
+import { FormValidatorBase } from '../../src/entities/formValidatorBase';
 import { FormValidationError } from '../../src/entities/formValidationError';
 import { FormElementValidationError } from '../../src/entities/formElementValidationError';
 import type { FormViewmodelState } from '../../src/types/formViewmodelState';
@@ -8,9 +8,9 @@ import { ObservableViewmodelState } from '@client/ui-core';
 import type { FormElement } from '../../src/entities/formElement';
 import { formStateMock } from '../mocks/formStateMock';
 
-function setupFormValidator(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormValidator
+function setupFormValidator(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormValidatorBase
 {
-    return new FormValidator(elements, state);
+    return new FormValidatorBase(elements, state);
 }
 
 describe('FormValidator', () =>

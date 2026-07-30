@@ -1,10 +1,10 @@
 import { vi } from 'vitest';
-import type { IFormValidator } from '../../src/entities/formValidator';
+import type { FormValidator } from '../../src/entities/formValidator';
 import type { FormValidationError } from '../../src/entities/formValidationError';
 
 export const formValidatorMock = {
     validate: vi.fn(),
-} satisfies IFormValidator;
+} satisfies FormValidator;
 
 export function markFormValidatorValid()
 {

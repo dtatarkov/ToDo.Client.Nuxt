@@ -1,14 +1,14 @@
 import { describe, it, expect } from 'vitest';
-import { FormDataContext } from '../../src/entities/formDataContext';
+import { FormDataContextBase } from '../../src/entities/formDataContextBase';
 import type { FormViewmodelState } from '../../src/types/formViewmodelState';
 import { createFormElementMock } from '../mocks/formElementMock';
 import { formStateMock } from '../mocks/formStateMock';
 import type { FormElement } from '../../src/entities/formElement';
 import type { ObservableViewmodelState } from '@client/ui-core';
 
-function setupFormDataContext(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormDataContext<any>
+function setupFormDataContext(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormDataContextBase<any>
 {
-    return new FormDataContext(elements, state);
+    return new FormDataContextBase(elements, state);
 }
 
 describe('FormDataContext', () =>

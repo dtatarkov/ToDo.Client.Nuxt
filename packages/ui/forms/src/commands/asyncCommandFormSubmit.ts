@@ -1,8 +1,8 @@
 import { AsyncCommandBase } from '@client/shared';
-import type { IFormValidator } from '../entities/formValidator';
-import type { IFormLock } from '../entities/formLock';
-import type { IFormEvents } from '../entities/formEvents';
-import type { IFormDataContext } from '../entities/formDataContext';
+import type { FormValidator } from '../entities/formValidator';
+import type { FormLock } from '../entities/formLock';
+import type { FormEvents } from '../entities/formEvents';
+import type { FormDataContext } from '../entities/formDataContext';
 
 /**
  * Async command for form submission.
@@ -48,10 +48,10 @@ export class AsyncCommandFormSubmit<TEntity extends Record<string, any> = Record
      * @param submitHandler — async handler for submitting data
      */
     constructor(
-        private formDataContext: IFormDataContext<TEntity>,
-        private formLock: IFormLock,
-        private formValidator: IFormValidator,
-        private formEvents: IFormEvents,
+        private formDataContext: FormDataContext<TEntity>,
+        private formLock: FormLock,
+        private formValidator: FormValidator,
+        private formEvents: FormEvents,
         private submitHandler: (data: Record<keyof TEntity, any>) => Promise<void>
     )
     {

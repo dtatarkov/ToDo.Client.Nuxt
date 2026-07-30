@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { FormLock } from '../../src/entities/formLock';
+import { FormLockBase } from '../../src/entities/formLockBase';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
 import type { FormViewmodelState } from '../../src/types/formViewmodelState';
 import { createFormElementMock } from '../mocks/formElementMock';
@@ -7,9 +7,9 @@ import { createFormStateMock } from '../mocks/formStateMock';
 import type { FormElement } from '../../src/entities/formElement';
 import type { ObservableViewmodelState } from '@client/ui-core';
 
-function setupFormLock(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormLock<any>
+function setupFormLock(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormLockBase<any>
 {
-    return new FormLock(elements, state);
+    return new FormLockBase(elements, state);
 }
 
 describe('FormLock', () =>
