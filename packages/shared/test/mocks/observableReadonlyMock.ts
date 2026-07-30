@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ObservableReadonly } from '../entities/observableReadonly';
+import type { ObservableReadonly } from '../../src/entities/observableReadonly';
 import { type Action } from '@client/shared';
 
 export function createObservableReadonlyMock<T>(value: T)

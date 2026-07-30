@@ -15,8 +15,8 @@
       "import": "./src/index.ts"
     },
     "./mocks": {
-      "types": "./src/mocks/index.ts",
-      "import": "./src/mocks/index.ts"
+      "types": "./test/mocks/index.ts",
+      "import": "./test/mocks/index.ts"
     }
   },
   

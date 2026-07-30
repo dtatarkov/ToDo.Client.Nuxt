@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ObservableArray } from '../entities/observableArray';
+import type { ObservableArray } from '../../src/entities/observableArray';
 
 export function createObservableArrayMock<T>(value = [] as T[])
 {
