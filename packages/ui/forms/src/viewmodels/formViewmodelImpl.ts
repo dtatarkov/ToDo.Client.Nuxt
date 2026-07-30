@@ -1,6 +1,6 @@
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from '../entities/formValidationError';
-import { type Func, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
+import { type AsyncCommand, type Action, type DisposeToken } from '@client/shared';
 import { ObservableViewmodelState, ObservableViewmodelStateBase } from '@client/ui-core';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../configuration/formConfiguration';
@@ -10,6 +10,7 @@ import { FormDataContext } from '../entities/formDataContext';
 import { FormLock } from '../entities/formLock';
 import { FormValidator } from '../entities/formValidator';
 import { FormEvents } from '../entities/formEvents';
+import { AsyncCommandFormSubmit } from '../commands/asyncCommandFormSubmit';
 
 export class FormViewmodelImpl<TEntity extends Record<string, any>> extends FormViewmodel<TEntity>
 {
@@ -43,7 +44,13 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         this.formValidator = new FormValidator(elements, this.state);
         this.formEvents = new FormEvents();
 
-        this.submitCommand = this.createSubmitCommand(handlers.submit);
+        this.submitCommand = new AsyncCommandFormSubmit(
+            this.formDataContext,
+            this.formLock,
+            this.formValidator,
+            this.formEvents,
+            handlers.submit
+        );
 
         this.state.update({
             data: this.getData()
@@ -76,36 +83,5 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         super[Symbol.dispose]();
 
         this.formEvents.formValidationErrorEvent[Symbol.dispose]();
-    }
-
-    private createSubmitCommand(submitFn: Func<Promise<void>, [Record<keyof TEntity, any>]>)
-    {
-        const command = new AsyncCommandBase(async () =>
-        {
-            this.formLock.assertNotDisabled();
-            this.formValidator.validate();
-
-            if (!this.formValidator.isValid() && this.formValidator.validationError)
-            {
-                this.formEvents.formValidationErrorEvent.emit(this.formValidator.validationError);
-                return false;
-            }
-
-            this.formLock.disable();
-
-            try
-            {
-                const data = this.formDataContext.getData();
-                await submitFn(data);
-
-                return true;
-            }
-            finally
-            {
-                this.formLock.enable();
-            }
-        });
-
-        return command;
     }
 }

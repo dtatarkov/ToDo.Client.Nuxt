@@ -3,7 +3,7 @@ import type { FormElement } from './formElement';
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from './formValidationError';
 import type { FormElementValidationError } from './formElementValidationError';
-import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandBase } from '@client/shared';
+import { type Func, EntityEvent, getUniqueId, type AsyncCommand, type Action, type DisposeToken, AsyncCommandGeneric } from '@client/shared';
 import { Form } from './form';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
@@ -136,7 +136,7 @@ export class FormBase<TEntity extends Record<string, any> = Record<string, any>>
 
   private createSubmitCommand(submitFn: Func<Promise<void>, [Record<keyof TEntity, any>]>)
   {
-    const command = new AsyncCommandBase(async () =>
+    const command = new AsyncCommandGeneric(async () =>
     {
       this.assertNotDisabled();
       this.validate();

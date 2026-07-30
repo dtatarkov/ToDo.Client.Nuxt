@@ -7,6 +7,11 @@ export type EntityEventConfiguration = {
     skipEmitOnSameValue?: boolean;
 };
 
+export interface IEntityEvent<T> extends Subscribable<T>, Disposable
+{
+    emit(value: T): void;
+}
+
 export class EntityEvent<T = void> implements Subscribable<T>, Disposable
 {
     private eventDisposeToken = new DisposeToken();

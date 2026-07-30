@@ -2,7 +2,13 @@ import type { FormElement } from './formElement';
 import { ObservableViewmodelState } from '@client/ui-core';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 
-export class FormDataContext<TEntity extends Record<string, any>>
+export interface IFormDataContext<TEntity extends Record<string, any>>
+{
+    getData(): Record<keyof TEntity, any>;
+    setData(changeData: Partial<Record<keyof TEntity, any>>): void;
+}
+
+export class FormDataContext<TEntity extends Record<string, any>> implements IFormDataContext<TEntity>
 {
     constructor(
         private elements: FormElement[],

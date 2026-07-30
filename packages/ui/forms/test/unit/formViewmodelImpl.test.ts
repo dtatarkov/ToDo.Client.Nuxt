@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { FormViewmodelImpl } from '../../src/viewmodels/formViewmodelImpl';
 import { createFormElementMock, markFormElementInvalid, markFormElementValid } from '../mocks/formElementMock';
-import { getPromiseResolverAsync } from '@client/shared';
 import { formElementsFactoryMock } from '../mocks/formElementsFactoryMock';
 import type { FormElement } from '../../src/entities/formElement';
 import type { FormViewmodel } from '../../src/viewmodels/formViewmodel';
@@ -9,6 +8,7 @@ import { FormElementValidationError } from '../../src/entities/formElementValida
 import type { FormElementData } from '../../src/types/formElementData';
 import { FormElementType } from '../../src/enums/formElementType';
 import { FormConfiguration } from '../../src/configuration/formConfiguration';
+import { setupPausedHandlerAsync } from '@client/shared/mocks';
 
 const submitHandler = vi.fn();
 const validationErrorHandler = vi.fn();
@@ -20,15 +20,6 @@ function setupViewmodel(elements: FormElement[]): FormViewmodel<any>
     const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, new FormConfiguration({}), { submit: submitHandler });
 
     return viewmodel;
-}
-
-async function setupPausedSubmitHandlerAsync()
-{
-    const { resolve, promise } = await getPromiseResolverAsync();
-
-    submitHandler.mockReturnValue(promise);
-
-    return resolve;
 }
 
 // TODO: change to integration tests
@@ -166,7 +157,7 @@ describe('FormViewmodelImpl', () =>
             markFormElementValid(titleElement);
 
             const viewmodel = setupViewmodel([titleElement]);
-            await setupPausedSubmitHandlerAsync();
+            await setupPausedHandlerAsync(submitHandler);
 
             const command = viewmodel.getSubmitCommand();
             command.executeAsync();
@@ -183,7 +174,7 @@ describe('FormViewmodelImpl', () =>
             markFormElementValid(titleElement);
 
             const viewmodel = setupViewmodel([titleElement]);
-            const resume = await setupPausedSubmitHandlerAsync();
+            const resume = await setupPausedHandlerAsync(submitHandler);
 
             const command = viewmodel.getSubmitCommand();
             const promise = command.executeAsync();

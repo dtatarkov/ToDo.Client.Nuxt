@@ -4,41 +4,39 @@ import { FormElementValidationError } from '../entities/formElementValidationErr
 import { ObservableViewmodelState } from '@client/ui-core';
 import { toObject } from '@client/shared';
 import type { FormViewmodelState } from '../types/formViewmodelState';
+import type { FormValidationResult } from '../types/formValidationResult';
 
-export class FormValidator
+export interface IFormValidator
 {
-    private validationErrorInternal: FormValidationError | undefined = undefined;
+    validate(): FormValidationResult;
+}
 
+export class FormValidator implements IFormValidator
+{
     constructor(
         private elements: FormElement[],
         private state: ObservableViewmodelState<FormViewmodelState<any>>
     ) { }
 
-    validate(): void
+    validate(): FormValidationResult
     {
         this.elements.forEach(element => element.validate());
 
-        const elementValidationErrors = this.getElementValidationErrors();
-        const errors = toObject(elementValidationErrors, error => error.formElementName);
+        const errorsList = this.getElementValidationErrors();
+        const errorsObj = toObject(errorsList, error => error.formElementName);
 
-        this.validationErrorInternal = elementValidationErrors.length > 0
-            ? new FormValidationError(elementValidationErrors)
-            : undefined;
+        this.state.update({ errors: errorsObj });
 
-        this.state.update({
-            errors
-        });
-    }
+        const isValid = errorsList.length === 0;
 
-    isValid(): boolean
-    {
-        const isValid = this.elements.every(element => element.isValid());
-        return isValid;
-    }
+        if (isValid)
+        {
+            return { isValid };
+        }
 
-    get validationError(): FormValidationError | undefined
-    {
-        return this.validationErrorInternal;
+        const validationError = new FormValidationError(errorsList);
+
+        return { isValid, validationError };
     }
 
     private getElementValidationErrors(): FormElementValidationError[]

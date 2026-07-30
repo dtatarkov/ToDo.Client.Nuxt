@@ -3,7 +3,15 @@ import { FormDisabledException } from '../exceptions/formDisabledException';
 import { ObservableViewmodelState } from '@client/ui-core';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 
-export class FormLock<TEntity extends Record<string, any>>
+export interface IFormLock
+{
+    isDisabled(): boolean;
+    enable(): void;
+    disable(): void;
+    assertNotDisabled(): void;
+}
+
+export class FormLock<TEntity extends Record<string, any>> implements IFormLock
 {
     constructor(
         private elements: FormElement[],

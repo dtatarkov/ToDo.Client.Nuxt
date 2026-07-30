@@ -1,8 +1,9 @@
 // Entities
 export { AsyncCommand } from './entities/asyncCommand';
 export { AsyncCommandBase } from './entities/asyncCommandBase';
+export { AsyncCommandGeneric } from './entities/asyncCommandGeneric';
 export { DisposeToken } from './entities/disposeToken';
-export { EntityEvent, type EntityEventConfiguration } from './entities/entityEvent';
+export { EntityEvent, type EntityEventConfiguration, type IEntityEvent } from './entities/entityEvent';
 export { InitializationToken } from './entities/initializationToken';
 export { type ObservableArray } from './entities/observableArray';
 export { ObservableArrayBase } from './entities/observableArrayBase';

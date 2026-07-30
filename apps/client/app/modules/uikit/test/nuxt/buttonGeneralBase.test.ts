@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ButtonGeneralBase } from '../../entities/buttons/buttonGeneralBase';
-import { DisposedException, InitializationOnlyException, AsyncCommandBase, delay } from '@client/shared';
+import { DisposedException, InitializationOnlyException, AsyncCommandGeneric, delay } from '@client/shared';
 
 
 
@@ -131,7 +131,7 @@ describe('ButtonGeneralBase', () =>
         it('should return the command after setCommand', () =>
         {
             const button = new ButtonGeneralBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             button.setCommand(command);
 
@@ -144,7 +144,7 @@ describe('ButtonGeneralBase', () =>
         it('should register onIdle handler that hides loader', async () =>
         {
             const button = new ButtonGeneralBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             button.showLoader();
             button.setCommand(command);
@@ -157,7 +157,7 @@ describe('ButtonGeneralBase', () =>
         it('should register onExecuting handler that shows loader', async () =>
         {
             const button = new ButtonGeneralBase();
-            const command = new AsyncCommandBase(async () => delay(10000));
+            const command = new AsyncCommandGeneric(async () => delay(10000));
 
             button.setCommand(command);
             command.executeAsync();
@@ -168,8 +168,8 @@ describe('ButtonGeneralBase', () =>
         it('should throw InitializationOnlyException when called twice', () =>
         {
             const button = new ButtonGeneralBase();
-            const command1 = new AsyncCommandBase(async () => true);
-            const command2 = new AsyncCommandBase(async () => true);
+            const command1 = new AsyncCommandGeneric(async () => true);
+            const command2 = new AsyncCommandGeneric(async () => true);
 
             button.setCommand(command1);
 
@@ -179,7 +179,7 @@ describe('ButtonGeneralBase', () =>
         it('should throw DisposedException when disposed', () =>
         {
             const button = new ButtonGeneralBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             button[Symbol.dispose]();
 

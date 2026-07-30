@@ -1,45 +1,85 @@
-import type { Func } from '../types/func';
 import type { Action } from '../types/action';
-import { DisposeToken } from './disposeToken';
 import { AsyncCommand } from './asyncCommand';
+import { DisposeToken } from './disposeToken';
 import { EntityEvent } from './entityEvent';
 import { CommandState } from '../enums/commandState';
 
-export class AsyncCommandBase extends AsyncCommand
+/**
+ * Abstract base class for async commands.
+ *
+ * Implements the common command lifecycle:
+ * - State management (idle → executing → idle)
+ * - Events: onIdle, onExecuting, onExecuted
+ * - Guard against re-entry during execution
+ * - Automatic resource cleanup via Disposable
+ *
+ * Subclasses must implement `handleExecution()` to define
+ * the specific execution logic.
+ */
+export abstract class AsyncCommandBase extends AsyncCommand implements Disposable
 {
-    private state = CommandState.idle;
-    private onIdleEvent = new EntityEvent<void>();
-    private onExecutingEvent = new EntityEvent<void>();
-    private onExecutedEvent = new EntityEvent<void>();
     private disposeToken = new DisposeToken();
 
-    constructor(
+    /** Event fired when the command transitions to idle state. */
+    protected onIdleEvent = new EntityEvent<void>();
+    /** Event fired when the command starts executing. */
+    protected onExecutingEvent = new EntityEvent<void>();
+    /** Event fired when the command completes successfully. */
+    protected onExecutedEvent = new EntityEvent<void>();
 
-        private executeInternal: Func<Promise<boolean | undefined | void>>
-    )
+    private state = CommandState.idle;
+
+    constructor()
     {
         super();
+
+        this.disposeToken.registerDisposable(this.onIdleEvent);
+        this.disposeToken.registerDisposable(this.onExecutingEvent);
+        this.disposeToken.registerDisposable(this.onExecutedEvent);
     }
 
+    /**
+     * Subscribes to the idle event.
+     * @param handler — event handler
+     * @param token — optional dispose token for auto-unsubscribe
+     */
     override onIdle(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onIdleEvent.on(handler, token);
     }
 
+    /**
+     * Subscribes to the executing event.
+     * @param handler — event handler
+     * @param token — optional dispose token for auto-unsubscribe
+     */
     override onExecuting(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onExecutingEvent.on(handler, token);
     }
 
+    /**
+     * Subscribes to the executed event.
+     * @param handler — event handler
+     * @param token — optional dispose token for auto-unsubscribe
+     */
     override onExecuted(handler: Action, token?: DisposeToken): void
     {
         this.disposeToken.assertNotDisposed();
         this.onExecutedEvent.on(handler, token);
     }
 
-    async executeAsync(): Promise<boolean>
+    /**
+     * Executes the command.
+     *
+     * Returns `false` if the command is already running.
+     * Always restores idle state after completion (success or error).
+     *
+     * @returns `true` if execution completed successfully, `false` if already running or execution returned false
+     */
+    override async executeAsync(): Promise<boolean>
     {
         this.disposeToken.assertNotDisposed();
 
@@ -49,11 +89,10 @@ export class AsyncCommandBase extends AsyncCommand
         }
 
         this.setState(CommandState.executing);
-        this.onExecutingEvent.emit();
 
         try
         {
-            const result = await (this.executeInternal() as Promise<boolean | undefined>) ?? true;
+            const result = (await this.handleExecution()) ?? true;
 
             if (result)
             {
@@ -65,25 +104,43 @@ export class AsyncCommandBase extends AsyncCommand
         finally
         {
             this.setState(CommandState.idle);
-            this.onIdleEvent.emit();
         }
     }
 
-    [Symbol.dispose](): void
-    {
-        if (this.disposeToken.isDisposed)
-        {
-            return;
-        }
+    /**
+     * Abstract method for execution logic in subclasses.
+     * Called inside `executeAsync()` after transitioning to executing state.
+     *
+     * @returns `true` on success, `false` on cancellation, `undefined` for neutral result
+     */
+    protected abstract handleExecution(): Promise<boolean | undefined>;
 
-        this.onIdleEvent[Symbol.dispose]();
-        this.onExecutingEvent[Symbol.dispose]();
-        this.onExecutedEvent[Symbol.dispose]();
-        this.disposeToken[Symbol.dispose]();
-    }
-
-    private setState(state: CommandState): void
+    /**
+     * Sets the command state and emits the corresponding event.
+     * @param state — new command state
+     */
+    protected setState(state: CommandState): void
     {
         this.state = state;
+
+        switch (state)
+        {
+            case CommandState.executing:
+                this.onExecutingEvent.emit();
+                break;
+
+            case CommandState.idle:
+                this.onIdleEvent.emit();
+                break;
+        }
+    }
+
+    /**
+     * Disposes all resources associated with the command.
+     * Unsubscribes all event handlers and disposes the inner token.
+     */
+    [Symbol.dispose](): void
+    {
+        this.disposeToken[Symbol.dispose]();
     }
 }

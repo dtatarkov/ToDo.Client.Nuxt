@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ButtonIconBase } from '../../entities/buttons/buttonIconBase';
-import { DisposedException, InitializationOnlyException, AsyncCommandBase, Icon } from '@client/shared';
+import { DisposedException, InitializationOnlyException, AsyncCommandGeneric, Icon } from '@client/shared';
 
 
 
@@ -75,7 +75,7 @@ describe('ButtonIconBase', () =>
         it('should return the command after setCommand', () =>
         {
             const button = new ButtonIconBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             button.setCommand(command);
 
@@ -88,7 +88,7 @@ describe('ButtonIconBase', () =>
         it('should set the command without error', () =>
         {
             const button = new ButtonIconBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             expect(() => button.setCommand(command)).not.toThrow();
         });
@@ -96,8 +96,8 @@ describe('ButtonIconBase', () =>
         it('should throw InitializationOnlyException when called twice', () =>
         {
             const button = new ButtonIconBase();
-            const command1 = new AsyncCommandBase(async () => true);
-            const command2 = new AsyncCommandBase(async () => true);
+            const command1 = new AsyncCommandGeneric(async () => true);
+            const command2 = new AsyncCommandGeneric(async () => true);
 
             button.setCommand(command1);
 
@@ -107,7 +107,7 @@ describe('ButtonIconBase', () =>
         it('should throw DisposedException when disposed', () =>
         {
             const button = new ButtonIconBase();
-            const command = new AsyncCommandBase(async () => true);
+            const command = new AsyncCommandGeneric(async () => true);
 
             button[Symbol.dispose]();
 
