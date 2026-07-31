@@ -1,7 +1,7 @@
 import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from '../entities/formValidationError';
 import { type AsyncCommand, type Action, type DisposeToken } from '@client/shared';
-import { ObservableViewmodelState, ObservableViewmodelStateBase } from '@client/ui-core';
+import { ObservableViewmodelState, ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 import type { FormViewmodelState } from '../types/formViewmodelState';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
@@ -16,7 +16,7 @@ import type { FormDataContext } from '../entities/formDataContext';
 import type { FormLock } from '../entities/formLock';
 import type { FormValidator } from '../entities/formValidator';
 
-export class FormViewmodelImpl<TEntity extends Record<string, any>> extends FormViewmodel<TEntity>
+export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormViewmodelState<TEntity>> implements FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
 
@@ -61,23 +61,23 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends Form
         });
     }
 
-    override getData(): Record<keyof TEntity, any>
+    getData(): Record<keyof TEntity, any>
     {
         return this.formDataContext.getData();
     }
 
-    override setData(changeData: Partial<Record<keyof TEntity, any>>)
+    setData(changeData: Partial<Record<keyof TEntity, any>>)
     {
         this.formLock.assertNotDisabled();
         this.formDataContext.setData(changeData);
     }
 
-    override getSubmitCommand(): AsyncCommand
+    getSubmitCommand(): AsyncCommand
     {
         return this.submitCommand;
     }
 
-    override onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
+    onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
     {
         this.formEvents.formValidationErrorEvent.on(handler, token);
     }

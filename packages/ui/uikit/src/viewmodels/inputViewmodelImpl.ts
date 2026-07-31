@@ -1,12 +1,11 @@
-import { ObservableWritableBase } from '@client/shared';
 import { InputViewmodel } from './inputViewmodel';
 import type { InputData } from '../types/inputData';
 import type { InputState, InputStateDefault, InputStateInitial } from '../types/InputState';
-import { ViewmodelBase } from '@client/ui-core';
+import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 
 export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState extends InputState<V, TData>> extends ViewmodelBase<TState> implements InputViewmodel<V, TData, TState>
 {
-    state = new ObservableWritableBase<TState>(this.getInitialStateFull());
+    state = new ObservableViewmodelStateBase<TState>(this.getInitialStateFull());
 
     get name(): string
     {
@@ -20,7 +19,7 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     set value(value: V)
     {
-        this.updateState({ value } as Partial<TState>);
+        this.state.update({ value } as Partial<TState>);
     }
 
     get isDisabled(): boolean
@@ -35,17 +34,17 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     setData(data: TData): void
     {
-        this.updateState({ ...data } as unknown as Partial<TState>);
+        this.state.update({ ...data } as unknown as Partial<TState>);
     }
 
     disable(): void
     {
-        this.updateState({ isDisabled: true } as Partial<TState>);
+        this.state.update({ isDisabled: true } as Partial<TState>);
     }
 
     enable(): void
     {
-        this.updateState({ isDisabled: false } as Partial<TState>);
+        this.state.update({ isDisabled: false } as Partial<TState>);
     }
 
     setDefaultValue(): void
@@ -55,12 +54,12 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     toErrorMode(): void
     {
-        this.updateState({ hasError: true } as Partial<TState>);
+        this.state.update({ hasError: true } as Partial<TState>);
     }
 
     toDefaultMode(): void
     {
-        this.updateState({ hasError: false } as Partial<TState>);
+        this.state.update({ hasError: false } as Partial<TState>);
     }
 
     protected getDefaultState(): InputStateDefault<V>

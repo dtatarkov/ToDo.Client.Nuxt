@@ -1,13 +1,12 @@
-import { ObservableWritableBase } from '@client/shared';
 import { InfoBlockViewmodel, type InfoBlockViewmodelState, type InfoBlockViewmodelStateRow } from './infoBlockViewmodel';
 import type { MessageKey } from '@client/infrastructure-messages';
-import { ViewmodelBase } from '@client/ui-core';
+import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 
 export class InfoBlockViewmodelImpl extends ViewmodelBase<InfoBlockViewmodelState> implements InfoBlockViewmodel
 {
     private rows = new Array<InfoBlockViewmodelStateRow>();
 
-    state = new ObservableWritableBase<InfoBlockViewmodelState>({
+    state = new ObservableViewmodelStateBase<InfoBlockViewmodelState>({
         rows: [],
         hasRows: false,
     });
@@ -26,7 +25,7 @@ export class InfoBlockViewmodelImpl extends ViewmodelBase<InfoBlockViewmodelStat
 
     private syncState()
     {
-        this.updateState({
+        this.state.update({
             rows: [...this.rows],
             hasRows: this.rows.length > 0,
         });
