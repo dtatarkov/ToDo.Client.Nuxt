@@ -25,5 +25,5 @@ export { InputElement } from './entities/inputElements/inputElement';
 export { InputElementsFactory } from './factories/inputElementsFactory';
 export { InputElementsFactoryImpl } from './factories/inputElementsFactoryImpl';
 
-export { InputViewmodelsFactory } from './factories/inputViewmodelsFactory';
-export { InputViewmodelsFactoryImpl } from './factories/inputViewmodelsFactoryImpl';
+export { UIKitViewmodelsFactory } from './factories/uiKitViewmodelsFactory';
+export { UIKitViewmodelsFactoryImpl } from './factories/uiKitViewmodelsFactoryImpl';

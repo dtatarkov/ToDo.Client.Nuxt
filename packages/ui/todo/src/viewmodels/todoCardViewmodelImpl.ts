@@ -2,28 +2,31 @@ import { DisposeToken, ObservableWritableBase } from '@client/shared';
 import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelState } from './todoCardViewmodel';
 import { DateFormatter } from '@client/infrastructure-datetime';
 import { dependency } from '@client/infrastructure-di';
-import { InfoBlockViewmodel } from '@client/ui-uikit';
+import { UIKitViewmodelsFactory, type InfoBlockViewmodel } from '@client/ui-uikit';
 import { ViewmodelBase } from '@client/ui-core';
 
 @dependency(DateFormatter)
-@dependency(InfoBlockViewmodel)
+@dependency(UIKitViewmodelsFactory)
 export class ToDoCardViewmodelImpl extends ViewmodelBase<ToDoCardViewmodelState> implements ToDoCardViewmodel
 {
     private disposeToken = new DisposeToken();
+
+    private readonly infoBlock: InfoBlockViewmodel;
 
     state: ObservableWritableBase<ToDoCardViewmodelState>;
 
     constructor(
         private readonly dateFormatter: DateFormatter,
-        private readonly infoBlock: InfoBlockViewmodel,
+        viewmodelsFactory: UIKitViewmodelsFactory,
     )
     {
         super();
 
+        this.infoBlock = viewmodelsFactory.createInfoBlock(this.disposeToken);
+
         const initialState = this.createState();
 
         this.state = new ObservableWritableBase(initialState);
-        this.disposeToken.registerDisposable(this.infoBlock);
     }
 
     setData(data: ToDoCardViewmodelData)

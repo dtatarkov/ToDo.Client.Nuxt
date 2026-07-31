@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { dateFormatterMock } from '@client/infrastructure-datetime/mocks';
 import type { ToDoCardViewmodelData } from '../../src/viewmodels/todoCardViewmodel';
 import { ToDoCardViewmodelImpl } from '../../src/viewmodels/todoCardViewmodelImpl';
-import { infoBlockViewmodelMock } from '@client/ui-uikit/mocks';
+import { infoBlockViewmodelMock, uiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 import type { InfoBlockViewmodelState } from '@client/ui-uikit';
 
 describe('ToDoCardViewmodelImpl', () =>
@@ -18,7 +18,9 @@ describe('ToDoCardViewmodelImpl', () =>
             hasRows: false,
         });
 
-        viewmodel = new ToDoCardViewmodelImpl(dateFormatterMock, infoBlockViewmodelMock);
+        uiKitViewmodelsFactoryMock.createInfoBlock.mockReturnValue(infoBlockViewmodelMock);
+
+        viewmodel = new ToDoCardViewmodelImpl(dateFormatterMock, uiKitViewmodelsFactoryMock);
     });
 
     describe('constructor', () =>

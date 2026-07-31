@@ -17,7 +17,7 @@ import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-mes
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
-import { InfoBlockViewmodel, InfoBlockViewmodelImpl, InputElementsFactory, InputElementsFactoryImpl } from '@client/ui-uikit';
+import { InputElementsFactory, InputElementsFactoryImpl, UIKitViewmodelsFactory, UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
 import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
 import { FormElementsFactory, FormElementsFactoryImpl, FormFactory, FormFactoryImpl } from '@client/ui-forms';
 export function useAppServices()
@@ -43,12 +43,12 @@ export function useAppServices()
     container.bind(FormElementsFactory).to(FormElementsFactoryImpl).asTransient();
     container.bind(FormFactory).to(FormFactoryImpl).asTransient();
     container.bind(InputElementsFactory).to(InputElementsFactoryImpl).asTransient();
+    container.bind(UIKitViewmodelsFactory).to(UIKitViewmodelsFactoryImpl).asTransient();
 
     container.bind(ButtonsFactory).to(ButtonsFactoryImpl).asTransient();
 
     container.bind(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
     container.bind(ToDoCardViewmodel).to(ToDoCardViewmodelImpl).asTransient();
-    container.bind(InfoBlockViewmodel).to(InfoBlockViewmodelImpl).asTransient();
 
     container.bind(DateParser).to(DateParserImpl).asTransient();
     container.bind(DateFormatter).to(DateFormatterImpl).asTransient();
