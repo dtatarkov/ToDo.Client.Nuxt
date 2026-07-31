@@ -53,7 +53,7 @@ const testCases: TestParams[] = [
 
         testData: {
             initialValue: undefined,
-            newValue: 27000000 //07:30 },
+            newValue: 27000000 // 07:30
         },
     },
 
@@ -84,9 +84,54 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
             expect(viewmodel.state.value.name).toBe('');
         });
 
-        it('should initialize with empty value', () =>
+        it('should initialize with default value', () =>
         {
             expect(viewmodel.state.value.value).toBe(testData.initialValue);
+        });
+
+        it('should initialize with isDisabled false', () =>
+        {
+            expect(viewmodel.state.value.isDisabled).toBe(false);
+        });
+
+        it('should initialize with hasAutofocus false', () =>
+        {
+            expect(viewmodel.state.value.hasAutofocus).toBe(false);
+        });
+
+        it('should initialize with hasError false', () =>
+        {
+            expect(viewmodel.state.value.hasError).toBe(false);
+        });
+    });
+
+    describe('getters', () =>
+    {
+        it('should match state name', () =>
+        {
+            const targetName = 'matched-name';
+            const data: InputData = { name: targetName };
+
+            viewmodel.setData(data);
+
+            expect(viewmodel.state.value.name).toBe(targetName);
+            expect(viewmodel.name).toBe(viewmodel.state.value.name);
+        });
+
+        it('should match state isDisabled', () =>
+        {
+            viewmodel.disable();
+
+            expect(viewmodel.state.value.isDisabled).toBe(true);
+            expect(viewmodel.isDisabled).toBe(viewmodel.state.value.isDisabled);
+        });
+
+        it('should match state hasError', () =>
+        {
+            viewmodel.toErrorMode();
+
+            expect(viewmodel.state.value.hasError).toBe(true);
+            expect(viewmodel.hasError).toBe(viewmodel.state.value.hasError);
         });
     });
 
@@ -100,10 +145,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 
             viewmodel.setData(data);
 
-            expect(viewmodel.state.value).toEqual({
-                value: testData.initialValue,
-                ...data,
-            });
+            expect(viewmodel.state.value.name).toBe('test-input');
         });
 
         it('should preserve value when setting data', () =>
@@ -120,15 +162,17 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
             expect(viewmodel.state.value.name).toBe('test-input');
         });
 
-        it('should update name property in state', () =>
+        it('should preserve disabled state when setting data', () =>
         {
+            viewmodel.disable();
+
             const data: InputData = {
-                name: 'new-name',
+                name: 'test-input',
             };
 
             viewmodel.setData(data);
 
-            expect(viewmodel.state.value.name).toBe('new-name');
+            expect(viewmodel.state.value.isDisabled).toBe(true);
         });
     });
 
@@ -155,17 +199,54 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
         });
     });
 
-    describe('name getter', () =>
+    describe('disable / enable', () =>
     {
-        it('should match state name', () =>
+        it('should disable the input', () =>
         {
-            const data: InputData = {
-                name: 'matched-name',
-            };
+            viewmodel.disable();
 
-            viewmodel.setData(data);
+            expect(viewmodel.isDisabled).toBe(true);
+            expect(viewmodel.state.value.isDisabled).toBe(true);
+        });
 
-            expect(viewmodel.name).toBe(viewmodel.state.value.name);
+        it('should enable the input', () =>
+        {
+            viewmodel.disable();
+            viewmodel.enable();
+
+            expect(viewmodel.isDisabled).toBe(false);
+            expect(viewmodel.state.value.isDisabled).toBe(false);
+        });
+    });
+
+    describe('toErrorMode / toDefaultMode', () =>
+    {
+        it('should set error mode', () =>
+        {
+            viewmodel.toErrorMode();
+
+            expect(viewmodel.hasError).toBe(true);
+            expect(viewmodel.state.value.hasError).toBe(true);
+        });
+
+        it('should clear error mode', () =>
+        {
+            viewmodel.toErrorMode();
+            viewmodel.toDefaultMode();
+
+            expect(viewmodel.hasError).toBe(false);
+            expect(viewmodel.state.value.hasError).toBe(false);
+        });
+    });
+
+    describe('setDefaultValue', () =>
+    {
+        it('should reset value to default', () =>
+        {
+            viewmodel.value = testData.newValue;
+            viewmodel.setDefaultValue();
+
+            expect(viewmodel.state.value.value).toBe(testData.initialValue);
         });
     });
 });
