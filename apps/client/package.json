@@ -16,6 +16,8 @@
     "@client/domain-todo": "workspace:*",
     "@client/ui-core": "workspace:*",
     "@client/ui-forms": "workspace:*",
+    "@client/ui-uikit": "workspace:*",
+    "@client/ui-todo": "workspace:*",
     "@client/ui-vue": "workspace:*",
     "@client/infrastructure-nuxt-ui": "workspace:*",
     "@client/infrastructure-i18n": "workspace:*",

@@ -2,9 +2,9 @@ import { DisposeToken, InitializationToken, ObservableWritableBase } from '@clie
 import { ToDosWidgetViewmodel, type ToDosWidgetViewmodelState } from './todosWidgetViewmodel';
 import { ToDosStore, type ToDo } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
-import type { ToDoCardData } from '../types/todoCardData';
+import type { ToDoCardData } from '../../../todo/src/types/todoCardData';
 import type { MessageKey } from '@client/infrastructure-messages';
-import { ViewmodelBase } from './viewmodelBase';
+import { ViewmodelBase } from '@client/ui-core';
 
 @dependency(ToDosStore)
 export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetViewmodelState> implements ToDosWidgetViewmodel

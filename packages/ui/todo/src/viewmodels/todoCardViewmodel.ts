@@ -1,6 +1,5 @@
-import type { InfoBlockViewmodelState } from './infoBlockViewmodel';
-import { Viewmodel } from './viewmodel';
-
+import { Viewmodel } from '@client/ui-core';
+import type { InfoBlockViewmodelState } from '@client/ui-uikit';
 export type ToDoCardViewmodelState = {
     infoBlock: InfoBlockViewmodelState;
     hasFooter: boolean;

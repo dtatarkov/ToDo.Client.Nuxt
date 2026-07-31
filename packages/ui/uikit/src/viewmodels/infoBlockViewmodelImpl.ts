@@ -1,7 +1,7 @@
 import { ObservableWritableBase } from '@client/shared';
 import { InfoBlockViewmodel, type InfoBlockViewmodelState, type InfoBlockViewmodelStateRow } from './infoBlockViewmodel';
 import type { MessageKey } from '@client/infrastructure-messages';
-import { ViewmodelBase } from './viewmodelBase';
+import { ViewmodelBase } from '@client/ui-core';
 
 export class InfoBlockViewmodelImpl extends ViewmodelBase<InfoBlockViewmodelState> implements InfoBlockViewmodel
 {

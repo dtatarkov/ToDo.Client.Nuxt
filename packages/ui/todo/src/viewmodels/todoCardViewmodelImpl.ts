@@ -1,9 +1,9 @@
 import { DisposeToken, ObservableWritableBase } from '@client/shared';
 import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelState } from './todoCardViewmodel';
 import { DateFormatter } from '@client/infrastructure-datetime';
-import { InfoBlockViewmodel } from './infoBlockViewmodel';
 import { dependency } from '@client/infrastructure-di';
-import { ViewmodelBase } from './viewmodelBase';
+import { InfoBlockViewmodel } from '@client/ui-uikit';
+import { ViewmodelBase } from '@client/ui-core';
 
 @dependency(DateFormatter)
 @dependency(InfoBlockViewmodel)

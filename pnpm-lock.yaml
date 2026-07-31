@@ -195,6 +195,12 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../../packages/ui/forms
+      '@client/ui-todo':
+        specifier: workspace:*
+        version: link:../../packages/ui/todo
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../../packages/ui/uikit
       '@client/ui-vue':
         specifier: workspace:*
         version: link:../../packages/ui/vue
@@ -289,6 +295,12 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../../packages/ui/forms
+      '@client/ui-todo':
+        specifier: workspace:*
+        version: link:../../packages/ui/todo
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../../packages/ui/uikit
       '@client/ui-vue':
         specifier: workspace:*
         version: link:../../packages/ui/vue
@@ -519,6 +531,60 @@ importers:
       '@client/ui-core':
         specifier: workspace:*
         version: link:../core
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../uikit
+
+  packages/ui/todo:
+    devDependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../domain/todo
+      '@client/infrastructure-datetime':
+        specifier: workspace:*
+        version: link:../../infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../infrastructure/messages
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../core
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../uikit
+
+  packages/ui/uikit:
+    devDependencies:
+      '@client/domain-todo':
+        specifier: workspace:*
+        version: link:../../domain/todo
+      '@client/infrastructure-datetime':
+        specifier: workspace:*
+        version: link:../../infrastructure/datetime
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../infrastructure/messages
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../core
 
   packages/ui/vue:
     dependencies:
@@ -543,6 +609,12 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../forms
+      '@client/ui-todo':
+        specifier: workspace:*
+        version: link:../todo
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../uikit
       '@nuxt/ui':
         specifier: 'catalog:'
         version: 4.9.0(8810ff551b6a74879c7d13d3e89b1bed)

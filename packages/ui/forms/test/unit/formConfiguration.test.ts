@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { FormConfiguration } from '../../src/configuration/formConfiguration';
 import { FormElementType } from '../../src/enums/formElementType';
 import type { FormElementData } from '../../src/types/formElementData';
-import type { InputTextData } from '@client/ui-core';
+import type { InputTextData } from '@client/ui-uikit';
 
 describe('FormConfiguration', () =>
 {

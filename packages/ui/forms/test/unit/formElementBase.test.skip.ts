@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { FormElementBase } from '../../src/entities/formElementBase';
 import { FormFieldBase } from '../../src/entities/formFieldBase';
 import { ValidationError } from '@client/shared';
-import { createInputElementTextMock } from '@client/ui-core/mocks';
+import { createInputElementTextMock } from '@client/ui-uikit/mocks';
 
 describe('FormElementBase', () =>
 {

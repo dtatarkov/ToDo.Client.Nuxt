@@ -1,5 +1,5 @@
 import type { MessageKey } from '@client/infrastructure-messages';
-import { Viewmodel } from './viewmodel';
+import { Viewmodel } from '@client/ui-core';
 
 export type InfoBlockViewmodelState = {
     rows: InfoBlockViewmodelStateRow[];

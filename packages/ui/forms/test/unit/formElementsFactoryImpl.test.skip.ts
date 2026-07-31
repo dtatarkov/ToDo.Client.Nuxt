@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { FormElementsFactoryImpl } from '../../src/factories/formElementsFactoryImpl';
 import { FormElementType } from '../../src/enums/formElementType';
 import type { FormElementData } from '../../src/types/formElementData';
-import { inputElementsFactoryMock, createInputElementTextMock, createInputElementTextareaMock, createInputElementDateTimeMock } from '@client/ui-core/mocks';
+import { inputElementsFactoryMock, createInputElementTextMock, createInputElementTextareaMock, createInputElementDateTimeMock } from '@client/ui-uikit/mocks';
 
 describe('FormElementsFactoryImpl', () =>
 {

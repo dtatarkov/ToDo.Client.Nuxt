@@ -1,7 +1,7 @@
 import type { Meta, StoryObj, } from '@storybook/vue3-vite';
 import { fn } from 'storybook/test';
 import { VToDoCard } from '@client/ui-vue';
-import type { ToDoCardData } from '@client/ui-core';
+import type { ToDoCardData } from '@client/ui-todo';
 
 type ToDoCardViewmodelStoryArgs = Partial<ToDoCardData>;
 

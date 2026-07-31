@@ -2,7 +2,7 @@ import type { FormFieldBase } from "./formFieldBase";
 import { FormElement } from "./formElement";
 import { FormElementValidationError } from './formElementValidationError';
 import { DisposeToken, type ValidationError } from '@client/shared';
-import type { InputElement } from '@client/ui-core';
+import type { InputElement } from '@client/ui-uikit';
 
 export class FormElementBase<V = any> extends FormElement
 {

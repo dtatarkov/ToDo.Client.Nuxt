@@ -1,6 +1,7 @@
 import { ServicesContainer } from '@client/infrastructure-di';
 import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
-import { InfoBlockViewmodel, InfoBlockViewmodelImpl, ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-core';
+import { InfoBlockViewmodel, InfoBlockViewmodelImpl } from '@client/ui-uikit';
+import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
 import { provideServicesContainer } from '@client/ui-vue';
 import { useI18n } from 'vue-i18n';
 import { DateFormatter, DateFormatterConfiguration, DateFormatterImpl, TimeMapper, TimeMapperImpl, ZonedDateTimeMapper, ZonedDateTimeMapperImpl } from '@client/infrastructure-datetime';

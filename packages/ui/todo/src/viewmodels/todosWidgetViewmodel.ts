@@ -1,6 +1,6 @@
 import type { MessageKey } from '@client/infrastructure-messages';
+import { Viewmodel } from '@client/ui-core';
 import type { ToDoCardData } from '../types/todoCardData';
-import { Viewmodel } from './viewmodel';
 
 export type ToDosWidgetViewmodelState = {
     cards: ToDoCardData[];

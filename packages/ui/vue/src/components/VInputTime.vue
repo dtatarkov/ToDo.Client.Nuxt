@@ -20,7 +20,7 @@ import { TimeMapper } from '@client/infrastructure-datetime';
 import { useInputData } from '../composables/useInputData';
 import { computed } from 'vue';
 import { useService } from '../composables/useService';
-import type { InputTimeData } from '@client/ui-core';
+import type { InputTimeData } from '@client/ui-uikit';
 
 defineOptions({
   inheritAttrs: false

@@ -6,7 +6,7 @@ import type { FormElementsFactory } from './formElementsFactory';
 import type { FormElementsCreateData } from '../types/formElementsCreateData';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import { FormElementType } from '../enums/formElementType';
-import { InputElementsFactory, type InputElement } from '@client/ui-core';
+import { InputElementsFactory, type InputElement } from '@client/ui-uikit';
 
 @dependency(InputElementsFactory)
 export class FormElementsFactoryImpl implements FormElementsFactory

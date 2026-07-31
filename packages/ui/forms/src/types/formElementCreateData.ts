@@ -1,4 +1,4 @@
-import type { InputTextData, InputTextareaData, InputDateData, InputTimeData, InputDateTimeData } from '@client/ui-core';
+import type { InputTextData, InputTextareaData, InputDateData, InputTimeData, InputDateTimeData } from '@client/ui-uikit';
 import type { FormElementType } from '../enums/formElementType';
 import type { FormElementGenericCreateData } from './formElementGenericCreateData';
 

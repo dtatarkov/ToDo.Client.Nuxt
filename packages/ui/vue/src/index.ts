@@ -33,6 +33,3 @@ export { default as VForm } from './components/VForm.vue';
 
 //Widgets
 export { default as VToDosWidget } from './widgets/VToDosWidget.vue';
-
-// Viewmodels
-export { ToDoCardViewmodel } from '@client/ui-core';

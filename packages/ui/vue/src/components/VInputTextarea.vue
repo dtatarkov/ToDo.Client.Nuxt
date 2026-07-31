@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { useMessages } from '../composables/useMessages';
 import { useInputData } from '../composables/useInputData';
-import type { InputTextareaData } from '@client/ui-core';
+import type { InputTextareaData } from '@client/ui-uikit';
 
 defineOptions({
   inheritAttrs: false

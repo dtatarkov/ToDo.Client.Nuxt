@@ -15,8 +15,7 @@
 <script setup lang="ts">
 import { Icon } from '@client/shared';
 import { MessagesService } from '@client/infrastructure-messages';
-import type { ToDoCardData } from '@client/ui-core';
-import { ToDoCardViewmodel } from '@client/ui-core';
+import { type ToDoCardData, ToDoCardViewmodel } from '@client/ui-todo';
 import { useService } from '../composables/useService';
 import VCard from './VCard.vue';
 import VButtonIcon from './VButtonIcon.vue';

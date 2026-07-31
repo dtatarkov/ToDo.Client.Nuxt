@@ -25,7 +25,7 @@ import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import { postfixNotEmptyString } from '@client/shared';
 import { computed, shallowRef, watchEffect } from 'vue';
-import type { InputDateTimeData } from '@client/ui-core';
+import type { InputDateTimeData } from '@client/ui-uikit';
 
 defineOptions({
   inheritAttrs: false

@@ -1,7 +1,7 @@
 import type { FormElementType } from '../enums/formElementType';
 import type { ValidationError } from '@client/shared';
 import type { MessageKey } from '@client/infrastructure-messages';
-import type { InputDateData, InputDateTimeData, InputTextareaData, InputTextData, InputTimeData } from '@client/ui-core';
+import type { InputDateData, InputDateTimeData, InputTextareaData, InputTextData, InputTimeData } from '@client/ui-uikit';
 
 export type FormElementGenericData<
     TInputElementData,

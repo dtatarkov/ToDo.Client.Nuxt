@@ -15,7 +15,7 @@ import VToolbar from '../components/VToolbar.vue';
 import VButtonGeneral from '../components/VButtonGeneral.vue';
 import VGrid from '../components/VGrid.vue';
 import VToDoCard from '../components/VToDoCard.vue';
-import { ToDosWidgetViewmodel } from '@client/ui-core';
+import { ToDosWidgetViewmodel } from '@client/ui-todo';
 import { useService } from '../composables/useService';
 import { useViewmodel } from '../composables/useViewmodel';
 import { MessagesService } from '@client/infrastructure-messages';

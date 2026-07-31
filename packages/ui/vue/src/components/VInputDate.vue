@@ -19,7 +19,7 @@ import { ZonedDateTimeMapper } from '@client/infrastructure-datetime';
 import { useService } from '../composables/useService';
 import { useInputData } from '../composables/useInputData';
 import { computed } from 'vue';
-import type { InputDateData } from '@client/ui-core';
+import type { InputDateData } from '@client/ui-uikit';
 
 defineOptions({
   inheritAttrs: false

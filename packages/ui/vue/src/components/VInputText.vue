@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InputTextData } from '@client/ui-core';
+import type { InputTextData } from '@client/ui-uikit';
 import { useInputData } from '../composables/useInputData';
 import { useMessages } from '../composables/useMessages';
 

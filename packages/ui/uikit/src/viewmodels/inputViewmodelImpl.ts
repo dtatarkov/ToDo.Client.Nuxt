@@ -1,8 +1,8 @@
 import { ObservableWritableBase } from '@client/shared';
 import { InputViewmodel } from './inputViewmodel';
-import { ViewmodelBase } from './viewmodelBase';
 import type { InputData } from '../types/inputData';
 import type { InputState } from '../types/InputState';
+import { ViewmodelBase } from '@client/ui-core';
 
 export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState extends InputState<V, TData>> extends ViewmodelBase<TState> implements InputViewmodel<V, TData, TState>
 {

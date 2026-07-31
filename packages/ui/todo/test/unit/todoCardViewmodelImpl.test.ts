@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { dateFormatterMock } from '@client/infrastructure-datetime/mocks';
 import type { ToDoCardViewmodelData } from '../../src/viewmodels/todoCardViewmodel';
-import { infoBlockViewmodelMock } from '../mocks/infoBlockViewmodelMock';
 import { ToDoCardViewmodelImpl } from '../../src/viewmodels/todoCardViewmodelImpl';
-import type { InfoBlockViewmodelState } from '../../src/viewmodels/infoBlockViewmodel';
+import { infoBlockViewmodelMock } from '@client/ui-uikit/mocks';
+import type { InfoBlockViewmodelState } from '@client/ui-uikit';
 
 describe('ToDoCardViewmodelImpl', () =>
 {

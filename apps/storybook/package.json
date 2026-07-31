@@ -11,6 +11,8 @@
   "dependencies": {
     "@client/ui-core": "workspace:*",
     "@client/ui-forms": "workspace:*",
+    "@client/ui-uikit": "workspace:*",
+    "@client/ui-todo": "workspace:*",
     "@client/ui-vue": "workspace:*",
     "@client/domain-todo": "workspace:*",
     "@client/infrastructure-nuxt-ui": "workspace:*",
