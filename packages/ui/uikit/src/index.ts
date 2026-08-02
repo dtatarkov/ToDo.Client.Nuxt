@@ -11,6 +11,8 @@ export type { InputTextState } from './types/InputTextState';
 export type { InputTimeState } from './types/InputTimeState';
 export type { InputTextareaState } from './types/InputTextareaState';
 
+export { InputType } from './enums/inputType';
+
 export { InfoBlockViewmodel, type InfoBlockViewmodelState } from './viewmodels/infoBlockViewmodel';
 export { InfoBlockViewmodelImpl } from './viewmodels/infoBlockViewmodelImpl';
 export { InputViewmodel } from './viewmodels/inputViewmodel';
