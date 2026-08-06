@@ -351,19 +351,6 @@ importers:
         specifier: 'catalog:'
         version: 3.2.5(typescript@5.9.3)
 
-  packages/domain/entitySchemes:
-    dependencies:
-      '@client/shared':
-        specifier: workspace:*
-        version: link:../../shared
-      zod:
-        specifier: 'catalog:'
-        version: 4.4.3
-    devDependencies:
-      '@client/infrastructure-eslint':
-        specifier: workspace:*
-        version: link:../../infrastructure/eslint
-
   packages/domain/todo:
     dependencies:
       '@client/infrastructure-datetime':
@@ -410,6 +397,25 @@ importers:
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
+
+  packages/infrastructure/entitySchemes:
+    dependencies:
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../messages
+      '@client/infrastructure-validation':
+        specifier: workspace:*
+        version: link:../validation
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
     devDependencies:
       '@client/infrastructure-eslint':
         specifier: workspace:*
@@ -475,6 +481,16 @@ importers:
       '@client/shared':
         specifier: workspace:*
         version: link:../../shared
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../eslint
+
+  packages/infrastructure/validation:
+    dependencies:
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../messages
     devDependencies:
       '@client/infrastructure-eslint':
         specifier: workspace:*

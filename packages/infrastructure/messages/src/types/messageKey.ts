@@ -14,4 +14,7 @@ export type MessageKey = 'todo.field.title.label' |
     'button.create' |
     'button.save' |
     'button.cancel' |
-    'todos.toolbar.buttons.add';
+    'todos.toolbar.buttons.add' |
+    'entity.field.required' |
+    'entity.field.invalid' |
+    'entity.field.unknown';

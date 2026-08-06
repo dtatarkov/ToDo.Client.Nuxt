@@ -34,6 +34,7 @@ export { ValueMapper } from './interfaces/valueMapper';
 export { OptionalValueMapper } from './mappers/optionalValueMapper';
 
 // Types
+export type { NonUndefined } from './types/nonUndefined';
 export type { AbstractConstructor } from './types/abstractConstructor';
 export type { Action } from './types/action';
 export type { Constructor } from './types/constructor';
