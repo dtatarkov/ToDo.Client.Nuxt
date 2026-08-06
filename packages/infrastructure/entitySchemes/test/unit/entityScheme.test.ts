@@ -364,4 +364,55 @@ describe('EntityScheme', () =>
             expect(result.extra?.[0]?.messageKey).toBe('entity.field.unknown');
         });
     });
+
+    describe('extend method', () =>
+    {
+        const extendedScheme = EntityScheme.create((c) => ({
+            name: c.string(),
+        })).extend((c) => ({
+            age: c.number(),
+        }));
+
+        describe('valid data', () =>
+        {
+            it('should pass validation', () =>
+            {
+                const result = extendedScheme.validate({ name: 'John', age: 30 });
+                expect(Object.keys(result)).toHaveLength(0);
+            });
+
+            it('should parse correctly', () =>
+            {
+                const result = extendedScheme.parse({ name: 'John', age: 30 });
+                expect(result.name).toBe('John');
+                expect(result.age).toBe(30);
+            });
+        });
+
+        describe('invalid data', () =>
+        {
+            it('should fail validation for invalid fields', () =>
+            {
+                const result = extendedScheme.validate({ name: 123, age: 'thirty' });
+                expect(Object.keys(result)).toHaveLength(2);
+                expect(result.name).toHaveLength(1);
+                expect(result.age).toHaveLength(1);
+            });
+
+            it('should fail parsing for invalid fields', () =>
+            {
+                expect(() => extendedScheme.parse({ name: 123, age: 'thirty' })).toThrow();
+            });
+        });
+
+        describe('extra fields not in scheme', () =>
+        {
+            it('should report unknown fields in validation', () =>
+            {
+                const result = extendedScheme.validate({ name: 'John', age: 30, extra: 'test' });
+                expect(result.extra).toHaveLength(1);
+                expect(result.extra?.[0]?.messageKey).toBe('entity.field.unknown');
+            });
+        });
+    });
 });

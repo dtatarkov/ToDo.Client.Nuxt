@@ -18,25 +18,10 @@ export class EntityScheme<TEntity extends Record<string, any>>
         setup: (scheme: EntitySchemeConfigurator) => { [K in keyof TEntity]: EntityFieldSchemeConfigurator<TEntity[K]> }
     ): EntityScheme<TEntity>
     {
-        const configurator = new EntitySchemeConfiguratorImpl();
-        const result = setup(configurator);
+        const fields = EntityScheme.createFields(setup);
+        const scheme = new EntityScheme(fields);
 
-        const fields = Object.entries(result).reduce(
-            (scheme, [fieldName, fieldConfigurator]) =>
-            {
-                if (!(fieldConfigurator instanceof EntityFieldSchemeConfiguratorBase))
-                {
-                    throw new EntityFieldInvalidConfigurationException(fieldName);
-                }
-
-                scheme[fieldName as keyof TEntity] = fieldConfigurator.toScheme();
-
-                return scheme;
-            },
-            {} as EntitySchemeFields<TEntity>
-        );
-
-        return new EntityScheme(fields);
+        return scheme;
     }
 
     validate<TData extends Record<string, any>>(data: TData): Partial<Record<keyof TEntity | keyof TData, ValidationMessage[]>>
@@ -75,6 +60,20 @@ export class EntityScheme<TEntity extends Record<string, any>>
         return result;
     }
 
+    extend<TNew extends Record<string, any>>(
+        setup: (configurator: EntitySchemeConfigurator) => { [K in keyof TNew]: EntityFieldSchemeConfigurator<TNew[K]> }
+    ): EntityScheme<TEntity & TNew>
+    {
+        const newFields = EntityScheme.createFields(setup);
+
+        const mergedFields = {
+            ...this.fields,
+            ...newFields,
+        } as EntitySchemeFields<TEntity & TNew>;
+
+        return new EntityScheme(mergedFields);
+    }
+
     private validateUnknownFields<TData extends Record<string, any>>(data: TData)
     {
         const result: Record<string, ValidationMessage[]> = {};
@@ -90,41 +89,28 @@ export class EntityScheme<TEntity extends Record<string, any>>
         return result;
     }
 
-    // static extend<TBase extends Record<string, any>, TExt extends Record<string, any>>(
-    //     base: EntityScheme<TBase>,
-    //     setup: (scheme: EntitySchemeConfigurator) => Record<keyof TExt, EntityFieldSchemeConfigurator>
-    // ): EntityScheme<TBase & TExt>
-    // {
-    //     const extendedScheme = EntityScheme.create(setup);
+    private static createFields<T extends Record<string, any>>(
+        setup: (configurator: EntitySchemeConfigurator) => { [K in keyof T]: EntityFieldSchemeConfigurator<T[K]> }
+    ): EntitySchemeFields<T>
+    {
+        const configurator = new EntitySchemeConfiguratorImpl();
+        const result = setup(configurator);
 
-    //     const fields = {
-    //         ...base.getFields(),
-    //         ...extendedScheme.getFields(),
-    //     } as EntitySchemeFields<TBase & TExt>;
+        const fields = Object.entries(result).reduce(
+            (scheme, [fieldName, fieldConfigurator]) =>
+            {
+                if (!(fieldConfigurator instanceof EntityFieldSchemeConfiguratorBase))
+                {
+                    throw new EntityFieldInvalidConfigurationException(fieldName);
+                }
 
-    //     return new EntityScheme(fields);
-    // }
+                scheme[fieldName as keyof T] = fieldConfigurator.toScheme();
 
-    // getFields(): EntitySchemeFields<TEntity>
-    // {
-    //     return this.fields;
-    // }
+                return scheme;
+            },
+            {} as EntitySchemeFields<T>
+        );
 
-    // getDefaults(): Partial<TEntity>
-    // {
-    //     return Object.entries(this.fields).reduce(
-    //         (defaults, [key, field]) =>
-    //         {
-    //             const defaultValue = field.getDefaultValue();
-
-    //             if (defaultValue !== undefined)
-    //             {
-    //                 (defaults as any)[key] = defaultValue;
-    //             }
-
-    //             return defaults;
-    //         },
-    //         {} as Partial<TEntity>
-    //     );
-    // }
+        return fields;
+    }
 }
