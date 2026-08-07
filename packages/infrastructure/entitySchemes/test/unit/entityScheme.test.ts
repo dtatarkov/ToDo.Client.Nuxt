@@ -415,4 +415,406 @@ describe('EntityScheme', () =>
             });
         });
     });
+
+    describe('required fields', () =>
+    {
+        it('should pass validation when all required fields are present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 'John',
+                age: 30,
+                active: true,
+                createdAt: new Date('2025-01-01'),
+            });
+            expect(Object.keys(result)).toHaveLength(0);
+        });
+
+        it('should fail validation when required field is missing', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 'John',
+                age: 30,
+                active: true,
+            });
+
+            expect(result.createdAt).toHaveLength(1);
+            expect(result.createdAt?.[0]?.messageKey).toBe('entity.field.required');
+        });
+
+        it('should fail validation when required field is undefined', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            const result = scheme.validate({
+                name: undefined,
+                age: 30,
+                active: true,
+                createdAt: new Date('2025-01-01'),
+            });
+
+            expect(result.name).toHaveLength(1);
+            expect(result.name?.[0]?.messageKey).toBe('entity.field.required');
+        });
+
+        it('should fail validation when required field has wrong type', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 123,
+                age: 'thirty',
+                active: 'yes',
+                createdAt: '2025-01-01',
+            });
+
+            expect(result.name).toHaveLength(1);
+            expect(result.name?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.age).toHaveLength(1);
+            expect(result.age?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.active).toHaveLength(1);
+            expect(result.active?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.createdAt).toHaveLength(1);
+            expect(result.createdAt?.[0]?.messageKey).toBe('entity.field.invalid');
+        });
+
+        it('should parse correctly when required fields are present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            const result = scheme.parse({
+                name: 'John',
+                age: 30,
+                active: true,
+                createdAt: new Date('2025-01-01'),
+            });
+
+            expect(result.name).toBe('John');
+            expect(result.age).toBe(30);
+            expect(result.active).toBe(true);
+            expect(result.createdAt).toEqual(new Date('2025-01-01'));
+        });
+
+        it('should throw when required field is missing during parse', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            expect(() => scheme.parse({
+                name: 'John',
+                age: 30,
+                active: true,
+            } as any)).toThrow();
+        });
+
+        it('should throw when required field has wrong type during parse', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+                createdAt: c.datetime().required(),
+            }));
+
+            expect(() => scheme.parse({
+                name: 123,
+                age: 'thirty',
+                active: 'yes',
+                createdAt: '2025-01-01',
+            } as any)).toThrow();
+        });
+    });
+
+    describe('defaulted fields', () =>
+    {
+        it('should pass validation when defaulted field is present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            const result = scheme.validate({
+                status: 'inactive',
+                priority: 5,
+                verified: true,
+                expiresAt: new Date('2027-01-01'),
+            });
+
+            expect(Object.keys(result)).toHaveLength(0);
+        });
+
+        it('should pass validation when defaulted field is missing', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            const result = scheme.validate({});
+            expect(Object.keys(result)).toHaveLength(0);
+        });
+
+        it('should parse with default value when defaulted field is missing', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            const result = scheme.parse({});
+            expect(result.status).toBe('active');
+            expect(result.priority).toBe(1);
+            expect(result.verified).toBe(false);
+            expect(result.expiresAt).toEqual(new Date('2026-01-01'));
+        });
+
+        it('should parse with provided value when defaulted field is present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            const result = scheme.parse({
+                status: 'inactive',
+                priority: 10,
+                verified: true,
+                expiresAt: new Date('2028-01-01'),
+            });
+
+            expect(result.status).toBe('inactive');
+            expect(result.priority).toBe(10);
+            expect(result.verified).toBe(true);
+            expect(result.expiresAt).toEqual(new Date('2028-01-01'));
+        });
+
+        it('should fail validation when defaulted field has wrong type', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            const result = scheme.validate({
+                status: 123,
+                priority: 'high',
+                verified: 'yes',
+                expiresAt: '2026-01-01',
+            });
+
+            expect(result.status).toHaveLength(1);
+            expect(result.status?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.priority).toHaveLength(1);
+            expect(result.priority?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.verified).toHaveLength(1);
+            expect(result.verified?.[0]?.messageKey).toBe('entity.field.invalid');
+            expect(result.expiresAt).toHaveLength(1);
+            expect(result.expiresAt?.[0]?.messageKey).toBe('entity.field.invalid');
+        });
+
+        it('should fail parsing when defaulted field has wrong type', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                status: c.string().withDefault('active'),
+                priority: c.number().withDefault(1),
+                verified: c.boolean().withDefault(false),
+                expiresAt: c.datetime().withDefault(new Date('2026-01-01')),
+            }));
+
+            expect(() => scheme.parse({
+                status: 123,
+                priority: 'high',
+                verified: 'yes',
+                expiresAt: '2026-01-01',
+            })).toThrow();
+        });
+    });
+
+    describe('mixed fields (optional/defaulted/required)', () =>
+    {
+        it('should pass validation with all fields present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                verified: c.boolean().withDefault(false),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 'John',
+                age: 30,
+                status: 'inactive',
+                verified: true,
+                score: 95,
+            });
+
+            expect(Object.keys(result)).toHaveLength(0);
+        });
+
+        it('should pass validation with only required fields present', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                verified: c.boolean().withDefault(false),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 'John',
+                score: 95,
+            });
+
+            expect(Object.keys(result)).toHaveLength(0);
+        });
+
+        it('should fail validation for invalid required field', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 123,
+                score: 95,
+            });
+
+            expect(result.name).toHaveLength(1);
+            expect(result.name?.[0]?.messageKey).toBe('entity.field.invalid');
+        });
+
+        it('should fail validation for missing required field', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 'John',
+            });
+
+            expect(result.score).toHaveLength(1);
+            expect(result.score?.[0]?.messageKey).toBe('entity.field.required');
+        });
+
+        it('should parse with defaults for missing optional/defaulted fields', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                verified: c.boolean().withDefault(false),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.parse({
+                name: 'John',
+                score: 95,
+            });
+
+            expect(result.name).toBe('John');
+            expect(result.age).toBeUndefined();
+            expect(result.status).toBe('active');
+            expect(result.verified).toBe(false);
+            expect(result.score).toBe(95);
+        });
+
+        it('should parse with provided values overriding defaults', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                verified: c.boolean().withDefault(false),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.parse({
+                name: 'Jane',
+                age: 25,
+                status: 'inactive',
+                verified: true,
+                score: 88,
+            });
+
+            expect(result.name).toBe('Jane');
+            expect(result.age).toBe(25);
+            expect(result.status).toBe('inactive');
+            expect(result.verified).toBe(true);
+            expect(result.score).toBe(88);
+        });
+
+        it('should fail validation for mixed valid/invalid data', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number(),
+                status: c.string().withDefault('active'),
+                score: c.number().required(),
+            }));
+
+            const result = scheme.validate({
+                name: 123,
+                age: 'twenty',
+                status: 'active',
+                score: 95,
+            });
+
+            expect(Object.keys(result)).toHaveLength(2);
+            expect(result.name).toHaveLength(1);
+            expect(result.age).toHaveLength(1);
+        });
+    });
 });

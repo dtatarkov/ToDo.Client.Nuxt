@@ -6,7 +6,7 @@ export interface EntityFieldSchemeConfigurator<TValue>
     __t: TValue;
 }
 
-export interface EntityFieldSchemeConfiguratorDefaulted<TValue> extends EntityFieldSchemeConfigurator<TValue | undefined>
+export interface EntityFieldSchemeConfiguratorDefaulted<TValue> extends EntityFieldSchemeConfigurator<TValue>
 {
 }
 

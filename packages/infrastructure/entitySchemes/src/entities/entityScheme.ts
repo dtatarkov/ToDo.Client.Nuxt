@@ -5,6 +5,7 @@ import { EntitySchemeConfiguratorImpl } from './entitySchemeConfiguratorImpl';
 import { EntityFieldSchemeConfiguratorBase } from './entityFieldSchemeConfiguratorBase';
 import { EntityFieldInvalidConfigurationException } from '../exceptions/entityFieldInvalidConfigurationException';
 import { ValidationMessage } from '@client/infrastructure-validation';
+import type { OptionalUndefined } from '@client/shared';
 
 export class EntityScheme<TEntity extends Record<string, any>>
 {
@@ -48,13 +49,13 @@ export class EntityScheme<TEntity extends Record<string, any>>
         return result as Partial<Record<keyof TEntity | keyof TData, ValidationMessage[]>>;
     }
 
-    parse(data: Record<keyof TEntity, any>): TEntity
+    parse(data: OptionalUndefined<Record<keyof TEntity, any>>): TEntity
     {
         const result = {} as TEntity;
 
         for (const [key, field] of Object.entries(this.fields))
         {
-            result[key as keyof TEntity] = field.parse(data[key as keyof TEntity]);
+            result[key as keyof TEntity] = field.parse(data[key as keyof OptionalUndefined<TEntity>]);
         }
 
         return result;
