@@ -14,13 +14,9 @@ export abstract class EntityFieldSchemeConfiguratorOptionalBase<TValue>
     extends EntityFieldSchemeConfiguratorBase<TValue | undefined>
     implements EntityFieldSchemeConfiguratorOptional<TValue>
 {
-    protected invalidMessageKey: MessageKey;
-
-    constructor(messageKey: MessageKey = 'entity.field.invalid')
+    constructor(protected readonly invalidMessageKey: MessageKey = 'entity.field.invalid')
     {
         super();
-
-        this.invalidMessageKey = messageKey;
     }
 
     required(messageKey: MessageKey = 'entity.field.required'): EntityFieldSchemeConfiguratorRequired<TValue>
