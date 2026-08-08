@@ -5,6 +5,7 @@
     "module": "esnext",
     "skipLibCheck": true,
     "noEmit": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "noImplicitOverride": true,
   },
 }

@@ -4,8 +4,6 @@ import type { MessageKey } from '@client/infrastructure-messages';
 import { EntityFieldSchemeConfiguratorBase } from './entityFieldSchemeConfiguratorBase';
 import { EntityFieldSchemeConfiguratorRequiredBase } from './entityFieldSchemeConfiguratorRequiredBase';
 import { EntityFieldSchemeConfiguratorDefaultedBase } from './entityFieldSchemeConfiguratorDefaultedBase';
-import { EntityFieldScheme } from './entityFieldScheme';
-import { EntityFieldSchemeBase } from './entityFieldSchemeBase';
 import type { z, ZodType } from 'zod';
 import type { EntityFieldSchemeZodParams } from '../types/entityFieldSchemeZodParams';
 import type { NonUndefined } from '@client/shared';
@@ -35,14 +33,6 @@ export abstract class EntityFieldSchemeConfiguratorOptionalBase<TValue>
         const zodScheme = this.createZodScheme(this.invalidMessageKey).default(value as NonUndefined<NonUndefined<TValue>>);
 
         return new EntityFieldSchemeConfiguratorDefaultedBase<TValue>(zodScheme);
-    }
-
-    toScheme(): EntityFieldScheme<TValue | undefined>
-    {
-        const zodScheme = this.createZodScheme(this.invalidMessageKey).optional();
-        const fieldScheme = new EntityFieldSchemeBase(zodScheme);
-
-        return fieldScheme;
     }
 
     protected getZodScheme(): ZodType<TValue | undefined>

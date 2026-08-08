@@ -1,10 +1,29 @@
 import { InputViewmodel } from './inputViewmodel';
 import type { InputData } from '../types/inputData';
-import type { InputState, InputStateDefault, InputStateInitial } from '../types/InputState';
+import type { InputState, InputStateBase, InputStateDefault, InputStateInitial } from '../types/InputState';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
+import { EntityScheme } from '@client/infrastructure-entity-schemes';
+import type { EntitySchemeConfigurator, EntityFieldSchemeConfigurator } from '@client/infrastructure-entity-schemes';
 
 export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState extends InputState<V, TData>> extends ViewmodelBase<TState> implements InputViewmodel<V, TData, TState>
 {
+    private baseScheme = EntityScheme.create((c) => ({
+        id: c.string(),
+        name: c.string().required(),
+        isDisabled: c.boolean().required(),
+        hasAutofocus: c.boolean().required(),
+        hasError: c.boolean().required(),
+    }));
+
+    protected withBaseScheme<TNew extends Record<string, any>>(
+        setup: (configurator: EntitySchemeConfigurator) => { [K in keyof TNew]: EntityFieldSchemeConfigurator<TNew[K]> }
+    ): EntityScheme<InputStateBase & TNew>
+    {
+        return this.baseScheme.extend(setup) as EntityScheme<InputStateBase & TNew>;
+    }
+
+    private readonly scheme: EntityScheme<InputStateBase> = this.createScheme();
+
     state = new ObservableViewmodelStateBase<TState>(this.getInitialStateFull());
 
     get name(): string
@@ -83,4 +102,5 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     protected abstract getInitialState(): InputStateInitial<TState, V>;
     protected abstract getDefaultValue(): V;
+    protected abstract createScheme(): EntityScheme<TState>;
 }

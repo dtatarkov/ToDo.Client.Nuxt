@@ -28,6 +28,7 @@
     "@client/infrastructure-di": "workspace:*",
     "@client/infrastructure-datetime": "workspace:*",
     "@client/infrastructure-messages": "workspace:*",
+    "@client/infrastructure-entity-schemes": "workspace:*",
     "@client/shared": "workspace:*"
   }
 }

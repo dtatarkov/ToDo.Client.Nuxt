@@ -1,21 +1,18 @@
-import type { InputType } from '../enums/inputType';
 import type { InputData } from './inputData';
 
-export type InputStateDefault<V> = {
+export type InputStateBase = {
     name: string;
-    value: V;
     isDisabled: boolean;
     hasAutofocus: boolean;
     hasError: boolean;
 };
 
+export type InputStateDefault<V> = InputStateBase & {
+    value: V;
+};
+
 export type InputStateInitial<TState, V> = Omit<TState, keyof InputStateDefault<V>>;
 
-export type InputState<V = any, TData extends InputData<V> = InputData<V>> = TData & {
-    type: InputType;
-    name: string;
+export type InputState<V = any, TData extends InputData<V> = InputData<V>> = TData & InputStateBase & {
     value: V;
-    isDisabled: boolean;
-    hasAutofocus: boolean;
-    hasError: boolean;
 };
