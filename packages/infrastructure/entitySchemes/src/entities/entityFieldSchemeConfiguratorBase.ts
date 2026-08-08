@@ -7,7 +7,7 @@ export abstract class EntityFieldSchemeConfiguratorBase<TValue> implements Entit
 {
     __t!: TValue;
 
-    toScheme(): EntityFieldScheme
+    toScheme(): EntityFieldScheme<TValue>
     {
         const zodScheme = this.getZodScheme();
         const fieldScheme = new EntityFieldSchemeBase(zodScheme);

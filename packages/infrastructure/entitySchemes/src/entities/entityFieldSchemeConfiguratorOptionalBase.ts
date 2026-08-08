@@ -37,7 +37,7 @@ export abstract class EntityFieldSchemeConfiguratorOptionalBase<TValue>
         return new EntityFieldSchemeConfiguratorDefaultedBase<TValue>(zodScheme);
     }
 
-    toScheme(): EntityFieldScheme
+    toScheme(): EntityFieldScheme<TValue | undefined>
     {
         const zodScheme = this.createZodScheme(this.invalidMessageKey).optional();
         const fieldScheme = new EntityFieldSchemeBase(zodScheme);

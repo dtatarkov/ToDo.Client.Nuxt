@@ -3,35 +3,58 @@ import { EntityFieldSchemeConfiguratorString } from '../../src/entities/entityFi
 import { EntityFieldSchemeConfiguratorNumber } from '../../src/entities/entityFieldSchemeConfiguratorNumber';
 import { EntityFieldSchemeConfiguratorBoolean } from '../../src/entities/entityFieldSchemeConfiguratorBoolean';
 import { EntityFieldSchemeConfiguratorDate } from '../../src/entities/entityFieldSchemeConfiguratorDate';
+import { EntityFieldSchemeConfiguratorEnum } from '../../src/entities/entityFieldSchemeConfiguratorEnum';
 import { EntityFieldSchemeConfiguratorOptionalBase } from '../../src/entities/entityFieldSchemeConfiguratorOptionalBase';
-import { EntityFieldSchemeConfiguratorDefaultedBase } from '../../src/entities/entityFieldSchemeConfiguratorDefaultedBase';
-import { EntityFieldSchemeConfiguratorRequiredBase } from '../../src/entities/entityFieldSchemeConfiguratorRequiredBase';
-import type { Constructor } from '@client/shared';
+import type { EntityFieldScheme } from '../../src/entities/entityFieldScheme';
+import type { MessageKey } from '@client/infrastructure-messages';
+import { EntityFieldSchemeConfiguratorBase } from '../../src/entities/entityFieldSchemeConfiguratorBase';
+import type { EntityFieldSchemeConfigurator } from '../../src/entities/entityFieldSchemeConfigurator';
+
+function toScheme<TValue>(configurator: EntityFieldSchemeConfigurator<TValue>): EntityFieldScheme<TValue>
+{
+    if (configurator instanceof EntityFieldSchemeConfiguratorBase)
+    {
+        return configurator.toScheme();
+    }
+
+    throw new Error('invalid configurator');
+}
 
 const configurators = [
     {
         name: 'string',
-        cls: EntityFieldSchemeConfiguratorString,
+        factory: (messageKey?: MessageKey) =>
+            new EntityFieldSchemeConfiguratorString(messageKey) as EntityFieldSchemeConfiguratorOptionalBase<any>,
         validValue: 'hello',
         invalidValue: 123,
     },
     {
         name: 'number',
-        cls: EntityFieldSchemeConfiguratorNumber,
+        factory: (messageKey?: MessageKey) =>
+            new EntityFieldSchemeConfiguratorNumber(messageKey) as EntityFieldSchemeConfiguratorOptionalBase<any>,
         validValue: 42,
         invalidValue: 'not-a-number',
     },
     {
         name: 'boolean',
-        cls: <Constructor<EntityFieldSchemeConfiguratorOptionalBase<any>>>EntityFieldSchemeConfiguratorBoolean,
+        factory: (messageKey?: MessageKey) =>
+            new EntityFieldSchemeConfiguratorBoolean(messageKey) as EntityFieldSchemeConfiguratorOptionalBase<any>,
         validValue: true,
         invalidValue: 'yes',
     },
     {
         name: 'date',
-        cls: EntityFieldSchemeConfiguratorDate,
+        factory: (messageKey?: MessageKey) =>
+            new EntityFieldSchemeConfiguratorDate(messageKey) as EntityFieldSchemeConfiguratorOptionalBase<any>,
         validValue: new Date('2025-01-01'),
         invalidValue: '2025-01-01',
+    },
+    {
+        name: 'enum',
+        factory: (messageKey?: MessageKey) =>
+            new EntityFieldSchemeConfiguratorEnum(['open', 'done'] as const, messageKey) as EntityFieldSchemeConfiguratorOptionalBase<any>,
+        validValue: 'open',
+        invalidValue: 'closed',
     },
 ];
 
@@ -41,21 +64,21 @@ describe.each(configurators)('$name configurator', (config) =>
     {
         it('should pass validation with valid value', () =>
         {
-            const scheme = new config.cls().toScheme();
+            const scheme = toScheme(config.factory());
             const result = scheme.validate(config.validValue as any);
             expect(result).toHaveLength(0);
         });
 
         it('should pass validation with undefined value', () =>
         {
-            const scheme = new config.cls().toScheme();
+            const scheme = toScheme(config.factory());
             const result = scheme.validate(undefined);
             expect(result).toHaveLength(0);
         });
 
         it('should fail validation with null value', () =>
         {
-            const scheme = new config.cls().toScheme();
+            const scheme = toScheme(config.factory());
             const result = scheme.validate(null);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.invalid');
@@ -63,7 +86,7 @@ describe.each(configurators)('$name configurator', (config) =>
 
         it('should fail validation with invalid type using default error message', () =>
         {
-            const scheme = new config.cls().toScheme();
+            const scheme = toScheme(config.factory());
             const result = scheme.validate(config.invalidValue as any);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.invalid');
@@ -74,7 +97,7 @@ describe.each(configurators)('$name configurator', (config) =>
     {
         it('should use custom error message for invalid type', () =>
         {
-            const scheme = new config.cls('todo.field.title.errors.empty').toScheme();
+            const scheme = toScheme(config.factory('todo.field.title.errors.empty'));
             const result = scheme.validate(config.invalidValue as any);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('todo.field.title.errors.empty');
@@ -85,14 +108,14 @@ describe.each(configurators)('$name configurator', (config) =>
     {
         it('should pass validation with valid value', () =>
         {
-            const scheme = (new config.cls().required() as EntityFieldSchemeConfiguratorRequiredBase<any>).toScheme();
+            const scheme = toScheme(config.factory().required());
             const result = scheme.validate(config.validValue as any);
             expect(result).toHaveLength(0);
         });
 
         it('should fail validation with undefined value', () =>
         {
-            const scheme = (new config.cls().required() as EntityFieldSchemeConfiguratorRequiredBase<any>).toScheme();
+            const scheme = toScheme(config.factory().required());
             const result = scheme.validate(undefined);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.required');
@@ -100,7 +123,7 @@ describe.each(configurators)('$name configurator', (config) =>
 
         it('should fail validation with null value', () =>
         {
-            const scheme = (new config.cls().required() as EntityFieldSchemeConfiguratorRequiredBase<any>).toScheme();
+            const scheme = toScheme(config.factory().required());
             const result = scheme.validate(null);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.required');
@@ -108,7 +131,7 @@ describe.each(configurators)('$name configurator', (config) =>
 
         it('should fail validation with invalid type', () =>
         {
-            const scheme = (new config.cls().required() as EntityFieldSchemeConfiguratorRequiredBase<any>).toScheme();
+            const scheme = toScheme(config.factory().required());
             const result = scheme.validate(config.invalidValue as any);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.invalid');
@@ -116,7 +139,7 @@ describe.each(configurators)('$name configurator', (config) =>
 
         it('should use custom error message for undefined value', () =>
         {
-            const scheme = (new config.cls().required('todo.field.title.errors.empty') as EntityFieldSchemeConfiguratorRequiredBase<any>).toScheme();
+            const scheme = toScheme(config.factory().required('todo.field.title.errors.empty'));
             const result = scheme.validate(undefined);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('todo.field.title.errors.empty');
@@ -127,21 +150,21 @@ describe.each(configurators)('$name configurator', (config) =>
     {
         it('should pass validation with valid value', () =>
         {
-            const scheme = (new config.cls().withDefault(config.validValue as any) as EntityFieldSchemeConfiguratorDefaultedBase<any>).toScheme();
+            const scheme = toScheme(config.factory().withDefault(config.validValue as any));
             const result = scheme.validate(config.validValue as any);
             expect(result).toHaveLength(0);
         });
 
         it('should pass validation with undefined value', () =>
         {
-            const scheme = (new config.cls().withDefault(config.validValue as any) as EntityFieldSchemeConfiguratorDefaultedBase<any>).toScheme();
+            const scheme = toScheme(config.factory().withDefault(config.validValue as any));
             const result = scheme.validate(undefined);
             expect(result).toHaveLength(0);
         });
 
         it('should fail validation with null value', () =>
         {
-            const scheme = (new config.cls().withDefault(config.validValue as any) as EntityFieldSchemeConfiguratorDefaultedBase<any>).toScheme();
+            const scheme = toScheme(config.factory().withDefault(config.validValue as any));
             const result = scheme.validate(null);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.invalid');
@@ -149,7 +172,7 @@ describe.each(configurators)('$name configurator', (config) =>
 
         it('should fail validation with invalid type', () =>
         {
-            const scheme = (new config.cls().withDefault(config.validValue as any) as EntityFieldSchemeConfiguratorDefaultedBase<any>).toScheme();
+            const scheme = toScheme(config.factory().withDefault(config.validValue as any));
             const result = scheme.validate(config.invalidValue as any);
             expect(result).toHaveLength(1);
             expect(result[0]?.messageKey).toBe('entity.field.invalid');

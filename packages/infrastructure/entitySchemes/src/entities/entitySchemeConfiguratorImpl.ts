@@ -3,28 +3,33 @@ import { EntityFieldSchemeConfiguratorString } from './entityFieldSchemeConfigur
 import { EntityFieldSchemeConfiguratorNumber } from './entityFieldSchemeConfiguratorNumber';
 import { EntityFieldSchemeConfiguratorBoolean } from './entityFieldSchemeConfiguratorBoolean';
 import { EntityFieldSchemeConfiguratorDate } from './entityFieldSchemeConfiguratorDate';
+import { EntityFieldSchemeConfiguratorEnum } from './entityFieldSchemeConfiguratorEnum';
 import type { EntityFieldSchemeConfiguratorOptional } from './entityFieldSchemeConfigurator';
-import type { MessageKey } from '@client/infrastructure-messages';
 
 export class EntitySchemeConfiguratorImpl extends EntitySchemeConfigurator
 {
-    override string(messageKey: MessageKey = 'entity.field.invalid'): EntityFieldSchemeConfiguratorOptional<string>
+    string(): EntityFieldSchemeConfiguratorOptional<string>
     {
-        return new EntityFieldSchemeConfiguratorString(messageKey);
+        return new EntityFieldSchemeConfiguratorString();
     }
 
-    override number(messageKey: MessageKey = 'entity.field.invalid'): EntityFieldSchemeConfiguratorOptional<number>
+    number(): EntityFieldSchemeConfiguratorOptional<number>
     {
-        return new EntityFieldSchemeConfiguratorNumber(messageKey);
+        return new EntityFieldSchemeConfiguratorNumber();
     }
 
-    override boolean(messageKey: MessageKey = 'entity.field.invalid'): EntityFieldSchemeConfiguratorOptional<boolean>
+    boolean(): EntityFieldSchemeConfiguratorOptional<boolean>
     {
-        return new EntityFieldSchemeConfiguratorBoolean(messageKey);
+        return new EntityFieldSchemeConfiguratorBoolean();
     }
 
-    override datetime(messageKey: MessageKey = 'entity.field.invalid'): EntityFieldSchemeConfiguratorOptional<Date>
+    datetime(): EntityFieldSchemeConfiguratorOptional<Date>
     {
-        return new EntityFieldSchemeConfiguratorDate(messageKey);
+        return new EntityFieldSchemeConfiguratorDate();
+    }
+
+    enum<TEnum extends string>(values: readonly TEnum[]): EntityFieldSchemeConfiguratorOptional<TEnum>
+    {
+        return new EntityFieldSchemeConfiguratorEnum(values);
     }
 }
