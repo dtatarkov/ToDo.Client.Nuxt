@@ -7,6 +7,7 @@ export { EntityData } from './entities/entityData';
 
 export { EntityFieldInvalidConfigurationException } from './exceptions/entityFieldInvalidConfigurationException';
 export { EntityFieldParseException } from './exceptions/entityFieldParseException';
+export { EntityParseException } from './exceptions/entityParseException';
 export { EntityDataUpdateException } from './exceptions/entityDataUpdateException';
 
 export type { EntitySchemeFields } from './types/entitySchemeFields';

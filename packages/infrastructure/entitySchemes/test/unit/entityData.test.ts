@@ -2,9 +2,76 @@ import { describe, it, expect } from 'vitest';
 import { EntityScheme } from '../../src/entities/entityScheme';
 import { EntityData } from '../../src/entities/entityData';
 import { EntityDataUpdateException } from '../../src/exceptions/entityDataUpdateException';
+import { EntityParseException } from '../../src/exceptions/entityParseException';
 
 describe('EntityData', () =>
 {
+    describe('constructor', () =>
+    {
+        it('should initialize with valid data', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+            }));
+
+            const data = new EntityData({ name: 'John' }, scheme);
+            expect(data.value.name).toBe('John');
+        });
+
+        it('should throw EntityParseException on invalid initial data', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+            }));
+
+            expect(() => new EntityData({} as any, scheme))
+                .toThrow(EntityParseException);
+
+            try
+            {
+                new EntityData({} as any, scheme);
+            }
+            catch (error)
+            {
+                expect(error).toBeInstanceOf(EntityParseException);
+                const errors = (error as EntityParseException).errors;
+                expect(Object.keys(errors)).toHaveLength(1);
+                expect(errors.name?.[0]?.messageKey).toBe('entity.field.required');
+            }
+        });
+
+        it('should throw EntityParseException on multiple invalid initial fields', () =>
+        {
+            const scheme = EntityScheme.create((c) => ({
+                name: c.string().required(),
+                age: c.number().required(),
+                active: c.boolean().required(),
+            }));
+
+            const data = {
+                name: 123,
+                age: 'thirty',
+                active: 'yes',
+            } as any;
+
+            expect(() => new EntityData(data, scheme)).toThrow(EntityParseException);
+
+            try
+            {
+                new EntityData(data, scheme);
+            }
+            catch (error)
+            {
+                expect(error).toBeInstanceOf(EntityParseException);
+                const errors = (error as EntityParseException).errors;
+                expect(Object.keys(errors)).toHaveLength(3);
+                expect(errors.name?.[0]?.messageKey).toBe('entity.field.invalid');
+                expect(errors.age?.[0]?.messageKey).toBe('entity.field.invalid');
+                expect(errors.active?.[0]?.messageKey).toBe('entity.field.invalid');
+            }
+        });
+    });
+
     describe('simple data with single string field', () =>
     {
         const scheme = EntityScheme.create((c) => ({
@@ -24,7 +91,7 @@ describe('EntityData', () =>
             expect(data.value.name).toBe('Jane');
         });
 
-        it('should throw EntityDataUpdateException on invalid update', () =>
+        it('should throw EntityDataUpdateException on invalid value type', () =>
         {
             const data = new EntityData({ name: 'John' }, scheme);
 
@@ -90,7 +157,7 @@ describe('EntityData', () =>
             expect(data.value.createdAt).toEqual(new Date('2025-06-01'));
         });
 
-        it('should throw EntityDataUpdateException on invalid update', () =>
+        it('should throw EntityDataUpdateException on invalid value types', () =>
         {
             const data = new EntityData({
                 name: 'John',
@@ -698,7 +765,7 @@ describe('EntityData', () =>
             }
         });
 
-        it('should throw EntityDataUpdateException for unknown fields', () =>
+        it('should ignore unknown fields during update', () =>
         {
             const data = new EntityData({
                 name: 'John',
@@ -712,20 +779,13 @@ describe('EntityData', () =>
                 anotherUnknown: 123,
             } as any;
 
-            expect(() => data.update(updateData)).toThrow(EntityDataUpdateException);
+            expect(() => data.update(updateData)).not.toThrow();
+            data.update(updateData);
 
-            try
-            {
-                data.update(updateData);
-            }
-            catch (error)
-            {
-                expect(error).toBeInstanceOf(EntityDataUpdateException);
-                const errors = (error as EntityDataUpdateException).errors;
-                expect(Object.keys(errors)).toHaveLength(2);
-                expect(errors.unknownField?.[0]?.messageKey).toBe('entity.field.unknown');
-                expect(errors.anotherUnknown?.[0]?.messageKey).toBe('entity.field.unknown');
-            }
+            expect(data.value.name).toBe('John');
+            expect(data.value.score).toBe(100);
+            expect(data.value.active).toBe(false);
+            expect(data.value.createdAt).toEqual(new Date('2025-06-01'));
         });
     });
 });

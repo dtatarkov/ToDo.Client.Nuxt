@@ -26,18 +26,30 @@ export class EntityFieldSchemeBase<TValue> extends EntityFieldScheme<TValue>
         return [];
     }
 
-    override parse(value: any): TValue
+    override tryParse(value: any): { value: TValue; } | { errors: ValidationMessage[]; }
     {
         const result = this.zodSchema.safeParse(value);
 
         if (!result.success)
         {
-            throw new EntityFieldParseException(
-                result.error.issues.map(issue =>
-                    new ValidationMessage(issue.message as MessageKey))
-            );
+            return {
+                errors: result.error.issues.map(issue =>
+                    new ValidationMessage(issue.message as MessageKey)),
+            };
         }
 
-        return result.data;
+        return { value: result.data };
+    }
+
+    override parse(value: any): TValue
+    {
+        const result = this.tryParse(value);
+
+        if ('errors' in result)
+        {
+            throw new EntityFieldParseException(result.errors);
+        }
+
+        return result.value;
     }
 }

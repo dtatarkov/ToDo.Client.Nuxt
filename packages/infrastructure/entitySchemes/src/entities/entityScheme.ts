@@ -4,6 +4,7 @@ import type { EntitySchemeFields } from '../types/entitySchemeFields';
 import { EntitySchemeConfiguratorImpl } from './entitySchemeConfiguratorImpl';
 import { EntityFieldSchemeConfiguratorBase } from './entityFieldSchemeConfiguratorBase';
 import { EntityFieldInvalidConfigurationException } from '../exceptions/entityFieldInvalidConfigurationException';
+import { EntityParseException } from '../exceptions/entityParseException';
 import { ValidationMessage } from '@client/infrastructure-validation';
 import type { OptionalUndefined } from '@client/shared';
 
@@ -25,9 +26,9 @@ export class EntityScheme<TEntity extends Record<string, any>>
         return scheme;
     }
 
-    validate<TData extends Record<string, any>>(data: TData): Partial<Record<keyof TEntity | keyof TData, ValidationMessage[]>>
+    validate<TData extends Record<string, any>>(data: TData): Partial<Record<keyof TEntity, ValidationMessage[]>>
     {
-        const knownFieldsValidationResult: Record<string, ValidationMessage[]> = {};
+        const validationResult: Record<string, ValidationMessage[]> = {};
 
         for (const [key, field] of Object.entries(this.fields))
         {
@@ -35,27 +36,42 @@ export class EntityScheme<TEntity extends Record<string, any>>
 
             if (errors.length > 0)
             {
-                knownFieldsValidationResult[key] = errors;
+                validationResult[key] = errors;
             }
         }
 
-        const unknownFieldsValidationResult = this.validateUnknownFields(data);
+        const result = validationResult as Partial<Record<keyof TEntity, ValidationMessage[]>>;
 
-        const result = {
-            ...knownFieldsValidationResult,
-            ...unknownFieldsValidationResult,
-        };
-
-        return result as Partial<Record<keyof TEntity | keyof TData, ValidationMessage[]>>;
+        return result;
     }
 
     parse(data: OptionalUndefined<Record<keyof TEntity, any>>): TEntity
     {
         const result = {} as TEntity;
+        const errors: Record<string, ValidationMessage[] | undefined> = {};
 
-        for (const [key, field] of Object.entries(this.fields))
+        for (const key in this.fields)
         {
-            result[key as keyof TEntity] = field.parse(data[key as keyof OptionalUndefined<TEntity>]);
+            const field = this.fields[key];
+            const fieldValue = data[key as unknown as keyof OptionalUndefined<TEntity>];
+
+            const parseResult = field.tryParse(fieldValue);
+
+            if ('errors' in parseResult)
+            {
+                errors[key] = parseResult.errors;
+            }
+            else
+            {
+                result[key as keyof TEntity] = parseResult.value;
+            }
+        }
+
+        const errorsCount = Object.keys(errors).length;
+
+        if (errorsCount > 0)
+        {
+            throw new EntityParseException(errors);
         }
 
         return result;
@@ -73,21 +89,6 @@ export class EntityScheme<TEntity extends Record<string, any>>
         } as EntitySchemeFields<TEntity & TNew>;
 
         return new EntityScheme(mergedFields);
-    }
-
-    private validateUnknownFields<TData extends Record<string, any>>(data: TData)
-    {
-        const result: Record<string, ValidationMessage[]> = {};
-
-        for (const [key] of Object.entries(data))
-        {
-            if (!this.fields[key as keyof TEntity])
-            {
-                result[key] = [new ValidationMessage('entity.field.unknown')];
-            }
-        }
-
-        return result;
     }
 
     private static createFields<T extends Record<string, any>>(

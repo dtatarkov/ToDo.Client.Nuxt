@@ -1,5 +1,6 @@
 import type { EntityScheme } from './entityScheme';
 import { EntityDataUpdateException } from '../exceptions/entityDataUpdateException';
+import type { ValidationMessage } from '@client/infrastructure-validation';
 
 export class EntityData<TData extends Record<string, any>>
 {
@@ -8,10 +9,9 @@ export class EntityData<TData extends Record<string, any>>
     constructor(
         initialData: TData,
         private readonly scheme: EntityScheme<TData>,
-
     )
     {
-        this.data = { ...initialData };
+        this.data = this.scheme.parse(initialData);
     }
 
     get value(): TData
@@ -22,25 +22,34 @@ export class EntityData<TData extends Record<string, any>>
     update(partial: Partial<TData>): void
     {
         const newData = { ...this.data };
-
-        const throwUpdateException = () =>
-        {
-            const errors = this.scheme.validate({ ...this.data, ...partial });
-            throw new EntityDataUpdateException(errors);
-        };
+        const errors: Record<string, ValidationMessage[] | undefined> = {};
 
         for (const [key, value] of Object.entries(partial))
         {
             const field = this.scheme.fields[key as keyof TData];
 
-            try
+            if (!field)
             {
-                newData[key as keyof TData] = field.parse(value);
+                continue;
             }
-            catch
+
+            const parseResult = field.tryParse(value);
+
+            if ('errors' in parseResult)
             {
-                throwUpdateException();
+                errors[key] = parseResult.errors;
             }
+            else
+            {
+                newData[key as keyof TData] = parseResult.value;
+            }
+        }
+
+        const errorsCount = Object.keys(errors).length;
+
+        if (errorsCount > 0)
+        {
+            throw new EntityDataUpdateException(errors);
         }
 
         this.data = newData;

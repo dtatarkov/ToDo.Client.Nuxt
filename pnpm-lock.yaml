@@ -517,6 +517,9 @@ importers:
       '@client/infrastructure-di':
         specifier: workspace:*
         version: link:../../infrastructure/di
+      '@client/infrastructure-entity-schemes':
+        specifier: workspace:*
+        version: link:../../infrastructure/entitySchemes
       '@client/infrastructure-eslint':
         specifier: workspace:*
         version: link:../../infrastructure/eslint

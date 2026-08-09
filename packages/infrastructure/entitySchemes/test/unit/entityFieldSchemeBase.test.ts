@@ -50,6 +50,40 @@ describe('EntityFieldSchemeBase', () =>
         expect(result).toBe('test');
     });
 
+    it('should return { value } when tryParse succeeds', () =>
+    {
+        mockSafeParse.mockReturnValue({ success: true, data: 'test' });
+
+        const scheme = new EntityFieldSchemeBase<string>(mockSchema as any);
+        const result = scheme.tryParse('test');
+
+        expect(result).toEqual({ value: 'test' });
+        expect('value' in result).toBe(true);
+    });
+
+    it('should return { errors } when tryParse fails', () =>
+    {
+        mockSafeParse.mockReturnValue({
+            success: false,
+            error: {
+                issues: [
+                    { message: 'entity.field.invalid' },
+                ],
+            },
+        });
+
+        const scheme = new EntityFieldSchemeBase<string>(mockSchema as any);
+        const result = scheme.tryParse('test');
+
+        expect('errors' in result).toBe(true);
+
+        if ('errors' in result)
+        {
+            expect(result.errors).toHaveLength(1);
+            expect(result.errors[0]?.messageKey).toBe('entity.field.invalid');
+        }
+    });
+
     it('should throw EntityFieldParseException when safeParse fails', () =>
     {
         mockSafeParse.mockReturnValue({
