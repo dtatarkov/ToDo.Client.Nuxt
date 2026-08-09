@@ -1,32 +1,33 @@
 import type { EntityScheme } from './entityScheme';
 import { EntityDataUpdateException } from '../exceptions/entityDataUpdateException';
 import type { ValidationMessage } from '@client/infrastructure-validation';
+import type { OptionalUndefined } from '@client/shared';
 
-export class EntityData<TData extends Record<string, any>>
+export class EntityData<TInput extends Record<string, any>, TOutput extends TInput>
 {
-    private data: TData;
+    private data: TOutput;
 
     constructor(
-        initialData: TData,
-        private readonly scheme: EntityScheme<TData>,
+        initialData: OptionalUndefined<TInput>,
+        private readonly scheme: EntityScheme<TInput, TOutput>,
     )
     {
-        this.data = this.scheme.parse(initialData);
+        this.data = this.scheme.parse(initialData as unknown as OptionalUndefined<Record<keyof TInput, any>>);
     }
 
-    get value(): TData
+    get value(): TOutput
     {
         return this.data;
     }
 
-    update(partial: Partial<TData>): void
+    update(partial: Partial<TInput>): void
     {
         const newData = { ...this.data };
         const errors: Record<string, ValidationMessage[] | undefined> = {};
 
         for (const [key, value] of Object.entries(partial))
         {
-            const field = this.scheme.fields[key as keyof TData];
+            const field = this.scheme.fields[key as keyof TInput];
 
             if (!field)
             {
@@ -41,7 +42,7 @@ export class EntityData<TData extends Record<string, any>>
             }
             else
             {
-                newData[key as keyof TData] = parseResult.value;
+                newData[key as keyof TInput] = parseResult.value;
             }
         }
 

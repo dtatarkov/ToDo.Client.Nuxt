@@ -84,6 +84,12 @@ describe('EntityData', () =>
             expect(data.value.name).toBe('John');
         });
 
+        it('should initialize with optional field omitted', () =>
+        {
+            const data = new EntityData({}, scheme);
+            expect(data.value.name).toBeUndefined();
+        });
+
         it('should update with valid string value', () =>
         {
             const data = new EntityData({ name: 'John' }, scheme);
@@ -133,6 +139,24 @@ describe('EntityData', () =>
             expect(data.value.age).toBe(30);
             expect(data.value.active).toBe(true);
             expect(data.value.createdAt).toEqual(new Date('2025-01-01'));
+        });
+
+        it('should initialize with partial data omitting optional fields', () =>
+        {
+            const data = new EntityData({ name: 'John' } as any, scheme);
+            expect(data.value.name).toBe('John');
+            expect(data.value.age).toBeUndefined();
+            expect(data.value.active).toBeUndefined();
+            expect(data.value.createdAt).toBeUndefined();
+        });
+
+        it('should initialize with all optional fields omitted', () =>
+        {
+            const data = new EntityData({} as any, scheme);
+            expect(data.value.name).toBeUndefined();
+            expect(data.value.age).toBeUndefined();
+            expect(data.value.active).toBeUndefined();
+            expect(data.value.createdAt).toBeUndefined();
         });
 
         it('should update with valid values for all fields', () =>

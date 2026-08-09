@@ -3,11 +3,12 @@ import type { EntityFieldScheme } from './entityFieldScheme';
 import { EntityFieldSchemeBase } from './entityFieldSchemeBase';
 import type { EntityFieldSchemeConfigurator } from './entityFieldSchemeConfigurator';
 
-export abstract class EntityFieldSchemeConfiguratorBase<TValue> implements EntityFieldSchemeConfigurator<TValue>
+export abstract class EntityFieldSchemeConfiguratorBase<TInput, TOutput> implements EntityFieldSchemeConfigurator<TInput, TOutput>
 {
-    __t!: TValue;
+    __ti!: TInput;
+    __to!: TOutput;
 
-    toScheme(): EntityFieldScheme<TValue>
+    toScheme(): EntityFieldScheme<TOutput>
     {
         const zodScheme = this.getZodScheme();
         const fieldScheme = new EntityFieldSchemeBase(zodScheme);
@@ -15,5 +16,5 @@ export abstract class EntityFieldSchemeConfiguratorBase<TValue> implements Entit
         return fieldScheme;
     }
 
-    protected abstract getZodScheme(): z.ZodType<TValue>;
+    protected abstract getZodScheme(): z.ZodType<TOutput>;
 }

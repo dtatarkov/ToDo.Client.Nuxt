@@ -10,7 +10,7 @@ import type { MessageKey } from '@client/infrastructure-messages';
 import { EntityFieldSchemeConfiguratorBase } from '../../src/entities/entityFieldSchemeConfiguratorBase';
 import type { EntityFieldSchemeConfigurator } from '../../src/entities/entityFieldSchemeConfigurator';
 
-function toScheme<TValue>(configurator: EntityFieldSchemeConfigurator<TValue>): EntityFieldScheme<TValue>
+function toScheme<TInput, TOutput extends TInput>(configurator: EntityFieldSchemeConfigurator<TInput, TOutput>): EntityFieldScheme<TInput>
 {
     if (configurator instanceof EntityFieldSchemeConfiguratorBase)
     {

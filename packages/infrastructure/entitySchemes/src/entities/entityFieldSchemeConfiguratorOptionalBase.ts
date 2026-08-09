@@ -9,7 +9,7 @@ import type { EntityFieldSchemeZodParams } from '../types/entityFieldSchemeZodPa
 import type { NonUndefined } from '@client/shared';
 
 export abstract class EntityFieldSchemeConfiguratorOptionalBase<TValue>
-    extends EntityFieldSchemeConfiguratorBase<TValue | undefined>
+    extends EntityFieldSchemeConfiguratorBase<TValue | undefined, TValue | undefined>
     implements EntityFieldSchemeConfiguratorOptional<TValue>
 {
     constructor(protected readonly invalidMessageKey: MessageKey = 'entity.field.invalid')

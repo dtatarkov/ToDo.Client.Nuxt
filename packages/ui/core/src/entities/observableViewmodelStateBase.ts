@@ -5,19 +5,19 @@ import type { ObservableReadonly } from '@client/shared';
 import { EntityData, type EntityScheme } from '@client/infrastructure-entity-schemes';
 import { ObservableViewmodelState } from './observableViewmodelState';
 
-export class ObservableViewmodelStateBase<TState extends Record<string, any>> extends ObservableViewmodelState<TState>
+export class ObservableViewmodelStateBase<TInput extends Record<string, any>, TOutput extends TInput = TInput> extends ObservableViewmodelState<TOutput>
 {
-    private observable: ObservableWritableBase<TState>;
-    private entityData: EntityData<TState> | undefined;
+    private observable: ObservableWritableBase<TOutput>;
+    private entityData: EntityData<TInput, TOutput> | undefined;
 
     constructor(
-        initialState: TState,
-        scheme?: EntityScheme<TState>,
+        initialState: TInput,
+        scheme?: EntityScheme<TInput, TOutput>,
     )
     {
         super();
 
-        this.observable = new ObservableWritableBase(initialState);
+        this.observable = new ObservableWritableBase(initialState as unknown as TOutput);
 
         if (scheme)
         {
@@ -26,17 +26,17 @@ export class ObservableViewmodelStateBase<TState extends Record<string, any>> ex
         }
     }
 
-    get value(): TState
+    get value(): TOutput
     {
         return this.observable.value;
     }
 
-    override on(handler: Action<[TState]>, disposeToken?: DisposeToken): void
+    override on(handler: Action<[TOutput]>, disposeToken?: DisposeToken): void
     {
         this.observable.on(handler, disposeToken);
     }
 
-    override update(partialState: Partial<TState>): void
+    override update(partialState: Partial<TInput>): void
     {
         if (this.entityData)
         {
@@ -45,11 +45,11 @@ export class ObservableViewmodelStateBase<TState extends Record<string, any>> ex
         }
         else
         {
-            this.observable.value = mergeDeep(this.observable.value, partialState);
+            this.observable.value = mergeDeep(this.observable.value, partialState as unknown as Partial<TOutput>);
         }
     }
 
-    override toReadonly(): ObservableReadonly<TState>
+    override toReadonly(): ObservableReadonly<TOutput>
     {
         return this.observable.toReadonly();
     }

@@ -1,5 +1,5 @@
 import type { EntitySchemeConfigurator } from './entitySchemeConfigurator';
-import type { EntityFieldSchemeConfigurator } from './entityFieldSchemeConfigurator';
+import type { EntityFieldScheme } from './entityFieldScheme';
 import type { EntitySchemeFields } from '../types/entitySchemeFields';
 import { EntitySchemeConfiguratorImpl } from './entitySchemeConfiguratorImpl';
 import { EntityFieldSchemeConfiguratorBase } from './entityFieldSchemeConfiguratorBase';
@@ -7,31 +7,33 @@ import { EntityFieldInvalidConfigurationException } from '../exceptions/entityFi
 import { EntityParseException } from '../exceptions/entityParseException';
 import { ValidationMessage } from '@client/infrastructure-validation';
 import type { OptionalUndefined } from '@client/shared';
+import type { EntitySchemeFieldConfigurators, EntityFieldConfiguratorInput, EntityFieldConfiguratorOutput } from '../types/entitySchemeFieldConfigurators';
 
-export class EntityScheme<TEntity extends Record<string, any>>
+export class EntityScheme<TInput extends object, TOutput extends Record<string, any>>
 {
     private constructor(
-        public readonly fields: EntitySchemeFields<TEntity>
+        public readonly fields: EntitySchemeFields<TOutput>
     )
     {
     }
 
-    static create<TEntity extends Record<string, any>>(
-        setup: (scheme: EntitySchemeConfigurator) => { [K in keyof TEntity]: EntityFieldSchemeConfigurator<TEntity[K]> }
-    ): EntityScheme<TEntity>
+    static create<C extends EntitySchemeFieldConfigurators<any, any>>(
+        setup: (scheme: EntitySchemeConfigurator) => C
+    ): EntityScheme<EntityFieldConfiguratorInput<C>, EntityFieldConfiguratorOutput<C>>
     {
         const fields = EntityScheme.createFields(setup);
         const scheme = new EntityScheme(fields);
 
-        return scheme;
+        return scheme as EntityScheme<EntityFieldConfiguratorInput<C>, EntityFieldConfiguratorOutput<C>>;
     }
 
-    validate<TData extends Record<string, any>>(data: TData): Partial<Record<keyof TEntity, ValidationMessage[]>>
+    validate<TData extends Record<string, any>>(data: TData): Partial<Record<keyof TOutput, ValidationMessage[]>>
     {
         const validationResult: Record<string, ValidationMessage[]> = {};
 
-        for (const [key, field] of Object.entries(this.fields))
+        for (const key in this.fields)
         {
+            const field = this.fields[key];
             const errors = field.validate(data[key as keyof TData]);
 
             if (errors.length > 0)
@@ -40,22 +42,22 @@ export class EntityScheme<TEntity extends Record<string, any>>
             }
         }
 
-        const result = validationResult as Partial<Record<keyof TEntity, ValidationMessage[]>>;
+        const result = validationResult as Partial<Record<keyof TOutput, ValidationMessage[]>>;
 
         return result;
     }
 
-    parse(data: OptionalUndefined<Record<keyof TEntity, any>>): TEntity
+    parse(data: OptionalUndefined<Record<keyof TInput, any>>): TOutput
     {
-        const result = {} as TEntity;
+        const result = {} as TOutput;
         const errors: Record<string, ValidationMessage[] | undefined> = {};
 
         for (const key in this.fields)
         {
             const field = this.fields[key];
-            const fieldValue = data[key as unknown as keyof OptionalUndefined<TEntity>];
+            const fieldValue = data[key as unknown as keyof OptionalUndefined<TInput>];
 
-            const parseResult = field.tryParse(fieldValue);
+            const parseResult = field.tryParse(fieldValue as any);
 
             if ('errors' in parseResult)
             {
@@ -63,7 +65,7 @@ export class EntityScheme<TEntity extends Record<string, any>>
             }
             else
             {
-                result[key as keyof TEntity] = parseResult.value;
+                result[key as keyof TOutput] = parseResult.value;
             }
         }
 
@@ -77,23 +79,23 @@ export class EntityScheme<TEntity extends Record<string, any>>
         return result;
     }
 
-    extend<TNew extends Record<string, any>>(
-        setup: (configurator: EntitySchemeConfigurator) => { [K in keyof TNew]: EntityFieldSchemeConfigurator<TNew[K]> }
-    ): EntityScheme<TEntity & TNew>
+    extend<T extends EntitySchemeFieldConfigurators<any, any>>(
+        setup: (configurator: EntitySchemeConfigurator) => T
+    ): EntityScheme<EntityFieldConfiguratorInput<T> & TInput, EntityFieldConfiguratorOutput<T> & TOutput>
     {
         const newFields = EntityScheme.createFields(setup);
 
         const mergedFields = {
             ...this.fields,
             ...newFields,
-        } as EntitySchemeFields<TEntity & TNew>;
+        } as EntitySchemeFields<EntityFieldConfiguratorOutput<T> & TOutput>;
 
         return new EntityScheme(mergedFields);
     }
 
-    private static createFields<T extends Record<string, any>>(
-        setup: (configurator: EntitySchemeConfigurator) => { [K in keyof T]: EntityFieldSchemeConfigurator<T[K]> }
-    ): EntitySchemeFields<T>
+    private static createFields<T extends EntitySchemeFieldConfigurators<any, any>>(
+        setup: (configurator: EntitySchemeConfigurator) => T
+    ): EntitySchemeFields<EntityFieldConfiguratorOutput<T>>
     {
         const configurator = new EntitySchemeConfiguratorImpl();
         const result = setup(configurator);
@@ -106,13 +108,13 @@ export class EntityScheme<TEntity extends Record<string, any>>
                     throw new EntityFieldInvalidConfigurationException(fieldName);
                 }
 
-                scheme[fieldName as keyof T] = fieldConfigurator.toScheme();
+                scheme[fieldName as string] = fieldConfigurator.toScheme();
 
                 return scheme;
             },
-            {} as EntitySchemeFields<T>
+            {} as Record<string, EntityFieldScheme<any>>
         );
 
-        return fields;
+        return fields as EntitySchemeFields<EntityFieldConfiguratorOutput<T>>;
     }
 }

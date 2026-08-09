@@ -4,10 +4,10 @@ import { EntityFieldScheme } from './entityFieldScheme';
 import { EntityFieldParseException } from '../exceptions/entityFieldParseException';
 import type { MessageKey } from '../../../../infrastructure/messages/src/types/messageKey';
 
-export class EntityFieldSchemeBase<TValue> extends EntityFieldScheme<TValue>
+export class EntityFieldSchemeBase<TOutput> extends EntityFieldScheme<TOutput>
 {
     constructor(
-        private readonly zodSchema: z.ZodType<TValue>
+        private readonly zodSchema: z.ZodType<TOutput>
     )
     {
         super();
@@ -26,7 +26,7 @@ export class EntityFieldSchemeBase<TValue> extends EntityFieldScheme<TValue>
         return [];
     }
 
-    override tryParse(value: any): { value: TValue; } | { errors: ValidationMessage[]; }
+    override tryParse(value: any): { value: TOutput; } | { errors: ValidationMessage[]; }
     {
         const result = this.zodSchema.safeParse(value);
 
@@ -41,7 +41,7 @@ export class EntityFieldSchemeBase<TValue> extends EntityFieldScheme<TValue>
         return { value: result.data };
     }
 
-    override parse(value: any): TValue
+    override parse(value: any): TOutput
     {
         const result = this.tryParse(value);
 
