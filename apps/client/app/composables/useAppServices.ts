@@ -19,7 +19,7 @@ import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
 import { InputElementsFactory, InputElementsFactoryImpl, UIKitViewmodelsFactory, UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
 import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
-import { FormElementsFactory, FormElementsFactoryImpl, FormFactory, FormFactoryImpl } from '@client/ui-forms';
+import { FormElementViewmodelsFactory, FormElementViewmodelsFactoryImpl, FormViewmodelFactory, FormViewmodelFactoryImpl } from '@client/ui-forms';
 export function useAppServices()
 {
     const container = new ServicesContainer();
@@ -40,8 +40,8 @@ export function useAppServices()
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
     container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();
 
-    container.bind(FormElementsFactory).to(FormElementsFactoryImpl).asTransient();
-    container.bind(FormFactory).to(FormFactoryImpl).asTransient();
+    container.bind(FormElementViewmodelsFactory).to(FormElementViewmodelsFactoryImpl).asTransient();
+    container.bind(FormViewmodelFactory).to(FormViewmodelFactoryImpl).asTransient();
     container.bind(InputElementsFactory).to(InputElementsFactoryImpl).asTransient();
     container.bind(UIKitViewmodelsFactory).to(UIKitViewmodelsFactoryImpl).asTransient();
 

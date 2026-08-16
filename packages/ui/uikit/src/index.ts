@@ -4,14 +4,14 @@ export type { InputTextareaData } from './types/inputTextareaData';
 export type { InputTimeData } from './types/inputTimeData';
 export type { InputDateData } from './types/inputDateData';
 export type { InputDateTimeData } from './types/inputDateTimeData';
-export type { InputState } from './types/InputState';
-export type { InputDateState } from './types/InputDateState';
-export type { InputDatetimeState } from './types/InputDatetimeState';
-export type { InputTextState } from './types/InputTextState';
-export type { InputTimeState } from './types/InputTimeState';
-export type { InputTextareaState } from './types/InputTextareaState';
+export type { InputState } from './types/inputState';
+export type { InputDateState } from './types/inputDateState';
+export type { InputDatetimeState } from './types/inputDatetimeState';
+export type { InputTextState } from './types/inputTextState';
+export type { InputTimeState } from './types/inputTimeState';
+export type { InputTextareaState } from './types/inputTextareaState';
 
-export { InputType } from './enums/inputType';
+export { InputType, inputTypeValues } from './enums/inputType';
 
 export { InfoBlockViewmodel, type InfoBlockViewmodelState } from './viewmodels/infoBlockViewmodel';
 export { InfoBlockViewmodelImpl } from './viewmodels/infoBlockViewmodelImpl';
@@ -29,3 +29,5 @@ export { InputElementsFactoryImpl } from './factories/inputElementsFactoryImpl';
 
 export { UIKitViewmodelsFactory } from './factories/uiKitViewmodelsFactory';
 export { UIKitViewmodelsFactoryImpl } from './factories/uiKitViewmodelsFactoryImpl';
+
+export { UnknownInputTypeException } from './exceptions/unknownInputTypeException';

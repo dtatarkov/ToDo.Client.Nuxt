@@ -1,13 +1,25 @@
 import { vi } from 'vitest';
-import type { FormElement } from '../../src/entities/formElement';
 import type { FormElementValidationError } from '../../src/entities/formElementValidationError';
+import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
+import { InputType } from '@client/ui-uikit';
+import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 
-export function createFormElementMock<V = unknown>(name: string, initialValue: V)
+export function createFormElementMock(name: string, initialValue: string)
 {
     return {
         name,
-        label: '',
         value: initialValue,
+
+        state: createObservableViewmodelStateMock({
+            name,
+            value: initialValue,
+            inputType: InputType.inputText,
+            hasAutofocus: false,
+            hasError: false,
+            isDisabled: false,
+        }),
+
+        setData: vi.fn(),
         setDefaultValue: vi.fn(),
         validate: vi.fn(),
         isValid: vi.fn(),
@@ -15,7 +27,7 @@ export function createFormElementMock<V = unknown>(name: string, initialValue: V
         disable: vi.fn(),
         enable: vi.fn(),
         [Symbol.dispose]: vi.fn(),
-    } satisfies FormElement;
+    } satisfies FormElementViewmodel<InputType.inputText>;
 }
 
 export function markFormElementValid(element: ReturnType<typeof createFormElementMock>)

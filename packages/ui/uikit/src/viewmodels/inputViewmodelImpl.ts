@@ -1,14 +1,16 @@
-import { InputViewmodel } from './inputViewmodel';
 import type { InputData } from '../types/inputData';
-import type { InputState } from '../types/InputState';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 import { EntityScheme } from '@client/infrastructure-entity-schemes';
 import type { EntitySchemeConfigurator, EntitySchemeFieldConfigurators } from '@client/infrastructure-entity-schemes';
+import { inputTypeValues, type InputType } from '../enums/inputType';
+import type { InputState } from '../types/inputState';
+import type { InputViewmodel } from './inputViewmodel';
 
-export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState extends InputState<V, TData>> extends ViewmodelBase<TState> implements InputViewmodel<V, TData, TState>
+export abstract class InputViewmodelImpl<V, TData extends InputData<V>> extends ViewmodelBase<InputState<V, TData>> implements InputViewmodel<V, TData>
 {
     private baseScheme = EntityScheme.create(scheme => ({
         id: scheme.string(),
+        inputType: scheme.enum(inputTypeValues).required(),
         name: scheme.string().withDefault(''),
         isDisabled: scheme.boolean().withDefault(false),
         hasAutofocus: scheme.boolean().withDefault(false),
@@ -24,7 +26,11 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     private readonly scheme = this.createScheme();
 
-    state = new ObservableViewmodelStateBase(this.getInitialData(), this.scheme);
+    state = new ObservableViewmodelStateBase({
+        inputType: this.getType(),
+
+        ...this.getInitialData()
+    }, this.scheme);
 
     get name(): string
     {
@@ -38,7 +44,7 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     set value(value: V)
     {
-        this.state.update({ value } as Partial<TState>);
+        this.state.update({ value } as Partial<InputState<V, TData>>);
     }
 
     get isDisabled(): boolean
@@ -53,17 +59,17 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     setData(data: TData): void
     {
-        this.state.update({ ...data } as unknown as Partial<TState>);
+        this.state.update({ ...data } as unknown as Partial<InputState<V, TData>>);
     }
 
     disable(): void
     {
-        this.state.update({ isDisabled: true } as Partial<TState>);
+        this.state.update({ isDisabled: true } as Partial<InputState<V, TData>>);
     }
 
     enable(): void
     {
-        this.state.update({ isDisabled: false } as Partial<TState>);
+        this.state.update({ isDisabled: false } as Partial<InputState<V, TData>>);
     }
 
     setDefaultValue(): void
@@ -73,15 +79,16 @@ export abstract class InputViewmodelImpl<V, TData extends InputData<V>, TState e
 
     toErrorMode(): void
     {
-        this.state.update({ hasError: true } as Partial<TState>);
+        this.state.update({ hasError: true } as Partial<InputState<V, TData>>);
     }
 
     toDefaultMode(): void
     {
-        this.state.update({ hasError: false } as Partial<TState>);
+        this.state.update({ hasError: false } as Partial<InputState<V, TData>>);
     }
 
+    protected abstract getType(): InputType;
     protected abstract getInitialData(): TData;
     protected abstract getDefaultValue(): V;
-    protected abstract createScheme(): EntityScheme<TData, TState>;
+    protected abstract createScheme(): EntityScheme<TData, InputState<V, TData>>;
 }

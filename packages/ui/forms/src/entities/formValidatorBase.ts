@@ -1,18 +1,17 @@
-import { toObject } from '@client/shared';
 import type { ObservableViewmodelState } from '@client/ui-core';
 import type { FormValidationResult } from '../types/formValidationResult';
-import type { FormViewmodelState } from '../types/formViewmodelState';
-import type { FormElement } from './formElement';
+import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
+import { FormValidator } from './formValidator';
 import type { FormElementValidationError } from './formElementValidationError';
 import { FormValidationError } from './formValidationError';
-import { FormValidator } from './formValidator';
+import type { FormState } from '../types/formState';
 
 
 export class FormValidatorBase extends FormValidator
 {
     constructor(
-        private elements: FormElement[],
-        private state: ObservableViewmodelState<FormViewmodelState<any>>
+        private elements: FormElementViewmodel[],
+        private state: ObservableViewmodelState<FormState>
     )
     {
         super();
@@ -23,9 +22,9 @@ export class FormValidatorBase extends FormValidator
         this.elements.forEach(element => element.validate());
 
         const errorsList = this.getElementValidationErrors();
-        const errorsObj = toObject(errorsList, error => error.formElementName);
+        //const errorsObj = toObject(errorsList, error => error.formElementName);
 
-        this.state.update({ errors: errorsObj });
+        //this.state.update({ errors: errorsObj });
 
         const isValid = errorsList.length === 0;
 

@@ -1,13 +1,12 @@
-import { InputTextViewmodel } from './inputTextViewmodel';
 import type { InputTextData } from '../types/inputTextData';
-import type { InputTextState } from '../types/InputTextState';
 import { InputViewmodelImpl } from './inputViewmodelImpl';
-import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 import { messageKeyValues } from '@client/infrastructure-messages';
+import { InputType } from '../enums/inputType';
+import type { InputTextViewmodel } from './inputTextViewmodel';
 
-export class InputTextViewmodelImpl extends InputViewmodelImpl<string, InputTextData, InputTextState> implements InputTextViewmodel
+export class InputTextViewmodelImpl extends InputViewmodelImpl<string, InputTextData> implements InputTextViewmodel
 {
-    protected createScheme(): EntityScheme<InputTextData, InputTextState>
+    protected createScheme()
     {
         return this.withBaseScheme(scheme => ({
             value: scheme.string().withDefault(''),
@@ -23,5 +22,10 @@ export class InputTextViewmodelImpl extends InputViewmodelImpl<string, InputText
     protected getDefaultValue(): string
     {
         return '';
+    }
+
+    protected getType(): InputType
+    {
+        return InputType.inputText;
     }
 }

@@ -6,3 +6,11 @@ export enum InputType
     inputTime = 'inputTime',
     inputDateTime = 'inputDateTime',
 }
+
+export const inputTypeValues = [
+    InputType.inputText,
+    InputType.inputTextarea,
+    InputType.inputDate,
+    InputType.inputTime,
+    InputType.inputDateTime
+];

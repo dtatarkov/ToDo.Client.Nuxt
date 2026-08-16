@@ -7,12 +7,11 @@ import { InputDatetimeViewmodelImpl } from '../../src/viewmodels/inputDatetimeVi
 import type { Constructor } from '@client/shared';
 import type { InputViewmodel } from '../../src/viewmodels/inputViewmodel';
 import type { InputData } from '../../src/types/inputData';
-import type { InputState } from '../../src/types/InputState';
 
 interface TestParams
 {
     label: string;
-    ViewmodelClass: Constructor<InputViewmodel<any, InputData, InputState>>;
+    ViewmodelClass: Constructor<InputViewmodel<any, InputData>>;
     testData: { initialValue: any; newValue: any; };
 }
 
@@ -70,7 +69,7 @@ const testCases: TestParams[] = [
 
 describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 {
-    let viewmodel: InputViewmodel<any, InputData, InputState>;
+    let viewmodel: InputViewmodel<any, InputData>;
 
     beforeEach(() =>
     {

@@ -2,13 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { FormValidatorBase } from '../../src/entities/formValidatorBase';
 import { FormValidationError } from '../../src/entities/formValidationError';
 import { FormElementValidationError } from '../../src/entities/formElementValidationError';
-import type { FormViewmodelState } from '../../src/types/formViewmodelState';
 import { createFormElementMock, markFormElementInvalid, markFormElementValid } from '../mocks/formElementMock';
 import { ObservableViewmodelState } from '@client/ui-core';
-import type { FormElement } from '../../src/entities/formElement';
 import { formStateMock } from '../mocks/formStateMock';
+import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
+import type { FormState } from '../../src/types/formState';
 
-function setupFormValidator(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormValidatorBase
+function setupFormValidator(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormState>): FormValidatorBase
 {
     return new FormValidatorBase(elements, state);
 }
@@ -49,7 +49,12 @@ describe('FormValidator', () =>
 
             expect(result.isValid).toBe(true);
             expect(result.validationError).toBeUndefined();
-            expect(formStateMock.value.errors).toEqual({});
+
+            for (const element of formStateMock.value.elements)
+            {
+                expect(element.hasError).toEqual(false);
+                expect(element.errorKey).toBeUndefined();
+            }
         });
 
         it('should return { isValid: false, validationError } when elements are invalid', () =>
@@ -71,6 +76,7 @@ describe('FormValidator', () =>
             expect(result.isValid).toBe(false);
             expect(result.validationError).toBeInstanceOf(FormValidationError);
             expect(result.validationError!.errors).toEqual([titleError, descriptionError]);
+
             expect(formStateMock.update).toBeCalledWith(expect.objectContaining({
                 errors: {
                     title: titleError,

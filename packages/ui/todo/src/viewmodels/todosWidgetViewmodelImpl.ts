@@ -1,4 +1,4 @@
-import { DisposeToken, InitializationToken } from '@client/shared';
+import { InitializationToken } from '@client/shared';
 import { ToDosWidgetViewmodel, type ToDosWidgetViewmodelState } from './todosWidgetViewmodel';
 import { ToDosStore, type ToDo } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
@@ -9,7 +9,6 @@ import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 @dependency(ToDosStore)
 export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetViewmodelState> implements ToDosWidgetViewmodel
 {
-    private disposeToken = new DisposeToken();
     private initializationToken = new InitializationToken();
 
     readonly addToDoButtonLabelKey: MessageKey = 'todos.toolbar.buttons.add';

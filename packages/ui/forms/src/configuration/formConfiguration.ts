@@ -1,40 +1,46 @@
 import type { MessageKey } from '@client/infrastructure-messages';
+import type { FormData } from '../types/formData';
+import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElementData } from '../types/formElementData';
-import { mapObject } from '@client/shared';
+
+export type FormConfigurationToDataOptions<TEntity extends Record<string, any> = Record<string, any>> = {
+    values?: Partial<TEntity>;
+    errors?: Partial<Record<keyof TEntity, MessageKey>>;
+};
 
 export class FormConfiguration<TEntity extends Record<string, any> = Record<string, any>>
 {
     constructor(
-        public readonly elements: Record<keyof TEntity, FormElementData>
+        public readonly elements: Record<keyof TEntity, FormElementCreateData>
     ) { }
 
-    withData(data: Partial<TEntity>): FormConfiguration<TEntity>
+    toData(options?: FormConfigurationToDataOptions<TEntity>): FormData
     {
-        const newElements = mapObject(this.elements, (elementData, elementName) => (<FormElementData>{
-            ...elementData,
-            value: data[elementName] ?? elementData.value
-        }));
-
-        return new FormConfiguration(newElements);
-    }
-
-    withErrors(
-        errors: Partial<Record<keyof TEntity, MessageKey>>
-    ): FormConfiguration<TEntity>
-    {
-        const newElements = mapObject(this.elements, (elementData, elementName) =>
+        const elements = Object.entries(this.elements).map(([name, data]) =>
         {
-            const errorKey = errors[elementName] ?? elementData.errorKey;
-            const hasError = errorKey !== undefined;
+            const element: FormElementData = { ...data, name };
 
-            return (<FormElementData>{
-                ...elementData,
+            this.addValueToFormElementData(element, options?.values?.[name]);
+            this.addErrorToFormElementData(element, options?.errors?.[name]);
 
-                errorKey,
-                hasError,
-            });
+            return element;
         });
 
-        return new FormConfiguration(newElements);
+        return { elements };
+    }
+
+    private addValueToFormElementData(element: FormElementData, value?: TEntity[keyof TEntity]): void
+    {
+        if (value !== undefined)
+        {
+            element.value = value;
+        }
+    }
+
+    private addErrorToFormElementData(element: FormElementData, errorKey?: MessageKey): void
+    {
+        element.errorKey = errorKey;
+        element.hasError = errorKey !== undefined;
     }
 }
+

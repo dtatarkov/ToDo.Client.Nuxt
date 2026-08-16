@@ -1,12 +1,11 @@
-import { InputDateViewmodel } from './inputDateViewmodel';
 import type { InputDateData } from '../types/inputDateData';
-import type { InputDateState } from '../types/InputDateState';
 import { InputViewmodelImpl } from './inputViewmodelImpl';
-import type { EntityScheme } from '@client/infrastructure-entity-schemes';
+import { InputType } from '../enums/inputType';
+import type { InputDateViewmodel } from './inputDateViewmodel';
 
-export class InputDateViewmodelImpl extends InputViewmodelImpl<Date | undefined, InputDateData, InputDateState> implements InputDateViewmodel
+export class InputDateViewmodelImpl extends InputViewmodelImpl<Date | undefined, InputDateData> implements InputDateViewmodel
 {
-    protected createScheme(): EntityScheme<InputDateData, InputDateState>
+    protected createScheme()
     {
         return this.withBaseScheme(scheme => ({
             value: scheme.datetime(),
@@ -21,5 +20,10 @@ export class InputDateViewmodelImpl extends InputViewmodelImpl<Date | undefined,
     protected getDefaultValue(): Date | undefined
     {
         return undefined;
+    }
+
+    protected getType(): InputType
+    {
+        return InputType.inputDate;
     }
 }

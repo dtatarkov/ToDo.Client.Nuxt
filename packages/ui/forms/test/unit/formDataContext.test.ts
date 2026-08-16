@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { FormDataContextBase } from '../../src/entities/formDataContextBase';
-import type { FormViewmodelState } from '../../src/types/formViewmodelState';
 import { createFormElementMock } from '../mocks/formElementMock';
 import { formStateMock } from '../mocks/formStateMock';
-import type { FormElement } from '../../src/entities/formElement';
 import type { ObservableViewmodelState } from '@client/ui-core';
+import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
+import type { FormState } from '../../src';
 
-function setupFormDataContext(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormDataContextBase<any>
+function setupFormDataContext(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormState>): FormDataContextBase<any>
 {
     return new FormDataContextBase(elements, state);
 }
@@ -98,10 +98,10 @@ describe('FormDataContext', () =>
             });
 
             expect(formStateMock.update).toBeCalledWith(expect.objectContaining({
-                data: {
-                    title: 'New Title',
-                    description: 'New Description',
-                }
+                elements: [
+                    expect.objectContaining({ name: 'title' }),
+                    expect.objectContaining({ name: 'description' })
+                ]
             }));
         });
 

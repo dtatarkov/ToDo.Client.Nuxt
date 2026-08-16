@@ -1,9 +1,6 @@
-import type { FormElementsFactory } from '../factories/formElementsFactory';
 import { FormValidationError } from '../entities/formValidationError';
-import { type AsyncCommand, type Action, type DisposeToken } from '@client/shared';
+import { type AsyncCommand, type Action, DisposeToken, onMany } from '@client/shared';
 import { ObservableViewmodelState, ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
-import type { FormViewmodelState } from '../types/formViewmodelState';
-import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import { FormViewmodel } from './formViewmodel';
 import { FormDataContextBase } from '../entities/formDataContextBase';
@@ -11,42 +8,41 @@ import { FormLockBase } from '../entities/formLockBase';
 import { FormValidatorBase } from '../entities/formValidatorBase';
 import { FormEventsBase } from '../entities/formEventsBase';
 import { AsyncCommandFormSubmit } from '../commands/asyncCommandFormSubmit';
-import type { FormEvents } from '../entities/formEvents';
+import type { FormElementViewmodel } from './formElementViewmodel';
 import type { FormDataContext } from '../entities/formDataContext';
+import type { FormEvents } from '../entities/formEvents';
 import type { FormLock } from '../entities/formLock';
 import type { FormValidator } from '../entities/formValidator';
+import type { FormState } from '../types/formState';
 
-export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormViewmodelState<TEntity>> implements FormViewmodel<TEntity>
+export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormState> implements FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
-
     private formDataContext: FormDataContext<TEntity>;
     private formLock: FormLock;
     private formValidator: FormValidator;
     private formEvents: FormEvents;
 
-    state: ObservableViewmodelState<FormViewmodelState<TEntity>>;
+    state: ObservableViewmodelState<FormState>;
 
     constructor(
-        private formElementsFactory: FormElementsFactory,
-        configuration: FormConfiguration<TEntity>,
+        private elementViewmodels: FormElementViewmodel<any>[],
         handlers: FormHandlers<TEntity>,
     )
     {
         super();
 
-        const elements = this.formElementsFactory.createElements(configuration.elements);
-
-        this.state = new ObservableViewmodelStateBase<FormViewmodelState<TEntity>>({
-            elements: configuration.elements,
+        this.state = new ObservableViewmodelStateBase<FormState>({
+            elements: [],
             isDisabled: false,
         });
 
+        this.formDataContext = new FormDataContextBase(this.elementViewmodels, this.state);
+        this.formLock = new FormLockBase(this.elementViewmodels, this.state);
+        this.formValidator = new FormValidatorBase(this.elementViewmodels, this.state);
 
-        this.formDataContext = new FormDataContextBase(elements, this.state);
-        this.formLock = new FormLockBase(elements, this.state);
-        this.formValidator = new FormValidatorBase(elements, this.state);
         this.formEvents = new FormEventsBase();
+        this.disposeToken.registerDisposable(this.formEvents);
 
         this.submitCommand = new AsyncCommandFormSubmit(
             this.formDataContext,
@@ -56,8 +52,24 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
             handlers.submit
         );
 
+        this.initState();
+        this.watchElementViewmodels();
+    }
+
+    private initState()
+    {
         this.state.update({
-            data: this.getData()
+            elements: this.getElementsState(),
+        });
+    }
+
+    private watchElementViewmodels()
+    {
+        const elementStates = this.elementViewmodels.map(vm => vm.state);
+
+        onMany(elementStates, () =>
+        {
+            this.getElementsState();
         });
     }
 
@@ -82,10 +94,10 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
         this.formEvents.formValidationErrorEvent.on(handler, token);
     }
 
-    override[Symbol.dispose](): void
+    private getElementsState()
     {
-        super[Symbol.dispose]();
+        const elements = this.elementViewmodels.map(vm => vm.state.value);
 
-        this.formEvents.formValidationErrorEvent[Symbol.dispose]();
+        return elements;
     }
 }

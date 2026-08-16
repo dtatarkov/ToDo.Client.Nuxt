@@ -1,4 +1,3 @@
-import { DisposeToken } from '@client/shared';
 import { ToDoCardViewmodel, type ToDoCardViewmodelData, type ToDoCardViewmodelState } from './todoCardViewmodel';
 import { DateFormatter } from '@client/infrastructure-datetime';
 import { dependency } from '@client/infrastructure-di';
@@ -9,8 +8,6 @@ import { ObservableViewmodelStateBase, ViewmodelBase, type ObservableViewmodelSt
 @dependency(UIKitViewmodelsFactory)
 export class ToDoCardViewmodelImpl extends ViewmodelBase<ToDoCardViewmodelState> implements ToDoCardViewmodel
 {
-    private disposeToken = new DisposeToken();
-
     private readonly infoBlock: InfoBlockViewmodel;
 
     state: ObservableViewmodelState<ToDoCardViewmodelState>;
@@ -22,7 +19,8 @@ export class ToDoCardViewmodelImpl extends ViewmodelBase<ToDoCardViewmodelState>
     {
         super();
 
-        this.infoBlock = viewmodelsFactory.createInfoBlock(this.disposeToken);
+        this.infoBlock = viewmodelsFactory.createInfoBlock();
+        this.disposeToken.registerDisposable(this.infoBlock);
 
         const initialState = this.createState();
 

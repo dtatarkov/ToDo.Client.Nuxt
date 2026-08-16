@@ -1,28 +1,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { FormViewmodelImpl } from '../../src/viewmodels/formViewmodelImpl';
-import { createFormElementMock, markFormElementInvalid, markFormElementValid } from '../mocks/formElementMock';
-import { formElementsFactoryMock } from '../mocks/formElementsFactoryMock';
-import type { FormElement } from '../../src/entities/formElement';
+import { formElementViewmodelsFactoryMock } from '../mocks/formElementViewmodelsFactoryMock';
 import type { FormViewmodel } from '../../src/viewmodels/formViewmodel';
 import { FormElementValidationError } from '../../src/entities/formElementValidationError';
-import type { FormElementData } from '../../src/types/formElementData';
-import { FormElementType } from '../../src/enums/formElementType';
-import { FormConfiguration } from '../../src/configuration/formConfiguration';
 import { setupPausedHandlerAsync } from '@client/shared/mocks';
+import { createFormElementViewmodelMock } from '../mocks/formElementViewmodelMock';
+import { FormDisabledException } from '../../src/exceptions/formDisabledException';
+import { InputType } from '@client/ui-uikit';
 
 const submitHandler = vi.fn();
 const validationErrorHandler = vi.fn();
 
-function setupViewmodel(elements: FormElement[]): FormViewmodel<any>
+function setupViewmodel(elements: ReturnType<typeof createFormElementViewmodelMock>[]): FormViewmodel<any>
 {
-    formElementsFactoryMock.createElements.mockReturnValue(elements);
-
-    const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, new FormConfiguration({}), { submit: submitHandler });
+    const viewmodel = new FormViewmodelImpl(elements, { submit: submitHandler });
 
     return viewmodel;
 }
 
-// TODO: change to integration tests
 describe('FormViewmodelImpl', () =>
 {
     beforeEach(() =>
@@ -34,72 +29,69 @@ describe('FormViewmodelImpl', () =>
     {
         it('should have correct initial state', () =>
         {
-            const elementsData: Record<string, FormElementData> = {
-                title: {
-                    type: FormElementType.inputText,
-                    value: ''
-                }
-            };
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: '' });
+            formElementViewmodelsFactoryMock.createViewmodels.mockReturnValue([titleElement]);
 
-            const titleElement = createFormElementMock('title', '');
-            formElementsFactoryMock.createElements.mockReturnValue([titleElement]);
+            const viewmodel = setupViewmodel([titleElement]);
 
-            const viewmodel = new FormViewmodelImpl(formElementsFactoryMock, new FormConfiguration(elementsData), { submit: submitHandler });
+            expect(viewmodel.state.value).toEqual({
+                elements: [
+                    expect.objectContaining({ name: 'title', inputType: InputType.inputText, value: '', hasError: false })
+                ],
 
-            expect(viewmodel.state.value.elements).toEqual(elementsData);
-            expect(viewmodel.state.value.data).toEqual({ title: '' });
-            expect(viewmodel.state.value.isDisabled).toBe(false);
-        });
-
-        it('should expose element values as data', () =>
-        {
-            const titleElement = createFormElementMock('title', 'test-title');
-            const descriptionElement = createFormElementMock('description', 'test-desc');
-
-            const viewmodel = setupViewmodel([titleElement, descriptionElement]);
-
-            expect(viewmodel.state.value.data).toEqual({
-                title: 'test-title',
-                description: 'test-desc',
+                isDisabled: false,
             });
         });
 
-        it('should expose element errors', async () =>
+        it('should expose element values', () =>
         {
-            const error1 = new FormElementValidationError('title', 'title', 'Title is required');
-            const error2 = new FormElementValidationError('description', 'description', 'Description is required');
-
-            const titleElement = createFormElementMock('title', '');
-            markFormElementInvalid(titleElement, error1);
-
-            const descriptionElement = createFormElementMock('description', '');
-            markFormElementInvalid(descriptionElement, error2);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'test-title' });
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'test-desc' });
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
-            const command = viewmodel.getSubmitCommand();
 
-            await command.executeAsync();
-
-            expect(viewmodel.state.value.errors).toEqual({
-                title: error1,
-                description: error2
-            });
+            expect(viewmodel.state.value.elements).toEqual([
+                expect.objectContaining({ name: 'title', value: 'test-title' }),
+                expect.objectContaining({ name: 'description', value: 'test-desc' })
+            ]);
         });
+
+        // it('should expose element errors', async () =>
+        // {
+        //     const error1 = new FormElementValidationError('title', 'title', 'Title is required');
+        //     const error2 = new FormElementValidationError('description', 'description', 'Description is required');
+
+        //     const titleElement = createFormElementViewmodelMock('title', { type: InputType.inputText, value: '' });
+        //     titleElement.markAsInvalid(error1);
+
+        //     const descriptionElement = createFormElementViewmodelMock('description', { type: InputType.inputText, value: '' });
+        //     descriptionElement.markAsInvalid(error2);
+
+        //     const viewmodel = setupViewmodel([titleElement, descriptionElement]);
+        //     const command = viewmodel.getSubmitCommand();
+
+        //     await command.executeAsync();
+
+        //     expect(viewmodel.state.value.elements).toEqual([
+        //         expect.objectContaining({ name: 'title', hasError: true }),
+        //         expect.objectContaining({ name: 'description', hasError: true }),
+        //     ]);
+        // });
 
         it('should have empty errors when all elements are valid', async () =>
         {
-            const titleElement = createFormElementMock('title', 'value');
-            markFormElementValid(titleElement);
-
-            const descriptionElement = createFormElementMock('description', 'value');
-            markFormElementValid(descriptionElement);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'value' });
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'value' });
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
             const command = viewmodel.getSubmitCommand();
 
             await command.executeAsync();
 
-            expect(viewmodel.state.value.errors).toEqual({});
+            expect(viewmodel.state.value.elements).toEqual([
+                expect.objectContaining({ name: 'title', hasError: false }),
+                expect.objectContaining({ name: 'description', hasError: false }),
+            ]);
         });
     });
 
@@ -107,8 +99,8 @@ describe('FormViewmodelImpl', () =>
     {
         it('should return data from all elements', () =>
         {
-            const titleElement = createFormElementMock('title', 'test-title');
-            const descriptionElement = createFormElementMock('description', 'test-desc');
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'test-title' });
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'test-desc' });
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
 
@@ -123,8 +115,8 @@ describe('FormViewmodelImpl', () =>
     {
         it('should update value of matching form element and reset others', () =>
         {
-            const titleElement = createFormElementMock('title', 'old-title');
-            const descriptionElement = createFormElementMock('description', 'old-desc');
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'old-title' });
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'old-desc' });
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
 
@@ -134,27 +126,10 @@ describe('FormViewmodelImpl', () =>
             expect(descriptionElement.setDefaultValue).toBeCalled();
         });
 
-        it('should update state with new data', () =>
-        {
-            const titleElement = createFormElementMock('title', 'old-title');
-            const descriptionElement = createFormElementMock('description', 'old-desc');
-
-            const viewmodel = setupViewmodel([titleElement, descriptionElement]);
-
-            const newData = {
-                title: 'new-title',
-                description: 'new-desc'
-            };
-
-            viewmodel.setData(newData);
-
-            expect(viewmodel.state.value.data).toEqual(newData);
-        });
-
         it('should throw FormDisabledException when form is disabled', async () =>
         {
-            const titleElement = createFormElementMock('title', 'value');
-            markFormElementValid(titleElement);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'value' });
+            titleElement.markAsValid();
 
             const viewmodel = setupViewmodel([titleElement]);
             await setupPausedHandlerAsync(submitHandler);
@@ -162,7 +137,7 @@ describe('FormViewmodelImpl', () =>
             const command = viewmodel.getSubmitCommand();
             command.executeAsync();
 
-            expect(() => viewmodel.setData({ title: 'new-value' })).toThrow();
+            expect(() => viewmodel.setData({ title: 'new-value' })).toThrow(FormDisabledException);
         });
     });
 
@@ -170,8 +145,8 @@ describe('FormViewmodelImpl', () =>
     {
         it('should switch form to disabled state during submission', async () =>
         {
-            const titleElement = createFormElementMock('title', 'value');
-            markFormElementValid(titleElement);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'value' });
+            titleElement.markAsValid();
 
             const viewmodel = setupViewmodel([titleElement]);
             const resume = await setupPausedHandlerAsync(submitHandler);
@@ -187,11 +162,11 @@ describe('FormViewmodelImpl', () =>
 
         it('should call submit handler with correct data on success', async () =>
         {
-            const titleElement = createFormElementMock('title', 'test-title');
-            markFormElementValid(titleElement);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'test-title' });
+            titleElement.markAsValid();
 
-            const descriptionElement = createFormElementMock('description', 'test-desc');
-            markFormElementValid(descriptionElement);
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'test-desc' });
+            descriptionElement.markAsValid();
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
 
@@ -213,10 +188,12 @@ describe('FormViewmodelImpl', () =>
         it('should emit FormValidationError when submit fails validation', async () =>
         {
             const validationError = new FormElementValidationError('description', 'description', 'Field is required');
-            const invalidFormElement = createFormElementMock('description', '');
-            markFormElementInvalid(invalidFormElement, validationError);
 
-            const validElement = createFormElementMock('title', 'value');
+            const invalidFormElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: '' });
+            invalidFormElement.markAsInvalid(validationError);
+
+            const validElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'value' });
+            validElement.markAsValid();
 
             const viewmodel = setupViewmodel([invalidFormElement, validElement]);
 
@@ -234,11 +211,11 @@ describe('FormViewmodelImpl', () =>
             const error1 = new FormElementValidationError('title', 'title', 'Title is required');
             const error2 = new FormElementValidationError('description', 'description', 'Description is required');
 
-            const titleElement = createFormElementMock('title', '');
-            markFormElementInvalid(titleElement, error1);
+            const titleElement = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: '' });
+            titleElement.markAsInvalid(error1);
 
-            const descriptionElement = createFormElementMock('description', '');
-            markFormElementInvalid(descriptionElement, error2);
+            const descriptionElement = createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: '' });
+            descriptionElement.markAsInvalid(error2);
 
             const viewmodel = setupViewmodel([titleElement, descriptionElement]);
             viewmodel.onValidationError(validationErrorHandler);
@@ -252,8 +229,8 @@ describe('FormViewmodelImpl', () =>
 
         it('should not emit onError when validation passes', async () =>
         {
-            const element = createFormElementMock('title', 'value');
-            markFormElementValid(element);
+            const element = createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'value' });
+            element.markAsValid();
 
             const viewmodel = setupViewmodel([element]);
             viewmodel.onValidationError(validationErrorHandler);

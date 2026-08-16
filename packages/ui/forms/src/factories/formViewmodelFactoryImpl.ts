@@ -1,16 +1,16 @@
-import type { FormFactory } from './formFactory';
+import type { FormViewmodelFactory } from './formViewmodelFactory';
 import { FormViewmodelImpl } from '../viewmodels/formViewmodelImpl';
-import { FormElementsFactory } from './formElementsFactory';
+import { FormElementViewmodelsFactory } from './formElementViewmodelsFactory';
 import { dependency } from '@client/infrastructure-di';
 import type { FormConfiguration } from '../configuration/formConfiguration';
 import type { FormHandlers } from '../types/formHandlers';
 import type { FormViewmodel } from '../viewmodels/formViewmodel';
 
-@dependency(FormElementsFactory)
-export class FormFactoryImpl implements FormFactory
+@dependency(FormElementViewmodelsFactory)
+export class FormViewmodelFactoryImpl implements FormViewmodelFactory
 {
   constructor(
-    private formElementsFactory: FormElementsFactory,
+    private formElementViewmodelsFactory: FormElementViewmodelsFactory,
   )
   {
   }
@@ -20,6 +20,10 @@ export class FormFactoryImpl implements FormFactory
     handlers: FormHandlers<TEntity>
   ): FormViewmodel<TEntity>
   {
-    return new FormViewmodelImpl(this.formElementsFactory, configuration, handlers);
+    const formElementViewmodels = this.formElementViewmodelsFactory.createViewmodels(
+      configuration.elements,
+    );
+
+    return new FormViewmodelImpl(formElementViewmodels, handlers);
   }
 }

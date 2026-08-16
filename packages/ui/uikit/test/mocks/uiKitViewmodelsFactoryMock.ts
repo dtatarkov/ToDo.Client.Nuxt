@@ -4,6 +4,7 @@ import type { UIKitViewmodelsFactory } from '../../src/factories/uiKitViewmodels
 export function createUiKitViewmodelsFactoryMock()
 {
     return {
+        createInput: vi.fn(),
         createInputText: vi.fn(),
         createTextarea: vi.fn(),
         createInputDate: vi.fn(),

@@ -1,182 +1,175 @@
 import { describe, it, expect } from 'vitest';
 import { FormConfiguration } from '../../src/configuration/formConfiguration';
-import { FormElementType } from '../../src/enums/formElementType';
-import type { FormElementData } from '../../src/types/formElementData';
-import type { InputTextData } from '@client/ui-uikit';
+import { InputType } from '@client/ui-uikit';
 
 describe('FormConfiguration', () =>
 {
-    describe('withData', () =>
+    describe('toData', () =>
     {
-        it('should update element values with provided data', () =>
+        it('should construct elements without options', () =>
         {
             const config = new FormConfiguration({
                 title: {
-                    type: FormElementType.inputText,
+                    inputType: InputType.inputText,
                     value: 'default-title',
-                },
-                description: {
-                    type: FormElementType.inputTextarea,
-                    value: 'default-desc',
-                },
-            });
-
-            const updatedConfig = config.withData({ title: 'new-title' });
-
-            expect(updatedConfig.elements.title.value).toBe('new-title');
-            expect(updatedConfig.elements.description.value).toBe('default-desc');
-        });
-
-        it('should update multiple element values', () =>
-        {
-            const config = new FormConfiguration({
-                title: {
-                    type: FormElementType.inputText,
-                    value: 'default-title',
-                },
-                description: {
-                    type: FormElementType.inputTextarea,
-                    value: 'default-desc',
-                },
-            });
-
-            const updatedConfig = config.withData({
-                title: 'new-title',
-                description: 'new-desc',
-            });
-
-            expect(updatedConfig.elements.title.value).toBe('new-title');
-            expect(updatedConfig.elements.description.value).toBe('new-desc');
-        });
-
-        it('should return a new instance', () =>
-        {
-            const elements: Record<string, FormElementData> = {
-                title: {
-                    type: FormElementType.inputText,
-                    value: '',
-                },
-            };
-
-            const config = new FormConfiguration(elements);
-            const updatedConfig = config.withData({ title: 'new' });
-
-            expect(updatedConfig).not.toBe(config);
-        });
-
-        it('should not modify the original configuration when updating data', () =>
-        {
-            const config = new FormConfiguration({
-                title: {
-                    type: FormElementType.inputText,
-                    value: 'default-title',
-                },
-                description: {
-                    type: FormElementType.inputTextarea,
-                    value: 'default-desc',
-                },
-            });
-
-            const originalTitleValue = config.elements.title.value;
-            const originalDescriptionValue = config.elements.description.value;
-
-            config.withData({ title: 'new-title' });
-
-            expect(config.elements.title.value).toBe(originalTitleValue);
-            expect(config.elements.description.value).toBe(originalDescriptionValue);
-        });
-
-        it('should preserve other element properties', () =>
-        {
-            const config = new FormConfiguration({
-                title: {
-                    type: FormElementType.inputText,
-                    value: 'default',
                     labelKey: 'todo.field.title.label',
-                    placeholderKey: 'todo.field.title.placeholder',
-                    errorKey: 'todo.field.title.errors.empty',
-                }
-            });
-
-            const updatedConfig = config.withData({ title: 'new-value' });
-
-            expect(updatedConfig.elements.title.type).toBe(FormElementType.inputText);
-            expect(updatedConfig.elements.title.labelKey).toBe('todo.field.title.label');
-            expect((<InputTextData>updatedConfig.elements.title).placeholderKey).toBe('todo.field.title.placeholder');
-            expect(updatedConfig.elements.title.errorKey).toBe('todo.field.title.errors.empty');
-        });
-    });
-
-    describe('withErrors', () =>
-    {
-        it('should set error for element when error key is provided', () =>
-        {
-            const elements: Record<string, FormElementData> = {
-                title: {
-                    type: FormElementType.inputText,
-                    value: '',
-                },
-            };
-
-            const config = new FormConfiguration(elements);
-            const updatedConfig = config.withErrors({ title: 'todo.field.title.errors.empty' });
-
-            expect(updatedConfig.elements.title.errorKey).toBe('todo.field.title.errors.empty');
-            expect(updatedConfig.elements.title.hasError).toBe(true);
-        });
-
-        it('should not set error for elements without errors', () =>
-        {
-            const config = new FormConfiguration({
-                title: {
-                    type: FormElementType.inputText,
-                    value: '',
                 },
                 description: {
-                    type: FormElementType.inputTextarea,
-                    value: '',
+                    inputType: InputType.inputTextarea,
+                    value: 'default-desc',
+                    labelKey: 'todo.field.description.label',
+                },
+                createDate: {
+                    inputType: InputType.inputDateTime,
                 },
             });
 
-            const updatedConfig = config.withErrors({ title: 'todo.field.title.errors.empty' });
+            const result = config.toData();
 
-            expect(updatedConfig.elements.title.errorKey).toBe('todo.field.title.errors.empty');
-            expect(updatedConfig.elements.title.hasError).toBe(true);
+            const elements = result.elements!;
+            expect(elements).toHaveLength(3);
+            expect(elements[0].name).toBe('title');
+            expect(elements[0].value).toBe('default-title');
+            expect(elements[0].labelKey).toBe('todo.field.title.label');
+            expect(elements[0].inputType).toBe(InputType.inputText);
+            expect(elements[0].hasError).toBe(false);
+            expect(elements[0].errorKey).toBeUndefined();
 
-            expect(updatedConfig.elements.description.errorKey).toBeUndefined();
-            expect(updatedConfig.elements.description.hasError).toBe(false);
+            expect(elements[1].name).toBe('description');
+            expect(elements[1].value).toBe('default-desc');
+            expect(elements[1].labelKey).toBe('todo.field.description.label');
+            expect(elements[1].inputType).toBe(InputType.inputTextarea);
+            expect(elements[1].hasError).toBe(false);
+            expect(elements[1].errorKey).toBeUndefined();
+
+            expect(elements[2].name).toBe('createDate');
+            expect(elements[2].value).toBeUndefined();
+            expect(elements[2].inputType).toBe(InputType.inputDateTime);
+            expect(elements[2].hasError).toBe(false);
+            expect(elements[2].errorKey).toBeUndefined();
         });
 
-        it('should return a new instance', () =>
+        it('should construct elements with overridden values', () =>
         {
             const config = new FormConfiguration({
                 title: {
-                    type: FormElementType.inputText,
-                    value: '',
+                    inputType: InputType.inputText,
+                    value: 'default-title',
+                    labelKey: 'todo.field.title.label',
+                },
+                description: {
+                    inputType: InputType.inputTextarea,
+                    value: 'default-desc',
+                    labelKey: 'todo.field.description.label',
+                },
+                createDate: {
+                    inputType: InputType.inputDateTime,
                 },
             });
 
-            const updatedConfig = config.withErrors({ title: 'todo.field.title.errors.empty' });
+            const result = config.toData({
+                values: {
+                    title: 'new-title',
+                    createDate: new Date('2024-01-15T10:30:00'),
+                },
+            });
 
-            expect(updatedConfig).not.toBe(config);
+            const elements = result.elements!;
+
+            expect(elements[0].name).toBe('title');
+            expect(elements[0].value).toBe('new-title');
+
+            expect(elements[1].name).toBe('description');
+            expect(elements[1].value).toBe('default-desc');
+
+            expect(elements[2].name).toBe('createDate');
+            expect(elements[2].value).toEqual(new Date('2024-01-15T10:30:00'));
         });
 
-        it('should not modify the original configuration when updating errors', () =>
+        it('should construct elements with errors', () =>
         {
             const config = new FormConfiguration({
                 title: {
-                    type: FormElementType.inputText,
-                    value: '',
+                    inputType: InputType.inputText,
+                    value: 'default-title',
+                },
+                description: {
+                    inputType: InputType.inputTextarea,
+                    value: 'default-desc',
+                },
+                createDate: {
+                    inputType: InputType.inputDateTime,
                 },
             });
 
-            const originalTitleErrorKey = config.elements.title.errorKey;
-            const originalTitleHasError = config.elements.title.hasError;
+            const result = config.toData({
+                errors: {
+                    title: 'todo.field.title.errors.empty',
+                    description: 'entity.field.required',
+                },
+            });
 
-            config.withErrors({ title: 'todo.field.title.errors.empty' });
+            const elements = result.elements!;
 
-            expect(config.elements.title.errorKey).toBe(originalTitleErrorKey);
-            expect(config.elements.title.hasError).toBe(originalTitleHasError);
+            expect(elements[0].name).toBe('title');
+            expect(elements[0].hasError).toBe(true);
+            expect(elements[0].errorKey).toBe('todo.field.title.errors.empty');
+
+            expect(elements[1].name).toBe('description');
+            expect(elements[1].hasError).toBe(true);
+            expect(elements[1].errorKey).toBe('entity.field.required');
+
+            expect(elements[2].name).toBe('createDate');
+            expect(elements[2].hasError).toBe(false);
+            expect(elements[2].errorKey).toBeUndefined();
+        });
+
+        it('should construct elements with all options provided', () =>
+        {
+            const config = new FormConfiguration({
+                title: {
+                    inputType: InputType.inputText,
+                    value: 'default-title',
+                    labelKey: 'todo.field.title.label',
+                },
+                description: {
+                    inputType: InputType.inputTextarea,
+                    value: 'default-desc',
+                    labelKey: 'todo.field.description.label',
+                },
+                createDate: {
+                    inputType: InputType.inputDateTime,
+                },
+            });
+
+            const result = config.toData({
+                values: {
+                    title: 'override-title',
+                    createDate: new Date('2024-02-20T14:00:00'),
+                },
+                errors: {
+                    title: 'todo.field.title.errors.empty',
+                    description: 'entity.field.required',
+                },
+            });
+
+            const elements = result.elements!;
+
+            expect(elements[0].name).toBe('title');
+            expect(elements[0].value).toBe('override-title');
+            expect(elements[0].hasError).toBe(true);
+            expect(elements[0].errorKey).toBe('todo.field.title.errors.empty');
+
+            expect(elements[1].name).toBe('description');
+            expect(elements[1].value).toBe('default-desc');
+            expect(elements[1].hasError).toBe(true);
+            expect(elements[1].errorKey).toBe('entity.field.required');
+
+            expect(elements[2].name).toBe('createDate');
+            expect(elements[2].value).toEqual(new Date('2024-02-20T14:00:00'));
+            expect(elements[2].hasError).toBe(false);
+            expect(elements[2].errorKey).toBeUndefined();
         });
     });
 });
+

@@ -9,7 +9,7 @@ import { ValidationMessage } from '@client/infrastructure-validation';
 import type { OptionalUndefined } from '@client/shared';
 import type { EntitySchemeFieldConfigurators, EntityFieldConfiguratorInput, EntityFieldConfiguratorOutput } from '../types/entitySchemeFieldConfigurators';
 
-export class EntityScheme<TInput extends object, TOutput extends Record<string, any>>
+export class EntityScheme<TInput extends object, TOutput extends Record<string, any> = TInput>
 {
     private constructor(
         public readonly fields: EntitySchemeFields<TOutput>

@@ -1,14 +1,14 @@
 import type { ObservableViewmodelState } from '@client/ui-core';
-import type { FormViewmodelState } from '../types/formViewmodelState';
 import { FormDataContext } from './formDataContext';
-import type { FormElement } from './formElement';
+import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
+import type { FormState } from '../types/formState';
 
 
 export class FormDataContextBase<TEntity extends Record<string, any>> extends FormDataContext<TEntity>
 {
     constructor(
-        private elements: FormElement[],
-        private state: ObservableViewmodelState<FormViewmodelState<TEntity>>
+        private elements: FormElementViewmodel[],
+        private state: ObservableViewmodelState<FormState>
     )
     {
         super();
@@ -41,7 +41,8 @@ export class FormDataContextBase<TEntity extends Record<string, any>> extends Fo
             }
         }
 
-        const newData = this.getData();
-        this.state.update({ data: newData });
+        this.state.update({
+            elements: this.elements.map(x => x.state.value)
+        });
     }
 }

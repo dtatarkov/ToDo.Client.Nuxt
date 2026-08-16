@@ -1,15 +1,15 @@
 import type { ObservableViewmodelState } from '@client/ui-core';
 import { FormDisabledException } from '../exceptions/formDisabledException';
-import type { FormViewmodelState } from '../types/formViewmodelState';
-import type { FormElement } from './formElement';
+import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
 import { FormLock } from './formLock';
+import type { FormState } from '../types/formState';
 
 
-export class FormLockBase<TEntity extends Record<string, any>> extends FormLock
+export class FormLockBase extends FormLock
 {
     constructor(
-        private elements: FormElement[],
-        private state: ObservableViewmodelState<FormViewmodelState<TEntity>>
+        private elements: FormElementViewmodel[],
+        private state: ObservableViewmodelState<FormState>
     )
     {
         super();

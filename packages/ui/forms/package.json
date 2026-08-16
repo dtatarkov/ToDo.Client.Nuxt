@@ -16,6 +16,7 @@
     "@client/infrastructure-eslint": "workspace:*",
     "@client/infrastructure-di": "workspace:*",
     "@client/infrastructure-messages": "workspace:*",
+    "@client/infrastructure-entity-schemes": "workspace:*",
     "@client/shared": "workspace:*"
   }
 }

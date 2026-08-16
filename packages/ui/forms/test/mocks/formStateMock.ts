@@ -1,25 +1,20 @@
-import { vi } from 'vitest';
-import type { FormViewmodelState } from '../../src/types/formViewmodelState';
 import { ObservableViewmodelState } from '@client/ui-core';
+import type { FormState } from '../../src/types/formState';
+import type { FormElementState } from '../../src/types/formElementState';
+import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 
-export function createFormStateMock(initialState: Partial<FormViewmodelState<any>> = {}): ObservableViewmodelState<FormViewmodelState<any>>
+export function createFormStateMock(initialState: Partial<FormState> = {}): ObservableViewmodelState<FormState>
 {
-    const state: FormViewmodelState<any> = {
-        elements: {},
-        data: {},
-        errors: {},
+    const state: FormState = {
+        elements: new Array<FormElementState>(),
         isDisabled: false,
 
         ...initialState,
     };
 
-    return {
-        value: state,
-        on: vi.fn(),
-        update: vi.fn(),
-        toReadonly: vi.fn(),
-        [Symbol.dispose]: vi.fn(),
-    } satisfies ObservableViewmodelState<FormViewmodelState<any>>;
+    const mock = createObservableViewmodelStateMock(state);
+
+    return mock;
 }
 
 export const formStateMock = createFormStateMock();

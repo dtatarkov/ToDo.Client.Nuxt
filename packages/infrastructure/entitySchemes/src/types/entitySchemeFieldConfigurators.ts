@@ -1,6 +1,6 @@
 import type { EntityFieldSchemeConfigurator } from '../entities/entityFieldSchemeConfigurator';
 
-export type EntitySchemeFieldConfigurators<TInput extends Record<string, any>, TOutput extends Record<string, any>> = {
+export type EntitySchemeFieldConfigurators<TInput extends Record<string, any>, TOutput extends Record<string, any> = TInput> = {
     [K in keyof TInput]: EntityFieldSchemeConfigurator<TInput[K], TOutput extends Record<string, any> ? TOutput[K & keyof TOutput] : never>;
 };
 

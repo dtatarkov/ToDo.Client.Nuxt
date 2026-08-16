@@ -1,12 +1,11 @@
-import { InputTimeViewmodel } from './inputTimeViewmodel';
 import type { InputTimeData } from '../types/inputTimeData';
-import type { InputTimeState } from '../types/InputTimeState';
 import { InputViewmodelImpl } from './inputViewmodelImpl';
-import type { EntityScheme } from '@client/infrastructure-entity-schemes';
+import { InputType } from '../enums/inputType';
+import type { InputTimeViewmodel } from './inputTimeViewmodel';
 
-export class InputTimeViewmodelImpl extends InputViewmodelImpl<number | undefined, InputTimeData, InputTimeState> implements InputTimeViewmodel
+export class InputTimeViewmodelImpl extends InputViewmodelImpl<number | undefined, InputTimeData> implements InputTimeViewmodel
 {
-    protected createScheme(): EntityScheme<InputTimeData, InputTimeState>
+    protected createScheme()
     {
         return this.withBaseScheme((scheme) => ({
             value: scheme.number(),
@@ -22,5 +21,10 @@ export class InputTimeViewmodelImpl extends InputViewmodelImpl<number | undefine
     protected getDefaultValue(): number | undefined
     {
         return undefined;
+    }
+
+    protected getType(): InputType
+    {
+        return InputType.inputTime;
     }
 }

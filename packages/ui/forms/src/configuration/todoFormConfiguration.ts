@@ -1,24 +1,24 @@
 import type { ToDoData } from '@client/domain-todo';
 import { FormConfiguration } from './formConfiguration';
-import { FormElementType } from '../enums/formElementType';
+import { InputType } from '@client/ui-uikit';
 
 export const todoFormConfiguration = new FormConfiguration<
     Omit<ToDoData, 'id' | 'completionDateActual'>
 >({
     title: {
-        type: FormElementType.inputText,
+        inputType: InputType.inputText,
         labelKey: 'todo.field.title.label',
         placeholderKey: 'todo.field.title.placeholder',
     },
 
     description: {
-        type: FormElementType.inputTextarea,
+        inputType: InputType.inputTextarea,
         labelKey: 'todo.field.description.label',
         placeholderKey: 'todo.field.description.placeholder',
     },
 
     completionDatePlanned: {
-        type: FormElementType.inputDateTime,
+        inputType: InputType.inputDateTime,
         labelKey: 'todo.field.completionDatePlanned.label',
     },
 });

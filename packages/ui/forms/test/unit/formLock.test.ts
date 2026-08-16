@@ -1,13 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { FormLockBase } from '../../src/entities/formLockBase';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
-import type { FormViewmodelState } from '../../src/types/formViewmodelState';
-import { createFormElementMock } from '../mocks/formElementMock';
 import { createFormStateMock } from '../mocks/formStateMock';
-import type { FormElement } from '../../src/entities/formElement';
 import type { ObservableViewmodelState } from '@client/ui-core';
+import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
+import { createFormElementViewmodelMock } from '../mocks/formElementViewmodelMock';
+import { InputType } from '@client/ui-uikit';
+import type { FormState } from '../../src';
 
-function setupFormLock(elements: FormElement[], state: ObservableViewmodelState<FormViewmodelState<any>>): FormLockBase<any>
+function setupFormLock(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormState>): FormLockBase
 {
     return new FormLockBase(elements, state);
 }
@@ -38,8 +39,8 @@ describe('FormLock', () =>
         it('should enable all elements', () =>
         {
             const elements = [
-                createFormElementMock('title', 'Initial Title'),
-                createFormElementMock('description', 'Initial Description'),
+                createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'Initial Title' }),
+                createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'Initial Description' }),
             ];
 
             const state = createFormStateMock({ isDisabled: true });
@@ -68,8 +69,8 @@ describe('FormLock', () =>
         it('should be idempotent when already enabled', () =>
         {
             const elements = [
-                createFormElementMock('title', 'Initial Title'),
-                createFormElementMock('description', 'Initial Description'),
+                createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'Initial Title' }),
+                createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'Initial Description' }),
             ];
 
             const state = createFormStateMock({ isDisabled: false });
@@ -91,8 +92,8 @@ describe('FormLock', () =>
         it('should disable all elements', () =>
         {
             const elements = [
-                createFormElementMock('title', 'Initial Title'),
-                createFormElementMock('description', 'Initial Description'),
+                createFormElementViewmodelMock('title', { inputType: InputType.inputText, value: 'Initial Title' }),
+                createFormElementViewmodelMock('description', { inputType: InputType.inputText, value: 'Initial Description' }),
             ];
 
             const state = createFormStateMock({ isDisabled: false });

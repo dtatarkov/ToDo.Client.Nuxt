@@ -1,4 +1,3 @@
-import type { DisposeToken } from '@client/shared';
 import type { InputDateViewmodel } from '../viewmodels/inputDateViewmodel';
 import type { InputDatetimeViewmodel } from '../viewmodels/inputDatetimeViewmodel';
 import type { InputTextareaViewmodel } from '../viewmodels/inputTextareaViewmodel';
@@ -12,48 +11,84 @@ import { InputTextViewmodelImpl } from '../viewmodels/inputTextViewmodelImpl';
 import { InputTextareaViewmodelImpl } from '../viewmodels/inputTextareaViewmodelImpl';
 import { InputTimeViewmodelImpl } from '../viewmodels/inputTimeViewmodelImpl';
 import { InfoBlockViewmodelImpl } from '../viewmodels/infoBlockViewmodelImpl';
+import { InputType } from '../enums/inputType';
+import type { InputViewmodel } from '../viewmodels/inputViewmodel';
+import { UnknownInputTypeException } from '../exceptions/unknownInputTypeException';
 
 export class UIKitViewmodelsFactoryImpl extends UIKitViewmodelsFactory
 {
-    override createInputText(disposeToken?: DisposeToken): InputTextViewmodel
+    override createInputText(): InputTextViewmodel
     {
-        const vm = this.withToken(new InputTextViewmodelImpl(), disposeToken);
+        const vm = new InputTextViewmodelImpl();
+
         return vm;
     }
 
-    override createTextarea(disposeToken?: DisposeToken): InputTextareaViewmodel
+    override createTextarea(): InputTextareaViewmodel
     {
-        const vm = this.withToken(new InputTextareaViewmodelImpl(), disposeToken);
+        const vm = new InputTextareaViewmodelImpl();
+
         return vm;
     }
 
-    override createInputDate(disposeToken?: DisposeToken): InputDateViewmodel
+    override createInputDate(): InputDateViewmodel
     {
-        const vm = this.withToken(new InputDateViewmodelImpl(), disposeToken);
+        const vm = new InputDateViewmodelImpl();
+
         return vm;
     }
 
-    override createInputTime(disposeToken?: DisposeToken): InputTimeViewmodel
+    override createInputTime(): InputTimeViewmodel
     {
-        const vm = this.withToken(new InputTimeViewmodelImpl(), disposeToken);
+        const vm = new InputTimeViewmodelImpl();
+
         return vm;
     }
 
-    override createInputDateTime(disposeToken?: DisposeToken): InputDatetimeViewmodel
+    override createInputDateTime(): InputDatetimeViewmodel
     {
-        const vm = this.withToken(new InputDatetimeViewmodelImpl(), disposeToken);
+        const vm = new InputDatetimeViewmodelImpl();
+
         return vm;
     }
 
-    override createInfoBlock(disposeToken?: DisposeToken): InfoBlockViewmodel
+    override createInput(type: InputType): InputViewmodel<any>
     {
-        const vm = this.withToken(new InfoBlockViewmodelImpl(), disposeToken);
-        return vm;
+        let inputElement: InputViewmodel<any>;
+
+        switch (type)
+        {
+            case InputType.inputText:
+                inputElement = this.createInputText();
+                break;
+
+            case InputType.inputTextarea:
+                inputElement = this.createTextarea();
+                break;
+
+            case InputType.inputDate:
+                inputElement = this.createInputDate();
+                break;
+
+            case InputType.inputTime:
+                inputElement = this.createInputTime();
+                break;
+
+            case InputType.inputDateTime:
+                inputElement = this.createInputDateTime();
+                break;
+
+            default:
+                throw new UnknownInputTypeException(type as InputType);
+        }
+
+        return inputElement;
     }
 
-    private withToken<T extends Disposable>(instance: T, disposeToken?: DisposeToken): T
+    override createInfoBlock(): InfoBlockViewmodel
     {
-        disposeToken?.registerDisposable(instance);
-        return instance;
+        const vm = new InfoBlockViewmodelImpl();
+
+        return vm;
     }
 }

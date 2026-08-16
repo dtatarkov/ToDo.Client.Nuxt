@@ -1,10 +1,7 @@
-import type { InputTextData, InputTextareaData, InputDateData, InputTimeData, InputDateTimeData } from '@client/ui-uikit';
-import type { FormElementType } from '../enums/formElementType';
-import type { FormElementGenericCreateData } from './formElementGenericCreateData';
+import type { FormElementData } from './formElementData';
 
-export type FormElementCreateData =
-    | FormElementGenericCreateData<InputTextData, FormElementType.inputText, string>
-    | FormElementGenericCreateData<InputTextareaData, FormElementType.inputTextarea, string>
-    | FormElementGenericCreateData<InputDateData, FormElementType.inputDate, Date | undefined>
-    | FormElementGenericCreateData<InputTimeData, FormElementType.inputTime, number | undefined>
-    | FormElementGenericCreateData<InputDateTimeData, FormElementType.inputDateTime, Date | undefined>;
+type AsCreateData<T> = T extends { name?: infer _, hasError: infer _; errorKey: infer _; }
+    ? Omit<T, 'name' | 'hasError' | 'errorKey'>
+    : T;
+
+export type FormElementCreateData = AsCreateData<FormElementData>;
