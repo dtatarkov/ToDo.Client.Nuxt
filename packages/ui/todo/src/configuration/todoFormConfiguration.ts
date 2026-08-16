@@ -1,6 +1,6 @@
 import type { ToDoData } from '@client/domain-todo';
-import { FormConfiguration } from './formConfiguration';
 import { InputType } from '@client/ui-uikit';
+import { FormConfiguration } from '@client/ui-forms';
 
 export const todoFormConfiguration = new FormConfiguration<
     Omit<ToDoData, 'id' | 'completionDateActual'>

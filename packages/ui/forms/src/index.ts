@@ -9,8 +9,6 @@ export { FormConfiguration } from './configuration/formConfiguration';
 export { FormViewmodel } from './viewmodels/formViewmodel';
 export { FormViewmodelImpl } from './viewmodels/formViewmodelImpl';
 
-export { todoFormConfiguration } from './configuration/todoFormConfiguration';
-
 export { FormElementViewmodelsFactory } from './factories/formElementViewmodelsFactory';
 export { FormElementViewmodelsFactoryImpl } from './factories/formElementViewmodelsFactoryImpl';
 export { FormViewmodelFactory } from './factories/formViewmodelFactory';

@@ -580,6 +580,9 @@ importers:
       '@client/ui-core':
         specifier: workspace:*
         version: link:../core
+      '@client/ui-forms':
+        specifier: workspace:*
+        version: link:../forms
       '@client/ui-uikit':
         specifier: workspace:*
         version: link:../uikit

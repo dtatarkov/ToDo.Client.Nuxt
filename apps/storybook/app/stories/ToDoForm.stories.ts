@@ -1,6 +1,6 @@
 import { VForm } from '@client/ui-vue';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { todoFormConfiguration } from '@client/ui-forms';
+import { todoFormConfiguration } from '@client/ui-todo';
 
 const meta: Meta<typeof VForm> = {
     title: 'ToDo/ToDoForm',
