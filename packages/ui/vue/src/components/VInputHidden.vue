@@ -13,6 +13,6 @@ defineOptions({
   inheritAttrs: false
 });
 
-const props = defineProps<InputHiddenData>();
+const props = defineProps<Partial<InputHiddenData>>();
 const valueModel = defineModel<any>('value', { default: undefined });
 </script>

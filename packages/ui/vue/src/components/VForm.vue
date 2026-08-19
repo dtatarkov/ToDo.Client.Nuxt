@@ -14,7 +14,7 @@ type Emits = {
   (e: 'submit'): void;
 }
 
-const props = withDefaults(defineProps<FormData>(), { 
+const props = withDefaults(defineProps<Partial<FormData>>(), { 
   elements: () => new Array<FormElementData>(),
   isDisabled: false,
 });

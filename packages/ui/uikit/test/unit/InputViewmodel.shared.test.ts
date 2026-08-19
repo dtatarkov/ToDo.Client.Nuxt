@@ -120,7 +120,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
         it('should match state name', () =>
         {
             const targetName = 'matched-name';
-            const data: InputData = { name: targetName };
+            const data: Partial<InputData> = { name: targetName };
 
             viewmodel.setData(data);
 
@@ -149,7 +149,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
     {
         it('should update state with provided data', () =>
         {
-            const data: InputData = {
+            const data: Partial<InputData> = {
                 name: 'test-input',
             };
 
@@ -162,7 +162,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
         {
             viewmodel.value = testData.initialValue;
 
-            const data: InputData = {
+            const data: Partial<InputData> = {
                 name: 'test-input',
             };
 
@@ -176,7 +176,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
         {
             viewmodel.disable();
 
-            const data: InputData = {
+            const data: Partial<InputData> = {
                 name: 'test-input',
             };
 
@@ -197,7 +197,7 @@ describe.each(testCases)('$label', ({ ViewmodelClass, testData }) =>
 
         it('should preserve data when setting value', () =>
         {
-            const data: InputData = {
+            const data: Partial<InputData> = {
                 name: 'test-input',
             };
 

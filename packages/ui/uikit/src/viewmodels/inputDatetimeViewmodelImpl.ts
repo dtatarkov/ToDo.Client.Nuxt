@@ -12,11 +12,6 @@ export class InputDatetimeViewmodelImpl extends InputViewmodelImpl<Date | undefi
         }));
     }
 
-    protected getInitialData(): InputDateData
-    {
-        return {};
-    }
-
     protected getDefaultValue(): Date | undefined
     {
         return undefined;

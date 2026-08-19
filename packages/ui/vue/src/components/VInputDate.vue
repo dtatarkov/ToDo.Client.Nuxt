@@ -28,7 +28,7 @@ defineOptions({
 const dateMapper = useService(ZonedDateTimeMapper);
 const optionalDateMapper = new OptionalValueMapper(dateMapper);
 
-const props = defineProps<InputDateData>();
+const props = defineProps<Partial<InputDateData>>();
 const valueModel = defineModel<Date>('value');
 
 const { color, shouldHighlight } = useInputData(props);

@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { FormElementViewmodelImpl } from '../../src/viewmodels/formElementViewmodelImpl';
 import { createInputViewmodelMock } from '@client/ui-uikit/mocks';
-import { InputType, type InputState } from '@client/ui-uikit';
+import { InputType, type InputData } from '@client/ui-uikit';
 
-function setupViewmodels(state: InputState)
+function setupViewmodels(state: InputData<string>)
 {
     const inputViewmodelMock = createInputViewmodelMock(state);
     const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodelMock);
@@ -16,7 +16,7 @@ describe('constructor', () =>
     it('should create initial state with input vm state and undefined labelKey/errorKey', () =>
     {
         const { formElementViewmodel } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'title',
             name: 'title',
             value: 'initial-value',
             isDisabled: false,
@@ -28,6 +28,7 @@ describe('constructor', () =>
             labelKey: undefined,
             errorKey: undefined,
             inputType: InputType.inputText,
+            id: 'title',
             name: 'title',
             value: 'initial-value',
             isDisabled: false,
@@ -42,7 +43,7 @@ describe('properties', () =>
     it('name getter should return input vm name', () =>
     {
         const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'test-field',
             name: 'test-field',
             value: 'test-value',
             isDisabled: false,
@@ -57,7 +58,7 @@ describe('properties', () =>
     it('value getter should return input vm value', () =>
     {
         const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'test-field',
             name: 'test-field',
             value: 'test-value',
             isDisabled: false,
@@ -72,7 +73,7 @@ describe('properties', () =>
     it('value setter should call input vm value setter and update vm state', () =>
     {
         const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'test-field',
             name: 'test-field',
             value: 'test-value',
             isDisabled: false,
@@ -92,7 +93,7 @@ describe('disable', () =>
     it('should call input vm disable method and update vm state', () =>
     {
         const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'field',
             name: 'field',
             value: 'value',
             isDisabled: false,
@@ -117,7 +118,7 @@ describe('enable', () =>
     it('should call input vm enable method and update vm state', () =>
     {
         const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'field',
             name: 'field',
             value: 'value',
             isDisabled: false,
@@ -142,7 +143,7 @@ describe('setDefaultValue', () =>
     it('should call input vm setDefaultValue method and update vm state', () =>
     {
         const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'field',
             name: 'field',
             value: 'value',
             isDisabled: false,
@@ -161,7 +162,7 @@ describe('dispose', () =>
     it('should dispose input vm on dispose', () =>
     {
         const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-            inputType: InputType.inputText,
+            id: 'title',
             name: 'title',
             value: 'initial-value',
             isDisabled: false,

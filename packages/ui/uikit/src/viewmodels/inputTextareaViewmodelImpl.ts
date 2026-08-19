@@ -14,11 +14,6 @@ export class InputTextareaViewmodelImpl extends InputViewmodelImpl<string, Input
         }));
     }
 
-    protected getInitialData(): InputTextareaData
-    {
-        return {};
-    }
-
     protected getDefaultValue(): string
     {
         return '';

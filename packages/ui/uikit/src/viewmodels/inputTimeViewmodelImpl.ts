@@ -13,11 +13,6 @@ export class InputTimeViewmodelImpl extends InputViewmodelImpl<number | undefine
         }));
     }
 
-    protected getInitialData(): InputTimeData
-    {
-        return {};
-    }
-
     protected getDefaultValue(): number | undefined
     {
         return undefined;

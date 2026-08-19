@@ -42,7 +42,7 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
         public readonly scheme?: EntityScheme<any, TEntity>
     ) { }
 
-    toData(options?: FormConfigurationToDataOptions<TEntity>): FormData
+    toData(options?: FormConfigurationToDataOptions<TEntity>): Partial<FormData>
     {
         const elements = Object.entries(this.elements).map(([name, data]) =>
         {

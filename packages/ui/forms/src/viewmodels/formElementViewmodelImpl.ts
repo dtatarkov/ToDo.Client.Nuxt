@@ -3,13 +3,11 @@ import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 import type { InputType, InputViewmodel } from '@client/ui-uikit';
 import { messageKeyValues } from '@client/infrastructure-messages';
 import { EntityData } from '@client/infrastructure-entity-schemes';
-import type { EntityFieldScheme } from '@client/infrastructure-entity-schemes';
-import type { FormElementStateForType } from '../types/formElementStateForType';
 import type { FormElementValue } from '../types/formElementValue';
+import type { FormElementDataChanges } from '../types/formElementDataChanges';
 import type { FormElementDataForType } from '../types/formElementDataForType';
-import type { FormElementData } from '../types/formElementData';
 
-export class FormElementViewmodelImpl<TType extends InputType> extends ViewmodelBase<FormElementStateForType<TType>> implements FormElementViewmodel<TType>
+export class FormElementViewmodelImpl<TType extends InputType> extends ViewmodelBase<FormElementDataForType<TType>> implements FormElementViewmodel<TType>
 {
     private data = EntityData.create({}, scheme =>
     ({
@@ -17,16 +15,18 @@ export class FormElementViewmodelImpl<TType extends InputType> extends Viewmodel
         errorKey: scheme.enum(messageKeyValues),
     }));
 
-    state: ObservableViewmodelStateBase<FormElementData, FormElementStateForType<TType>>;
+
+    state: ObservableViewmodelStateBase<FormElementDataForType<TType>, FormElementDataForType<TType>>;
 
     constructor(
         private inputViewmodel: InputViewmodel<FormElementValue<TType>, any>,
-        private fieldScheme?: EntityFieldScheme<any>,
+        private fieldScheme?: any,
     )
     {
         super();
 
-        this.state = new ObservableViewmodelStateBase({
+        this.state = new ObservableViewmodelStateBase<FormElementDataForType<TType>, FormElementDataForType<TType>>({
+            inputType: this.inputViewmodel.inputType,
             ...this.data.value,
             ...inputViewmodel.state.value,
         });
@@ -68,7 +68,7 @@ export class FormElementViewmodelImpl<TType extends InputType> extends Viewmodel
         this.updateStateFromInput();
     }
 
-    setData(data: FormElementDataForType<TType>): void
+    setData(data: FormElementDataChanges): void
     {
         this.data.update(data);
         this.updateStateFromData();
@@ -108,6 +108,6 @@ export class FormElementViewmodelImpl<TType extends InputType> extends Viewmodel
 
     private updateStateFromData()
     {
-        this.state.update({ ...this.data.value });
+        this.state.update({ ...this.data.value } as FormElementDataForType<TType>);
     }
 }

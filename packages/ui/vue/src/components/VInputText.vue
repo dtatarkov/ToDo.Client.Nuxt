@@ -23,7 +23,7 @@ defineOptions({
 
 const { getMessage } = useMessages();
 
-const props = defineProps<InputTextData>();
+const props = defineProps<Partial<InputTextData>>();
 const valueModel = defineModel<string>('value', { default: '' });
 
 const { color, shouldHighlight } = useInputData(props);

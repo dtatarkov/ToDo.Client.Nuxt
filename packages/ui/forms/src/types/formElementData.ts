@@ -8,7 +8,7 @@ export type FormElementDataBase = {
 };
 
 export type FormElementDataVariant<TType extends InputType, TData extends InputData> =
-    FormElementDataBase & TData & { inputType: TType; };
+    FormElementDataBase & TData & { readonly inputType: TType; };
 
 export type FormElementData =
     | FormElementDataVariant<InputType.inputText, InputTextData>

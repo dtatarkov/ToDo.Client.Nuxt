@@ -14,9 +14,9 @@ import type { FormDataContext } from '../entities/formDataContext';
 import type { FormEvents } from '../entities/formEvents';
 import type { FormLock } from '../entities/formLock';
 import type { FormValidator } from '../entities/formValidator';
-import type { FormState } from '../types/formState';
+import type { FormData } from '../types/formData';
 
-export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormState> implements FormViewmodel<TEntity>
+export class FormViewmodelImpl<TEntity extends Record<string, any>> extends ViewmodelBase<FormData> implements FormViewmodel<TEntity>
 {
     private submitCommand: AsyncCommand;
     private formDataContext: FormDataContext<TEntity>;
@@ -24,7 +24,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
     private formValidator: FormValidator<TEntity>;
     private formEvents: FormEvents<TEntity>;
 
-    state: ObservableViewmodelState<FormState>;
+    state: ObservableViewmodelState<FormData>;
 
     constructor(
         private elementViewmodels: FormElementViewmodel<any>[],
@@ -34,7 +34,7 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
     {
         super();
 
-        this.state = new ObservableViewmodelStateBase<FormState>({
+        this.state = new ObservableViewmodelStateBase<FormData>({
             elements: [],
             isDisabled: false,
         });

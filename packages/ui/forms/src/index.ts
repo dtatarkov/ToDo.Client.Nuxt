@@ -1,7 +1,7 @@
 export type { FormElementData } from './types/formElementData';
+export type { FormElementDataChanges } from './types/formElementDataChanges';
 export type { FormHandlers } from './types/formHandlers';
 export type { FormData } from './types/formData';
-export type { FormState } from './types/formState';
 export type { FormValidationMessages } from './types/formValidationMessages';
 
 export { FormConfiguration, type FormConfigurationElements } from './configuration/formConfiguration';

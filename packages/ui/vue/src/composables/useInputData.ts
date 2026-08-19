@@ -1,7 +1,7 @@
 import type { Color } from '@client/ui-core';
 import { computed, type Reactive } from 'vue';
 import type { InputData } from '../../../uikit/src/types/inputData';
-export function useInputData(data: Reactive<InputData>)
+export function useInputData(data: Reactive<Partial<InputData>>)
 {
     const hasError = computed(() => data.hasError ?? false);
 

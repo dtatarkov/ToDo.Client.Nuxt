@@ -1,7 +1,7 @@
 import type { FormElementData } from './formElementData';
 
-type AsCreateData<T> = T extends { name?: infer _, hasError: infer _; errorKey: infer _; }
+type AsCreateData<T> = T extends { name: infer _, hasError: infer _; errorKey?: infer _; }
     ? Omit<T, 'name' | 'hasError' | 'errorKey'>
-    : T;
+    : never;
 
-export type FormElementCreateData = AsCreateData<FormElementData>;
+export type FormElementCreateData = Partial<AsCreateData<FormElementData>> & Pick<AsCreateData<FormElementData>, 'inputType'>;

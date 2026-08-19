@@ -31,7 +31,7 @@ defineOptions({
   inheritAttrs: false
 });
 
-const props = defineProps<InputDateTimeData>();
+const props = defineProps<Partial<InputDateTimeData>>();
 const valueModel = defineModel<Date>('value');
 
 const date = shallowRef<Date>();

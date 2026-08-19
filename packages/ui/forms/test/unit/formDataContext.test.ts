@@ -1,12 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { FormDataContextBase } from '../../src/entities/formDataContextBase';
 import { createFormElementViewmodelMock } from '../mocks/formElementViewmodelMock';
-import { formStateMock } from '../mocks/formStateMock';
+import { formDataMock } from '../mocks/formDataMock';
 import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
 
-function setupFormDataContext(elements: FormElementViewmodel[]): FormDataContextBase<any>
+function setupFormDataContext(elements: readonly FormElementViewmodel[]): FormDataContextBase<any>
 {
-    return new FormDataContextBase(elements, formStateMock);
+    return new FormDataContextBase(elements, formDataMock);
 }
 
 describe('getData', () =>
@@ -40,7 +40,7 @@ describe('getData', () =>
         const elements = [
             createFormElementViewmodelMock('title', { value: 'Initial Title' }),
             createFormElementViewmodelMock('description', { value: 'Initial Description' }),
-        ];
+        ] as const;
 
         const formDataContext = setupFormDataContext(elements);
 
@@ -93,7 +93,7 @@ describe('setData', () =>
             description: 'New Description'
         });
 
-        expect(formStateMock.update).toBeCalledWith(expect.objectContaining({
+        expect(formDataMock.update).toBeCalledWith(expect.objectContaining({
             elements: [
                 expect.objectContaining({ name: 'title' }),
                 expect.objectContaining({ name: 'description' })

@@ -5,13 +5,6 @@ export type { InputTimeData } from './types/inputTimeData';
 export type { InputDateData } from './types/inputDateData';
 export type { InputDateTimeData } from './types/inputDateTimeData';
 export type { InputHiddenData } from './types/inputHiddenData';
-export type { InputState } from './types/inputState';
-export type { InputDateState } from './types/inputDateState';
-export type { InputDatetimeState } from './types/inputDatetimeState';
-export type { InputTextState } from './types/inputTextState';
-export type { InputTimeState } from './types/inputTimeState';
-export type { InputTextareaState } from './types/inputTextareaState';
-export type { InputHiddenState } from './types/inputHiddenState';
 
 export { InputType, inputTypeValues } from './enums/inputType';
 
@@ -25,8 +18,6 @@ export { InputTimeViewmodel } from './viewmodels/inputTimeViewmodel';
 export { InputTextareaViewmodel } from './viewmodels/inputTextareaViewmodel';
 export { InputHiddenViewmodel } from './viewmodels/inputHiddenViewmodel';
 export { InputHiddenViewmodelImpl } from './viewmodels/inputHiddenViewmodelImpl';
-
-export { InputElement } from './entities/inputElements/inputElement';
 
 export { UIKitViewmodelsFactory } from './factories/uiKitViewmodelsFactory';
 export { UIKitViewmodelsFactoryImpl } from './factories/uiKitViewmodelsFactoryImpl';

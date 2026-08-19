@@ -2,12 +2,11 @@ import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewm
 import { vi } from 'vitest';
 import { InputType } from '@client/ui-uikit';
 import type { FormElementDataForType } from '../../src/types/formElementDataForType';
-import type { FormElementStateForType } from '../../src/types/formElementStateForType';
 import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 
 export function createFormElementViewmodelMock(
     name: string,
-    data: Omit<FormElementDataForType<InputType.inputText>, 'inputType'>
+    data: Partial<Omit<FormElementDataForType<InputType.inputText>, 'inputType'>>
 )
 {
     const value = data.value ?? '';
@@ -15,14 +14,16 @@ export function createFormElementViewmodelMock(
     const mock = {
         name,
         value,
+        inputType: InputType.inputText,
 
-        state: createObservableViewmodelStateMock<FormElementStateForType<InputType.inputText>>({
+        state: createObservableViewmodelStateMock<FormElementDataForType<InputType.inputText>>({
+            id: '',
             hasAutofocus: false,
             isDisabled: false,
+            inputType: InputType.inputText,
 
             ...data,
 
-            inputType: InputType.inputText,
             name,
             hasError: false,
             value,

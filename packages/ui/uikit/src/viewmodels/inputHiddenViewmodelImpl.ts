@@ -12,11 +12,6 @@ export class InputHiddenViewmodelImpl extends InputViewmodelImpl<any, InputHidde
         }));
     }
 
-    protected getInitialData(): InputHiddenData
-    {
-        return {};
-    }
-
     protected getDefaultValue(): any
     {
         return undefined;

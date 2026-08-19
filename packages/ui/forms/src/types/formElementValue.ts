@@ -1,7 +1,7 @@
-import type { FormElementState } from './formElementState';
+import type { FormElementData } from './formElementData';
 import type { InputType } from '@client/ui-uikit';
 
 export type FormElementValue<TType extends InputType> =
-    Extract<FormElementState, { inputType: TType }> extends { value: infer V }
+    Extract<FormElementData, { inputType: TType }> extends { value: infer V }
         ? V
         : never;

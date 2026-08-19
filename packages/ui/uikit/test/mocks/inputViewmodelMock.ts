@@ -2,14 +2,15 @@ import { vi } from 'vitest';
 import { ObservableViewmodelStateBase } from '@client/ui-core';
 import type { InputViewmodel } from '../../src/viewmodels/inputViewmodel';
 import type { InputData } from '../../src/types/inputData';
-import type { InputState } from '../../src/types/inputState';
+import { InputType } from '../../src/enums/inputType';
 
-export function createInputViewmodelMock<V = any>(state: InputState<V, InputData<V>>)
+export function createInputViewmodelMock(state: InputData<string>)
 {
-    const observableState = new ObservableViewmodelStateBase<InputState<V, InputData<V>>>(state);
+    const observableState = new ObservableViewmodelStateBase<InputData<string>>(state);
 
     return {
         state: observableState,
+        inputType: InputType.inputText,
         name: state.name,
         isDisabled: state.isDisabled,
         hasError: state.hasError,
@@ -21,5 +22,5 @@ export function createInputViewmodelMock<V = any>(state: InputState<V, InputData
         toErrorMode: vi.fn(),
         toDefaultMode: vi.fn(),
         [Symbol.dispose]: vi.fn(),
-    } satisfies InputViewmodel<V>;
+    } satisfies InputViewmodel<string>;
 }

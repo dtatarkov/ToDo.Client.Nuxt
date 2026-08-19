@@ -29,7 +29,7 @@ defineOptions({
 const timeMapper = useService(TimeMapper);
 const optionalTimeMapper = new OptionalValueMapper(timeMapper);
 
-const props = defineProps<InputTimeData>();
+const props = defineProps<Partial<InputTimeData>>();
 const valueModel = defineModel<number>('value');
 
 const { color, shouldHighlight } = useInputData(props);

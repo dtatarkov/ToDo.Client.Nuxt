@@ -1,13 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { FormLockBase } from '../../src/entities/formLockBase';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
-import { createFormStateMock } from '../mocks/formStateMock';
+import { createFormDataMock } from '../mocks/formDataMock';
 import type { ObservableViewmodelState } from '@client/ui-core';
 import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
 import { createFormElementViewmodelMock } from '../mocks/formElementViewmodelMock';
-import type { FormState } from '../../src';
+import type { FormData } from '../../src';
 
-function setupFormLock(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormState>): FormLockBase
+function setupFormLock(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormData>): FormLockBase
 {
     return new FormLockBase(elements, state);
 }
@@ -16,7 +16,7 @@ describe('isDisabled', () =>
 {
     it('should return false when form is enabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: false });
+        const state = createFormDataMock({ isDisabled: false });
         const formLock = setupFormLock([], state);
 
         expect(formLock.isDisabled()).toBe(false);
@@ -24,7 +24,7 @@ describe('isDisabled', () =>
 
     it('should return true when form is disabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: true });
+        const state = createFormDataMock({ isDisabled: true });
         const formLock = setupFormLock([], state);
 
         expect(formLock.isDisabled()).toBe(true);
@@ -40,7 +40,7 @@ describe('enable', () =>
             createFormElementViewmodelMock('description', { value: 'Initial Description' }),
         ];
 
-        const state = createFormStateMock({ isDisabled: true });
+        const state = createFormDataMock({ isDisabled: true });
         const formLock = setupFormLock(elements, state);
 
         formLock.enable();
@@ -53,7 +53,7 @@ describe('enable', () =>
 
     it('should update state to enabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: true });
+        const state = createFormDataMock({ isDisabled: true });
         const formLock = setupFormLock([], state);
 
         formLock.enable();
@@ -70,7 +70,7 @@ describe('enable', () =>
             createFormElementViewmodelMock('description', { value: 'Initial Description' }),
         ];
 
-        const state = createFormStateMock({ isDisabled: false });
+        const state = createFormDataMock({ isDisabled: false });
         const formLock = setupFormLock(elements, state);
 
         formLock.enable();
@@ -93,7 +93,7 @@ describe('disable', () =>
             createFormElementViewmodelMock('description', { value: 'Initial Description' }),
         ];
 
-        const state = createFormStateMock({ isDisabled: false });
+        const state = createFormDataMock({ isDisabled: false });
         const formLock = setupFormLock(elements, state);
 
         formLock.disable();
@@ -106,7 +106,7 @@ describe('disable', () =>
 
     it('should update state to disabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: false });
+        const state = createFormDataMock({ isDisabled: false });
         const formLock = setupFormLock([], state);
 
         formLock.disable();
@@ -118,7 +118,7 @@ describe('disable', () =>
 
     it('should throw error when already disabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: true });
+        const state = createFormDataMock({ isDisabled: true });
         const formLock = setupFormLock([], state);
 
         expect(() => formLock.disable()).toThrow(FormDisabledException);
@@ -129,7 +129,7 @@ describe('assertNotDisabled', () =>
 {
     it('should not throw when form is enabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: false });
+        const state = createFormDataMock({ isDisabled: false });
         const formLock = setupFormLock([], state);
 
         expect(() => formLock.assertNotDisabled()).not.toThrow();
@@ -137,7 +137,7 @@ describe('assertNotDisabled', () =>
 
     it('should throw FormDisabledException when form is disabled', () =>
     {
-        const state = createFormStateMock({ isDisabled: true });
+        const state = createFormDataMock({ isDisabled: true });
         const formLock = setupFormLock([], state);
 
         expect(() => formLock.assertNotDisabled()).toThrow(FormDisabledException);
