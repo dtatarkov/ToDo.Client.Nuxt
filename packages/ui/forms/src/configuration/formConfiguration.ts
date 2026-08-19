@@ -1,10 +1,10 @@
 import type { MessageKey } from '@client/infrastructure-messages';
 import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 import type { InputType } from '@client/ui-uikit';
-import type { FormData } from '../types/formData';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElementData } from '../types/formElementData';
 import type { FormElementValue } from '../types/formElementValue';
+import type { FormDataInit } from '../types/formDataInit';
 
 export type FormConfigurationToDataOptions<TEntity extends Record<string, any> = Record<string, any>> = {
     values?: Partial<TEntity>;
@@ -42,11 +42,11 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
         public readonly scheme?: EntityScheme<any, TEntity>
     ) { }
 
-    toData(options?: FormConfigurationToDataOptions<TEntity>): Partial<FormData>
+    toData(options?: FormConfigurationToDataOptions<TEntity>): Partial<FormDataInit>
     {
         const elements = Object.entries(this.elements).map(([name, data]) =>
         {
-            const element: FormElementData = { ...data, name };
+            const element: Partial<FormElementData> = { ...data, name };
 
             this.addValueToFormElementData(element, options?.values?.[name]);
             this.addErrorToFormElementData(element, options?.errors?.[name]);
@@ -57,7 +57,7 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
         return { elements };
     }
 
-    private addValueToFormElementData(element: FormElementData, value?: TEntity[keyof TEntity]): void
+    private addValueToFormElementData(element: Partial<FormElementData>, value?: TEntity[keyof TEntity]): void
     {
         if (value !== undefined)
         {
@@ -65,7 +65,7 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
         }
     }
 
-    private addErrorToFormElementData(element: FormElementData, errorKey?: MessageKey): void
+    private addErrorToFormElementData(element: Partial<FormElementData>, errorKey?: MessageKey): void
     {
         element.errorKey = errorKey;
         element.hasError = errorKey !== undefined;
