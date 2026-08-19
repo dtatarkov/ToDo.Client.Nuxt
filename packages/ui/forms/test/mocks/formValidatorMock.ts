@@ -1,17 +1,26 @@
 import { vi } from 'vitest';
 import type { FormValidator } from '../../src/entities/formValidator';
-import type { FormValidationError } from '../../src/entities/formValidationError';
+import type { FormValidationMessages } from '../../src/types/formValidationMessages';
 
-export const formValidatorMock = {
-    validate: vi.fn(),
-} satisfies FormValidator;
-
-export function markFormValidatorValid()
+function createFormValidatorMock()
 {
-    formValidatorMock.validate.mockReturnValue({ isValid: true });
+    const mock = {
+        validate: vi.fn(),
+
+        markAsValid()
+        {
+            this.validate.mockReturnValue({ isValid: true, messages: {} });
+        },
+
+        markAsInvalid(messages: FormValidationMessages)
+        {
+            this.validate.mockReturnValue({ isValid: false, messages });
+        },
+    };
+
+    const result = mock satisfies FormValidator;
+
+    return result;
 }
 
-export function markFormValidatorInvalid(error: FormValidationError)
-{
-    formValidatorMock.validate.mockReturnValue({ isValid: false, validationError: error });
-}
+export const formValidatorMock = createFormValidatorMock();

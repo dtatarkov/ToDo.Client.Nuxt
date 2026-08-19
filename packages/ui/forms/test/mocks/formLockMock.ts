@@ -2,19 +2,28 @@ import { vi } from 'vitest';
 import type { FormLock } from '../../src/entities/formLock';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
 
-export const formLockMock = {
-    isDisabled: vi.fn(),
-    enable: vi.fn(),
-    disable: vi.fn(),
-    assertNotDisabled: vi.fn(),
-} satisfies FormLock;
-
-export function markFormLockMockAsDisabled()
+function createFormLockMock()
 {
-    formLockMock.isDisabled.mockReturnValue(true);
+    const mock = {
+        isDisabled: vi.fn(),
+        enable: vi.fn(),
+        disable: vi.fn(),
+        assertNotDisabled: vi.fn(),
 
-    formLockMock.assertNotDisabled.mockImplementation(() =>
-    {
-        throw new FormDisabledException();
-    });
+        markDisabled: function () 
+        {
+            this.isDisabled.mockReturnValue(true);
+
+            this.assertNotDisabled.mockImplementation(() =>
+            {
+                throw new FormDisabledException();
+            });
+        }
+    };
+
+    const result = mock satisfies FormLock;
+
+    return result;
 }
+
+export const formLockMock = createFormLockMock();

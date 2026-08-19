@@ -22,8 +22,9 @@ export class FormViewmodelFactoryImpl implements FormViewmodelFactory
   {
     const formElementViewmodels = this.formElementViewmodelsFactory.createViewmodels(
       configuration.elements,
+      configuration.scheme,
     );
 
-    return new FormViewmodelImpl(formElementViewmodels, handlers);
+    return new FormViewmodelImpl(formElementViewmodels, handlers, configuration.scheme);
   }
 }

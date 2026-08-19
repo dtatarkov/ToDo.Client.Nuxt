@@ -7,4 +7,5 @@ export abstract class EntitySchemeConfigurator
     abstract boolean(): EntityFieldSchemeConfiguratorOptional<boolean>;
     abstract datetime(): EntityFieldSchemeConfiguratorOptional<Date>;
     abstract enum<TEnum extends string>(values: readonly TEnum[]): EntityFieldSchemeConfiguratorOptional<TEnum>;
+    abstract any(): EntityFieldSchemeConfiguratorOptional<any>;
 }

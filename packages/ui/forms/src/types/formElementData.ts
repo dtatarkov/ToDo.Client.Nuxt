@@ -1,4 +1,4 @@
-import type { InputData, InputDateData, InputDateTimeData, InputTextareaData, InputTextData, InputTimeData, InputType } from '@client/ui-uikit';
+import type { InputData, InputDateData, InputDateTimeData, InputTextareaData, InputTextData, InputTimeData, InputHiddenData, InputType } from '@client/ui-uikit';
 import type { MessageKey } from '@client/infrastructure-messages';
 
 export type FormElementDataBase = {
@@ -15,4 +15,5 @@ export type FormElementData =
     | FormElementDataVariant<InputType.inputTextarea, InputTextareaData>
     | FormElementDataVariant<InputType.inputDate, InputDateData>
     | FormElementDataVariant<InputType.inputTime, InputTimeData>
-    | FormElementDataVariant<InputType.inputDateTime, InputDateTimeData>;
+    | FormElementDataVariant<InputType.inputDateTime, InputDateTimeData>
+    | FormElementDataVariant<InputType.inputHidden, InputHiddenData>;

@@ -1,4 +1,4 @@
-import type { InputType, InputTextState, InputTextareaState, InputDateState, InputTimeState, InputDatetimeState, InputState } from '@client/ui-uikit';
+import type { InputType, InputTextState, InputTextareaState, InputDateState, InputTimeState, InputDatetimeState, InputHiddenState, InputState } from '@client/ui-uikit';
 import type { FormElementDataBase } from './formElementData';
 
 export type FormElementStateVariant<TType extends InputType, TState extends InputState> =
@@ -9,4 +9,5 @@ export type FormElementState =
     | FormElementStateVariant<InputType.inputTextarea, InputTextareaState>
     | FormElementStateVariant<InputType.inputDate, InputDateState>
     | FormElementStateVariant<InputType.inputTime, InputTimeState>
-    | FormElementStateVariant<InputType.inputDateTime, InputDatetimeState>;
+    | FormElementStateVariant<InputType.inputDateTime, InputDatetimeState>
+    | FormElementStateVariant<InputType.inputHidden, InputHiddenState>;

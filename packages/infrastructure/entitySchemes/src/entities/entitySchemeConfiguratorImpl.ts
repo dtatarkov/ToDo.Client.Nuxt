@@ -4,6 +4,7 @@ import { EntityFieldSchemeConfiguratorNumber } from './entityFieldSchemeConfigur
 import { EntityFieldSchemeConfiguratorBoolean } from './entityFieldSchemeConfiguratorBoolean';
 import { EntityFieldSchemeConfiguratorDate } from './entityFieldSchemeConfiguratorDate';
 import { EntityFieldSchemeConfiguratorEnum } from './entityFieldSchemeConfiguratorEnum';
+import { EntityFieldSchemeConfiguratorAny } from './entityFieldSchemeConfiguratorAny';
 import type { EntityFieldSchemeConfiguratorOptional } from './entityFieldSchemeConfigurator';
 
 export class EntitySchemeConfiguratorImpl extends EntitySchemeConfigurator
@@ -31,5 +32,10 @@ export class EntitySchemeConfiguratorImpl extends EntitySchemeConfigurator
     enum<TEnum extends string>(values: readonly TEnum[]): EntityFieldSchemeConfiguratorOptional<TEnum>
     {
         return new EntityFieldSchemeConfiguratorEnum(values);
+    }
+
+    any(): EntityFieldSchemeConfiguratorOptional<any>
+    {
+        return new EntityFieldSchemeConfiguratorAny();
     }
 }

@@ -1,7 +1,8 @@
-import { FormValidationError } from '../entities/formValidationError';
 import { type AsyncCommand, type Action, DisposeToken, onMany } from '@client/shared';
 import { ObservableViewmodelState, ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
+import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 import type { FormHandlers } from '../types/formHandlers';
+import type { FormValidationMessages } from '../types/formValidationMessages';
 import { FormViewmodel } from './formViewmodel';
 import { FormDataContextBase } from '../entities/formDataContextBase';
 import { FormLockBase } from '../entities/formLockBase';
@@ -20,14 +21,15 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
     private submitCommand: AsyncCommand;
     private formDataContext: FormDataContext<TEntity>;
     private formLock: FormLock;
-    private formValidator: FormValidator;
-    private formEvents: FormEvents;
+    private formValidator: FormValidator<TEntity>;
+    private formEvents: FormEvents<TEntity>;
 
     state: ObservableViewmodelState<FormState>;
 
     constructor(
         private elementViewmodels: FormElementViewmodel<any>[],
         handlers: FormHandlers<TEntity>,
+        scheme?: EntityScheme<any, TEntity>,
     )
     {
         super();
@@ -37,11 +39,11 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
             isDisabled: false,
         });
 
-        this.formDataContext = new FormDataContextBase(this.elementViewmodels, this.state);
+        this.formDataContext = new FormDataContextBase<TEntity>(this.elementViewmodels, this.state);
         this.formLock = new FormLockBase(this.elementViewmodels, this.state);
-        this.formValidator = new FormValidatorBase(this.elementViewmodels, this.state);
+        this.formValidator = new FormValidatorBase<TEntity>(this.elementViewmodels, this.formDataContext, scheme);
 
-        this.formEvents = new FormEventsBase();
+        this.formEvents = new FormEventsBase<TEntity>();
         this.disposeToken.registerDisposable(this.formEvents);
 
         this.submitCommand = new AsyncCommandFormSubmit(
@@ -89,7 +91,12 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
         return this.submitCommand;
     }
 
-    onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void
+    async submitAsync(): Promise<void>
+    {
+        await this.submitCommand.executeAsync();
+    }
+
+    onValidationError(handler: Action<[FormValidationMessages<TEntity>]>, token?: DisposeToken): void
     {
         this.formEvents.formValidationErrorEvent.on(handler, token);
     }

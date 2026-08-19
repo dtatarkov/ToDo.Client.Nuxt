@@ -17,6 +17,7 @@
     "@client/infrastructure-di": "workspace:*",
     "@client/infrastructure-messages": "workspace:*",
     "@client/infrastructure-entity-schemes": "workspace:*",
+    "@client/infrastructure-validation": "workspace:*",
     "@client/shared": "workspace:*"
   }
 }

@@ -4,6 +4,7 @@ import { InputTextareaViewmodelImpl } from '../../src/viewmodels/inputTextareaVi
 import { InputDateViewmodelImpl } from '../../src/viewmodels/inputDateViewmodelImpl';
 import { InputTimeViewmodelImpl } from '../../src/viewmodels/inputTimeViewmodelImpl';
 import { InputDatetimeViewmodelImpl } from '../../src/viewmodels/inputDatetimeViewmodelImpl';
+import { InputHiddenViewmodelImpl } from '../../src/viewmodels/inputHiddenViewmodelImpl';
 import type { Constructor } from '@client/shared';
 import type { InputViewmodel } from '../../src/viewmodels/inputViewmodel';
 import type { InputData } from '../../src/types/inputData';
@@ -63,6 +64,16 @@ const testCases: TestParams[] = [
         testData: {
             initialValue: undefined,
             newValue: new Date('07-20-2026 15:30:00')
+        },
+    },
+
+    {
+        label: 'InputHiddenViewmodelImpl',
+        ViewmodelClass: InputHiddenViewmodelImpl,
+
+        testData: {
+            initialValue: undefined,
+            newValue: 'hidden-value'
         },
     }
 ];

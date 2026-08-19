@@ -10,6 +10,7 @@ export function createUiKitViewmodelsFactoryMock()
         createInputDate: vi.fn(),
         createInputTime: vi.fn(),
         createInputDateTime: vi.fn(),
+        createInputHidden: vi.fn(),
         createInfoBlock: vi.fn(),
     } satisfies UIKitViewmodelsFactory;
 }

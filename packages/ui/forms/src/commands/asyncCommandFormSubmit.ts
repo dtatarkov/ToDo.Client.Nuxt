@@ -50,8 +50,8 @@ export class AsyncCommandFormSubmit<TEntity extends Record<string, any> = Record
     constructor(
         private formDataContext: FormDataContext<TEntity>,
         private formLock: FormLock,
-        private formValidator: FormValidator,
-        private formEvents: FormEvents,
+        private formValidator: FormValidator<TEntity>,
+        private formEvents: FormEvents<TEntity>,
         private submitHandler: (data: Record<keyof TEntity, any>) => Promise<void>
     )
     {
@@ -71,7 +71,7 @@ export class AsyncCommandFormSubmit<TEntity extends Record<string, any> = Record
 
         if (!result.isValid)
         {
-            this.formEvents.formValidationErrorEvent.emit(result.validationError);
+            this.formEvents.formValidationErrorEvent.emit(result.messages);
             return false;
         }
 

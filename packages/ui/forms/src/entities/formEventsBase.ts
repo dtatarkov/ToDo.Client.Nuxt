@@ -1,11 +1,11 @@
 import { EntityEvent } from '@client/shared';
 import { FormEvents } from './formEvents';
-import type { FormValidationError } from './formValidationError';
+import type { FormValidationMessages } from '../types/formValidationMessages';
 
 
-export class FormEventsBase extends FormEvents
+export class FormEventsBase<TEntity extends Record<string, any> = Record<string, any>> extends FormEvents<TEntity>
 {
-    formValidationErrorEvent = new EntityEvent<FormValidationError>();
+    formValidationErrorEvent = new EntityEvent<FormValidationMessages<TEntity>>();
 
     override[Symbol.dispose](): void
     {

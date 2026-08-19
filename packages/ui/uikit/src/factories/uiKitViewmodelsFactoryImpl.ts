@@ -3,6 +3,7 @@ import type { InputDatetimeViewmodel } from '../viewmodels/inputDatetimeViewmode
 import type { InputTextareaViewmodel } from '../viewmodels/inputTextareaViewmodel';
 import type { InputTimeViewmodel } from '../viewmodels/inputTimeViewmodel';
 import type { InputTextViewmodel } from '../viewmodels/inputTextViewmodel';
+import type { InputHiddenViewmodel } from '../viewmodels/inputHiddenViewmodel';
 import type { InfoBlockViewmodel } from '../viewmodels/infoBlockViewmodel';
 import { UIKitViewmodelsFactory } from './uiKitViewmodelsFactory';
 import { InputDateViewmodelImpl } from '../viewmodels/inputDateViewmodelImpl';
@@ -10,6 +11,7 @@ import { InputDatetimeViewmodelImpl } from '../viewmodels/inputDatetimeViewmodel
 import { InputTextViewmodelImpl } from '../viewmodels/inputTextViewmodelImpl';
 import { InputTextareaViewmodelImpl } from '../viewmodels/inputTextareaViewmodelImpl';
 import { InputTimeViewmodelImpl } from '../viewmodels/inputTimeViewmodelImpl';
+import { InputHiddenViewmodelImpl } from '../viewmodels/inputHiddenViewmodelImpl';
 import { InfoBlockViewmodelImpl } from '../viewmodels/infoBlockViewmodelImpl';
 import { InputType } from '../enums/inputType';
 import type { InputViewmodel } from '../viewmodels/inputViewmodel';
@@ -52,6 +54,13 @@ export class UIKitViewmodelsFactoryImpl extends UIKitViewmodelsFactory
         return vm;
     }
 
+    override createInputHidden(): InputHiddenViewmodel
+    {
+        const vm = new InputHiddenViewmodelImpl();
+
+        return vm;
+    }
+
     override createInput(type: InputType): InputViewmodel<any>
     {
         let inputElement: InputViewmodel<any>;
@@ -76,6 +85,10 @@ export class UIKitViewmodelsFactoryImpl extends UIKitViewmodelsFactory
 
             case InputType.inputDateTime:
                 inputElement = this.createInputDateTime();
+                break;
+
+            case InputType.inputHidden:
+                inputElement = this.createInputHidden();
                 break;
 
             default:

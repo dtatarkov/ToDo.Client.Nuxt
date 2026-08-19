@@ -5,6 +5,7 @@ export enum InputType
     inputDate = 'inputDate',
     inputTime = 'inputTime',
     inputDateTime = 'inputDateTime',
+    inputHidden = 'inputHidden',
 }
 
 export const inputTypeValues = [
@@ -12,5 +13,6 @@ export const inputTypeValues = [
     InputType.inputTextarea,
     InputType.inputDate,
     InputType.inputTime,
-    InputType.inputDateTime
+    InputType.inputDateTime,
+    InputType.inputHidden
 ];

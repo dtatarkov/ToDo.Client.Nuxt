@@ -3,177 +3,174 @@ import { FormElementViewmodelImpl } from '../../src/viewmodels/formElementViewmo
 import { createInputViewmodelMock } from '@client/ui-uikit/mocks';
 import { InputType, type InputState } from '@client/ui-uikit';
 
-describe('FormElementViewmodelImpl', () =>
+function setupViewmodels(state: InputState)
 {
-    function setupViewmodels(state: InputState)
+    const inputViewmodelMock = createInputViewmodelMock(state);
+    const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodelMock);
+
+    return { inputViewmodelMock, formElementViewmodel };
+}
+
+describe('constructor', () =>
+{
+    it('should create initial state with input vm state and undefined labelKey/errorKey', () =>
     {
-        const inputViewmodelMock = createInputViewmodelMock(state);
-        const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodelMock);
+        const { formElementViewmodel } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'title',
+            value: 'initial-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
+        });
 
-        return { inputViewmodelMock, formElementViewmodel };
-    }
-
-    describe('constructor', () =>
-    {
-        it('should create initial state with input vm state and undefined labelKey/errorKey', () =>
-        {
-            const { formElementViewmodel } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'title',
-                value: 'initial-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            expect(formElementViewmodel.state.value).toEqual({
-                labelKey: undefined,
-                errorKey: undefined,
-                inputType: InputType.inputText,
-                name: 'title',
-                value: 'initial-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
+        expect(formElementViewmodel.state.value).toEqual({
+            labelKey: undefined,
+            errorKey: undefined,
+            inputType: InputType.inputText,
+            name: 'title',
+            value: 'initial-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
     });
+});
 
-    describe('properties', () =>
+describe('properties', () =>
+{
+    it('name getter should return input vm name', () =>
     {
-        it('name getter should return input vm name', () =>
-        {
-            const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'test-field',
-                value: 'test-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            expect(inputViewmodelMock.name).toBe(formElementViewmodel.name);
-            expect(formElementViewmodel.name).toBe('test-field');
+        const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'test-field',
+            value: 'test-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
 
-        it('value getter should return input vm value', () =>
-        {
-            const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'test-field',
-                value: 'test-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            expect(inputViewmodelMock.value).toBe(formElementViewmodel.value);
-            expect(formElementViewmodel.value).toBe('test-value');
-        });
-
-        it('value setter should call input vm value setter and update vm state', () =>
-        {
-            const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'test-field',
-                value: 'test-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            formElementViewmodel.value = 'new-value';
-
-            expect(inputViewmodelMock.value).toBe(formElementViewmodel.value);
-            expect(formElementViewmodel.value).toBe('new-value');
-        });
+        expect(inputViewmodelMock.name).toBe(formElementViewmodel.name);
+        expect(formElementViewmodel.name).toBe('test-field');
     });
 
-    describe('disable', () =>
+    it('value getter should return input vm value', () =>
     {
-        it('should call input vm disable method and update vm state', () =>
-        {
-            const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'field',
-                value: 'value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            inputViewmodelMock.disable.mockImplementation(() =>
-            {
-                inputViewmodelMock.state.update({ isDisabled: true });
-            });
-
-            formElementViewmodel.disable();
-
-            expect(inputViewmodelMock.disable).toHaveBeenCalledTimes(1);
-            expect(formElementViewmodel.state.value.isDisabled).toBe(true);
+        const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'test-field',
+            value: 'test-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
+
+        expect(inputViewmodelMock.value).toBe(formElementViewmodel.value);
+        expect(formElementViewmodel.value).toBe('test-value');
     });
 
-    describe('enable', () =>
+    it('value setter should call input vm value setter and update vm state', () =>
     {
-        it('should call input vm enable method and update vm state', () =>
-        {
-            const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'field',
-                value: 'value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            inputViewmodelMock.enable.mockImplementation(() =>
-            {
-                inputViewmodelMock.state.update({ isDisabled: false });
-            });
-
-            formElementViewmodel.enable();
-
-            expect(inputViewmodelMock.enable).toHaveBeenCalledTimes(1);
-            expect(formElementViewmodel.state.value.isDisabled).toBe(false);
+        const { inputViewmodelMock, formElementViewmodel } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'test-field',
+            value: 'test-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
+
+        formElementViewmodel.value = 'new-value';
+
+        expect(inputViewmodelMock.value).toBe(formElementViewmodel.value);
+        expect(formElementViewmodel.value).toBe('new-value');
     });
+});
 
-    describe('setDefaultValue', () =>
+describe('disable', () =>
+{
+    it('should call input vm disable method and update vm state', () =>
     {
-        it('should call input vm setDefaultValue method and update vm state', () =>
-        {
-            const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'field',
-                value: 'value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            formElementViewmodel.setDefaultValue();
-
-            expect(inputViewmodelMock.setDefaultValue).toHaveBeenCalledTimes(1);
+        const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'field',
+            value: 'value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
+
+        inputViewmodelMock.disable.mockImplementation(() =>
+        {
+            inputViewmodelMock.state.update({ isDisabled: true });
+        });
+
+        formElementViewmodel.disable();
+
+        expect(inputViewmodelMock.disable).toHaveBeenCalledTimes(1);
+        expect(formElementViewmodel.state.value.isDisabled).toBe(true);
     });
+});
 
-    describe('dispose', () =>
+describe('enable', () =>
+{
+    it('should call input vm enable method and update vm state', () =>
     {
-        it('should dispose input vm on dispose', () =>
-        {
-            const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
-                inputType: InputType.inputText,
-                name: 'title',
-                value: 'initial-value',
-                isDisabled: false,
-                hasError: false,
-                hasAutofocus: false,
-            });
-
-            formElementViewmodel[Symbol.dispose]();
-
-            expect(inputViewmodelMock[Symbol.dispose]).toHaveBeenCalledTimes(1);
+        const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'field',
+            value: 'value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
         });
+
+        inputViewmodelMock.enable.mockImplementation(() =>
+        {
+            inputViewmodelMock.state.update({ isDisabled: false });
+        });
+
+        formElementViewmodel.enable();
+
+        expect(inputViewmodelMock.enable).toHaveBeenCalledTimes(1);
+        expect(formElementViewmodel.state.value.isDisabled).toBe(false);
+    });
+});
+
+describe('setDefaultValue', () =>
+{
+    it('should call input vm setDefaultValue method and update vm state', () =>
+    {
+        const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'field',
+            value: 'value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
+        });
+
+        formElementViewmodel.setDefaultValue();
+
+        expect(inputViewmodelMock.setDefaultValue).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe('dispose', () =>
+{
+    it('should dispose input vm on dispose', () =>
+    {
+        const { formElementViewmodel, inputViewmodelMock } = setupViewmodels({
+            inputType: InputType.inputText,
+            name: 'title',
+            value: 'initial-value',
+            isDisabled: false,
+            hasError: false,
+            hasAutofocus: false,
+        });
+
+        formElementViewmodel[Symbol.dispose]();
+
+        expect(inputViewmodelMock[Symbol.dispose]).toHaveBeenCalledTimes(1);
     });
 });

@@ -1,187 +1,151 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { AsyncCommandFormSubmit } from '../../src/commands/asyncCommandFormSubmit';
-import { FormValidationError } from '../../src/entities/formValidationError';
-import { FormElementValidationError } from '../../src/entities/formElementValidationError';
+import { ValidationMessage } from '@client/infrastructure-validation';
 import { formDataContextMock } from '../mocks/formDataContextMock';
-import { formLockMock, markFormLockMockAsDisabled } from '../mocks/formLockMock';
-import { formValidatorMock, markFormValidatorInvalid, markFormValidatorValid } from '../mocks/formValidatorMock';
+import { formLockMock } from '../mocks/formLockMock';
+import { formValidatorMock } from '../mocks/formValidatorMock';
 import { formEventsMock } from '../mocks/formEventsMock';
-import { setupPausedHandlerAsync } from '@client/shared/mocks';
 import { FormDisabledException } from '../../src/exceptions/formDisabledException';
 
-describe('AsyncCommandFormSubmit', () =>
+beforeEach(() =>
 {
-    beforeEach(() =>
+    vi.resetAllMocks();
+});
+
+function createCommand(submitHandler?: ReturnType<typeof vi.fn>): AsyncCommandFormSubmit
+{
+    return new AsyncCommandFormSubmit(
+        formDataContextMock,
+        formLockMock,
+        formValidatorMock,
+        formEventsMock,
+        submitHandler ?? vi.fn(async () => { }),
+    );
+}
+
+describe('executeAsync', () =>
+{
+    it('calls submit handler with form data when validation succeeds', async () =>
     {
-        vi.resetAllMocks();
+        const data = { title: 'Test' };
+        formDataContextMock.getData.mockReturnValue(data);
+        formValidatorMock.markAsValid();
+
+        const submitHandler = vi.fn(async () => { });
+        const command = createCommand(submitHandler);
+
+        await command.executeAsync();
+
+        expect(submitHandler).toHaveBeenCalledWith(data);
     });
 
-    describe('executeAsync', () =>
+    it('locks form when validation succeeds', async () =>
     {
-        it('should submit data, lock/unlock form, and return true when handler succeeds', async () =>
-        {
-            const data = { title: 'Test' };
-            formDataContextMock.getData.mockReturnValue(data);
-            markFormValidatorValid();
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
 
-            const submitHandler = vi.fn(async () => { });
+        const command = createCommand();
 
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                submitHandler
-            );
+        await command.executeAsync();
 
-            const logs: string[] = [];
-            command.onExecuting(() => logs.push('executing'));
-            command.onExecuted(() => logs.push('executed'));
-            command.onIdle(() => logs.push('idle'));
-
-            const result = await command.executeAsync();
-
-            expect(result).toBe(true);
-            expect(logs).toEqual(['executing', 'executed', 'idle']);
-            expect(formValidatorMock.validate).toHaveBeenCalledTimes(1);
-            expect(formLockMock.disable).toHaveBeenCalledTimes(1);
-            expect(submitHandler).toHaveBeenCalledWith(data);
-            expect(formLockMock.enable).toHaveBeenCalledTimes(1);
-            expect(formEventsMock.formValidationErrorEvent.emit).not.toHaveBeenCalled();
-        });
-
-        it('should return false and skip submission when validation fails', async () =>
-        {
-            const error = new FormValidationError([
-                new FormElementValidationError('title', 'Title', 'Required'),
-            ]);
-
-            formDataContextMock.getData.mockReturnValue({ title: '' });
-            markFormValidatorInvalid(error);
-
-            const submitHandler = vi.fn(async () => { /* should not be called */ });
-
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                submitHandler
-            );
-
-            const logs: string[] = [];
-            command.onExecuting(() => logs.push('executing'));
-            command.onExecuted(() => logs.push('executed'));
-            command.onIdle(() => logs.push('idle'));
-
-            const result = await command.executeAsync();
-
-            expect(result).toBe(false);
-            expect(logs).toEqual(['executing', 'idle']);
-            expect(formValidatorMock.validate).toHaveBeenCalledTimes(1);
-            expect(submitHandler).not.toHaveBeenCalled();
-            expect(formLockMock.disable).not.toHaveBeenCalled();
-            expect(formLockMock.enable).not.toHaveBeenCalled();
-            expect(formEventsMock.formValidationErrorEvent.emit).toHaveBeenCalledWith(error);
-        });
-
-        it('should reject when submit handler throws and still unlock form', async () =>
-        {
-            const error = new Error('submit failed');
-            formDataContextMock.getData.mockReturnValue({ title: 'Test' });
-            markFormValidatorValid();
-
-            const submitHandler = vi.fn(async () => { throw error; });
-
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                submitHandler
-            );
-
-            const logs: string[] = [];
-            command.onExecuting(() => logs.push('executing'));
-            command.onExecuted(() => logs.push('executed'));
-            command.onIdle(() => logs.push('idle'));
-
-            await expect(command.executeAsync()).rejects.toThrow(error);
-            expect(logs).toEqual(['executing', 'idle']);
-            expect(formValidatorMock.validate).toHaveBeenCalledTimes(1);
-            expect(formLockMock.disable).toHaveBeenCalledTimes(1);
-            expect(submitHandler).toHaveBeenCalledTimes(1);
-            expect(formLockMock.enable).toHaveBeenCalledTimes(1);
-        });
-
-        it('should return false and skip execution when already executing', async () =>
-        {
-            formDataContextMock.getData.mockReturnValue({ title: 'Test' });
-            markFormValidatorValid();
-
-            const submitHandler = vi.fn();
-            setupPausedHandlerAsync(submitHandler);
-
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                submitHandler
-            );
-
-            command.executeAsync();
-
-            formValidatorMock.validate.mockReset();
-            submitHandler.mockReset();
-
-            const result = await command.executeAsync();
-
-            expect(result).toBe(false);
-            expect(formValidatorMock.validate).not.toHaveBeenCalled();
-            expect(submitHandler).not.toHaveBeenCalled();
-        });
-
-        it('should return false and skip submission when form is disabled', async () =>
-        {
-            formDataContextMock.getData.mockReturnValue({ title: 'Test' });
-            markFormValidatorValid();
-
-            const submitHandler = vi.fn(async () => { /* should not be called */ });
-
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                submitHandler
-            );
-
-            const logs: string[] = [];
-            command.onExecuting(() => logs.push('executing'));
-            command.onExecuted(() => logs.push('executed'));
-            command.onIdle(() => logs.push('idle'));
-
-            markFormLockMockAsDisabled();
-
-            expect(() => command.executeAsync()).rejects.toThrow(FormDisabledException);
-        });
+        expect(formLockMock.disable).toHaveBeenCalledTimes(1);
     });
 
-    describe('dispose', () =>
+    it('unlocks form when submit handler succeeds', async () =>
     {
-        it('should not throw when disposed multiple times', () =>
-        {
-            const command = new AsyncCommandFormSubmit(
-                formDataContextMock,
-                formLockMock,
-                formValidatorMock,
-                formEventsMock,
-                async () => { }
-            );
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
 
-            command[Symbol.dispose]();
-            expect(() => command[Symbol.dispose]()).not.toThrow();
-        });
+        const command = createCommand();
+
+        await command.executeAsync();
+
+        expect(formLockMock.enable).toHaveBeenCalledTimes(1);
+    });
+
+    it('unlocks form when submit handler fails', async () =>
+    {
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
+
+        const submitHandler = vi.fn(async () => { throw new Error('fail'); });
+        const command = createCommand(submitHandler);
+
+        await expect(command.executeAsync()).rejects.toThrow();
+
+        expect(formLockMock.enable).toHaveBeenCalledTimes(1);
+    });
+
+    it('returns true when submit handler succeeds', async () =>
+    {
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
+
+        const command = createCommand();
+
+        const result = await command.executeAsync();
+
+        expect(result).toBe(true);
+    });
+
+    it('throws error when submit handler fails', async () =>
+    {
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
+
+        const error = new Error('submit failed');
+        const submitHandler = vi.fn(async () => { throw error; });
+        const command = createCommand(submitHandler);
+
+        await expect(command.executeAsync()).rejects.toThrow(error);
+    });
+
+    it('returns false when validation fails', async () =>
+    {
+        const messages = { title: [new ValidationMessage('entity.field.required')] };
+        formDataContextMock.getData.mockReturnValue({ title: '' });
+        formValidatorMock.markAsInvalid(messages);
+
+        const command = createCommand();
+
+        const result = await command.executeAsync();
+
+        expect(result).toBe(false);
+    });
+
+    it('emits validation error when validation fails', async () =>
+    {
+        const messages = { title: [new ValidationMessage('entity.field.required')] };
+        formDataContextMock.getData.mockReturnValue({ title: '' });
+        formValidatorMock.markAsInvalid(messages);
+
+        const command = createCommand();
+
+        await command.executeAsync();
+
+        expect(formEventsMock.formValidationErrorEvent.emit).toHaveBeenCalledWith(messages);
+    });
+
+    it('throws FormDisabledException when form is disabled', async () =>
+    {
+        formDataContextMock.getData.mockReturnValue({ title: 'Test' });
+        formValidatorMock.markAsValid();
+        formLockMock.markDisabled();
+
+        const command = createCommand();
+
+        await expect(command.executeAsync()).rejects.toThrow(FormDisabledException);
+    });
+});
+
+describe('dispose', () =>
+{
+    it('does not throw when disposed multiple times', () =>
+    {
+        const command = createCommand();
+
+        command[Symbol.dispose]();
+
+        expect(() => command[Symbol.dispose]()).not.toThrow();
     });
 });

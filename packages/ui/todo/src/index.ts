@@ -1,6 +1,6 @@
 export type { ToDoCardData } from './types/todoCardData';
 
-export { todoFormConfiguration } from './configuration/todoFormConfiguration';
+export { todoFormConfiguration, createToDoFormConfiguration } from './configuration/todoFormConfiguration';
 
 export { ToDosWidgetViewmodel } from './viewmodels/todosWidgetViewmodel';
 export { ToDosWidgetViewmodelImpl } from './viewmodels/todosWidgetViewmodelImpl';

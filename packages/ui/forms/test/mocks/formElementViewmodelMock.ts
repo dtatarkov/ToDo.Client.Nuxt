@@ -1,30 +1,31 @@
-import { ObservableViewmodelStateBase } from '@client/ui-core';
 import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
-import type { FormElementValidationError } from '../../src/entities/formElementValidationError';
 import { vi } from 'vitest';
-import type { FormElementData } from '../../src/types/formElementData';
-import type { InputType } from '@client/ui-uikit';
+import { InputType } from '@client/ui-uikit';
 import type { FormElementDataForType } from '../../src/types/formElementDataForType';
 import type { FormElementStateForType } from '../../src/types/formElementStateForType';
-import type { FormElementValue } from '../../src/types/formElementValue';
+import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 
 export function createFormElementViewmodelMock(
     name: string,
-    data: FormElementDataForType<InputType.inputText>
+    data: Omit<FormElementDataForType<InputType.inputText>, 'inputType'>
 )
 {
+    const value = data.value ?? '';
+
     const mock = {
         name,
-        value: data.value as FormElementValue<InputType.inputText>,
+        value,
 
-        state: new ObservableViewmodelStateBase<FormElementData, FormElementStateForType<InputType.inputText>>({
+        state: createObservableViewmodelStateMock<FormElementStateForType<InputType.inputText>>({
             hasAutofocus: false,
             isDisabled: false,
 
             ...data,
 
+            inputType: InputType.inputText,
             name,
             hasError: false,
+            value,
         }),
 
         disable: vi.fn(),
@@ -32,22 +33,7 @@ export function createFormElementViewmodelMock(
         setData: vi.fn(),
         setDefaultValue: vi.fn(),
         validate: vi.fn(),
-        isValid: vi.fn(),
-        getError: vi.fn(),
         [Symbol.dispose]: vi.fn(),
-
-        markAsValid()
-        {
-            this.isValid.mockReturnValue(true);
-            this.state.update({ hasError: false });
-        },
-
-        markAsInvalid(error: FormElementValidationError) 
-        {
-            this.isValid.mockReturnValue(false);
-            this.getError.mockReturnValue(error);
-            this.state.update({ hasError: true });
-        },
     };
 
     const vmMock = mock satisfies FormElementViewmodel<InputType.inputText>;

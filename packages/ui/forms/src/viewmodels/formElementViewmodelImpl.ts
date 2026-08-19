@@ -1,9 +1,9 @@
 import { FormElementViewmodel } from './formElementViewmodel';
-import type { FormElementValidationError } from '../entities/formElementValidationError';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
 import type { InputType, InputViewmodel } from '@client/ui-uikit';
 import { messageKeyValues } from '@client/infrastructure-messages';
 import { EntityData } from '@client/infrastructure-entity-schemes';
+import type { EntityFieldScheme } from '@client/infrastructure-entity-schemes';
 import type { FormElementStateForType } from '../types/formElementStateForType';
 import type { FormElementValue } from '../types/formElementValue';
 import type { FormElementDataForType } from '../types/formElementDataForType';
@@ -20,7 +20,8 @@ export class FormElementViewmodelImpl<TType extends InputType> extends Viewmodel
     state: ObservableViewmodelStateBase<FormElementData, FormElementStateForType<TType>>;
 
     constructor(
-        private inputViewmodel: InputViewmodel<FormElementValue<TType>, any>
+        private inputViewmodel: InputViewmodel<FormElementValue<TType>, any>,
+        private fieldScheme?: EntityFieldScheme<any>,
     )
     {
         super();
@@ -78,18 +79,26 @@ export class FormElementViewmodelImpl<TType extends InputType> extends Viewmodel
 
     validate(): void
     {
-        // Validation logic is handled by FormValidator at the form layer.
-        // This method is present for API compatibility but does nothing.
-    }
+        if (!this.fieldScheme)
+        {
+            return;
+        }
 
-    isValid(): boolean
-    {
-        return true;
-    }
+        const errors = this.fieldScheme.validate(this.inputViewmodel.value);
 
-    getError(): FormElementValidationError | undefined
-    {
-        return undefined;
+        if (errors.length > 0)
+        {
+            this.inputViewmodel.toErrorMode();
+            this.data.update({ errorKey: errors[0]?.messageKey });
+        }
+        else
+        {
+            this.inputViewmodel.toDefaultMode();
+            this.data.update({ errorKey: undefined });
+        }
+
+        this.updateStateFromData();
+        this.updateStateFromInput();
     }
 
     private updateStateFromInput()

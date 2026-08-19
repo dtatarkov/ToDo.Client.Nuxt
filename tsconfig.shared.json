@@ -7,5 +7,6 @@
     "noEmit": true,
     "verbatimModuleSyntax": true,
     "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
   },
 }

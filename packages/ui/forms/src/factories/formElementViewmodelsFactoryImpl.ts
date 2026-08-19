@@ -3,6 +3,7 @@ import { FormElementViewmodelsFactory } from './formElementViewmodelsFactory';
 import { FormElementViewmodelImpl } from '../viewmodels/formElementViewmodelImpl';
 import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
 import { UIKitViewmodelsFactory } from '@client/ui-uikit';
+import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 
 @dependency(UIKitViewmodelsFactory)
@@ -15,8 +16,9 @@ export class FormElementViewmodelsFactoryImpl extends FormElementViewmodelsFacto
         super();
     }
 
-    override createViewmodels(
-        elementsCreateData: Record<string, FormElementCreateData>,
+    override createViewmodels<TEntity extends Record<string, any>>(
+        elementsCreateData: Record<keyof TEntity, FormElementCreateData>,
+        scheme?: EntityScheme<any, TEntity>,
     ): FormElementViewmodel[]
     {
         const result = new Array<FormElementViewmodel>();
@@ -24,7 +26,8 @@ export class FormElementViewmodelsFactoryImpl extends FormElementViewmodelsFacto
         for (const [name, createData] of Object.entries(elementsCreateData))
         {
             const inputViewmodel = this.uikitFactory.createInput(createData.inputType);
-            const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodel);
+            const fieldScheme = scheme?.fields[name as keyof TEntity];
+            const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodel, fieldScheme);
 
             formElementViewmodel.setData({ name, ...createData });
 

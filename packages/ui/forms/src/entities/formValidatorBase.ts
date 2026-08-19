@@ -1,55 +1,33 @@
-import type { ObservableViewmodelState } from '@client/ui-core';
+import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 import type { FormValidationResult } from '../types/formValidationResult';
 import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
+import type { FormDataContext } from './formDataContext';
 import { FormValidator } from './formValidator';
-import type { FormElementValidationError } from './formElementValidationError';
-import { FormValidationError } from './formValidationError';
-import type { FormState } from '../types/formState';
 
-
-export class FormValidatorBase extends FormValidator
+export class FormValidatorBase<TEntity extends Record<string, any> = Record<string, any>> extends FormValidator<TEntity>
 {
     constructor(
         private elements: FormElementViewmodel[],
-        private state: ObservableViewmodelState<FormState>
+        private formDataContext: FormDataContext<TEntity>,
+        private scheme?: EntityScheme<any, TEntity>,
     )
     {
         super();
     }
 
-    override validate(): FormValidationResult
+    override validate(): FormValidationResult<TEntity>
     {
         this.elements.forEach(element => element.validate());
 
-        const errorsList = this.getElementValidationErrors();
-        //const errorsObj = toObject(errorsList, error => error.formElementName);
-
-        //this.state.update({ errors: errorsObj });
-
-        const isValid = errorsList.length === 0;
-
-        if (isValid)
+        if (!this.scheme)
         {
-            return { isValid };
+            return { isValid: true, messages: {} };
         }
 
-        const validationError = new FormValidationError(errorsList);
+        const data = this.formDataContext.getData();
+        const messages = this.scheme.validate(data);
+        const isValid = Object.keys(messages).length === 0;
 
-        return { isValid, validationError };
-    }
-
-    private getElementValidationErrors(): FormElementValidationError[]
-    {
-        return this.elements.reduce((result, element) =>
-        {
-            const error = element.getError();
-
-            if (error)
-            {
-                result.push(error);
-            }
-
-            return result;
-        }, new Array<FormElementValidationError>());
+        return { isValid, messages };
     }
 }

@@ -1,4 +1,4 @@
-import type { FormValidationError } from '../entities/formValidationError';
+import type { FormValidationMessages } from '../types/formValidationMessages';
 import type { Action, AsyncCommand, DisposeToken } from '@client/shared';
 import { Viewmodel } from '@client/ui-core';
 import type { FormState } from '../types/formState';
@@ -8,6 +8,7 @@ export abstract class FormViewmodel<TEntity extends Record<string, any> = Record
   abstract getData(): Record<keyof TEntity, any>;
   abstract setData(change: Partial<Record<keyof TEntity, any>>): void;
   abstract getSubmitCommand(): AsyncCommand;
+  abstract submitAsync(): Promise<void>;
 
-  abstract onValidationError(handler: Action<[FormValidationError]>, token?: DisposeToken): void;
+  abstract onValidationError(handler: Action<[FormValidationMessages<TEntity>]>, token?: DisposeToken): void;
 }

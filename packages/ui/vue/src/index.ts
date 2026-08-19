@@ -27,6 +27,7 @@ export { default as VInputDateTime } from './components/VInputDateTime.vue';
 export { default as VInputText } from './components/VInputText.vue';
 export { default as VInputTextarea } from './components/VInputTextarea.vue';
 export { default as VInputTime } from './components/VInputTime.vue';
+export { default as VInputHidden } from './components/VInputHidden.vue';
 export { default as VModal } from './components/VModal.vue';
 export { default as VForm } from './components/VForm.vue';
 
