@@ -7,6 +7,8 @@ import type { InputHiddenViewmodel } from '../viewmodels/inputHiddenViewmodel';
 import type { InfoBlockViewmodel } from '../viewmodels/infoBlockViewmodel';
 import type { InputType } from '../enums/inputType';
 import type { InputViewmodel } from '../viewmodels/inputViewmodel';
+import type { ButtonGeneralViewmodel } from '../viewmodels/buttonGeneralViewmodel';
+import type { ButtonIconViewmodel } from '../viewmodels/buttonIconViewmodel';
 
 export abstract class UIKitViewmodelsFactory
 {
@@ -25,4 +27,6 @@ export abstract class UIKitViewmodelsFactory
     abstract createInputDateTime(): InputDatetimeViewmodel;
     abstract createInputHidden(): InputHiddenViewmodel;
     abstract createInfoBlock(): InfoBlockViewmodel;
+    abstract createButtonGeneral(): ButtonGeneralViewmodel;
+    abstract createButtonIcon(): ButtonIconViewmodel;
 }

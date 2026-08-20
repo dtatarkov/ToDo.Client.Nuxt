@@ -12,6 +12,8 @@ export function createUiKitViewmodelsFactoryMock()
         createInputDateTime: vi.fn(),
         createInputHidden: vi.fn(),
         createInfoBlock: vi.fn(),
+        createButtonGeneral: vi.fn(),
+        createButtonIcon: vi.fn(),
     } satisfies UIKitViewmodelsFactory;
 }
 

@@ -13,8 +13,12 @@ import { InputTextareaViewmodelImpl } from '../viewmodels/inputTextareaViewmodel
 import { InputTimeViewmodelImpl } from '../viewmodels/inputTimeViewmodelImpl';
 import { InputHiddenViewmodelImpl } from '../viewmodels/inputHiddenViewmodelImpl';
 import { InfoBlockViewmodelImpl } from '../viewmodels/infoBlockViewmodelImpl';
+import { ButtonGeneralViewmodelImpl } from '../viewmodels/buttonGeneralViewmodelImpl';
+import { ButtonIconViewmodelImpl } from '../viewmodels/buttonIconViewmodelImpl';
 import { InputType } from '../enums/inputType';
 import type { InputViewmodel } from '../viewmodels/inputViewmodel';
+import type { ButtonGeneralViewmodel } from '../viewmodels/buttonGeneralViewmodel';
+import type { ButtonIconViewmodel } from '../viewmodels/buttonIconViewmodel';
 import { UnknownInputTypeException } from '../exceptions/unknownInputTypeException';
 
 export class UIKitViewmodelsFactoryImpl extends UIKitViewmodelsFactory
@@ -101,6 +105,20 @@ export class UIKitViewmodelsFactoryImpl extends UIKitViewmodelsFactory
     override createInfoBlock(): InfoBlockViewmodel
     {
         const vm = new InfoBlockViewmodelImpl();
+
+        return vm;
+    }
+
+    override createButtonGeneral(): ButtonGeneralViewmodel
+    {
+        const vm = new ButtonGeneralViewmodelImpl();
+
+        return vm;
+    }
+
+    override createButtonIcon(): ButtonIconViewmodel
+    {
+        const vm = new ButtonIconViewmodelImpl();
 
         return vm;
     }
