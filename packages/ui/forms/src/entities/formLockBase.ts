@@ -2,14 +2,14 @@ import type { ObservableViewmodelState } from '@client/ui-core';
 import { FormDisabledException } from '../exceptions/formDisabledException';
 import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
 import { FormLock } from './formLock';
-import type { FormData } from '../types/formData';
+import type { FormDataFull } from '../types/formDataFull';
 
 
 export class FormLockBase extends FormLock
 {
     constructor(
         private elements: FormElementViewmodel[],
-        private state: ObservableViewmodelState<FormData>
+        private state: ObservableViewmodelState<FormDataFull>
     )
     {
         super();

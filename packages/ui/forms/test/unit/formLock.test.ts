@@ -5,9 +5,9 @@ import { createFormDataMock } from '../mocks/formDataMock';
 import type { ObservableViewmodelState } from '@client/ui-core';
 import type { FormElementViewmodel } from '../../src/viewmodels/formElementViewmodel';
 import { createFormElementViewmodelMock } from '../mocks/formElementViewmodelMock';
-import type { FormData } from '../../src';
+import type { FormDataFull } from '../../src/types/formDataFull';
 
-function setupFormLock(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormData>): FormLockBase
+function setupFormLock(elements: FormElementViewmodel[], state: ObservableViewmodelState<FormDataFull>): FormLockBase
 {
     return new FormLockBase(elements, state);
 }

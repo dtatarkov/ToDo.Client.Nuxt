@@ -1,0 +1,4 @@
+import type { FormDataBase } from './formDataBase';
+import type { FormElementData } from './formElementData';
+
+export type FormDataPartial = Partial<FormDataBase<Partial<FormElementData>>>;

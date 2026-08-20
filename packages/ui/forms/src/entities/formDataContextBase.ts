@@ -1,14 +1,14 @@
 import type { ObservableViewmodelState } from '@client/ui-core';
 import { FormDataContext } from './formDataContext';
 import type { FormElementViewmodel } from '../viewmodels/formElementViewmodel';
-import type { FormData } from '../types/formData';
+import type { FormDataFull } from '../types/formDataFull';
 
 
 export class FormDataContextBase<TEntity extends Record<string, any>> extends FormDataContext<TEntity>
 {
     constructor(
         private elements: readonly FormElementViewmodel[],
-        private state: ObservableViewmodelState<FormData>
+        private state: ObservableViewmodelState<FormDataFull>
     )
     {
         super();

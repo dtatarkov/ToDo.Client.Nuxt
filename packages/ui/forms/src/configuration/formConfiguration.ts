@@ -4,7 +4,7 @@ import type { InputType } from '@client/ui-uikit';
 import type { FormElementCreateData } from '../types/formElementCreateData';
 import type { FormElementData } from '../types/formElementData';
 import type { FormElementValue } from '../types/formElementValue';
-import type { FormDataInit } from '../types/formDataInit';
+import type { FormDataPartial } from '../types/formDataPartial';
 
 export type FormConfigurationToDataOptions<TEntity extends Record<string, any> = Record<string, any>> = {
     values?: Partial<TEntity>;
@@ -42,7 +42,7 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
         public readonly scheme?: EntityScheme<any, TEntity>
     ) { }
 
-    toData(options?: FormConfigurationToDataOptions<TEntity>): Partial<FormDataInit>
+    toData(options?: FormConfigurationToDataOptions<TEntity>): FormDataPartial
     {
         const elements = Object.entries(this.elements).map(([name, data]) =>
         {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VFormField from './VFormField.vue';
-import type { FormElementData, FormData } from '@client/ui-forms';
+import type { FormElementData, FormDataFull } from '@client/ui-forms';
 import { InputType } from '@client/ui-uikit';
 import { h, type VNode } from 'vue';
 import VInputText from './VInputText.vue';
@@ -9,13 +9,13 @@ import VInputDate from './VInputDate.vue';
 import VInputTime from './VInputTime.vue';
 import VInputDateTime from './VInputDateTime.vue';
 import VInputHidden from './VInputHidden.vue';
-import type { FormDataInit } from '@client/ui-forms';
+import type { FormDataPartial } from '@client/ui-forms';
 
 type Emits = {
   (e: 'submit'): void;
 }
 
-const props = withDefaults(defineProps<FormDataInit>(), { 
+const props = withDefaults(defineProps<FormDataPartial>(), { 
   elements: () => new Array<Partial<FormElementData>>(),
   isDisabled: false,
 });
