@@ -1,0 +1,15 @@
+{
+  "name": "@client/ui-overlay",
+  "type": "module",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+
+  "scripts": {
+    "typecheck": "tsc"
+  },
+  
+  "devDependencies": {
+    "@client/infrastructure-eslint": "workspace:*"
+  }
+}

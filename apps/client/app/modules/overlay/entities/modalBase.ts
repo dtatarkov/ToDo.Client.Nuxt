@@ -10,14 +10,15 @@ import type { ButtonGeneral } from '@/modules/uikit/entities/buttons/buttonGener
 import type { Func, AsyncCommand } from '@client/shared';
 import { OverlayElementBase } from './overlayElementBase';
 import type { MessagesService } from '@client/infrastructure-messages';
-import { VModal, type ModalData, type ModalState } from '@client/ui-vue';
+import { VModal } from '@client/ui-vue';
+import type { ModalData } from '@client/ui-overlay';
 
 export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {
   private data: ModalData;
   private buttons: Array<ButtonGeneral>;
 
-  private state: ModalState = shallowReactive({
+  private state = shallowReactive({
     isDisabled: false,
   });
 
@@ -46,6 +47,7 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
     this.data = {
       title: configuration.title,
       description: configuration.description ?? '',
+      isDisabled: false,
     };
 
     this.content = configuration.content;

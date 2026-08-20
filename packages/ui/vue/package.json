@@ -21,6 +21,7 @@
     "@client/ui-uikit": "workspace:*",
     "@client/ui-forms": "workspace:*",
     "@client/ui-todo": "workspace:*",
+    "@client/ui-overlay": "workspace:*",
     "@client/shared": "workspace:*",    
     "@client/infrastructure-datetime": "workspace:*",
     "@client/infrastructure-messages": "workspace:*",

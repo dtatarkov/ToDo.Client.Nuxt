@@ -195,6 +195,9 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../../packages/ui/forms
+      '@client/ui-overlay':
+        specifier: workspace:*
+        version: link:../../packages/ui/overlay
       '@client/ui-todo':
         specifier: workspace:*
         version: link:../../packages/ui/todo
@@ -560,6 +563,12 @@ importers:
         specifier: workspace:*
         version: link:../uikit
 
+  packages/ui/overlay:
+    devDependencies:
+      '@client/infrastructure-eslint':
+        specifier: workspace:*
+        version: link:../../infrastructure/eslint
+
   packages/ui/todo:
     devDependencies:
       '@client/domain-todo':
@@ -643,6 +652,9 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../forms
+      '@client/ui-overlay':
+        specifier: workspace:*
+        version: link:../overlay
       '@client/ui-todo':
         specifier: workspace:*
         version: link:../todo

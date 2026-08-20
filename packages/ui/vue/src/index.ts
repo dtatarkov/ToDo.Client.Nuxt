@@ -1,7 +1,5 @@
 // Types
 export type { CardData } from './types/cardData';
-export type { ModalData } from './types/modalData';
-export type { ModalState } from './types/modalState';
 
 // Composables
 export { provideServicesContainer } from './composables/provideServicesContainer';

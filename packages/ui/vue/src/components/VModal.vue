@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { ModalData } from '../types/modalData';
-import type { ModalState } from '../types/modalState';
+import type { ModalData } from '@client/ui-overlay';
 
-const props = defineProps<ModalData & ModalState>();
+const props = defineProps<ModalData>();
 
  const emits = defineEmits<{
    (e: 'close'): void
