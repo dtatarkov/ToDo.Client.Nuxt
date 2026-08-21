@@ -1,9 +1,16 @@
 import { ViewmodelBase, ObservableViewmodelStateBase } from '@client/ui-core';
 import type { ModalData } from '../types/modalData';
-import type { ModalViewmodelOptions } from '../types/modalViewmodelOptions';
 import { ModalViewmodel } from './modalViewmodel';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
 import type { Viewmodel } from '@client/ui-core';
+
+export type ModalViewmodelOptions<TContentData extends Record<string, any>> = {
+    content: Viewmodel<TContentData>;
+    title?: string;
+    description?: string;
+    buttonConfirm?: ButtonGeneralViewmodel;
+    buttonCancel?: ButtonGeneralViewmodel;
+};
 
 export class ModalViewmodelImpl<TContentData extends Record<string, any>>
     extends ViewmodelBase<ModalData<TContentData>>

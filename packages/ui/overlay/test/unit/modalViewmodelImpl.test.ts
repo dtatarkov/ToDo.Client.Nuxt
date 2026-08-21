@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ModalViewmodelImpl } from '../../src/viewmodels/modalViewmodelImpl';
-import type { ModalViewmodelOptions } from '../../src/types/modalViewmodelOptions';
+import { ModalViewmodelImpl, type ModalViewmodelOptions } from '../../src/viewmodels/modalViewmodelImpl';
 import { viewmodelMock, createViewmodelMock } from '@client/ui-core/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
 

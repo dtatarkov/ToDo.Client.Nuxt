@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import type { ModalButtonConfirmConfigurator } from '../../src/configuration/modalButtonConfirmConfigurator';
+import type { ModalButtonConfirmConfigurator } from '../../src/entities/modalButtonConfirmConfigurator';
 
 export function createModalButtonConfirmConfiguratorMock()
 {

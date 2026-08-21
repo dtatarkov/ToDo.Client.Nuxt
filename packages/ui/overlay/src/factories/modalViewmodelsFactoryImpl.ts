@@ -1,9 +1,8 @@
 import type { Viewmodel } from '@client/ui-core';
-import { ModalViewmodelsFactory } from './modalViewmodelsFactory';
+import { ModalViewmodelsFactory, type ModalConfiguration } from './modalViewmodelsFactory';
 import { ModalViewmodelImpl } from '../viewmodels/modalViewmodelImpl';
 import type { ModalViewmodel } from '../viewmodels/modalViewmodel';
-import type { ModalConfiguration } from '../types/modalConfiguration';
-import { ModalButtonConfirmConfiguratorBase } from '../configuration/modalButtonConfirmConfiguratorBase';
+import { ModalButtonConfirmConfiguratorBase } from '../entities/modalButtonConfirmConfiguratorBase';
 import type { UIKitViewmodelsFactory } from '@client/ui-uikit';
 import type { MessagesService } from '@client/infrastructure-messages';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
