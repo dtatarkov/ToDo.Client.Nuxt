@@ -8,8 +8,14 @@
   "scripts": {
     "typecheck": "tsc"
   },
-  
+
   "devDependencies": {
+    "@client/ui-core": "workspace:*",
+    "@client/ui-uikit": "workspace:*",
+    "@client/ui-forms": "workspace:*",
+    "@client/shared": "workspace:*",
+    "@client/infrastructure-di": "workspace:*",
+    "@client/infrastructure-messages": "workspace:*",
     "@client/infrastructure-eslint": "workspace:*"
   }
 }

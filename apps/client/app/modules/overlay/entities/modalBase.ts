@@ -44,6 +44,8 @@ export class ModalBase<Content extends UIElement> extends OverlayElementBase<Mod
   {
     super(store);
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     this.data = {
       title: configuration.title,
       description: configuration.description ?? '',

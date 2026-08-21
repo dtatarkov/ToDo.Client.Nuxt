@@ -565,9 +565,27 @@ importers:
 
   packages/ui/overlay:
     devDependencies:
+      '@client/infrastructure-di':
+        specifier: workspace:*
+        version: link:../../infrastructure/di
       '@client/infrastructure-eslint':
         specifier: workspace:*
         version: link:../../infrastructure/eslint
+      '@client/infrastructure-messages':
+        specifier: workspace:*
+        version: link:../../infrastructure/messages
+      '@client/shared':
+        specifier: workspace:*
+        version: link:../../shared
+      '@client/ui-core':
+        specifier: workspace:*
+        version: link:../core
+      '@client/ui-forms':
+        specifier: workspace:*
+        version: link:../forms
+      '@client/ui-uikit':
+        specifier: workspace:*
+        version: link:../uikit
 
   packages/ui/todo:
     devDependencies:
