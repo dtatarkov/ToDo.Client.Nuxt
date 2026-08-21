@@ -1,33 +1,27 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ModalViewmodelsFactoryImpl } from '../../src/factories/modalViewmodelsFactoryImpl';
 import { createUiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
 import { createViewmodelMock, viewmodelMock } from '@client/ui-core/mocks';
 import type { ModalButtonConfirmConfigurator } from '../../src';
 
-function createFactory(): ModalViewmodelsFactoryImpl
+function setupFactory()
 {
-    const uikitMock = createUiKitViewmodelsFactoryMock();
+    const uikit = createUiKitViewmodelsFactoryMock();
+    const factory = new ModalViewmodelsFactoryImpl(uikit);
 
-    uikitMock.createButtonGeneral.mockImplementation(() => createButtonGeneralViewmodelMock());
-
-    return new ModalViewmodelsFactoryImpl(uikitMock);
+    return { uikit, factory };
 }
 
 describe('ModalViewmodelsFactoryImpl', () =>
 {
-    let factory: ModalViewmodelsFactoryImpl;
-
-    beforeEach(() =>
-    {
-        vi.clearAllMocks();
-        factory = createFactory();
-    });
 
     describe('create', () =>
     {
         it('should create modal with provided title', () =>
         {
+            const { factory } = setupFactory();
+
             const modal = factory.create({
                 title: 'Test title',
                 content: viewmodelMock,
@@ -39,6 +33,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
         it('should create modal with provided content', () =>
         {
             const content = createViewmodelMock({ foo: 'bar' });
+            const { factory } = setupFactory();
 
             const modal = factory.create({
                 title: 'Test title',
@@ -50,6 +45,8 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should create modal with provided description', () =>
         {
+            const { factory } = setupFactory();
+
             const modal = factory.create({
                 title: 'Test title',
                 description: 'Test description',
@@ -61,6 +58,11 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should create modal with buttonConfirm (configurator fn invoked)', () =>
         {
+            const { factory, uikit } = setupFactory();
+
+            const button = createButtonGeneralViewmodelMock();
+            uikit.createButtonGeneral.mockImplementation(() => button);
+
             const configuratorFn = vi.fn((configurator: ModalButtonConfirmConfigurator) => configurator.asCreateButton());
 
             const modal = factory.create({
@@ -75,6 +77,11 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should create modal with buttonCancel', () =>
         {
+            const { factory, uikit } = setupFactory();
+
+            const button = createButtonGeneralViewmodelMock();
+            uikit.createButtonGeneral.mockImplementation(() => button);
+
             const modal = factory.create({
                 title: 'Test title',
                 content: viewmodelMock,
@@ -82,12 +89,16 @@ describe('ModalViewmodelsFactoryImpl', () =>
             });
 
             expect(modal.state.value.buttonCancel).toBeDefined();
+            expect(button.setTitle).toBeCalledWith('button.cancel');
         });
 
         it('should create modal with all fields', () =>
         {
-            const configuratorFn = vi.fn((configurator: ModalButtonConfirmConfigurator) => configurator.asCreateButton());
+            const { factory, uikit } = setupFactory();
 
+            uikit.createButtonGeneral.mockImplementation(() => createButtonGeneralViewmodelMock());
+
+            const configuratorFn = vi.fn((configurator: ModalButtonConfirmConfigurator) => configurator.asCreateButton());
             const content = createViewmodelMock({ foo: 'bar' });
 
             const modal = factory.create({
@@ -107,6 +118,8 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should not create buttonConfirm when buttonConfirm omitted', () =>
         {
+            const { factory } = setupFactory();
+
             const modal = factory.create({
                 title: 'Test title',
                 content: viewmodelMock,
@@ -117,6 +130,8 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should not create buttonCancel when buttonCancel omitted', () =>
         {
+            const { factory } = setupFactory();
+
             const modal = factory.create({
                 title: 'Test title',
                 content: viewmodelMock,
