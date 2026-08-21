@@ -5,11 +5,8 @@ import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 export function createButtonGeneralViewmodelMock()
 {
     return {
-        title: '',
-        color: 'neutral',
-        isDisabled: false,
-        isLoading: false,
-
+        setColor: vi.fn(),
+        setTitle: vi.fn(),
         getCommand: vi.fn(),
         setCommand: vi.fn(),
         onClick: vi.fn(),
@@ -20,7 +17,7 @@ export function createButtonGeneralViewmodelMock()
         hideLoader: vi.fn(),
 
         state: createObservableViewmodelStateMock({
-            title: '',
+            title: undefined,
             color: 'neutral',
             isDisabled: false,
             isLoading: false,

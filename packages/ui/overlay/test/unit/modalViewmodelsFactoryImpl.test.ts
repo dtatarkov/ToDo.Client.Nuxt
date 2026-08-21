@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ModalViewmodelsFactoryImpl } from '../../src/factories/modalViewmodelsFactoryImpl';
-import { messagesServiceMock } from '@client/infrastructure-messages/mocks';
 import { createUiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
 import { createViewmodelMock, viewmodelMock } from '@client/ui-core/mocks';
@@ -12,7 +11,7 @@ function createFactory(): ModalViewmodelsFactoryImpl
 
     uikitMock.createButtonGeneral.mockImplementation(() => createButtonGeneralViewmodelMock());
 
-    return new ModalViewmodelsFactoryImpl(uikitMock, messagesServiceMock);
+    return new ModalViewmodelsFactoryImpl(uikitMock);
 }
 
 describe('ModalViewmodelsFactoryImpl', () =>

@@ -3,7 +3,6 @@ import { ModalViewmodelsFactoryImpl } from '../../src/factories/modalViewmodelsF
 import { UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
 import { FormViewmodelFactoryImpl, FormElementViewmodelsFactoryImpl, FormConfiguration } from '@client/ui-forms';
 import { AsyncCommandGeneric } from '@client/shared';
-import { MessagesServiceImpl } from '@client/infrastructure-messages';
 import { InputType } from '@client/ui-uikit';
 
 it('modal example', async () =>
@@ -22,10 +21,8 @@ it('modal example', async () =>
         { submit: async () => { } }
     );
 
-    const messagesService = new MessagesServiceImpl((key) => key);
-
     // Modal via factory + configuration object
-    const modal = new ModalViewmodelsFactoryImpl(uikitFactory, messagesService)
+    const modal = new ModalViewmodelsFactoryImpl(uikitFactory)
         .create({
             title: 'todo.modal.create.title',
             description: '...',

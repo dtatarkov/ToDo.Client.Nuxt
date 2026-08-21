@@ -21,10 +21,9 @@ export { InputTimeViewmodel } from './viewmodels/inputTimeViewmodel';
 export { InputTextareaViewmodel } from './viewmodels/inputTextareaViewmodel';
 export { InputHiddenViewmodel } from './viewmodels/inputHiddenViewmodel';
 export { InputHiddenViewmodelImpl } from './viewmodels/inputHiddenViewmodelImpl';
-export { ButtonViewmodel } from './viewmodels/buttonViewmodel';
 export { ButtonGeneralViewmodel } from './viewmodels/buttonGeneralViewmodel';
-export { ButtonIconViewmodel } from './viewmodels/buttonIconViewmodel';
 export { ButtonGeneralViewmodelImpl } from './viewmodels/buttonGeneralViewmodelImpl';
+export { ButtonIconViewmodel } from './viewmodels/buttonIconViewmodel';
 export { ButtonIconViewmodelImpl } from './viewmodels/buttonIconViewmodelImpl';
 
 export { UIKitViewmodelsFactory } from './factories/uiKitViewmodelsFactory';

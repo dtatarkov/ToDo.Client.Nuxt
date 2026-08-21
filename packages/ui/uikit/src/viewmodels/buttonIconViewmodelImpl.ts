@@ -8,18 +8,11 @@ export class ButtonIconViewmodelImpl extends ButtonBaseViewmodelImpl<ButtonIconD
 {
     protected override getInitialData(): Omit<ButtonIconData, keyof ButtonData>
     {
-        return {
-            icon: Icon.questionMarkCircle,
-        };
+        return {};
     }
 
-    get icon(): Icon
+    setIcon(icon: Icon): void
     {
-        return this.state.value.icon;
-    }
-
-    set icon(value: Icon)
-    {
-        this.state.update({ icon: value });
+        this.state.update({ icon });
     }
 }

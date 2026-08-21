@@ -1,10 +1,10 @@
 import { ViewmodelBase, ObservableViewmodelStateBase } from '@client/ui-core';
-import { ButtonViewmodel } from './buttonViewmodel';
+import { ButtonBaseViewmodel } from './buttonBaseViewmodel';
 import type { ButtonData } from '../types/buttonData';
 import { EntityEvent, DisposeToken, InitializationOnlyException } from '@client/shared';
 import type { AsyncCommand, Action } from '@client/shared';
 
-export abstract class ButtonBaseViewmodelImpl<TData extends ButtonData> extends ViewmodelBase<TData> implements ButtonViewmodel<TData>
+export abstract class ButtonBaseViewmodelImpl<TData extends ButtonData> extends ViewmodelBase<TData> implements ButtonBaseViewmodel<TData>
 {
     protected onClickEvent = new EntityEvent();
     protected command: AsyncCommand | undefined;
@@ -13,11 +13,6 @@ export abstract class ButtonBaseViewmodelImpl<TData extends ButtonData> extends 
         ...this.getBaseInitialData(),
         ...this.getInitialData(),
     } as TData);
-
-    get isDisabled(): boolean
-    {
-        return this.state.value.isDisabled;
-    }
 
     getCommand(): AsyncCommand | undefined
     {

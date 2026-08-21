@@ -15,7 +15,7 @@ describe('ButtonGeneralViewmodelImpl', () =>
     {
         it('should initialize with empty title', () =>
         {
-            expect(button.state.value.title).toBe('');
+            expect(button.state.value.title).toBeUndefined();
         });
 
         it('should initialize with neutral color', () =>
@@ -27,47 +27,39 @@ describe('ButtonGeneralViewmodelImpl', () =>
         {
             expect(button.state.value.isLoading).toBe(false);
         });
+    });
 
-        it('should initialize with isDisabled false', () =>
+    describe('setTitle', () =>
+    {
+        it('should update title in state', () =>
         {
-            expect(button.state.value.isDisabled).toBe(false);
+            button.setTitle('button.create');
+
+            expect(button.state.value.title).toBe('button.create');
+        });
+
+        it('should throw DisposedException when disposed', () =>
+        {
+            button[Symbol.dispose]();
+
+            expect(() => button.setTitle('button.create')).toThrow(DisposedException);
         });
     });
 
-    describe('properties', () =>
+    describe('setColor', () =>
     {
-        it('should read title from state', () =>
+        it('should update color in state', () =>
         {
-            expect(button.state.value.title).toBe('');
-            expect(button.title).toBe('');
-        });
-
-        it('should write title to state', () =>
-        {
-            button.title = 'Save';
-
-            expect(button.state.value.title).toBe('Save');
-            expect(button.title).toBe('Save');
-        });
-
-        it('should read color from state', () =>
-        {
-            expect(button.state.value.color).toBe('neutral');
-            expect(button.color).toBe('neutral');
-        });
-
-        it('should write color to state', () =>
-        {
-            button.color = 'primary';
+            button.setColor('primary');
 
             expect(button.state.value.color).toBe('primary');
-            expect(button.color).toBe('primary');
         });
 
-        it('should read isLoading from state', () =>
+        it('should throw DisposedException when disposed', () =>
         {
-            expect(button.state.value.isLoading).toBe(false);
-            expect(button.isLoading).toBe(false);
+            button[Symbol.dispose]();
+
+            expect(() => button.setColor('primary')).toThrow(DisposedException);
         });
     });
 
@@ -77,7 +69,6 @@ describe('ButtonGeneralViewmodelImpl', () =>
         {
             button.showLoader();
 
-            expect(button.isLoading).toBe(true);
             expect(button.state.value.isLoading).toBe(true);
         });
 
@@ -96,7 +87,6 @@ describe('ButtonGeneralViewmodelImpl', () =>
             button.showLoader();
             button.hideLoader();
 
-            expect(button.isLoading).toBe(false);
             expect(button.state.value.isLoading).toBe(false);
         });
 
@@ -121,12 +111,12 @@ describe('ButtonGeneralViewmodelImpl', () =>
 
             const executionPromise = command.executeAsync();
 
-            expect(button.isLoading).toBe(true);
+            expect(button.state.value.isLoading).toBe(true);
 
             resolve();
             await executionPromise;
 
-            expect(button.isLoading).toBe(false);
+            expect(button.state.value.isLoading).toBe(false);
         });
     });
 });

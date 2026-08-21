@@ -1,13 +1,12 @@
 import { ModalButtonConfirmConfigurator } from './modalButtonConfirmConfigurator';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
 import type { AsyncCommand } from '@client/shared';
-import type { MessagesService } from '@client/infrastructure-messages';
+import type { MessageKey } from '@client/infrastructure-messages';
 
 export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfigurator
 {
     constructor(
-        private button: ButtonGeneralViewmodel,
-        private messagesService: MessagesService,
+        private button: ButtonGeneralViewmodel
     )
     {
         super();
@@ -24,7 +23,7 @@ export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfig
     {
         this
             .setDefaultColor()
-            .setTitle(this.messagesService.getMessage('button.create'));
+            .setTitle('button.create');
 
         return this.button;
     }
@@ -33,21 +32,21 @@ export class ModalButtonConfirmConfiguratorBase extends ModalButtonConfirmConfig
     {
         this
             .setDefaultColor()
-            .setTitle(this.messagesService.getMessage('button.save'));
+            .setTitle('button.save');
 
         return this.button;
     }
 
     private setDefaultColor(): this
     {
-        this.button.color = 'primary';
+        this.button.setColor('primary');
 
         return this;
     }
 
-    private setTitle(title: string): this
+    private setTitle(title: MessageKey | undefined): this
     {
-        this.button.title = title;
+        this.button.setTitle(title);
 
         return this;
     }

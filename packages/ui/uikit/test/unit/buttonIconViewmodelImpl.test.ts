@@ -15,29 +15,17 @@ describe('ButtonIconViewmodelImpl', () =>
     {
         it('should initialize with default icon', () =>
         {
-            expect(button.state.value.icon).toBe(Icon.questionMarkCircle);
-        });
-
-        it('should initialize with isDisabled false', () =>
-        {
-            expect(button.state.value.isDisabled).toBe(false);
+            expect(button.state.value.icon).toBeUndefined();
         });
     });
 
-    describe('properties', () =>
+    describe('setIcon', () =>
     {
-        it('should read icon from state by default', () =>
+        it('should update icon in state', () =>
         {
-            expect(button.state.value.icon).toBe(Icon.questionMarkCircle);
-            expect(button.icon).toBe(Icon.questionMarkCircle);
-        });
-
-        it('should write icon to state', () =>
-        {
-            button.icon = Icon.check;
+            button.setIcon(Icon.check);
 
             expect(button.state.value.icon).toBe(Icon.check);
-            expect(button.icon).toBe(Icon.check);
         });
     });
 });

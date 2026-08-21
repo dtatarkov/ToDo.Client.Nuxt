@@ -1,8 +1,8 @@
-import { ButtonViewmodel } from './buttonViewmodel';
+import { ButtonBaseViewmodel } from './buttonBaseViewmodel';
 import type { ButtonIconData } from '../types/buttonIconData';
 import type { Icon } from '@client/shared';
 
-export abstract class ButtonIconViewmodel extends ButtonViewmodel<ButtonIconData>
+export abstract class ButtonIconViewmodel extends ButtonBaseViewmodel<ButtonIconData>
 {
-    abstract icon: Icon;
+    abstract setIcon(icon: Icon): void;
 }

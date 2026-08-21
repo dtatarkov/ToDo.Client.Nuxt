@@ -3,6 +3,7 @@ import { ButtonGeneralViewmodel } from './buttonGeneralViewmodel';
 import type { ButtonGeneralData } from '../types/buttonGeneralData';
 import type { ButtonData } from '../types/buttonData';
 import type { Color } from '@client/ui-core';
+import type { MessageKey } from '@client/infrastructure-messages';
 import type { AsyncCommand } from '@client/shared';
 
 export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl<ButtonGeneralData> implements ButtonGeneralViewmodel
@@ -10,35 +11,20 @@ export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl<ButtonGe
     protected override getInitialData(): Omit<ButtonGeneralData, keyof ButtonData>
     {
         return {
-            title: '',
+            title: undefined,
             color: 'neutral',
             isLoading: false,
         };
     }
 
-    get title(): string
+    setTitle(title: MessageKey | undefined): void
     {
-        return this.state.value.title;
+        this.state.update({ title });
     }
 
-    set title(value: string)
+    setColor(color: Color): void
     {
-        this.state.update({ title: value });
-    }
-
-    get color(): Color
-    {
-        return this.state.value.color;
-    }
-
-    set color(value: Color)
-    {
-        this.state.update({ color: value });
-    }
-
-    get isLoading(): boolean
-    {
-        return this.state.value.isLoading;
+        this.state.update({ color });
     }
 
     override setCommand(command: AsyncCommand): void

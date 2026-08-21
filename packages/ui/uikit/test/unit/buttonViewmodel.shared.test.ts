@@ -3,12 +3,12 @@ import { ButtonGeneralViewmodelImpl } from '../../src/viewmodels/buttonGeneralVi
 import { ButtonIconViewmodelImpl } from '../../src/viewmodels/buttonIconViewmodelImpl';
 import { AsyncCommandGeneric, DisposedException, InitializationOnlyException } from '@client/shared';
 import type { Constructor } from '@client/shared';
-import type { ButtonViewmodel } from '../../src/viewmodels/buttonViewmodel';
+import type { ButtonBaseViewmodel } from '../../src/viewmodels/buttonBaseViewmodel';
 
 interface TestParams
 {
     label: string;
-    ViewmodelClass: Constructor<ButtonViewmodel<any>>;
+    ViewmodelClass: Constructor<ButtonBaseViewmodel<any>>;
 }
 
 const testCases: TestParams[] = [
@@ -25,7 +25,7 @@ const testCases: TestParams[] = [
 
 describe.each(testCases)('$label', ({ ViewmodelClass }) =>
 {
-    let button: ButtonViewmodel<any>;
+    let button: ButtonBaseViewmodel<any>;
 
     beforeEach(() =>
     {
@@ -40,22 +40,12 @@ describe.each(testCases)('$label', ({ ViewmodelClass }) =>
         });
     });
 
-    describe('properties', () =>
-    {
-        it('should read isDisabled from state', () =>
-        {
-            expect(button.state.value.isDisabled).toBe(false);
-            expect(button.isDisabled).toBe(false);
-        });
-    });
-
     describe('disable', () =>
     {
         it('should disable the button', () =>
         {
             button.disable();
 
-            expect(button.isDisabled).toBe(true);
             expect(button.state.value.isDisabled).toBe(true);
         });
 
@@ -74,7 +64,6 @@ describe.each(testCases)('$label', ({ ViewmodelClass }) =>
             button.disable();
             button.enable();
 
-            expect(button.isDisabled).toBe(false);
             expect(button.state.value.isDisabled).toBe(false);
         });
 
