@@ -45,6 +45,14 @@ export default defineNuxtConfig({
     },
   },
 
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        skipLibCheck: true,
+      }
+    }
+  },
+
   experimental: {
     decorators: true,
   },
