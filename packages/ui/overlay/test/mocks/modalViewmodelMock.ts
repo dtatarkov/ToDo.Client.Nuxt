@@ -9,6 +9,7 @@ export function createModalViewmodelMock<TContentData extends Record<string, any
         state: createObservableViewmodelStateMock(state),
         enable: vi.fn(),
         disable: vi.fn(),
+        close: vi.fn(),
         [Symbol.dispose]: vi.fn(),
     } satisfies ModalViewmodel<TContentData>;
 }

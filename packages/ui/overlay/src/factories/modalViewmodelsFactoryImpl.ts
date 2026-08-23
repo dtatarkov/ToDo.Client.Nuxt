@@ -1,4 +1,3 @@
-import type { Viewmodel } from '@client/ui-core';
 import { ModalViewmodelsFactory, type ModalConfiguration } from './modalViewmodelsFactory';
 import { ModalViewmodelImpl } from '../viewmodels/modalViewmodelImpl';
 import type { ModalViewmodel } from '../viewmodels/modalViewmodel';
@@ -15,9 +14,10 @@ export class ModalViewmodelsFactoryImpl extends ModalViewmodelsFactory
         super();
     }
 
-    override create<TContent extends Viewmodel<any> = Viewmodel<any>>(
-        configuration: ModalConfiguration<TContent>
-    ): ModalViewmodel<TContent>
+    override create<TContentData extends Record<string, any> = Record<string, any>>(
+        configuration: ModalConfiguration<TContentData>,
+        onClose?: () => void
+    ): ModalViewmodel<TContentData>
     {
         const buttonConfirm = this.createButtonConfirm(configuration);
         const buttonCancel = this.createButtonCancel(configuration);
@@ -28,11 +28,12 @@ export class ModalViewmodelsFactoryImpl extends ModalViewmodelsFactory
             description: configuration.description,
             buttonConfirm,
             buttonCancel,
+            onClose,
         });
     }
 
-    private createButtonConfirm<TContent extends Viewmodel<any>>(
-        configuration: ModalConfiguration<TContent>
+    private createButtonConfirm<TContentData extends Record<string, any> = Record<string, any>>(
+        configuration: ModalConfiguration<TContentData>
     ): ButtonGeneralViewmodel | undefined
     {
         if (!configuration.buttonConfirm)
@@ -46,8 +47,8 @@ export class ModalViewmodelsFactoryImpl extends ModalViewmodelsFactory
         return configuration.buttonConfirm(configurator);
     }
 
-    private createButtonCancel<TContent extends Viewmodel<any>>(
-        configuration: ModalConfiguration<TContent>
+    private createButtonCancel<TContentData extends Record<string, any> = Record<string, any>>(
+        configuration: ModalConfiguration<TContentData>
     ): ButtonGeneralViewmodel | undefined
     {
         if (configuration.buttonCancel !== true)

@@ -10,7 +10,9 @@ function setupFactory()
     const uikit = createUiKitViewmodelsFactoryMock();
     const factory = new ModalViewmodelsFactoryImpl(uikit);
 
-    return { uikit, factory };
+    const onClose = vi.fn();
+
+    return { uikit, factory, onClose };
 }
 
 describe('ModalViewmodelsFactoryImpl', () =>
@@ -138,6 +140,20 @@ describe('ModalViewmodelsFactoryImpl', () =>
             });
 
             expect(modal.state.value.buttonCancel).toBeUndefined();
+        });
+
+        it('should pass onClose handler to vm', () =>
+        {
+            const { factory, onClose } = setupFactory();
+
+            const modal = factory.create({
+                title: 'Test title',
+                content: viewmodelMock,
+            }, onClose);
+
+            modal.close();
+
+            expect(onClose).toBeCalled();
         });
     });
 });

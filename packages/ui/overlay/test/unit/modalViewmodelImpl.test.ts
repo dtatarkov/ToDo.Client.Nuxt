@@ -1,7 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ModalViewmodelImpl, type ModalViewmodelOptions } from '../../src/viewmodels/modalViewmodelImpl';
 import { viewmodelMock, createViewmodelMock } from '@client/ui-core/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
+import { OverlayElementType } from '../../src/enums/overlayElementType';
 
 function setupViewmodel(options: ModalViewmodelOptions<{}>): ModalViewmodelImpl<{}>
 {
@@ -136,6 +137,29 @@ describe('ModalViewmodelImpl', () =>
             modal.disable();
 
             expect(buttonCancel.disable).toHaveBeenCalled();
+        });
+    });
+
+    describe('overlay element', () =>
+    {
+        it('should have state.elementType === OverlayElementType.Modal', () =>
+        {
+            const modal = setupViewmodel({ content: viewmodelMock });
+
+            expect(modal.state.value.elementType).toBe(OverlayElementType.modal);
+        });
+    });
+
+    describe('close', () =>
+    {
+        it('should call onClose handler when closed', () =>
+        {
+            const onClose = vi.fn();
+            const modal = setupViewmodel({ content: viewmodelMock, onClose });
+
+            modal.close();
+
+            expect(onClose).toHaveBeenCalledTimes(1);
         });
     });
 

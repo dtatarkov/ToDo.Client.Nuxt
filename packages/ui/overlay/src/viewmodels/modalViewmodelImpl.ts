@@ -1,8 +1,10 @@
-import { ViewmodelBase, ObservableViewmodelStateBase } from '@client/ui-core';
+import { ObservableViewmodelStateBase } from '@client/ui-core';
 import type { ModalData } from '../types/modalData';
 import { ModalViewmodel } from './modalViewmodel';
+import { OverlayElementViewmodelBase } from './overlayElementViewmodelBase';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
 import type { Viewmodel } from '@client/ui-core';
+import { OverlayElementType } from '../enums/overlayElementType';
 
 export type ModalViewmodelOptions<TContentData extends Record<string, any>> = {
     content: Viewmodel<TContentData>;
@@ -10,29 +12,31 @@ export type ModalViewmodelOptions<TContentData extends Record<string, any>> = {
     description?: string;
     buttonConfirm?: ButtonGeneralViewmodel;
     buttonCancel?: ButtonGeneralViewmodel;
+    onClose?: () => void;
 };
 
 export class ModalViewmodelImpl<TContentData extends Record<string, any>>
-    extends ViewmodelBase<ModalData<TContentData>>
+    extends OverlayElementViewmodelBase<ModalData<TContentData>>
     implements ModalViewmodel<TContentData>
 {
+    override state: ObservableViewmodelStateBase<ModalData<TContentData>>;
+
     private content: Viewmodel<TContentData>;
     private buttonConfirm: ButtonGeneralViewmodel | undefined;
     private buttonCancel: ButtonGeneralViewmodel | undefined;
 
-    state: ObservableViewmodelStateBase<ModalData<TContentData>>;
-
     constructor(
-        options: ModalViewmodelOptions<TContentData>,
+        options: ModalViewmodelOptions<TContentData>
     )
     {
-        super();
+        super(options.onClose);
 
         this.content = options.content;
         this.buttonConfirm = options.buttonConfirm;
         this.buttonCancel = options.buttonCancel;
 
         this.state = new ObservableViewmodelStateBase<ModalData<TContentData>>({
+            elementType: OverlayElementType.modal,
             title: options.title ?? '',
             description: options.description ?? '',
             content: options.content.state.value,

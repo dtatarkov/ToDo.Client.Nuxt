@@ -4,17 +4,18 @@ import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
 import type { ModalButtonConfirmConfigurator } from '../entities/modalButtonConfirmConfigurator';
 import type { Func } from '@client/shared';
 
-export type ModalConfiguration<TContent extends Viewmodel<any> = Viewmodel<any>> = {
+export type ModalConfiguration<TContentData extends Record<string, any> = Record<string, any>> = {
     title: string;
     description?: string;
-    content: TContent;
+    content: Viewmodel<TContentData>;
     buttonConfirm?: Func<ButtonGeneralViewmodel, [ModalButtonConfirmConfigurator]>;
     buttonCancel?: boolean;
 };
 
 export abstract class ModalViewmodelsFactory
 {
-    abstract create<TContent extends Viewmodel<any> = Viewmodel<any>>(
-        configuration: ModalConfiguration<TContent>
-    ): ModalViewmodel<TContent>;
+    abstract create<TContentData extends Record<string, any> = Record<string, any>>(
+        configuration: ModalConfiguration<TContentData>,
+        onClose?: () => void
+    ): ModalViewmodel<TContentData>;
 }
