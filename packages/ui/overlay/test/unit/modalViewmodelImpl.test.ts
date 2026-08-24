@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { ModalViewmodelImpl, type ModalViewmodelOptions } from '../../src/viewmodels/modalViewmodelImpl';
-import { viewmodelMock, createViewmodelMock } from '@client/ui-core/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
 import { OverlayElementType } from '../../src/enums/overlayElementType';
+import { createRenderableViewmodelMock, renderableViewmodelMock } from '@client/ui-core/mocks';
 
-function setupViewmodel(options: ModalViewmodelOptions<{}>): ModalViewmodelImpl<{}>
+function setupViewmodel<TContentData extends Record<string, any>>(options: ModalViewmodelOptions<TContentData>): ModalViewmodelImpl<TContentData>
 {
     return new ModalViewmodelImpl(options);
 }
@@ -15,30 +15,31 @@ describe('ModalViewmodelImpl', () =>
     {
         it('should have provided title', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock, title: 'Test title' });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, title: 'Test title' });
 
             expect(modal.state.value.title).toBe('Test title');
         });
 
         it('should have provided description', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock, description: 'Test description' });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, description: 'Test description' });
 
             expect(modal.state.value.description).toBe('Test description');
         });
 
         it('should have provided content state', () =>
         {
-            const content = createViewmodelMock({ foo: 'bar' });
+            const content = createRenderableViewmodelMock({ foo: 'bar' });
             const modal = setupViewmodel({ content });
 
-            expect(modal.state.value.content).toEqual(content.state.value);
+            expect(modal.state.value.content.renderKey).toBe(content.renderKey);
+            expect(modal.state.value.content.data).toEqual(content.state.value);
         });
 
         it('should have provided buttonConfirm state', () =>
         {
             const buttonConfirm = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonConfirm });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonConfirm });
 
             expect(modal.state.value.buttonConfirm).toEqual(buttonConfirm.state.value);
         });
@@ -46,30 +47,37 @@ describe('ModalViewmodelImpl', () =>
         it('should have provided buttonCancel state', () =>
         {
             const buttonCancel = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonCancel });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonCancel });
 
             expect(modal.state.value.buttonCancel).toEqual(buttonCancel.state.value);
         });
 
         it('should not have buttonConfirm state when buttonConfirm is not provided', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             expect(modal.state.value.buttonConfirm).toBeUndefined();
         });
 
         it('should not have buttonCancel state when buttonCancel is not provided', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             expect(modal.state.value.buttonCancel).toBeUndefined();
         });
 
         it('should not be disabled by default', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             expect(modal.state.value.isDisabled).toBe(false);
+        });
+
+        it('should have isInline: false by default', () =>
+        {
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
+
+            expect(modal.state.value.isInline).toBe(false);
         });
     });
 
@@ -77,7 +85,7 @@ describe('ModalViewmodelImpl', () =>
     {
         it('should set isDisabled to false', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             modal.disable();
             modal.enable();
@@ -88,7 +96,7 @@ describe('ModalViewmodelImpl', () =>
         it('should enable buttonConfirmViewmodel if present', () =>
         {
             const buttonConfirm = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonConfirm });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonConfirm });
 
             modal.disable();
             modal.enable();
@@ -99,7 +107,7 @@ describe('ModalViewmodelImpl', () =>
         it('should enable buttonCancelViewmodel if present', () =>
         {
             const buttonCancel = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonCancel });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonCancel });
 
             modal.disable();
             modal.enable();
@@ -112,7 +120,7 @@ describe('ModalViewmodelImpl', () =>
     {
         it('should set isDisabled to true', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             modal.disable();
 
@@ -122,7 +130,7 @@ describe('ModalViewmodelImpl', () =>
         it('should disable buttonConfirmViewmodel if present', () =>
         {
             const buttonConfirm = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonConfirm });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonConfirm });
 
             modal.disable();
 
@@ -132,7 +140,7 @@ describe('ModalViewmodelImpl', () =>
         it('should disable buttonCancelViewmodel if present', () =>
         {
             const buttonCancel = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonCancel });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonCancel });
 
             modal.disable();
 
@@ -144,7 +152,7 @@ describe('ModalViewmodelImpl', () =>
     {
         it('should have state.elementType === OverlayElementType.Modal', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             expect(modal.state.value.elementType).toBe(OverlayElementType.modal);
         });
@@ -155,7 +163,7 @@ describe('ModalViewmodelImpl', () =>
         it('should call onClose handler when closed', () =>
         {
             const onClose = vi.fn();
-            const modal = setupViewmodel({ content: viewmodelMock, onClose });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, onClose });
 
             modal.close();
 
@@ -167,17 +175,17 @@ describe('ModalViewmodelImpl', () =>
     {
         it('should dispose content viewmodel', () =>
         {
-            const modal = setupViewmodel({ content: viewmodelMock });
+            const modal = setupViewmodel({ content: renderableViewmodelMock });
 
             modal[Symbol.dispose]();
 
-            expect(viewmodelMock[Symbol.dispose]).toHaveBeenCalled();
+            expect(renderableViewmodelMock[Symbol.dispose]).toHaveBeenCalled();
         });
 
         it('should dispose buttonConfirmViewmodel if present', () =>
         {
             const buttonConfirm = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonConfirm });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonConfirm });
 
             modal[Symbol.dispose]();
 
@@ -187,7 +195,7 @@ describe('ModalViewmodelImpl', () =>
         it('should dispose buttonCancelViewmodel if present', () =>
         {
             const buttonCancel = createButtonGeneralViewmodelMock();
-            const modal = setupViewmodel({ content: viewmodelMock, buttonCancel });
+            const modal = setupViewmodel({ content: renderableViewmodelMock, buttonCancel });
 
             modal[Symbol.dispose]();
 

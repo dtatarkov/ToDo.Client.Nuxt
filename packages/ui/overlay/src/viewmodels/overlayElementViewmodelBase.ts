@@ -2,8 +2,8 @@ import type { OverlayElementData } from '../types/overlayElementData';
 import { ViewmodelBase } from '@client/ui-core';
 import type { OverlayElementViewmodel } from './overlayElementViewmodel';
 
-export abstract class OverlayElementViewmodelBase<TData extends OverlayElementData>
-    extends ViewmodelBase<TData>
+export abstract class OverlayElementViewmodelBase<TData extends Record<string, any> = Record<string, any>>
+    extends ViewmodelBase<OverlayElementData<TData>>
     implements OverlayElementViewmodel<TData>
 {
     constructor(

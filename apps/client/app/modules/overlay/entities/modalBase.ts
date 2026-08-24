@@ -11,11 +11,11 @@ import type { Func, AsyncCommand } from '@client/shared';
 import { OverlayElementBase } from './overlayElementBase';
 import type { MessagesService } from '@client/infrastructure-messages';
 import { VModal } from '@client/ui-vue';
-import type { ModalData } from '@client/ui-overlay';
+import type { ModalDataFull } from '@client/ui-overlay';
 
 export class ModalBase<Content extends UIElement> extends OverlayElementBase<ModalsStore> implements Modal<Content>
 {
-  private data: ModalData;
+  private data: ModalDataFull;
   private buttons: Array<ButtonGeneral>;
 
   private state = shallowReactive({

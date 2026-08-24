@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { ModalViewmodelsFactoryImpl } from '../../src/factories/modalViewmodelsFactoryImpl';
 import { createUiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 import { createButtonGeneralViewmodelMock } from '@client/ui-uikit/mocks';
-import { createViewmodelMock, viewmodelMock } from '@client/ui-core/mocks';
+import { createRenderableViewmodelMock, renderableViewmodelMock } from '@client/ui-core/mocks';
 import type { ModalButtonConfirmConfigurator } from '../../src';
 
 function setupFactory()
@@ -26,7 +26,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             expect(modal.state.value.title).toBe('Test title');
@@ -34,7 +34,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
         it('should create modal with provided content', () =>
         {
-            const content = createViewmodelMock({ foo: 'bar' });
+            const content = createRenderableViewmodelMock({ foo: 'bar' });
             const { factory } = setupFactory();
 
             const modal = factory.create({
@@ -42,7 +42,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
                 content,
             });
 
-            expect(modal.state.value.content).toEqual(content.state.value);
+            expect(modal.state.value.content.data).toEqual(content.state.value);
         });
 
         it('should create modal with provided description', () =>
@@ -52,7 +52,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
             const modal = factory.create({
                 title: 'Test title',
                 description: 'Test description',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             expect(modal.state.value.description).toBe('Test description');
@@ -69,7 +69,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
                 buttonConfirm: configuratorFn,
             });
 
@@ -86,7 +86,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
                 buttonCancel: true,
             });
 
@@ -101,7 +101,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
             uikit.createButtonGeneral.mockImplementation(() => createButtonGeneralViewmodelMock());
 
             const configuratorFn = vi.fn((configurator: ModalButtonConfirmConfigurator) => configurator.asCreateButton());
-            const content = createViewmodelMock({ foo: 'bar' });
+            const content = createRenderableViewmodelMock({ foo: 'bar' });
 
             const modal = factory.create({
                 title: 'Test title',
@@ -113,7 +113,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             expect(modal.state.value.title).toBe('Test title');
             expect(modal.state.value.description).toBe('Test description');
-            expect(modal.state.value.content).toBe(content.state.value);
+            expect(modal.state.value.content.data).toEqual(content.state.value);
             expect(modal.state.value.buttonConfirm).toBeDefined();
             expect(modal.state.value.buttonCancel).toBeDefined();
         });
@@ -124,7 +124,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             expect(modal.state.value.buttonConfirm).toBeUndefined();
@@ -136,7 +136,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             expect(modal.state.value.buttonCancel).toBeUndefined();
@@ -148,7 +148,7 @@ describe('ModalViewmodelsFactoryImpl', () =>
 
             const modal = factory.create({
                 title: 'Test title',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             }, onClose);
 
             modal.close();

@@ -26,6 +26,11 @@ export class FormViewmodelImpl<TEntity extends Record<string, any>> extends View
 
     state: ObservableViewmodelState<FormDataFull>;
 
+    get renderKey(): symbol
+    {
+        return FormViewmodel.renderKey;
+    }
+
     constructor(
         private elementViewmodels: FormElementViewmodel<any>[],
         handlers: FormHandlers<TEntity>,

@@ -1,13 +1,14 @@
 import { ObservableViewmodelStateBase } from '@client/ui-core';
-import type { ModalData } from '../types/modalData';
+import type { OverlayElementData } from '../types/overlayElementData';
+import type { ModalDataFull } from '../types/modalDataFull';
 import { ModalViewmodel } from './modalViewmodel';
 import { OverlayElementViewmodelBase } from './overlayElementViewmodelBase';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
-import type { Viewmodel } from '@client/ui-core';
+import type { RenderableViewmodel } from '@client/ui-core';
 import { OverlayElementType } from '../enums/overlayElementType';
 
 export type ModalViewmodelOptions<TContentData extends Record<string, any>> = {
-    content: Viewmodel<TContentData>;
+    content: RenderableViewmodel<TContentData>;
     title?: string;
     description?: string;
     buttonConfirm?: ButtonGeneralViewmodel;
@@ -16,12 +17,12 @@ export type ModalViewmodelOptions<TContentData extends Record<string, any>> = {
 };
 
 export class ModalViewmodelImpl<TContentData extends Record<string, any>>
-    extends OverlayElementViewmodelBase<ModalData<TContentData>>
+    extends OverlayElementViewmodelBase<ModalDataFull<TContentData>>
     implements ModalViewmodel<TContentData>
 {
-    override state: ObservableViewmodelStateBase<ModalData<TContentData>>;
+    override state: ObservableViewmodelStateBase<OverlayElementData<ModalDataFull<TContentData>>>;
 
-    private content: Viewmodel<TContentData>;
+    private content: RenderableViewmodel<TContentData>;
     private buttonConfirm: ButtonGeneralViewmodel | undefined;
     private buttonCancel: ButtonGeneralViewmodel | undefined;
 
@@ -35,11 +36,15 @@ export class ModalViewmodelImpl<TContentData extends Record<string, any>>
         this.buttonConfirm = options.buttonConfirm;
         this.buttonCancel = options.buttonCancel;
 
-        this.state = new ObservableViewmodelStateBase<ModalData<TContentData>>({
+        this.state = new ObservableViewmodelStateBase<OverlayElementData<ModalDataFull<TContentData>>>({
             elementType: OverlayElementType.modal,
             title: options.title ?? '',
             description: options.description ?? '',
-            content: options.content.state.value,
+            content: {
+                renderKey: this.content.renderKey,
+                data: this.content.state.value,
+            },
+            isInline: false,
             buttonConfirm: options.buttonConfirm?.state.value,
             buttonCancel: options.buttonCancel?.state.value,
             isDisabled: false,
@@ -66,7 +71,6 @@ export class ModalViewmodelImpl<TContentData extends Record<string, any>>
     {
         this.disposeToken.assertNotDisposed();
         this.state.update({ isDisabled: false });
-
         this.buttonConfirm?.enable();
         this.buttonCancel?.enable();
     }
@@ -75,14 +79,13 @@ export class ModalViewmodelImpl<TContentData extends Record<string, any>>
     {
         this.disposeToken.assertNotDisposed();
         this.state.update({ isDisabled: true });
-
         this.buttonConfirm?.disable();
         this.buttonCancel?.disable();
     }
 
     private updateContentState()
     {
-        this.state.update({ content: this.content.state.value });
+        this.state.update({ content: { ...this.state.value.content, data: this.content.state.value } });
     }
 
     private updateButtonConfirmState()

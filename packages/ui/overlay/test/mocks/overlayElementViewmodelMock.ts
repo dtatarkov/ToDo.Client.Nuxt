@@ -1,23 +1,20 @@
 import { vi } from 'vitest';
 import type { OverlayElementViewmodel } from '../../src/viewmodels/overlayElementViewmodel';
-import { createObservableViewmodelStateMock, createViewmodelMock } from '@client/ui-core/mocks';
+import { createObservableViewmodelStateMock } from '@client/ui-core/mocks';
 import type { OverlayElementData } from '../../src/types/overlayElementData';
-import { OverlayElementType, type OverlayElementsData } from '../../src';
+import { OverlayElementType } from '../../src';
 
-export function createOverlayElementViewmodelMock()
+export function createOverlayElementViewmodelMock<TData extends Record<string, any> = Record<string, any>>(
+    data: TData = {} as TData
+)
 {
     return {
-        state: createObservableViewmodelStateMock<OverlayElementsData>({
+        state: createObservableViewmodelStateMock<OverlayElementData<TData>>({
             elementType: OverlayElementType.modal,
-            title: '',
-            description: '',
-            content: createViewmodelMock({}),
-            buttonConfirm: undefined,
-            buttonCancel: undefined,
-            isDisabled: false,
+            ...data
         }),
 
         close: vi.fn(),
         [Symbol.dispose]: vi.fn(),
-    } satisfies OverlayElementViewmodel<OverlayElementData>;
+    } satisfies OverlayElementViewmodel<TData>;
 }

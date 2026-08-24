@@ -1,5 +1,5 @@
 import type { OverlayElementType } from '../enums/overlayElementType';
-import type { ModalData } from './modalData';
+import type { ModalDataFull } from './modalDataFull';
 
 export type OverlayElementsData =
-    | (ModalData & { elementType: OverlayElementType.modal; });
+    | (ModalDataFull & { elementType: OverlayElementType.modal; });

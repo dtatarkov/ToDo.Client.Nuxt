@@ -41,5 +41,5 @@ it('modal example', async () =>
     expect(modal.state.value.isDisabled).toBe(false);
 
     // Content access
-    expect(modal.state.value.content).toBe(form.state.value);
+    expect(modal.state.value.content.data).toBe(form.state.value);
 });

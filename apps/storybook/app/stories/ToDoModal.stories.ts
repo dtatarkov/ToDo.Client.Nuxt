@@ -1,0 +1,140 @@
+import type { Color } from '@client/ui-core';
+import type { ButtonGeneralData } from '@client/ui-uikit';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import { createToDoFormConfiguration } from '@client/ui-todo';
+import { FormViewmodel } from '@client/ui-forms';
+import { VModal } from '@client/ui-vue';
+
+const meta: Meta = {
+    title: 'ToDo/ToDoModal',
+    component: VModal,
+};
+
+export default meta;
+type Story = StoryObj<typeof VModal>;
+
+const buttonCancel: Partial<ButtonGeneralData> = {
+    title: 'button.cancel',
+};
+
+const buttonConfirmCreate: Partial<ButtonGeneralData> = {
+    title: 'button.create',
+    color: 'primary' as Color,
+};
+
+const buttonConfirmSave: Partial<ButtonGeneralData> = {
+    title: 'button.save',
+    color: 'primary' as Color,
+};
+
+export const AddEmpty: Story = {
+    args: {
+        title: 'Create ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData(),
+        },
+        buttonConfirm: buttonConfirmCreate,
+        buttonCancel,
+    },
+};
+
+export const AddFilled: Story = {
+    args: {
+        title: 'Create ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData({
+                values: {
+                    title: 'Test ToDo',
+                    description: 'This is a test description',
+                    completionDatePlanned: new Date('07/20/2026'),
+                },
+            }),
+        },
+        buttonConfirm: buttonConfirmCreate,
+        buttonCancel,
+    },
+};
+
+export const AddWithErrors: Story = {
+    args: {
+        title: 'Create ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData({
+                errors: {
+                    title: 'todo.field.title.errors.empty',
+                },
+            }),
+        },
+        buttonConfirm: buttonConfirmCreate,
+        buttonCancel,
+    },
+};
+
+export const AddDisabled: Story = {
+    args: {
+        title: 'Create ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData(),
+        },
+        buttonConfirm: buttonConfirmCreate,
+        buttonCancel,
+        isDisabled: true,
+    },
+};
+
+export const EditFilled: Story = {
+    args: {
+        title: 'Edit ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData({
+                values: {
+                    title: 'Test ToDo',
+                    description: 'This is a test description',
+                    completionDatePlanned: new Date('07/20/2026'),
+                },
+            }),
+        },
+        buttonConfirm: buttonConfirmSave,
+        buttonCancel,
+    },
+};
+
+export const EditWithErrors: Story = {
+    args: {
+        title: 'Edit ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData({
+                errors: {
+                    title: 'todo.field.title.errors.empty',
+                },
+            }),
+        },
+        buttonConfirm: buttonConfirmSave,
+        buttonCancel,
+    },
+};
+
+export const EditDisabled: Story = {
+    args: {
+        title: 'Edit ToDo',
+        content: {
+            renderKey: FormViewmodel.renderKey,
+            data: createToDoFormConfiguration().toData({
+                values: {
+                    title: 'Test ToDo',
+                    description: 'This is a test description',
+                    completionDatePlanned: new Date('07/20/2026'),
+                },
+            }),
+        },
+        buttonConfirm: buttonConfirmSave,
+        buttonCancel,
+        isDisabled: true,
+    },
+};

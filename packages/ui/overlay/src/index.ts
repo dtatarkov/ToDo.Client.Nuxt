@@ -1,4 +1,6 @@
-export type { ModalData } from './types/modalData';
+export type { ModalContentData } from './types/modalContentData';
+export type { ModalDataPartial } from './types/modalDataPartial';
+export type { ModalDataFull } from './types/modalDataFull';
 export type { ModalConfiguration } from './factories/modalViewmodelsFactory';
 export type { ModalViewmodelOptions } from './viewmodels/modalViewmodelImpl';
 export type { OverlayData } from './types/overlayData';

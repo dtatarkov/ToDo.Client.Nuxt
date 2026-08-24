@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { OverlayBase } from '../../src/entities/overlayBase';
 import { ModalViewmodelsFactoryImpl } from '../../src/factories/modalViewmodelsFactoryImpl';
 import { createUiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
-import { viewmodelMock } from '@client/ui-core/mocks';
+import { renderableViewmodelMock } from '@client/ui-core/mocks';
 
 function setupOverlay()
 {
@@ -33,7 +33,7 @@ describe('OverlayBase', () =>
 
             overlay.createModal({
                 title: 'Test',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             expect(overlay.elements.value).toHaveLength(1);
@@ -45,7 +45,7 @@ describe('OverlayBase', () =>
 
             const modal = overlay.createModal({
                 title: 'Test',
-                content: viewmodelMock,
+                content: renderableViewmodelMock,
             });
 
             modal.close();
