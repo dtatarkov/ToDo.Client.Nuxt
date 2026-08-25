@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import * as locales from '@nuxt/ui/locale';
-import VOverlayWidget from '@/modules/overlay/widgets/VOverlayWidget.vue';
+import { VOverlayWidget } from '@client/ui-vue';
 
 const config = useRuntimeConfig();
 const locale = (locales as any)[config.public.locale];

@@ -31,3 +31,4 @@ export { default as VForm } from './components/VForm.vue';
 
 //Widgets
 export { default as VToDosWidget } from './widgets/VToDosWidget.vue';
+export { default as VOverlayWidget } from './widgets/VOverlayWidget.vue';
