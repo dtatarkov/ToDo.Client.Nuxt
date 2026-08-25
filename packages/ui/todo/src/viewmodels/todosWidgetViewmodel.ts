@@ -1,17 +1,9 @@
-import type { MessageKey } from '@client/infrastructure-messages';
 import { Viewmodel } from '@client/ui-core';
-import type { ToDoCardData } from '../types/todoCardData';
+import type { ToDosWidgetData } from '../types/todosWidgetData';
 
-export type ToDosWidgetViewmodelState = {
-    cards: ToDoCardData[];
-};
-
-export abstract class ToDosWidgetViewmodel extends Viewmodel<ToDosWidgetViewmodelState>
+export abstract class ToDosWidgetViewmodel extends Viewmodel<ToDosWidgetData>
 {
-    abstract readonly addToDoButtonLabelKey: MessageKey;
-
     abstract createToDo(): void;
     abstract editToDo(id: string): void;
     abstract initializeAsync(): Promise<void>;
 }
-

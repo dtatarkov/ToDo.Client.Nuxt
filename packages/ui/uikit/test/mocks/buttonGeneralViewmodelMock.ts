@@ -26,3 +26,5 @@ export function createButtonGeneralViewmodelMock()
         [Symbol.dispose]: vi.fn(),
     } satisfies ButtonGeneralViewmodel;
 }
+
+export const buttonGeneralViewmodelMock = createButtonGeneralViewmodelMock();

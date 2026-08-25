@@ -1,47 +1,52 @@
 import { InitializationToken } from '@client/shared';
-import { ToDosWidgetViewmodel, type ToDosWidgetViewmodelState } from './todosWidgetViewmodel';
+import { ToDosWidgetViewmodel } from './todosWidgetViewmodel';
+import type { ToDosWidgetData } from '../types/todosWidgetData';
 import { ToDosStore, type ToDo } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
-import type { ToDoCardData } from '../../../todo/src/types/todoCardData';
-import type { MessageKey } from '@client/infrastructure-messages';
+import { UIKitViewmodelsFactory, type ButtonGeneralViewmodel } from '@client/ui-uikit';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
+import type { ToDoCardData } from '../types/todoCardData';
 
 @dependency(ToDosStore)
-export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetViewmodelState> implements ToDosWidgetViewmodel
+@dependency(UIKitViewmodelsFactory)
+export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetData> implements ToDosWidgetViewmodel
 {
     private initializationToken = new InitializationToken();
+    private readonly addToDoButtonViewmodel: ButtonGeneralViewmodel;
 
-    readonly addToDoButtonLabelKey: MessageKey = 'todos.toolbar.buttons.add';
-
-    state = new ObservableViewmodelStateBase<ToDosWidgetViewmodelState>({
-        cards: []
-    });
+    state: ObservableViewmodelStateBase<ToDosWidgetData>;
 
     constructor(
-        private todosStore: ToDosStore
+        private todosStore: ToDosStore,
+        uiKitViewmodelsFactory: UIKitViewmodelsFactory,
     )
     {
         super();
+
+        this.addToDoButtonViewmodel = this.createAddToDoButton(uiKitViewmodelsFactory);
+        this.disposeToken.registerDisposable(this.addToDoButtonViewmodel);
+
+        this.state = new ObservableViewmodelStateBase<ToDosWidgetData>({
+            cards: [],
+            addToDoButton: this.addToDoButtonViewmodel.state.value,
+        });
+
+        this.addToDoButtonViewmodel.state.on(() => this.updateAddToDoButtonState(), this.disposeToken);
+
+        this.todosStore.todos.on(todos =>
+        {
+            this.updateCardsState(todos);
+        }, this.disposeToken);
     }
 
     createToDo(): void
     {
         console.log('createToDo');
-
-        // const todo = todosOwner.createToDo();
-        // todo.showForm();
     }
 
     editToDo(id: string): void
     {
         console.log('editToDo:id', id);
-
-        // const todo = await todosOwner.getToDoByIdAsync(id);
-
-        // if (todo)
-        // {
-        //     todo.showForm();
-        // }
     }
 
     async initializeAsync()
@@ -52,24 +57,25 @@ export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetViewmodel
         }
 
         this.initializationToken.initialize();
-        this.updateCards(this.todosStore.todos.value);
-
-        this.todosStore.todos.on(todos =>
-        {
-            this.updateCards(todos);
-        }, this.disposeToken);
+        this.updateCardsState(this.todosStore.todos.value);
 
         await this.todosStore.initializeToDosAsync();
     }
 
-    override[Symbol.dispose]()
+    private createAddToDoButton(factory: UIKitViewmodelsFactory): ButtonGeneralViewmodel
     {
-        super[Symbol.dispose]();
+        const button = factory.createButtonGeneral();
+        button.setTitle('todos.toolbar.buttons.add');
 
-        this.disposeToken[Symbol.dispose]();
+        return button;
     }
 
-    private updateCards(todos: ToDo[])
+    private updateAddToDoButtonState()
+    {
+        this.state.update({ addToDoButton: this.addToDoButtonViewmodel.state.value });
+    }
+
+    private updateCardsState(todos: ToDo[])
     {
         const cards = this.createToDoCardsData(todos);
 

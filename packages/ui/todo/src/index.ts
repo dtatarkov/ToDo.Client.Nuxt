@@ -1,4 +1,5 @@
 export type { ToDoCardData } from './types/todoCardData';
+export type { ToDosWidgetData } from './types/todosWidgetData';
 
 export { todoFormConfiguration, createToDoFormConfiguration } from './configuration/todoFormConfiguration';
 

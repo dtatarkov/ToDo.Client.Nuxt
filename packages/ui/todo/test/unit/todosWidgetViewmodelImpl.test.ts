@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosWidgetViewmodelImpl } from '../../src/viewmodels/todosWidgetViewmodelImpl';
 import { todosStoreMock } from '../../../../domain/todo/test/mocks/todosStoreMock';
 import { createToDoMock } from '../../../../domain/todo/test/mocks/todoMock';
+import { buttonGeneralViewmodelMock, uiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 
 describe('ToDosWidgetViewmodelImpl', () =>
 {
@@ -10,22 +11,21 @@ describe('ToDosWidgetViewmodelImpl', () =>
     beforeEach(() =>
     {
         vi.clearAllMocks();
-        viewmodel = new ToDosWidgetViewmodelImpl(todosStoreMock);
-    });
-
-    describe('addToDoButtonLabelKey', () =>
-    {
-        it('should return the correct button label key', () =>
-        {
-            expect(viewmodel.addToDoButtonLabelKey).toBe('todos.toolbar.buttons.add');
-        });
+        uiKitViewmodelsFactoryMock.createButtonGeneral.mockReturnValue(buttonGeneralViewmodelMock);
+        viewmodel = new ToDosWidgetViewmodelImpl(todosStoreMock, uiKitViewmodelsFactoryMock);
     });
 
     describe('state', () =>
     {
         it('should initialize with empty cards array', () =>
         {
-            expect(viewmodel.state.value).toEqual({ cards: [] });
+            expect(viewmodel.state.value.cards).toEqual([]);
+        });
+
+        it('should initialize with addToDoButton in state', () =>
+        {
+            expect(buttonGeneralViewmodelMock.setTitle).toBeCalledWith('todos.toolbar.buttons.add');
+            expect(viewmodel.state.value.addToDoButton).toBeDefined();
         });
     });
 
