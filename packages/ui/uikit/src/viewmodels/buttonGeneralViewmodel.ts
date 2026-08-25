@@ -5,7 +5,7 @@ import type { MessageKey } from '@client/infrastructure-messages';
 
 export abstract class ButtonGeneralViewmodel extends ButtonBaseViewmodel<ButtonGeneralData>
 {
-    abstract setTitle(title: MessageKey | undefined): void;
+    abstract setTitle(titleKey: MessageKey | undefined): void;
     abstract setColor(color: Color): void;
     abstract showLoader(): void;
     abstract hideLoader(): void;

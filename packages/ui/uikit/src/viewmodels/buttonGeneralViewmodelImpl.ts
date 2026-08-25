@@ -11,15 +11,15 @@ export class ButtonGeneralViewmodelImpl extends ButtonBaseViewmodelImpl<ButtonGe
     protected override getInitialData(): Omit<ButtonGeneralData, keyof ButtonData>
     {
         return {
-            title: undefined,
+            titleKey: undefined,
             color: 'neutral',
             isLoading: false,
         };
     }
 
-    setTitle(title: MessageKey | undefined): void
+    setTitle(titleKey: MessageKey | undefined): void
     {
-        this.state.update({ title });
+        this.state.update({ titleKey: titleKey });
     }
 
     setColor(color: Color): void

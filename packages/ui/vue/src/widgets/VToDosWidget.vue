@@ -1,7 +1,7 @@
 <template>
   <div class="p-4 flex flex-col gap-4">
     <VToolbar>
-      <VButtonGeneral :title="messages.getMessage(viewmodel.addToDoButtonLabelKey)" @click="viewmodel.createToDo()" />
+      <VButtonGeneral :titleKey="viewmodel.addToDoButtonLabelKey" @click="viewmodel.createToDo()" />
     </VToolbar>
 
     <VGrid>

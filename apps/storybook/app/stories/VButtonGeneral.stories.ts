@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
     args: {
-        title: 'Создать Задание',
+        titleKey: 'button.save',
         color: 'primary',
         isDisabled: false,
         isLoading: false,
@@ -39,7 +39,7 @@ export const Default: Story = {
 
 export const Secondary: Story = {
     args: {
-        title: 'Обновить',
+        titleKey: 'button.save',
         color: 'secondary',
         isDisabled: false,
         isLoading: false,
@@ -48,7 +48,7 @@ export const Secondary: Story = {
 
 export const Success: Story = {
     args: {
-        title: 'Подтвердить',
+        titleKey: 'button.save',
         color: 'success',
         isDisabled: false,
         isLoading: false,
@@ -57,7 +57,7 @@ export const Success: Story = {
 
 export const Warning: Story = {
     args: {
-        title: 'Блокировать',
+        titleKey: 'button.cancel',
         color: 'warning',
         isDisabled: false,
         isLoading: false,
@@ -66,7 +66,7 @@ export const Warning: Story = {
 
 export const Error: Story = {
     args: {
-        title: 'Удалить',
+        titleKey: 'button.cancel',
         color: 'error',
         isDisabled: false,
         isLoading: false,
@@ -75,7 +75,7 @@ export const Error: Story = {
 
 export const Disabled: Story = {
     args: {
-        title: 'Сохранить',
+        titleKey: 'button.save',
         color: 'primary',
         isDisabled: true,
         isLoading: false,
@@ -84,7 +84,7 @@ export const Disabled: Story = {
 
 export const Loading: Story = {
     args: {
-        title: 'Сохранить',
+        titleKey: 'button.save',
         color: 'primary',
         isDisabled: false,
         isLoading: true,

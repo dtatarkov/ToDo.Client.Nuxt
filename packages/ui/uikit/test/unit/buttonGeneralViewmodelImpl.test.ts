@@ -15,7 +15,7 @@ describe('ButtonGeneralViewmodelImpl', () =>
     {
         it('should initialize with empty title', () =>
         {
-            expect(button.state.value.title).toBeUndefined();
+            expect(button.state.value.titleKey).toBeUndefined();
         });
 
         it('should initialize with neutral color', () =>
@@ -35,7 +35,7 @@ describe('ButtonGeneralViewmodelImpl', () =>
         {
             button.setTitle('button.create');
 
-            expect(button.state.value.title).toBe('button.create');
+            expect(button.state.value.titleKey).toBe('button.create');
         });
 
         it('should throw DisposedException when disposed', () =>

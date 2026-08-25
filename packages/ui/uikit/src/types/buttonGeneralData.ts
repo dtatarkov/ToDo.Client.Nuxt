@@ -3,7 +3,7 @@ import type { MessageKey } from '@client/infrastructure-messages';
 import type { ButtonData } from './buttonData';
 
 export type ButtonGeneralData = ButtonData & {
-    title: MessageKey | undefined;
+    titleKey: MessageKey | undefined;
     color: Color;
     isLoading: boolean;
 };

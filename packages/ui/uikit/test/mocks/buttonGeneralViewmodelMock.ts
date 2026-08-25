@@ -17,7 +17,7 @@ export function createButtonGeneralViewmodelMock()
         hideLoader: vi.fn(),
 
         state: createObservableViewmodelStateMock({
-            title: undefined,
+            titleKey: undefined,
             color: 'neutral',
             isDisabled: false,
             isLoading: false,

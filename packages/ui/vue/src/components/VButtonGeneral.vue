@@ -1,14 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { Color } from '@client/ui-core';
 import { isStringEmpty } from '@client/shared';
-
-type VButtonGeneralProps = {
-  title?: string;
-  color?: Color;
-  isDisabled?: boolean;
-  isLoading?: boolean;
-};
+import type { ButtonGeneralData } from '@client/ui-uikit';
+import { useMessages } from '../composables/useMessages';
 
 type VButtonGeneralEmits = {
   (e: 'click'): void;
@@ -18,8 +12,7 @@ defineOptions({
   inheritAttrs: false
 });
 
-const props = withDefaults(defineProps<VButtonGeneralProps>(), {
-  title: '',
+const props = withDefaults(defineProps<Partial<ButtonGeneralData>>(), {
   color: 'neutral',
   isDisabled: false,
   isLoading: false,
@@ -27,18 +20,21 @@ const props = withDefaults(defineProps<VButtonGeneralProps>(), {
 
 defineEmits<VButtonGeneralEmits>();
 
-const hasTitle = computed(() => !isStringEmpty(props.title));
+const { getMessage } = useMessages();
+
+const title = computed(() => getMessage(props.titleKey));
+const hasTitle = computed(() => !isStringEmpty(title.value));
 </script>
 
 <template>
   <UButton
     v-if="hasTitle"
     :label="title"
-    :color="color"
+    :color="props.color"
     variant="outline"
     size="lg"
-    :disabled="isDisabled"
-    :loading="isLoading"
+    :disabled="props.isDisabled"
+    :loading="props.isLoading"
     class="cursor-pointer"
     @click="$emit('click')"
   />

@@ -4,26 +4,31 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { createToDoFormConfiguration } from '@client/ui-todo';
 import { FormViewmodel } from '@client/ui-forms';
 import { VModal } from '@client/ui-vue';
+import { fn } from 'storybook/test';
 
 const meta: Meta = {
     title: 'ToDo/ToDoModal',
     component: VModal,
+
+    args: {
+        'onClose': fn(),
+    }
 };
 
 export default meta;
 type Story = StoryObj<typeof VModal>;
 
 const buttonCancel: Partial<ButtonGeneralData> = {
-    title: 'button.cancel',
+    titleKey: 'button.cancel',
 };
 
 const buttonConfirmCreate: Partial<ButtonGeneralData> = {
-    title: 'button.create',
+    titleKey: 'button.create',
     color: 'primary' as Color,
 };
 
 const buttonConfirmSave: Partial<ButtonGeneralData> = {
-    title: 'button.save',
+    titleKey: 'button.save',
     color: 'primary' as Color,
 };
 
