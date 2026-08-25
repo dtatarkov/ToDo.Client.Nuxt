@@ -18,9 +18,6 @@ import VToDoCard from '../components/VToDoCard.vue';
 import { ToDosWidgetViewmodel } from '@client/ui-todo';
 import { useService } from '../composables/useService';
 import { useViewmodel } from '../composables/useViewmodel';
-import { MessagesService } from '@client/infrastructure-messages';
-
-const messages = useService(MessagesService);
 
 const viewmodel = useService(ToDosWidgetViewmodel);
 const state = useViewmodel(viewmodel);
