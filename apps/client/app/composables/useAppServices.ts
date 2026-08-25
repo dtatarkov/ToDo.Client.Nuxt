@@ -18,7 +18,7 @@ import { ServicesContainer } from '@client/infrastructure-di';
 import { UIKitViewmodelsFactory, UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
 import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
 import { FormElementViewmodelsFactory, FormElementViewmodelsFactoryImpl, FormViewmodelFactory, FormViewmodelFactoryImpl } from '@client/ui-forms';
-import { Overlay, OverlayBase } from '@client/ui-overlay';
+import { Overlay, OverlayBase, OverlayViewmodel, OverlayViewmodelImpl } from '@client/ui-overlay';
 
 export function useAppServices()
 {
@@ -48,6 +48,7 @@ export function useAppServices()
 
     container.bind(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
     container.bind(ToDoCardViewmodel).to(ToDoCardViewmodelImpl).asTransient();
+    container.bind(OverlayViewmodel).to(OverlayViewmodelImpl).asTransient();
 
     container.bind(DateParser).to(DateParserImpl).asTransient();
     container.bind(DateFormatter).to(DateFormatterImpl).asTransient();
