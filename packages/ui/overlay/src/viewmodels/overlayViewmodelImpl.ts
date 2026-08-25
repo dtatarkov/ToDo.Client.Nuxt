@@ -1,8 +1,10 @@
 import { OverlayViewmodel } from './overlayViewmodel';
 import type { OverlayData } from '../types/overlayData';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
-import type { Overlay } from '../entities/overlay';
+import { Overlay } from '../entities/overlay';
+import { dependency } from '../../../../infrastructure/di/src';
 
+@dependency(Overlay)
 export class OverlayViewmodelImpl
     extends ViewmodelBase<OverlayData>
     implements OverlayViewmodel

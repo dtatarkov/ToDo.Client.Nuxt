@@ -5,12 +5,6 @@ import { DisposeToken } from '@client/shared';
 import { LoggingService, LoggingServiceImpl } from '@client/infrastructure-logging';
 import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
-import { Timeline } from '@/modules/notifications/entities/timeline';
-import { TimelineBase } from '@/modules/notifications/entities/timelineBase';
-import { Sidebar } from '@/modules/sidebar/entities/sidebar';
-import { SidebarBase } from '@/modules/sidebar/entities/sidebarBase';
-import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
-import { AppNotificationsStoreBase } from '@/modules/notifications/entities/appNotificationsStoreBase';
 import { MessagesService, MessagesServiceImpl } from '@client/infrastructure-messages';
 import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosStore, ToDosStoreBase, ToDosRepository } from '@client/domain-todo';
 import { provideServicesContainer } from '@client/ui-vue';
@@ -33,9 +27,6 @@ export function useAppServices()
     container.bind(ToDoFactory).to(ToDoFactoryImpl).asTransient();
 
     container.bind(Overlay).to(OverlayBase).asSingleton();
-    container.bind(Sidebar).to(SidebarBase).asSingleton();
-    container.bind(Timeline).to(TimelineBase).asSingleton();
-    container.bind(AppNotificationsStore).to(AppNotificationsStoreBase).asSingleton();
     container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
     container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();
