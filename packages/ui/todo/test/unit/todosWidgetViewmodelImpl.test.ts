@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { ToDosWidgetViewmodelImpl } from '../../src/viewmodels/todosWidgetViewmodelImpl';
-import { todosStoreMock } from '../../../../domain/todo/test/mocks/todosStoreMock';
+import { todoStoreMock } from '@client/domain-todo/test/mocks/todoStoreMock';
 import { createToDoMock } from '../../../../domain/todo/test/mocks/todoMock';
 import { buttonGeneralViewmodelMock, uiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
 
@@ -12,7 +12,7 @@ describe('ToDosWidgetViewmodelImpl', () =>
     {
         vi.clearAllMocks();
         uiKitViewmodelsFactoryMock.createButtonGeneral.mockReturnValue(buttonGeneralViewmodelMock);
-        viewmodel = new ToDosWidgetViewmodelImpl(todosStoreMock, uiKitViewmodelsFactoryMock);
+        viewmodel = new ToDosWidgetViewmodelImpl(todoStoreMock, uiKitViewmodelsFactoryMock);
     });
 
     describe('state', () =>
@@ -38,11 +38,11 @@ describe('ToDosWidgetViewmodelImpl', () =>
                 createToDoMock({ id: '2', title: 'Task 2', description: 'Desc 2' })
             ];
 
-            todosStoreMock.todos.setMockValue(mockTodos);
+            todoStoreMock.todos.setMockValue(mockTodos);
 
             await viewmodel.initializeAsync();
 
-            expect(todosStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
+            expect(todoStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
             expect(viewmodel.state.value.cards).toHaveLength(2);
         });
 
@@ -52,12 +52,12 @@ describe('ToDosWidgetViewmodelImpl', () =>
                 createToDoMock({ id: '1', title: 'Task 1', description: 'Desc 1' })
             ];
 
-            todosStoreMock.todos.setMockValue(mockTodos);
+            todoStoreMock.todos.setMockValue(mockTodos);
 
             await viewmodel.initializeAsync();
             await viewmodel.initializeAsync();
 
-            expect(todosStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
+            expect(todoStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
         });
     });
 });

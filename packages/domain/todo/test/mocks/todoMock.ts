@@ -1,6 +1,6 @@
 import { vi } from 'vitest';
 import type { ToDo } from '../../src';
-import type { ToDosStore } from '../../src/entities/todosStore';
+import type { ToDoStore } from '../../src/entities/todoStore';
 import type { ToDoData } from '../../src/types/todoData';
 
 const defaultToDoData: ToDoData = {
@@ -11,7 +11,7 @@ const defaultToDoData: ToDoData = {
     completionDateActual: undefined
 };
 
-export function createToDoMock(data?: Partial<ToDoData>, owner?: ToDosStore)
+export function createToDoMock(data?: Partial<ToDoData>, owner?: ToDoStore)
 {
     const fullData: ToDoData = {
         ...defaultToDoData,

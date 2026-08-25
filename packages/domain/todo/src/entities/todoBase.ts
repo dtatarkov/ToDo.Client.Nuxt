@@ -1,11 +1,11 @@
 import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
-import type { ToDosStore } from './todosStore';
+import type { ToDoStore } from './todoStore';
 import { isStringEmpty, updatePropertiesWithData } from '@client/shared';
 
 export class ToDoBase extends ToDo
 {
-  private ownerInternal: ToDosStore | undefined;
+  private ownerInternal: ToDoStore | undefined;
 
   private dataInternal: ToDoData = {
     id: '',
@@ -15,12 +15,12 @@ export class ToDoBase extends ToDo
     completionDateActual: undefined
   };
 
-  get owner(): ToDosStore | undefined
+  get owner(): ToDoStore | undefined
   {
     return this.ownerInternal;
   }
 
-  set owner(value: ToDosStore | undefined)
+  set owner(value: ToDoStore | undefined)
   {
     this.ownerInternal = value;
   }
