@@ -11,7 +11,9 @@ const meta: Meta = {
     component: VModal,
 
     args: {
-        'onClose': fn(),
+        onClose: fn(),
+        onCancel: fn(),
+        onConfirm: fn(),
     }
 };
 

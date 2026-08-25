@@ -18,6 +18,8 @@ const props = withDefaults(
 
 const emits = defineEmits<{
   (e: 'close'): void;
+  (e: 'cancel'): void;
+  (e: 'confirm'): void;
 }>();
 
 const isDismissible = computed(() => !props.isDisabled);
@@ -59,12 +61,13 @@ function getContentVNode(): VNode | undefined {
         <VButtonGeneral
           v-if="props.buttonCancel"
           v-bind="props.buttonCancel"
-          @click="emits('close')"
+          @click="emits('cancel')"
         />
 
         <VButtonGeneral
           v-if="props.buttonConfirm"
           v-bind="props.buttonConfirm"
+          @click="emits('confirm')"
         />
       </div>
     </template>
