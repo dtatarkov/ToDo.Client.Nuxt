@@ -7,8 +7,6 @@ import { ButtonsFactory } from '@/modules/uikit/factories/buttonsFactory';
 import { ButtonsFactoryImpl } from '@/modules/uikit/factories/buttonsFactoryImpl';
 import { Timeline } from '@/modules/notifications/entities/timeline';
 import { TimelineBase } from '@/modules/notifications/entities/timelineBase';
-import { Overlay } from '@/modules/overlay/entities/overlay';
-import { OverlayBase } from '@/modules/overlay/entities/overlayBase';
 import { Sidebar } from '@/modules/sidebar/entities/sidebar';
 import { SidebarBase } from '@/modules/sidebar/entities/sidebarBase';
 import { AppNotificationsStore } from '@/modules/notifications/entities/appNotificationsStore';
@@ -20,6 +18,8 @@ import { ServicesContainer } from '@client/infrastructure-di';
 import { UIKitViewmodelsFactory, UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
 import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
 import { FormElementViewmodelsFactory, FormElementViewmodelsFactoryImpl, FormViewmodelFactory, FormViewmodelFactoryImpl } from '@client/ui-forms';
+import { Overlay, OverlayBase } from '@client/ui-overlay';
+
 export function useAppServices()
 {
     const container = new ServicesContainer();
