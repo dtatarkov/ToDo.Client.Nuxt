@@ -5,7 +5,7 @@
     </VToolbar>
 
     <VGrid>
-      <VToDoCard v-for="card in state.cards" v-bind="card" :key="card.id" @edit="viewmodel.editToDo(card.id)" />
+      <VToDoCard v-for="card in state.cards" v-bind="card" :key="card.id" @edit="viewmodel.editToDoAsync(card.id)" />
     </VGrid>
   </div>
 </template>

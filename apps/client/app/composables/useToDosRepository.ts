@@ -1,4 +1,4 @@
-import { ToDoDtoMapper, type ToDo, type ToDoGetDto, type ToDosRepository } from '@client/domain-todo';
+import { ToDoDtoMapper, type ToDoGetDto, type ToDosRepository, type ToDoData, type ToDoAddData, type ToDoUpdateData } from '@client/domain-todo';
 
 export function useToDosRepository(): ToDosRepository
 {
@@ -6,7 +6,7 @@ export function useToDosRepository(): ToDosRepository
     const todoDtoMapper = useService(ToDoDtoMapper);
     const { load } = useSSRLoader();
 
-    async function getAllToDosAsync(): Promise<ToDo[]>
+    async function getAllToDosAsync(): Promise<ToDoData[]>
     {
         const dtos = await load('todos', () =>
             $fetch<ToDoGetDto[]>(`${config.public.apiBaseUrl}/todos`, {
@@ -15,19 +15,14 @@ export function useToDosRepository(): ToDosRepository
             })
         );
 
-        const todos = dtos.map(dto => todoDtoMapper.mapToEntity(dto));
+        const data = dtos.map(dto => todoDtoMapper.mapDtoToData(dto));
 
-        return todos;
+        return data;
     }
 
-    async function addToDoAsync(todo: ToDo): Promise<void>
+    async function addToDoAsync(data: ToDoAddData): Promise<ToDoData>
     {
-        if (!todo.isNew)
-        {
-            throw new Error('todo is not new');
-        }
-
-        const addDto = todoDtoMapper.mapToAddDto(todo);
+        const addDto = todoDtoMapper.mapDataToAddDto(data);
 
         const dto: ToDoGetDto = await $fetch(`${config.public.apiBaseUrl}/todos`, {
             method: 'POST',
@@ -35,22 +30,24 @@ export function useToDosRepository(): ToDosRepository
             body: addDto
         });
 
-        const addedToDo = todoDtoMapper.mapToEntity(dto);
-        todo.setData(addedToDo.getData());
+        const result = todoDtoMapper.mapDtoToData(dto);
+
+        return result;
     }
 
-    async function updateToDoAsync(todo: ToDo): Promise<void>
+    async function updateToDoAsync(data: ToDoUpdateData): Promise<ToDoData>
     {
-        const updateDto = todoDtoMapper.mapToUpdateDto(todo);
+        const updateDto = todoDtoMapper.mapDataToUpdateDto(data);
 
-        const dto: ToDoGetDto = await $fetch(`${config.public.apiBaseUrl}/todos/${todo.id}`, {
+        const dto: ToDoGetDto = await $fetch(`${config.public.apiBaseUrl}/todos/${data.id}`, {
             method: 'PUT',
             credentials: 'include',
             body: updateDto
         });
 
-        const updatedTodo = todoDtoMapper.mapToEntity(dto);
-        todo.setData(updatedTodo.getData());
+        const result = todoDtoMapper.mapDtoToData(dto);
+
+        return result;
     }
 
     return { getAllToDosAsync, addToDoAsync, updateToDoAsync };

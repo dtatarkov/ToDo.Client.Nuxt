@@ -9,12 +9,18 @@ function createFormValidatorMock()
 
         markAsValid()
         {
-            this.validate.mockReturnValue({ isValid: true, messages: {} });
+            this.validate.mockReturnValue({
+                isValid: true,
+                messages: {}
+            });
         },
 
         markAsInvalid(messages: FormValidationMessages)
         {
-            this.validate.mockReturnValue({ isValid: false, messages });
+            this.validate.mockReturnValue({
+                isValid: false,
+                messages
+            });
         },
     };
 

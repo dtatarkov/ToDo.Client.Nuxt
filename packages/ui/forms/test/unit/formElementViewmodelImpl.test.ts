@@ -8,7 +8,10 @@ function setupViewmodels(state: InputData<string>)
     const inputViewmodelMock = createInputViewmodelMock(state);
     const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodelMock);
 
-    return { inputViewmodelMock, formElementViewmodel };
+    return {
+        inputViewmodelMock,
+        formElementViewmodel
+    };
 }
 
 describe('constructor', () =>

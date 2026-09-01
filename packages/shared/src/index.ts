@@ -5,6 +5,7 @@ export { AsyncCommandGeneric } from './entities/asyncCommandGeneric';
 export { DisposeToken } from './entities/disposeToken';
 export { EntityEvent, type EntityEventConfiguration, type IEntityEvent } from './entities/entityEvent';
 export { InitializationToken } from './entities/initializationToken';
+export { TasksQueue } from './entities/tasksQueue';
 export { type ObservableArray } from './entities/observableArray';
 export { ObservableArrayBase } from './entities/observableArrayBase';
 export { type ObservableReadonly, isObservable } from './entities/observableReadonly';

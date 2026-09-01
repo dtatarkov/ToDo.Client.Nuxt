@@ -29,7 +29,10 @@ export class FormElementViewmodelsFactoryImpl extends FormElementViewmodelsFacto
             const fieldScheme = scheme?.fields[name as keyof TEntity];
             const formElementViewmodel = new FormElementViewmodelImpl(inputViewmodel, fieldScheme);
 
-            formElementViewmodel.setData({ name, ...createData });
+            formElementViewmodel.setData({
+                name,
+                ...createData
+            });
 
             result.push(formElementViewmodel);
         }

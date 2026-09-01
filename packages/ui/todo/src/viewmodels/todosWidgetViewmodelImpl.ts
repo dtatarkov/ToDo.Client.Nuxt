@@ -1,17 +1,21 @@
-import { InitializationToken } from '@client/shared';
 import { ToDosWidgetViewmodel } from './todosWidgetViewmodel';
 import type { ToDosWidgetData } from '../types/todosWidgetData';
-import { ToDosStore, type ToDo } from '@client/domain-todo';
+import { ToDosStore, type ToDoAddData, type ToDoUpdateData, ToDoNotFoundException, type ToDoData } from '@client/domain-todo';
 import { dependency } from '@client/infrastructure-di';
 import { UIKitViewmodelsFactory, type ButtonGeneralViewmodel } from '@client/ui-uikit';
 import { ObservableViewmodelStateBase, ViewmodelBase } from '@client/ui-core';
-import type { ToDoCardData } from '../types/todoCardData';
+import { createToDoAddFormConfiguration, createToDoUpdateFormConfiguration } from '../configuration/todoFormConfiguration';
+import { FormViewmodelFactory } from '@client/ui-forms';
+import { Overlay } from '@client/ui-overlay';
+import { ToDoToCardMapper } from '../mappers/todoToCardMapper';
 
 @dependency(ToDosStore)
 @dependency(UIKitViewmodelsFactory)
+@dependency(FormViewmodelFactory)
+@dependency(Overlay)
+@dependency(ToDoToCardMapper)
 export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetData> implements ToDosWidgetViewmodel
 {
-    private initializationToken = new InitializationToken();
     private readonly addToDoButtonViewmodel: ButtonGeneralViewmodel;
 
     state: ObservableViewmodelStateBase<ToDosWidgetData>;
@@ -19,6 +23,9 @@ export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetData> imp
     constructor(
         private todosStore: ToDosStore,
         uiKitViewmodelsFactory: UIKitViewmodelsFactory,
+        private formViewmodelFactory: FormViewmodelFactory,
+        private overlay: Overlay,
+        private todoToCardMapper: ToDoToCardMapper,
     )
     {
         super();
@@ -41,24 +48,63 @@ export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetData> imp
 
     createToDo(): void
     {
-        console.log('createToDo');
+        const scheme = this.todosStore.getAddScheme();
+        const formConfig = createToDoAddFormConfiguration(scheme);
+
+        const formViewmodel = this.formViewmodelFactory.create(formConfig, {
+            submit: async (data: Record<keyof ToDoAddData, any>) =>
+            {
+                await this.todosStore.addToDoAsync(data as ToDoAddData);
+            },
+        });
+
+        this.overlay.createModal({
+            title: 'Create ToDo',
+            content: formViewmodel,
+
+            buttonConfirm: configurator => configurator
+                .withCommand(formViewmodel.getSubmitCommand())
+                .asCreateButton(),
+
+            buttonCancel: true,
+        });
     }
 
-    editToDo(id: string): void
+    async editToDoAsync(id: string): Promise<void>
     {
-        console.log('editToDo:id', id);
+        const todoData = await this.todosStore.getToDoByIdAsync(id);
+        const scheme = await this.todosStore.getUpdateSchemeAsync(id);
+
+        if (!todoData || !scheme)
+        {
+            throw new ToDoNotFoundException(id);
+        }
+
+        const formConfig = createToDoUpdateFormConfiguration(scheme);
+
+        const formViewmodel = this.formViewmodelFactory.create(formConfig, {
+            submit: async (data: Record<keyof ToDoUpdateData, any>) =>
+            {
+                await this.todosStore.updateToDoAsync(data as ToDoUpdateData);
+            },
+        });
+
+        formViewmodel.setData(todoData);
+
+        this.overlay.createModal({
+            title: 'Edit ToDo',
+            content: formViewmodel,
+
+            buttonConfirm: configurator => configurator
+                .withCommand(formViewmodel.getSubmitCommand())
+                .asEditButton(),
+
+            buttonCancel: true,
+        });
     }
 
     async initializeAsync()
     {
-        if (this.initializationToken.isInitialized)
-        {
-            return;
-        }
-
-        this.initializationToken.initialize();
-        this.updateCardsState(this.todosStore.todos.value);
-
         await this.todosStore.initializeToDosAsync();
     }
 
@@ -75,23 +121,11 @@ export class ToDosWidgetViewmodelImpl extends ViewmodelBase<ToDosWidgetData> imp
         this.state.update({ addToDoButton: this.addToDoButtonViewmodel.state.value });
     }
 
-    private updateCardsState(todos: ToDo[])
+    private updateCardsState(todos: ToDoData[])
     {
-        const cards = this.createToDoCardsData(todos);
+        const cards = todos.map(todo =>
+            this.todoToCardMapper.map(todo));
 
         this.state.update({ cards });
-    }
-
-    private createToDoCardsData(todos: ToDo[]): ToDoCardData[]
-    {
-        const data = todos.map(todo => <ToDoCardData>{
-            id: todo.id,
-            title: todo.title,
-            description: todo.description,
-            completionDateActual: todo.completionDateActual,
-            completionDatePlanned: todo.completionDatePlanned,
-        });
-
-        return data;
     }
 }

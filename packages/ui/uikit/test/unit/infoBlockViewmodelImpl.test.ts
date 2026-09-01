@@ -43,8 +43,17 @@ describe('InfoBlockViewmodelImpl', () =>
             viewmodel.addRow('todo.card.completed', 'Content 2');
 
             expect(viewmodel.state.value.rows).toHaveLength(2);
-            expect(viewmodel.state.value.rows[0]).toEqual({ labelKey: 'todo.card.completeBy', content: 'Content 1' });
-            expect(viewmodel.state.value.rows[1]).toEqual({ labelKey: 'todo.card.completed', content: 'Content 2' });
+
+            expect(viewmodel.state.value.rows[0]).toEqual({
+                labelKey: 'todo.card.completeBy',
+                content: 'Content 1'
+            });
+
+            expect(viewmodel.state.value.rows[1]).toEqual({
+                labelKey: 'todo.card.completed',
+                content: 'Content 2'
+            });
+
             expect(viewmodel.state.value.hasRows).toBe(true);
         });
 

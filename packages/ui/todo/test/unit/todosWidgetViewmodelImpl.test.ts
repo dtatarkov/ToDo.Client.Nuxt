@@ -1,63 +1,122 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ToDosWidgetViewmodelImpl } from '../../src/viewmodels/todosWidgetViewmodelImpl';
-import { todoStoreMock } from '@client/domain-todo/test/mocks/todoStoreMock';
-import { createToDoMock } from '../../../../domain/todo/test/mocks/todoMock';
-import { buttonGeneralViewmodelMock, uiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
+import { todoStoreMock } from '@client/domain-todo/mocks';
+import { createButtonGeneralViewmodelMock, uiKitViewmodelsFactoryMock } from '@client/ui-uikit/mocks';
+import { formViewmodelMock, formViewmodelFactoryMock } from '@client/ui-forms/mocks';
+import { overlayMock } from '@client/ui-overlay/mocks';
+import { todoToCardMapperMock } from '../mocks';
+import { ToDoNotFoundException, type ToDoData } from '@client/domain-todo';
+import type { MessageKey } from '@client/infrastructure-messages';
+import { entitySchemeMock } from '../../../../infrastructure/entitySchemes/test/mocks/entitySchemeMock';
 
-describe('ToDosWidgetViewmodelImpl', () =>
+function setupViewmodel(): ToDosWidgetViewmodelImpl
 {
-    let viewmodel: ToDosWidgetViewmodelImpl;
+    return new ToDosWidgetViewmodelImpl(
+        todoStoreMock,
+        uiKitViewmodelsFactoryMock,
+        formViewmodelFactoryMock,
+        overlayMock,
+        todoToCardMapperMock,
+    );
+}
 
-    beforeEach(() =>
+beforeEach(() =>
+{
+    vi.resetAllMocks();
+    uiKitViewmodelsFactoryMock.createButtonGeneral.mockImplementation(() => createButtonGeneralViewmodelMock());
+    todoToCardMapperMock.map.mockImplementation(data => data);
+});
+
+describe('constructor', () =>
+{
+    it('should initialize with empty cards array', () =>
     {
-        vi.clearAllMocks();
-        uiKitViewmodelsFactoryMock.createButtonGeneral.mockReturnValue(buttonGeneralViewmodelMock);
-        viewmodel = new ToDosWidgetViewmodelImpl(todoStoreMock, uiKitViewmodelsFactoryMock);
+        const viewmodel = setupViewmodel();
+        expect(viewmodel.state.value.cards).toEqual([]);
     });
 
-    describe('state', () =>
+    it('should initialize addToDoButton', () =>
     {
-        it('should initialize with empty cards array', () =>
+        const addToDoButtonMock = createButtonGeneralViewmodelMock();
+        uiKitViewmodelsFactoryMock.createButtonGeneral.mockReturnValue(addToDoButtonMock);
+
+        setupViewmodel();
+
+        expect(addToDoButtonMock.setTitle).toBeCalledWith(<MessageKey>'todos.toolbar.buttons.add');
+    });
+});
+
+describe('side effects', () =>
+{
+    it('should update cards when store todos change', () =>
+    {
+        const newToDo: ToDoData =
         {
-            expect(viewmodel.state.value.cards).toEqual([]);
+            id: '1',
+            title: 'Task 1',
+            description: 'Desc 1',
+            completionDatePlanned: undefined,
+            completionDateActual: undefined,
+        };
+
+        todoStoreMock.todos.on.mockImplementation(fn =>
+        {
+            fn([newToDo]);
         });
 
-        it('should initialize with addToDoButton in state', () =>
-        {
-            expect(buttonGeneralViewmodelMock.setTitle).toBeCalledWith('todos.toolbar.buttons.add');
-            expect(viewmodel.state.value.addToDoButton).toBeDefined();
-        });
+        const viewmodel = setupViewmodel();
+
+        expect(viewmodel.state.value.cards).toHaveLength(1);
+        expect(viewmodel.state.value.cards[0]!.id).toBe(newToDo.id);
+    });
+});
+
+describe('createToDo', () =>
+{
+    it('should open modal with add form', () =>
+    {
+        formViewmodelFactoryMock.create.mockReturnValue(formViewmodelMock);
+
+        const viewmodel = setupViewmodel();
+        viewmodel.createToDo();
+
+        expect(overlayMock.createModal).toHaveBeenCalledWith(expect.objectContaining({
+            content: formViewmodelMock
+        }));
+    });
+});
+
+describe('editToDo', () =>
+{
+    it('should open modal with edit form for existing todo', async () =>
+    {
+        formViewmodelFactoryMock.create.mockReturnValue(formViewmodelMock);
+
+        const viewmodel = setupViewmodel();
+
+        const mockTodo: ToDoData = {
+            id: '1',
+            title: 'Task 1',
+            description: 'Desc 1',
+            completionDatePlanned: undefined,
+            completionDateActual: undefined,
+        };
+
+        todoStoreMock.getToDoByIdAsync.mockResolvedValue(mockTodo);
+        todoStoreMock.getUpdateSchemeAsync.mockResolvedValue(entitySchemeMock);
+
+        await viewmodel.editToDoAsync(mockTodo.id);
+
+        expect(overlayMock.createModal).toHaveBeenCalledWith(expect.objectContaining({
+            content: formViewmodelMock
+        }));
     });
 
-    describe('initializeAsync', () =>
+    it('should do nothing if todo not found', async () =>
     {
-        it('should initialize once and update cards from store', async () =>
-        {
-            const mockTodos = [
-                createToDoMock({ id: '1', title: 'Task 1', description: 'Desc 1' }),
-                createToDoMock({ id: '2', title: 'Task 2', description: 'Desc 2' })
-            ];
+        const viewmodel = setupViewmodel();
+        todoStoreMock.getToDoByIdAsync.mockResolvedValue(undefined);
 
-            todoStoreMock.todos.setMockValue(mockTodos);
-
-            await viewmodel.initializeAsync();
-
-            expect(todoStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
-            expect(viewmodel.state.value.cards).toHaveLength(2);
-        });
-
-        it('should not reinitialize if already initialized', async () =>
-        {
-            const mockTodos = [
-                createToDoMock({ id: '1', title: 'Task 1', description: 'Desc 1' })
-            ];
-
-            todoStoreMock.todos.setMockValue(mockTodos);
-
-            await viewmodel.initializeAsync();
-            await viewmodel.initializeAsync();
-
-            expect(todoStoreMock.initializeToDosAsync).toHaveBeenCalledTimes(1);
-        });
+        expect(viewmodel.editToDoAsync('1')).rejects.toThrow(ToDoNotFoundException);
     });
 });

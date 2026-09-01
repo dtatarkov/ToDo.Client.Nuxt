@@ -353,7 +353,11 @@ export class ServicesContainer implements Disposable
 
     constructor(settings?: Partial<ContainerSettings>)
     {
-        this.settings = { ...defaultContainerSettings, ...settings };
+        this.settings = {
+            ...defaultContainerSettings,
+            ...settings
+        };
+
         this.rootScope = new ServicesScopeImpl(this.bindings);
     }
 

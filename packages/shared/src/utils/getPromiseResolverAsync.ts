@@ -18,5 +18,8 @@ export async function getPromiseResolverAsync<T = void>(): Promise<PromiseResolv
 
     await delay(0);
 
-    return { resolve: resolve!, promise };
+    return {
+        resolve: resolve!,
+        promise
+    };
 }

@@ -10,9 +10,9 @@ import { ToDoDtoMapper, ToDoDtoMapperImpl, ToDoFactory, ToDoFactoryImpl, ToDosSt
 import { provideServicesContainer } from '@client/ui-vue';
 import { ServicesContainer } from '@client/infrastructure-di';
 import { UIKitViewmodelsFactory, UIKitViewmodelsFactoryImpl } from '@client/ui-uikit';
-import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl } from '@client/ui-todo';
+import { ToDoCardViewmodel, ToDoCardViewmodelImpl, ToDosWidgetViewmodel, ToDosWidgetViewmodelImpl, ToDoToCardMapper, ToDoToCardMapperImpl } from '@client/ui-todo';
 import { FormElementViewmodelsFactory, FormElementViewmodelsFactoryImpl, FormViewmodelFactory, FormViewmodelFactoryImpl } from '@client/ui-forms';
-import { Overlay, OverlayBase, OverlayViewmodel, OverlayViewmodelImpl } from '@client/ui-overlay';
+import { Overlay, OverlayBase, OverlayViewmodel, OverlayViewmodelImpl, ModalViewmodelsFactory, ModalViewmodelsFactoryImpl } from '@client/ui-overlay';
 
 export function useAppServices()
 {
@@ -27,6 +27,7 @@ export function useAppServices()
     container.bind(ToDoFactory).to(ToDoFactoryImpl).asTransient();
 
     container.bind(Overlay).to(OverlayBase).asSingleton();
+    container.bind(ModalViewmodelsFactory).to(ModalViewmodelsFactoryImpl).asTransient();
     container.bind(LoggingService).to(LoggingServiceImpl).asSingleton();
     container.bind(MessagesService).toDynamicValue(() => new MessagesServiceImpl(t)).asSingleton();
     container.bind(SSRLoader).toDynamicValue(() => ssrLoader).asSingleton();
@@ -39,6 +40,7 @@ export function useAppServices()
 
     container.bind(ToDosWidgetViewmodel).to(ToDosWidgetViewmodelImpl).asTransient();
     container.bind(ToDoCardViewmodel).to(ToDoCardViewmodelImpl).asTransient();
+    container.bind(ToDoToCardMapper).to(ToDoToCardMapperImpl).asTransient();
     container.bind(OverlayViewmodel).to(OverlayViewmodelImpl).asTransient();
 
     container.bind(DateParser).to(DateParserImpl).asTransient();

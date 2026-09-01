@@ -8,6 +8,9 @@ export type { OverlayElementsData } from './types/overlayElementsData';
 
 export { OverlayElementType } from './enums/overlayElementType';
 
+export { ModalViewmodelsFactory } from './factories/modalViewmodelsFactory';
+export { ModalViewmodelsFactoryImpl } from './factories/modalViewmodelsFactoryImpl';
+
 export { ModalViewmodel } from './viewmodels/modalViewmodel';
 export { OverlayViewmodel } from './viewmodels/overlayViewmodel';
 export { OverlayViewmodelImpl } from './viewmodels/overlayViewmodelImpl';

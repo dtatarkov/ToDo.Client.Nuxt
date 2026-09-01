@@ -28,7 +28,11 @@ describe('ToDoCardViewmodelImpl', () =>
         it('should initialize state', () =>
         {
             expect(viewmodel.state.value).toEqual({
-                infoBlock: { rows: [], hasRows: false },
+                infoBlock: {
+                    rows: [],
+                    hasRows: false
+                },
+
                 hasFooter: false,
             });
         });
@@ -58,7 +62,10 @@ describe('ToDoCardViewmodelImpl', () =>
 
             const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
-                    { labelKey: 'todo.card.completed', content: formattedDate }
+                    {
+                        labelKey: 'todo.card.completed',
+                        content: formattedDate
+                    }
                 ],
 
                 hasRows: true,
@@ -87,7 +94,10 @@ describe('ToDoCardViewmodelImpl', () =>
 
             const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
-                    { labelKey: 'todo.card.completeBy', content: formattedDate }
+                    {
+                        labelKey: 'todo.card.completeBy',
+                        content: formattedDate
+                    }
                 ],
 
                 hasRows: true,
@@ -119,8 +129,15 @@ describe('ToDoCardViewmodelImpl', () =>
 
             const infoBlockState: InfoBlockViewmodelState = {
                 rows: [
-                    { labelKey: 'todo.card.completeBy', content: formattedDate },
-                    { labelKey: 'todo.card.completed', content: formattedDate },
+                    {
+                        labelKey: 'todo.card.completeBy',
+                        content: formattedDate
+                    },
+
+                    {
+                        labelKey: 'todo.card.completed',
+                        content: formattedDate
+                    },
                 ],
 
                 hasRows: true,
@@ -171,7 +188,10 @@ describe('ToDoCardViewmodelImpl', () =>
         {
             infoBlockViewmodelMock.state.setMockValue({
                 rows: [
-                    { labelKey: 'todo.card.completeBy', content: '' },
+                    {
+                        labelKey: 'todo.card.completeBy',
+                        content: ''
+                    },
                 ],
                 hasRows: true,
             });

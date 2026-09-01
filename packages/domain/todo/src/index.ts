@@ -2,6 +2,8 @@ export type { ToDoGetDto } from './types/todoGetDto';
 export type { ToDoAddDto } from './types/todoAddDto';
 export type { ToDoUpdateDto } from './types/todoUpdateDto';
 export type { ToDoData } from './types/todoData';
+export type { ToDoAddData } from './types/todoAddData';
+export type { ToDoUpdateData } from './types/todoUpdateData';
 
 export { ToDo } from './entities/todo';
 export { ToDoStore as ToDosStore } from './entities/todoStore';
@@ -12,3 +14,4 @@ export { ToDoDtoMapperImpl } from './mappers/todoDtoMapperImpl';
 export { ToDosRepository } from './repositories/todosRepository';
 export { ToDoFactory } from './factories/todoFactory';
 export { ToDoFactoryImpl } from './factories/todoFactoryImpl';
+export { ToDoNotFoundException } from './exceptions/todoNotFoundException';

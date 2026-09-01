@@ -19,7 +19,7 @@ type InputTypesForValue<TValue> = {
 }[Exclude<InputType, InputType.inputHidden>];
 
 // 2. Visible editors compatible with the value type
-type FormElementCreateDataForValue<TValue> = Extract<
+export type FormElementCreateDataForValue<TValue> = Extract<
     FormElementCreateData,
     { inputType: InputTypesForValue<TValue>; }
 >;
@@ -46,7 +46,10 @@ export class FormConfiguration<TEntity extends Record<string, any> = Record<stri
     {
         const elements = Object.entries(this.elements).map(([name, data]) =>
         {
-            const element: Partial<FormElementData> = { ...data, name };
+            const element: Partial<FormElementData> = {
+                ...data,
+                name
+            };
 
             this.addValueToFormElementData(element, options?.values?.[name]);
             this.addErrorToFormElementData(element, options?.errors?.[name]);

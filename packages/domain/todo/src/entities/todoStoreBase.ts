@@ -1,108 +1,132 @@
 import { ToDoStore } from "./todoStore";
-import type { ToDo } from "./todo";
-import { ToDosRepository } from "../repositories/todosRepository";
-import { ToDoNotFoundException } from "../exceptions/todoNotFoundException";
+import type { ToDoData } from '../types/todoData';
+import type { ToDoAddData } from '../types/todoAddData';
+import type { ToDoUpdateData } from '../types/todoUpdateData';
+import { ToDosRepository } from '../repositories/todosRepository';
 import { dependency } from '@client/infrastructure-di';
 import { ToDoFactory } from '../factories/todoFactory';
-import { EntityEvent, ObservableArrayBase } from '@client/shared';
-
+import { DisposeToken, ObservableArrayBase, TasksQueue } from '@client/shared';
+import { ToDo } from './todo';
+import type { EntityScheme } from '@client/infrastructure-entity-schemes';
 
 @dependency(ToDosRepository)
 @dependency(ToDoFactory)
 export class ToDoStoreBase extends ToDoStore
 {
-  private initializationPromise: Promise<void> | undefined;
-  private todosChangeEvent = new EntityEvent<ToDo[]>();
+  private disposeToken = new DisposeToken();
+  private tasksQueue = new TasksQueue();
+  private todosInternal = new Array<ToDo>();
+  private initializePromise: Promise<void> | null = null;
 
-  todos = new ObservableArrayBase<ToDo>();
+  todos = new ObservableArrayBase<ToDoData>();
 
   constructor(
     private todosRepository: ToDosRepository,
-    private todoFactory: ToDoFactory
+    private todoFactory: ToDoFactory,
   )
   {
     super();
+
+    this.initializeToDosAsync();
+
+    this.disposeToken.registerDisposable(this.tasksQueue);
+    this.disposeToken.registerDisposable(this.todos);
   }
 
-  override async getToDoByIdAsync(id: string): Promise<ToDo | undefined>
+  override async initializeToDosAsync(): Promise<void>
   {
-    await this.initializeToDosAsync();
-
-    return this.todos.value.find(todo => todo.id === id);
-  }
-
-  override initializeToDosAsync(): Promise<void>
-  {
-    if (this.initializationPromise == undefined)
+    if (this.initializePromise)
     {
-      this.initializationPromise = this.updateToDosInternalAsync();
+      return this.initializePromise;
     }
 
-    return this.initializationPromise;
+    this.initializePromise = this.tasksQueue.queueTask(() => this.loadToDosAsync());
+
+    return this.initializePromise;
   }
 
   override async updateToDosAsync(): Promise<void>
   {
-    if (!this.initializationPromise)
-    {
-      await this.initializeToDosAsync();
-    }
-    else
-    {
-      await this.updateToDosInternalAsync();
-    }
+    await this.tasksQueue.queueTask(() => this.loadToDosAsync());
   }
 
-  override async saveToDoAsync(todo: ToDo): Promise<void>
+  override async getToDoByIdAsync(id: string): Promise<ToDoData | undefined>
   {
-    await this.initializeToDosAsync();
+    const todo = await this.findToDoByIdAsync(id);
 
-    this.assertNewOrExistingToDo(todo);
-
-    if (todo.isNew)
-    {
-      this.todosRepository.addToDoAsync(todo);
-      this.todos.add(todo);
-    }
-    else
-    {
-      this.todosRepository.updateToDoAsync(todo);
-    }
+    return todo?.getData();
   }
 
-  override createToDo()
+  override async addToDoAsync(data: ToDoAddData): Promise<void>
   {
-    const todo = this.todoFactory.create();
-    todo.owner = this;
+    await this.tasksQueue.queueTask(async () =>
+    {
+      const savedData = await this.todosRepository.addToDoAsync(data);
 
-    return todo;
+      const todo = this.todoFactory.create(savedData);
+
+      this.todosInternal.push(todo);
+      this.updateToDos();
+    });
+  }
+
+  override async updateToDoAsync(data: ToDoUpdateData): Promise<void>
+  {
+    await this.tasksQueue.queueTask(async () =>
+    {
+      const savedData = await this.todosRepository.updateToDoAsync(data);
+
+      const existingTodo = this.todosInternal.find(t => t.id === data.id);
+
+      if (existingTodo)
+      {
+        existingTodo.setData(savedData);
+      }
+      else
+      {
+        const todo = this.todoFactory.create(savedData);
+        this.todosInternal.push(todo);
+      }
+
+      this.updateToDos();
+    });
+  }
+
+  override getAddScheme()
+  {
+    return ToDo.getAddScheme();
+  }
+
+  override async getUpdateSchemeAsync(id: string): Promise<EntityScheme<any, ToDoUpdateData> | undefined>
+  {
+    const todo = await this.findToDoByIdAsync(id);
+
+    return todo?.getUpdateScheme();
   }
 
   override[Symbol.dispose](): void
   {
-    this.todos[Symbol.dispose]();
+    this.disposeToken[Symbol.dispose]();
   }
 
-  private assertNewOrExistingToDo(todo: ToDo): void
+  private async findToDoByIdAsync(id: string): Promise<ToDo | undefined>
   {
-    if (!todo.isNew)
-    {
-      if (!this.todos.value.some(t => t.id === todo.id))
-      {
-        throw new ToDoNotFoundException(todo.id);
-      }
-    }
+    await this.tasksQueue.awaitAll();
+
+    return this.todosInternal.find(t => t.id === id);
   }
 
-  private async updateToDosInternalAsync(): Promise<void>
+  private async loadToDosAsync(): Promise<void>
   {
-    const todos = await this.todosRepository.getAllToDosAsync();
+    const todosData = await this.todosRepository.getAllToDosAsync();
 
-    for (const todo of todos)
-    {
-      todo.owner = this;
-    }
+    this.todosInternal = todosData.map(data => this.todoFactory.create(data));
 
-    this.todos.value = todos;
+    this.updateToDos();
+  }
+
+  private updateToDos(): void
+  {
+    this.todos.value = this.todosInternal.map(todo => todo.getData());
   }
 }

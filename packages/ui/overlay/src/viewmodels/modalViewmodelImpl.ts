@@ -85,7 +85,12 @@ export class ModalViewmodelImpl<TContentData extends Record<string, any>>
 
     private updateContentState()
     {
-        this.state.update({ content: { ...this.state.value.content, data: this.content.state.value } });
+        this.state.update({
+            content: {
+                ...this.state.value.content,
+                data: this.content.state.value
+            }
+        });
     }
 
     private updateButtonConfirmState()

@@ -16,7 +16,10 @@ it('modal example', async () =>
 
     const form = formFactory.create(
         new FormConfiguration<{ title: string; }>({
-            title: { inputType: InputType.inputText, labelKey: 'todo.field.title.label' },
+            title: {
+                inputType: InputType.inputText,
+                labelKey: 'todo.field.title.label'
+            },
         }),
         { submit: async () => { } }
     );

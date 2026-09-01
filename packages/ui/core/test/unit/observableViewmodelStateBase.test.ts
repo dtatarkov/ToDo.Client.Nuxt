@@ -9,22 +9,40 @@ describe('ObservableViewmodelStateBase', () =>
     {
         it('should update simple property values', () =>
         {
-            const initialState = { name: 'John', age: 30 };
+            const initialState = {
+                name: 'John',
+                age: 30
+            };
+
             const state = new ObservableViewmodelStateBase(initialState);
 
             state.update({ name: 'Jane' });
 
-            expect(state.value).toEqual({ name: 'Jane', age: 30 });
+            expect(state.value).toEqual({
+                name: 'Jane',
+                age: 30
+            });
         });
 
         it('should update multiple properties at once', () =>
         {
-            const initialState = { name: 'John', age: 30, city: 'NYC' };
+            const initialState = {
+                name: 'John',
+                age: 30,
+                city: 'NYC'
+            };
             const state = new ObservableViewmodelStateBase(initialState);
 
-            state.update({ name: 'Jane', age: 25 });
+            state.update({
+                name: 'Jane',
+                age: 25
+            });
 
-            expect(state.value).toEqual({ name: 'Jane', age: 25, city: 'NYC' });
+            expect(state.value).toEqual({
+                name: 'Jane',
+                age: 25,
+                city: 'NYC'
+            });
         });
     });
 
@@ -38,11 +56,17 @@ describe('ObservableViewmodelStateBase', () =>
             }));
 
             const state = new ObservableViewmodelStateBase(
-                { name: 'John', age: 30 },
+                {
+                    name: 'John',
+                    age: 30
+                },
                 scheme,
             );
 
-            expect(state.value).toEqual({ name: 'John', age: 30 });
+            expect(state.value).toEqual({
+                name: 'John',
+                age: 30
+            });
         });
 
         it('should throw on invalid initial data', () =>
@@ -65,12 +89,18 @@ describe('ObservableViewmodelStateBase', () =>
             }));
 
             const state = new ObservableViewmodelStateBase(
-                { name: 'John', age: 30 },
+                {
+                    name: 'John',
+                    age: 30
+                },
                 scheme,
             );
 
             state.update({ age: 31 });
-            expect(state.value).toEqual({ name: 'John', age: 31 });
+            expect(state.value).toEqual({
+                name: 'John',
+                age: 31
+            });
         });
 
         it('should throw on invalid update', () =>
@@ -81,7 +111,10 @@ describe('ObservableViewmodelStateBase', () =>
             }));
 
             const state = new ObservableViewmodelStateBase(
-                { name: 'John', age: 30 },
+                {
+                    name: 'John',
+                    age: 30
+                },
                 scheme,
             );
 

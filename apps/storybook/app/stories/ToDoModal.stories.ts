@@ -1,7 +1,7 @@
 import type { Color } from '@client/ui-core';
 import type { ButtonGeneralData } from '@client/ui-uikit';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
-import { createToDoFormConfiguration } from '@client/ui-todo';
+import { createToDoAddFormConfiguration, createToDoUpdateFormConfiguration } from '@client/ui-todo';
 import { FormViewmodel } from '@client/ui-forms';
 import { VModal } from '@client/ui-vue';
 import { fn } from 'storybook/test';
@@ -39,7 +39,7 @@ export const AddEmpty: Story = {
         title: 'Create ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData(),
+            data: createToDoAddFormConfiguration().toData(),
         },
         buttonConfirm: buttonConfirmCreate,
         buttonCancel,
@@ -51,7 +51,7 @@ export const AddFilled: Story = {
         title: 'Create ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData({
+            data: createToDoAddFormConfiguration().toData({
                 values: {
                     title: 'Test ToDo',
                     description: 'This is a test description',
@@ -69,7 +69,7 @@ export const AddWithErrors: Story = {
         title: 'Create ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData({
+            data: createToDoAddFormConfiguration().toData({
                 errors: {
                     title: 'todo.field.title.errors.empty',
                 },
@@ -85,7 +85,7 @@ export const AddDisabled: Story = {
         title: 'Create ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData(),
+            data: createToDoAddFormConfiguration().toData(),
         },
         buttonConfirm: buttonConfirmCreate,
         buttonCancel,
@@ -98,8 +98,9 @@ export const EditFilled: Story = {
         title: 'Edit ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData({
+            data: createToDoUpdateFormConfiguration().toData({
                 values: {
+                    id: 'todo-1',
                     title: 'Test ToDo',
                     description: 'This is a test description',
                     completionDatePlanned: new Date('07/20/2026'),
@@ -116,7 +117,7 @@ export const EditWithErrors: Story = {
         title: 'Edit ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData({
+            data: createToDoUpdateFormConfiguration().toData({
                 errors: {
                     title: 'todo.field.title.errors.empty',
                 },
@@ -132,8 +133,9 @@ export const EditDisabled: Story = {
         title: 'Edit ToDo',
         content: {
             renderKey: FormViewmodel.renderKey,
-            data: createToDoFormConfiguration().toData({
+            data: createToDoUpdateFormConfiguration().toData({
                 values: {
+                    id: 'todo-1',
                     title: 'Test ToDo',
                     description: 'This is a test description',
                     completionDatePlanned: new Date('07/20/2026'),

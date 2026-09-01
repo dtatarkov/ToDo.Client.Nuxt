@@ -362,6 +362,9 @@ importers:
       '@client/infrastructure-di':
         specifier: workspace:*
         version: link:../../infrastructure/di
+      '@client/infrastructure-entity-schemes':
+        specifier: workspace:*
+        version: link:../../infrastructure/entitySchemes
       '@client/infrastructure-ssr':
         specifier: workspace:*
         version: link:../../infrastructure/ssr
@@ -616,6 +619,9 @@ importers:
       '@client/ui-forms':
         specifier: workspace:*
         version: link:../forms
+      '@client/ui-overlay':
+        specifier: workspace:*
+        version: link:../overlay
       '@client/ui-uikit':
         specifier: workspace:*
         version: link:../uikit

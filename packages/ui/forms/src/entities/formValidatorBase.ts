@@ -21,13 +21,19 @@ export class FormValidatorBase<TEntity extends Record<string, any> = Record<stri
 
         if (!this.scheme)
         {
-            return { isValid: true, messages: {} };
+            return {
+                isValid: true,
+                messages: {}
+            };
         }
 
         const data = this.formDataContext.getData();
         const messages = this.scheme.validate(data);
         const isValid = Object.keys(messages).length === 0;
 
-        return { isValid, messages };
+        return {
+            isValid,
+            messages
+        };
     }
 }

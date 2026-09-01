@@ -1,11 +1,13 @@
 import { ObservableArrayBase, type ObservableReadonly } from '@client/shared';
-import type { ModalViewmodelsFactory, ModalConfiguration } from '../factories/modalViewmodelsFactory';
+import { ModalViewmodelsFactory, type ModalConfiguration } from '../factories/modalViewmodelsFactory';
 import type { OverlayElementsData } from '../types/overlayElementsData';
 import type { ModalViewmodel } from '../viewmodels/modalViewmodel';
 import type { OverlayElementViewmodel } from '../viewmodels/overlayElementViewmodel';
 import { Overlay } from './overlay';
+import { dependency } from '@client/infrastructure-di';
 
 
+@dependency(ModalViewmodelsFactory)
 export class OverlayBase extends Overlay
 {
     private elementsInternal = new ObservableArrayBase<OverlayElementViewmodel<OverlayElementsData>>();

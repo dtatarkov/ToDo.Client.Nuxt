@@ -242,7 +242,11 @@ describe('EntityEvent', () =>
     {
         it('should skip emit when same value is emitted before microtask', async () =>
         {
-            const event = new EntityEvent<string>({ deferred: true, skipEmitOnSameValue: true });
+            const event = new EntityEvent<string>({
+                deferred: true,
+                skipEmitOnSameValue: true
+            });
+
             const handler = vi.fn();
 
             event.on(handler);
@@ -257,7 +261,10 @@ describe('EntityEvent', () =>
 
         it('should deliver only the last distinct value when multiple different values are emitted before microtask', async () =>
         {
-            const event = new EntityEvent<string>({ deferred: true, skipEmitOnSameValue: true });
+            const event = new EntityEvent<string>({
+                deferred: true,
+                skipEmitOnSameValue: true
+            });
             const handler = vi.fn();
 
             event.on(handler);
@@ -274,7 +281,10 @@ describe('EntityEvent', () =>
 
         it('should skip emit when same value is emitted across microtask boundaries', async () =>
         {
-            const event = new EntityEvent<string>({ deferred: true, skipEmitOnSameValue: true });
+            const event = new EntityEvent<string>({
+                deferred: true,
+                skipEmitOnSameValue: true
+            });
             const handler = vi.fn();
 
             event.on(handler);

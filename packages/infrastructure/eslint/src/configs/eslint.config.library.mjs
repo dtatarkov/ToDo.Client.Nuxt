@@ -3,7 +3,6 @@ import js from "@eslint/js";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
-import { Linter } from "eslint";
 import { defineConfig } from "eslint/config";
 
 export const libraryConfig = defineConfig([
@@ -39,6 +38,8 @@ export const libraryConfig = defineConfig([
     rules: {
       // Enable strict unused variable detection
       'no-unused-vars': 'off',
+      
+      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: false }],
 
       '@typescript-eslint/no-unused-vars': ['error', {
         args: 'all',
@@ -58,7 +59,7 @@ export const libraryConfig = defineConfig([
       '@typescript-eslint/unified-signatures': 'off',
       '@typescript-eslint/no-extraneous-class': 'off',
 
-      'vue/valid-template-root': 'off',
+      'vue/valid-template-root': 'off',      
     },
   },
 ]);

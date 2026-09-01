@@ -342,13 +342,21 @@ describe('extend method', () =>
     {
         it('should pass validation', () =>
         {
-            const result = extendedScheme.validate({ name: 'John', age: 30 });
+            const result = extendedScheme.validate({
+                name: 'John',
+                age: 30
+            });
+
             expect(Object.keys(result)).toHaveLength(0);
         });
 
         it('should parse correctly', () =>
         {
-            const result = extendedScheme.parse({ name: 'John', age: 30 });
+            const result = extendedScheme.parse({
+                name: 'John',
+                age: 30
+            });
+
             expect(result.name).toBe('John');
             expect(result.age).toBe(30);
         });
@@ -358,7 +366,11 @@ describe('extend method', () =>
     {
         it('should fail validation for invalid fields', () =>
         {
-            const result = extendedScheme.validate({ name: 123, age: 'thirty' });
+            const result = extendedScheme.validate({
+                name: 123,
+                age: 'thirty'
+            });
+
             expect(Object.keys(result)).toHaveLength(2);
             expect(result.name).toHaveLength(1);
             expect(result.age).toHaveLength(1);
@@ -366,11 +378,17 @@ describe('extend method', () =>
 
         it('should throw EntityParseException for invalid fields', () =>
         {
-            expect(() => extendedScheme.parse({ name: 123, age: 'thirty' })).toThrow(EntityParseException);
+            expect(() => extendedScheme.parse({
+                name: 123,
+                age: 'thirty'
+            })).toThrow(EntityParseException);
 
             try
             {
-                extendedScheme.parse({ name: 123, age: 'thirty' });
+                extendedScheme.parse({
+                    name: 123,
+                    age: 'thirty'
+                });
             }
             catch (error)
             {

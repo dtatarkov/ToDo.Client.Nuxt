@@ -12,7 +12,11 @@ function setupFactory()
 
     const onClose = vi.fn();
 
-    return { uikit, factory, onClose };
+    return {
+        uikit,
+        factory,
+        onClose
+    };
 }
 
 describe('ModalViewmodelsFactoryImpl', () =>

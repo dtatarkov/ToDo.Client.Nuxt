@@ -13,7 +13,11 @@ export class InfoBlockViewmodelImpl extends ViewmodelBase<InfoBlockViewmodelStat
 
     addRow(labelKey: MessageKey, content: string): void
     {
-        this.rows.push({ labelKey, content });
+        this.rows.push({
+            labelKey,
+            content
+        });
+
         this.syncState();
     }
 

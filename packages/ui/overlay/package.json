@@ -5,6 +5,11 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
 
+  "exports": {
+    ".": "./src/index.ts",
+    "./mocks": "./test/mocks/index.ts"
+  },
+
   "scripts": {
     "typecheck": "tsc"
   },

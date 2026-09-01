@@ -42,7 +42,10 @@ describe('EntityFieldSchemeBase', () =>
 
     it('should return parsed value when safeParse succeeds', () =>
     {
-        mockSafeParse.mockReturnValue({ success: true, data: 'test' });
+        mockSafeParse.mockReturnValue({
+            success: true,
+            data: 'test'
+        });
 
         const scheme = new EntityFieldSchemeBase<string>(mockSchema as any);
         const result = scheme.parse('test');
@@ -52,7 +55,10 @@ describe('EntityFieldSchemeBase', () =>
 
     it('should return { value } when tryParse succeeds', () =>
     {
-        mockSafeParse.mockReturnValue({ success: true, data: 'test' });
+        mockSafeParse.mockReturnValue({
+            success: true,
+            data: 'test'
+        });
 
         const scheme = new EntityFieldSchemeBase<string>(mockSchema as any);
         const result = scheme.tryParse('test');

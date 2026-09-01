@@ -1,55 +1,49 @@
 import { ToDoDtoMapper } from "./todoDtoMapper";
 import type { ToDoGetDto } from "../types/todoGetDto";
-import type { ToDoUpdateDto } from "../types/todoUpdateDto";
-import type { ToDo } from "../entities/todo";
-import { DateParser } from '@client/infrastructure-datetime';
-import { ToDoFactory } from "../factories/todoFactory";
 import type { ToDoAddDto } from '../types/todoAddDto';
+import type { ToDoUpdateDto } from '../types/todoUpdateDto';
+import type { ToDoData } from '../types/todoData';
+import type { ToDoAddData } from '../types/todoAddData';
+import type { ToDoUpdateData } from '../types/todoUpdateData';
+import { DateParser } from '@client/infrastructure-datetime';
 import { dependency } from '@client/infrastructure-di';
 
 @dependency(DateParser)
-@dependency(ToDoFactory)
 export class ToDoDtoMapperImpl extends ToDoDtoMapper
 {
-  constructor(
-    private dateParser: DateParser,
-    private todoFactory: ToDoFactory
-  )
-  {
-    super();
-  }
+    constructor(
+        private dateParser: DateParser,
+    )
+    {
+        super();
+    }
 
-  mapToEntity(dto: ToDoGetDto): ToDo
-  {
-    const todo = this.todoFactory.create({
-      ...dto,
+    override mapDtoToData(dto: ToDoGetDto): ToDoData
+    {
+        return {
+            id: dto.id,
+            title: dto.title,
+            description: dto.description,
+            completionDatePlanned: this.dateParser.fromStringOptional(dto.completionDatePlanned),
+            completionDateActual: this.dateParser.fromStringOptional(dto.completionDateActual),
+        };
+    }
 
-      completionDateActual: this.dateParser.fromStringOptional(dto.completionDateActual),
-      completionDatePlanned: this.dateParser.fromStringOptional(dto.completionDatePlanned),
-    });
+    override mapDataToAddDto(data: ToDoAddData): ToDoAddDto
+    {
+        return {
+            title: data.title,
+            description: data.description,
+            completionDatePlanned: data.completionDatePlanned?.toISOString(),
+        };
+    }
 
-    return todo;
-  }
-
-  mapToUpdateDto(todo: ToDo): ToDoUpdateDto
-  {
-    const dto = {
-      title: todo.title,
-      description: todo.description,
-      completionDatePlanned: todo.completionDatePlanned?.toISOString()
-    };
-
-    return dto;
-  }
-
-  mapToAddDto(todo: ToDo): ToDoAddDto
-  {
-    const dto = {
-      title: todo.title,
-      description: todo.description,
-      completionDatePlanned: todo.completionDatePlanned?.toISOString()
-    };
-
-    return dto;
-  }
+    override mapDataToUpdateDto(data: ToDoUpdateData): ToDoUpdateDto
+    {
+        return {
+            title: data.title,
+            description: data.description,
+            completionDatePlanned: data.completionDatePlanned?.toISOString(),
+        };
+    }
 }

@@ -8,7 +8,10 @@ function setupViewModel()
     const button = createButtonGeneralViewmodelMock();
     const configurator = new ModalButtonConfirmConfiguratorBase(button);
 
-    return { button, configurator };
+    return {
+        button,
+        configurator
+    };
 }
 
 describe('ModalButtonConfirmConfiguratorBase', () =>

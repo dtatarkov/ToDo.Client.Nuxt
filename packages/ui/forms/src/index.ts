@@ -5,7 +5,7 @@ export type { FormDataFull } from './types/formDataFull';
 export type { FormDataPartial } from './types/formDataPartial';
 export type { FormValidationMessages } from './types/formValidationMessages';
 
-export { FormConfiguration, type FormConfigurationElements } from './configuration/formConfiguration';
+export { FormConfiguration, type FormConfigurationElements, type FormElementCreateDataForValue } from './configuration/formConfiguration';
 
 export { FormViewmodel } from './viewmodels/formViewmodel';
 export { FormViewmodelImpl } from './viewmodels/formViewmodelImpl';

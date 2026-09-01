@@ -15,7 +15,11 @@ const meta: Meta<InfoBlockStoryArgs> = {
     render: args =>
     {
         return {
-            components: { VInfoBlock, VInfoRow },
+            components: {
+                VInfoBlock,
+                VInfoRow
+            },
+
             setup()
             {
                 return args;
@@ -34,8 +38,15 @@ type Story = StoryObj<InfoBlockStoryArgs>;
 export const Default: Story = {
     args: {
         rows: [
-            { label: 'Выполнить до', content: '31.12.2026, 03:00' },
-            { label: 'Выполнено', content: '01.05.2026, 03:00' },
+            {
+                label: 'Выполнить до',
+                content: '31.12.2026, 03:00'
+            },
+
+            {
+                label: 'Выполнено',
+                content: '01.05.2026, 03:00'
+            },
         ]
     }
 };
@@ -43,7 +54,10 @@ export const Default: Story = {
 export const SingleRow: Story = {
     args: {
         rows: [
-            { label: 'Выполнить до', content: '31.12.2026, 03:00' },
+            {
+                label: 'Выполнить до',
+                content: '31.12.2026, 03:00'
+            },
         ]
     }
 };
@@ -57,8 +71,15 @@ export const Empty: Story = {
 export const LongContent: Story = {
     args: {
         rows: [
-            { label: 'Description', content: 'This is a very long description that might span multiple lines and test the layout of the info block. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-            { label: 'Short', content: 'Short content' },
+            {
+                label: 'Description',
+                content: 'This is a very long description that might span multiple lines and test the layout of the info block. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+            },
+
+            {
+                label: 'Short',
+                content: 'Short content'
+            },
         ]
     }
 };
@@ -66,10 +87,26 @@ export const LongContent: Story = {
 export const MixedEmptyRows: Story = {
     args: {
         rows: [
-            { label: 'Label 1', content: 'Content 1' },
-            { label: 'Label 2', content: '' }, // Empty content row should be hidden
-            { label: 'Label 3', content: 'Content 3' },
-            { label: '', content: 'Content without label' },
+            {
+                label: 'Label 1',
+                content: 'Content 1'
+            },
+
+            // Empty content row should be hidden
+            {
+                label: 'Label 2',
+                content: ''
+            },
+
+            {
+                label: 'Label 3',
+                content: 'Content 3'
+            },
+
+            {
+                label: '',
+                content: 'Content without label'
+            },
         ]
     }
 };
@@ -77,16 +114,55 @@ export const MixedEmptyRows: Story = {
 export const ManyRows: Story = {
     args: {
         rows: [
-            { label: 'ID', content: '12345' },
-            { label: 'Name', content: 'Project Alpha' },
-            { label: 'Status', content: 'In Progress' },
-            { label: 'Priority', content: 'High' },
-            { label: 'Assignee', content: 'Jane Smith' },
-            { label: 'Due Date', content: '2026-12-31' },
-            { label: 'Created', content: '2026-01-15' },
-            { label: 'Updated', content: '2026-04-30' },
-            { label: 'Category', content: 'Development' },
-            { label: 'Tags', content: 'urgent, backend, api' },
+            {
+                label: 'ID',
+                content: '12345'
+            },
+
+            {
+                label: 'Name',
+                content: 'Project Alpha'
+            },
+
+            {
+                label: 'Status',
+                content: 'In Progress'
+            },
+
+            {
+                label: 'Priority',
+                content: 'High'
+            },
+
+            {
+                label: 'Assignee',
+                content: 'Jane Smith'
+            },
+
+            {
+                label: 'Due Date',
+                content: '2026-12-31'
+            },
+
+            {
+                label: 'Created',
+                content: '2026-01-15'
+            },
+
+            {
+                label: 'Updated',
+                content: '2026-04-30'
+            },
+
+            {
+                label: 'Category',
+                content: 'Development'
+            },
+
+            {
+                label: 'Tags',
+                content: 'urgent, backend, api'
+            },
         ]
     }
 };

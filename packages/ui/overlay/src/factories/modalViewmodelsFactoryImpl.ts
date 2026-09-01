@@ -2,9 +2,11 @@ import { ModalViewmodelsFactory, type ModalConfiguration } from './modalViewmode
 import { ModalViewmodelImpl } from '../viewmodels/modalViewmodelImpl';
 import type { ModalViewmodel } from '../viewmodels/modalViewmodel';
 import { ModalButtonConfirmConfiguratorBase } from '../entities/modalButtonConfirmConfiguratorBase';
-import type { UIKitViewmodelsFactory } from '@client/ui-uikit';
+import { UIKitViewmodelsFactory } from '@client/ui-uikit';
 import type { ButtonGeneralViewmodel } from '@client/ui-uikit';
+import { dependency } from '@client/infrastructure-di';
 
+@dependency(UIKitViewmodelsFactory)
 export class ModalViewmodelsFactoryImpl extends ModalViewmodelsFactory
 {
     constructor(

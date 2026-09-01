@@ -4,7 +4,10 @@ import { createObservableReadonlyMock } from '@client/shared/mocks';
 
 export function createInfoBlockViewmodelMock(state?: InfoBlockViewmodelState)
 {
-    state ??= { rows: [], hasRows: false };
+    state ??= {
+        rows: [],
+        hasRows: false
+    };
 
     const mock = {
         state: createObservableReadonlyMock(state),

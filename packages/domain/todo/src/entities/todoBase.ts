@@ -1,12 +1,11 @@
 import { ToDo } from "./todo";
 import type { ToDoData } from '../types/todoData';
-import type { ToDoStore } from './todoStore';
-import { isStringEmpty, updatePropertiesWithData } from '@client/shared';
+import type { ToDoUpdateData } from '../types/todoUpdateData';
+import { updatePropertiesWithData } from '@client/shared';
+import { EntityScheme } from '@client/infrastructure-entity-schemes';
 
 export class ToDoBase extends ToDo
 {
-  private ownerInternal: ToDoStore | undefined;
-
   private dataInternal: ToDoData = {
     id: '',
     title: '',
@@ -14,16 +13,6 @@ export class ToDoBase extends ToDo
     completionDatePlanned: undefined,
     completionDateActual: undefined
   };
-
-  get owner(): ToDoStore | undefined
-  {
-    return this.ownerInternal;
-  }
-
-  set owner(value: ToDoStore | undefined)
-  {
-    this.ownerInternal = value;
-  }
 
   get id(): string
   {
@@ -75,11 +64,6 @@ export class ToDoBase extends ToDo
     this.dataInternal.completionDateActual = value;
   }
 
-  get isNew()
-  {
-    return isStringEmpty(this.id);
-  }
-
   override getData(): ToDoData
   {
     return this.dataInternal;
@@ -96,26 +80,18 @@ export class ToDoBase extends ToDo
   {
     const todo = new ToDoBase();
 
-    todo.setData({
-      id: this.id,
-      title: this.title,
-      description: this.description,
-      completionDatePlanned: this.completionDatePlanned,
-      completionDateActual: this.completionDateActual,
-    } satisfies ToDoData);
-
-    todo.owner = this.owner;
+    todo.setData(this.getData());
 
     return todo;
   }
 
-  override async saveAsync(): Promise<void>
+  override getUpdateScheme(): EntityScheme<any, ToDoUpdateData>
   {
-    if (!this.owner)
-    {
-      throw new Error('Owner is not available');
-    }
-
-    await this.ownerInternal?.saveToDoAsync(this);
+    return EntityScheme.create(scheme => ({
+      id: scheme.string().required(),
+      title: scheme.string().required('todo.field.title.errors.empty'),
+      description: scheme.string().withDefault(''),
+      completionDatePlanned: scheme.datetime(),
+    }));
   }
 }
